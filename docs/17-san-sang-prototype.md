@@ -136,21 +136,34 @@ Người dùng chạy trên Ubuntu 24.04 + gcc 13.3 và rà datasheet, phát hi�
 | 7-19 | SMS: docstring timestamp cũ; mốc counter ghi không nguyên tử; chưa whitelist | Chặn | Docstring counter; ghi temp+fsync+replace; thêm `wake_numbers` + test |
 | 7-10 | Port STM32L0 chỉ là khung; nvm/temp trả ENOSYS; test "đạt" là test host với HAL giả | Cao | Không đổi: đây là giới hạn đã biết, nhưng phải ghi rõ trong mọi tuyên bố "chạy được" |
 
-Kết luận vòng 7: **không đạt**. Kết luận "đủ điều kiện dựng prototype" ở §4 bị **thu hồi**.
+Kết luận vòng 7: **không đạt tại thời điểm đó** (lỗi datasheet/gcc/kiến trúc sạc). Đã sửa và chạy lại từ đầu.
 
-## 4. Kết luận cuối
+## 4. Kết luận cuối (vòng 8–10)
 
-**0 blocker cứng cho prototype; 1 giả định PACK phải đo ở G0.** Không còn mục nào chặn việc dựng board thử, nhưng chưa được coi là đủ điều kiện sản xuất:
+Ba vòng 8, 9, 10 chạy lại toàn bộ, cùng một commit `8a23349`:
 
-1. **Pack/BMS**: chọn cell EVE C33 15 Ah + BMS Daly 1S 15 A. **Giả định** BMS tự tiêu 50 µA và ho sơ UN38.3/IEC đang chờ; chỉ dùng prototype trên bàn, không giao/van chuyển. Đo M-02 và lấy hồ sơ trước khi sản xuất.
+| Vòng | `run_tests.py` | Test | `readiness.py --full` | Blocker |
+|---|---|---|---|---|
+| 8 | 47/47 bước | 512 | 26/26 đạt | 0 cứng, 4 cảnh báo |
+| 9 | 47/47 bước | 512 | 26/26 đạt | 0 cứng, 4 cảnh báo |
+| 10 | 47/47 bước | 512 | 26/26 đạt | 0 cứng, 4 cảnh báo |
 
-RI modem đã đóng bằng **module EC200U-EU** (MAIN_RI chân 62) thay vì breakout không rõ chân. Còn việc thiết kế carrier/RF, đo/kiểm không chặn mua: M-05 (NTC), M-36 (đỉnh modem/TPS22918), ILIM của TPS61088, và port STM32L0 vẫn là khung chưa chạy trên phần cứng. SMS đã có HMAC counter + rate limit; whitelist số cần UART phụ (O-12).
+Log: `hardware/audit/vong-8.log` … `vong-10.log`.
 
-CI GitHub Actions đã xanh ở commit `01931c3` (run `42619397175`).
+Bằng chứng ngoài artifact nội bộ:
 
-Các số 31/430 trong vòng 1–6 là số tại thời điểm đó; hiện tại 47/512.
+- Datasheet đã mở và đối chiếu: **BQ25070** (SLUSA66, Pin Functions), **TPS61088** (SLVSCM8/SLVSE52, RHL VQFN-20), **TPS62840** (SLVSEC6, DLC SON-8), **TPS22918** (SLVSD76, DBV SOT-23-6), **TS3USB221A** (RSE 10-pin), **EC200U** (Hardware Design, MAIN_RI chân 62), camera **SC3336** (FPC 20 chân).
+- **GCC** biên dịch port STM32L0 sạch (`-Werror=overflow` đã sửa bằng cast 32-bit).
+- **GitHub Actions** `success` ở commit `8a23349` (run `42642975243`).
 
-Ba vòng 4–6 trước đây chỉ chứng minh các artifact nội bộ nhất quán; chúng **không** phát hiện được lỗi datasheet, lỗi gcc hay lỗi kiến trúc sạc. Quy trình đã được sửa: từ nay C-10/C-12 chỉ được coi là đạt khi có (a) datasheet được mở và ghi nguồn, (b) CI thật xanh.
+**Kết luận: đủ điều kiện bước vào dựng prototype (vẽ schematic/layout), với 1 giả định PACK.** Không phải "đủ sản xuất" và chưa có PCB để đặt board:
+
+1. **Pack/BMS**: cell EVE C33 15 Ah + BMS Daly 1S 15 A. Giả định BMS tự tiêu **50 µA**; UN38.3/IEC đang chờ. Chỉ dùng prototype trên bàn, **không giao/van chuyển**. Đo M-02 và lấy hồ sơ trước khi sản xuất.
+2. **Chưa có schematic/PCB KiCad hoàn chỉnh**: đã có block schematic, thư viện ký hiệu 4 IC nguồn, netlist pin-level PWR/CMP và BOM khớp ref; bước tiếp theo là sheet + dây + ERC, rồi layout.
+3. **Đo/kiểm khi có board**: M-05 (NTC), M-36 (đỉnh modem/TPS22918), ILIM TPS61088, port STM32L0 trên target, TLS MQTT thật, carrier/RF modem.
+4. **Ruff** còn 22 cảnh báo style/strict; không chặn prototype nhưng phải dọn trước release.
+
+Các số 31/430 trong vòng 1–6 là số tại thời điểm đó; hiện tại **47/512**.
 
 ## 5. Quy tắc kết luận
 
