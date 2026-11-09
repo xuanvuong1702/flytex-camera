@@ -35,7 +35,7 @@ Trong repo này, cả hai khối đã có lõi chạy được trên máy tính,
 
 Hai điểm còn mở ở port STM32L0, đã ghi thành rủi ro:
 
-- **IWDG trong STOP:** watchdog vẫn đếm khi ngủ. Nếu bật mà không có ai kick, thiết bị reset sau vài chục giây. Phải chốt: tắt trước STOP rồi bật lại sau, hoặc thức ngắn định kỳ để kick, và đo dòng ngủ (M-02). Xem R-32.
+- **IWDG trong STOP (chốt tạm 2026-11-09):** tắt IWDG ngay trước khi vào STOP và bật lại sau khi thức; ghi nhận đây là đánh đổi có chủ đích (mất bảo vệ watchdog trong lúc ngủ sâu, bù bằng brown-out và RTC/PIR wake). Đo lại M-02; nếu cần watchdog cả trong ngủ thì chuyển sang thức 20 s để kick và giảm tần suất lấy mẫu pin. Xem R-32.
 - **MCU reset khi SoC đang chạy:** `fly_init` cắt `+5V_SOC` ngay theo trạng thái đã khôi phục, có thể làm hỏng thẻ. Cần mạch giữ nguồn hoặc cờ "SoC đang chạy" trong NVM trước khi coi là an toàn. Xem R-31.
 
 ### 2.3 Pin cạn
@@ -108,6 +108,15 @@ Giá trị mặc định: clip 30 s, nghỉ trước khi ngủ 10 s, giữ live 
 - Mọi lệnh AT có deadline tuyệt đối; transport treo thì trả `AtTimeout`, không treo tiến trình. URC được tách khỏi kết quả lệnh.
 - Theo dõi: SIM, đăng ký mạng, cường độ sóng, băng tần.
 - Kênh đánh thức: xem [15](15-giao-thuc-va-cloud.md) §4; MCU giữ chân RI, SoC đọc SMS sau khi thức.
+
+**Rủi ro chi phí và replay của SMS (2026-11-09, chưa sửa):** MCU bật SoC khi RI kéo, trước khi token được kiểm; SMS rác hoặc cuộc gọi đến có thể đánh thức nhiều lần; token hiện là chuỗi tĩnh, có thể replay. Kế hoạch bắt buộc trước G0:
+
+1. MCU giới hạn tần suất: tối đa một lần bật SoC mỗi 10 phút do RI, kể cả khi token sai.
+2. Token dạng `W <timestamp> <hmac16>`; SoC kiểm HMAC-SHA256 bằng khóa thiết bị, từ chối timestamp lệch quá 10 phút và ghi nhớ nonce để chống replay.
+3. Nếu modem cho đọc số gửi trước khi bật SoC (cần UART phụ, O-12), thêm whitelist số.
+4. Đo chi phí một lần đánh thức (M-35) và đưa vào ngân sách pin.
+
+Chưa hiện thực — là blocker của vòng 7 trong [17](17-san-sang-prototype.md).
 - Tên lệnh cụ thể (`AT+QNETDEVCTL` hay tương đương) phải đối chiếu datasheet EC200U `[CHƯA XÁC MINH]`.
 
 ### 3.5 Uplink

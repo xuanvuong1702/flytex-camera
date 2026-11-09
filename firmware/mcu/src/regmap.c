@@ -13,6 +13,7 @@
 #include "flytex/regs_gen.h"
 #include "flytex/sched.h"
 #include "flytex/temp.h"
+#include <stddef.h>
 
 const fly_reg_desc_t *fly_reg_find(uint8_t addr)
 {

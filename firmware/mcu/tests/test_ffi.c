@@ -8,6 +8,7 @@
 
 #include "../sim/ffi.h"
 #include "flytex/regs_gen.h"
+#include <stddef.h>
 
 TEST_CASE(test_ffi_lifecycle_and_inputs)
 {

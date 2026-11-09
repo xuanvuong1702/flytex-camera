@@ -6,6 +6,7 @@
 #include "../hal/host/hal_host.h"
 #include "flytex/core.h"
 #include "flytex/regs_gen.h"
+#include <stddef.h>
 
 static hal_host_t host;
 static fly_ctx_t *core;

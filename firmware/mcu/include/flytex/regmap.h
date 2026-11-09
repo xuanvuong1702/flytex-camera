@@ -17,6 +17,7 @@
 #include <stdint.h>
 
 #include "flytex/regs_gen.h"
+#include <stddef.h>
 
 #ifdef __cplusplus
 extern "C" {

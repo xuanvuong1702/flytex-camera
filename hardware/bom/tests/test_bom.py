@@ -45,7 +45,9 @@ class BomTests(unittest.TestCase):
                     self.assertIn(row["dnp"], {"yes", "no"})
                     self.assertIn(row["verify"], VERIFY)
                     self.assertGreater(int(row["qty"]), 0)
-                    if row["dnp"] == "no":
+                    if row["verify"] == "not-chosen":
+                        self.assertTrue(row["notes"].strip(), "not-chosen phai ghi ly do")
+                    elif row["dnp"] == "no":
                         self.assertTrue(row["mpn"].strip(), "dnp=no phai co MPN")
                         self.assertIn(
                             row["verify"], {"candidate", "verified-datasheet"}
@@ -85,12 +87,23 @@ class BomTests(unittest.TestCase):
         ):
             self.assertIn(part, text)
 
-    def test_charger_is_switching_with_power_path(self) -> None:
+    def test_charger_is_explicitly_unresolved(self) -> None:
         charger = [row for row in self.pwr if row["block"] == "charger"]
         self.assertEqual(len(charger), 1)
-        text = (charger[0]["notes"] + " " + charger[0]["value"]).lower()
-        self.assertIn("power-path", text)
-        self.assertTrue("switching" in text or "buck-boost" in text)
+        row = charger[0]
+        self.assertEqual(row["verify"], "not-chosen")
+        text = (row["notes"] + " " + row["value"]).lower()
+        self.assertIn("4.2", text)
+        self.assertIn("hardware", text)
+
+    def test_package_regressions(self) -> None:
+        expected = {
+            "TPS62840DLCR": "SON-8 1.5x2mm",
+            "M24C32-FMN6TP": "SO-8 150mil",
+        }
+        seen = {row["mpn"]: row["package"] for row in self.pwr}
+        for mpn, package in expected.items():
+            self.assertEqual(seen.get(mpn), package, f"goi sai cho {mpn}")
 
     def test_readme_exists(self) -> None:
         self.assertTrue((BOM_DIR / "README.md").exists())

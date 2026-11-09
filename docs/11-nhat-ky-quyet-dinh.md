@@ -12,7 +12,7 @@ Ba nhóm: đã chốt, đề xuất (chờ xác nhận), và câu hỏi mở. Kh
 | D-01 | Làm lại từ đầu; tài liệu nằm ở repo này, không kế thừa file thiết kế của CAM4G | 2026-11-09 | Kế thừa bài học ([12](12-bai-hoc-tu-cam4g.md)) |
 | D-02 | Pin là pack 1S LFP có sẵn BMS, không tự ghép cell | 2026-11-09 | Kéo theo mục 7 của [02](02-thiet-ke-nguon.md) |
 | D-03 | Sạc bằng USB-C 5 V | 2026-11-09 | Giữ pack 1S và boost; không dùng pack điện áp cao với buck |
-| D-16 | Dùng **bộ sạc xung có power-path ngay từ Rev A**, không dùng sạc tuyến tính | 2026-11-09 | Chủ dự án chốt. Lý do: F-04 — 0,5 A cần 20–30 giờ và tải không bao giờ đầy. Chọn IC cụ thể vẫn mở (O-05) |
+| D-16 | Dùng **bộ sạc có power-path ngay từ Rev A**, không dùng sạc tuyến tính | 2026-11-09 | Chủ dự án chốt. Lý do: F-04 — 0,5 A cần 20–30 giờ và tải không bao giờ đầy. **Sửa 2026-11-09:** yêu cầu "xung" hạ xuống "float LFP bằng phần cứng + power-path"; IC cụ thể chưa chọn (O-05), BQ25798 bị loại |
 | D-18 | Pack LFP 1S **15 Ah** (48 Wh danh định) | 2026-11-09 | Chủ dự án chốt. 10 Ah không còn dư cho kịch bản đêm (F-05). Kéo theo: BMS sạc ≥1,5 A, tự tiêu ≤100 µA |
 | D-19 | Module **eMMC 8 GB** (Core1106D1408 hoặc D1808), không dùng bản 256 MB SPI NAND | 2026-11-09 | Chủ dự án chốt. NAND không đủ OTA A/B + runtime Python (F-08) |
 | D-21 | Đổi một chân dự phòng trên J_B2B lấy `MODEM_RI` (chân 21) | 2026-11-09 | Chủ dự án chốt. RI là đường đánh thức SMS; số chân dự phòng còn 2 |
@@ -49,7 +49,7 @@ Ba nhóm: đã chốt, đề xuất (chờ xác nhận), và câu hỏi mở. Kh
 | O-02 | Module camera cụ thể và pinout FPC 20 chân | Vẽ CMP | Mở — chặn layout CMP |
 | O-03 | Pack LFP và BMS cụ thể: dòng xả, dòng sạc ≥1,5 A, tự tiêu ≤100 µA, NTC, khôi phục, giấy tờ | Mục 7 của [02](02-thiet-ke-nguon.md) | Mở — chặn mua pack |
 | O-04 | Breakout EC200U-EU nào đủ yêu cầu (USB ra, hạ áp, đổi mức, **RI ra header**)? | Header J_MODEM | Mở |
-| O-05 | IC sạc xung LFP 1S có power-path, còn hàng, giá hợp lý. **Phải xác nhận BQ25798 sạc được LFP 1S 3,6 V; nếu không, xét LTC4162-L** | Layout PWR Rev A | Mở — blocker trong [18](18-tai-lieu-linh-kien.md) §2.1 |
+| O-05 | IC sạc LFP 1S **float 3,6 V đặt bằng phần cứng**, power-path, không phụ thuộc host/watchdog. BQ25798 **bị loại** (mặc định 4,2 V). Ứng viên: LTC4162-L, LTC4098-3.6, CN3058E + ideal diode | Layout PWR Rev A | Mở — blocker, chặn đặt board |
 | O-06 | Giải pháp cổng USB-C chống nước | Vỏ | Mở |
 | O-07 | Vị trí và loại ăng-ten 4G với vỏ nhôm | Vỏ | Mở |
 | O-08 | OTA có khả thi trên SDK Core1106 không? A/B có vừa eMMC không? | FR-07 | Mở |
@@ -60,3 +60,4 @@ Ba nhóm: đã chốt, đề xuất (chờ xác nhận), và câu hỏi mở. Kh
 | O-13 | Mux USB cụ thể (ví dụ TS3USB221A) và ai điều khiển `USB_SEL`? | J_B2B phiên bản sau, layout CMP | Mở |
 | O-14 | Có cần gauge pin để báo phần trăm không, hay chỉ báo mV? | Ứng dụng, UI | Mở — LFP có đường cong phẳng, đừng suy phần trăm từ điện áp |
 | O-15 | Buck 3,3 V: dùng bản cố định 3,3 V hay bản chỉnh được (cần thêm cặp điện trở hồi tiếp)? Vref và gói DLC là gì? | BOM, schematic PWR | Mở — blocker trong [18](18-tai-lieu-linh-kien.md) §2.1 |
+| O-16 | +3V3 hiện là buck, nên chỉ 3,0–3,3 V khi chạy pin. Có cần đổi sang buck-boost 3,3 V để nuôi DS18B20/rail logic không? | BOM, đo G0 | Mở — quyết định sau M-02/M-41; nếu DS18B20 hoặc bus không ổn định ở 3,0 V thì đổi |

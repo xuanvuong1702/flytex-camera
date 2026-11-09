@@ -66,7 +66,7 @@ Công thức: thời gian chạy (h) = Wh dùng được ÷ W.
 
 | Phần tử | Giá trị | Mục đích |
 |---|---|---|
-| R1 / R2 | 178 kΩ / 56 kΩ | Đặt ra 5,03 V |
+| R1 / R2 | 169 kΩ / 53,6 kΩ | Đặt ra 5,00 V (khớp `pwr-design` và BOM) |
 | Rfsw | 267 kΩ | Khoảng 597 kHz |
 | Rilim | 64,9 kΩ | Giới hạn khoảng 8,47 A |
 | COMP | 10,5 kΩ + 2,2 nF, C8 DNP | Bù vòng |
@@ -80,9 +80,17 @@ Quy tắc layout cho board mới:
 
 ## 5. Buck 3,3 V
 
-Ứng viên: TPS62840, vì dòng nghỉ cực thấp (xác nhận trong datasheet). **Đính chính 2026-11-09 (vòng kiểm tra 1):** bản nháp ghi "SON 1,5×2 mm, 8 pad" theo CAM4G; mã đặt hàng `TPS62840DLCR` dùng gói **DLC = SOT-563 6 chân** theo tài liệu TI. Bản nháp đã nhầm lẫn giữa hai gói — đúng loại lỗi footprint mà dự án này muốn tránh. Vì vậy: chưa chốt gói; phải mở datasheet TI, chọn đúng mã gói (SOT-563 hoặc loại khác), vẽ footprint theo đúng bản vẽ gói, và đưa vào board thử footprint ([07](07-ke-hoach-phat-trien.md) giai đoạn 1) `[CHƯA XÁC MINH]`. Dòng ra tối đa 0,75 A `[KẾ THỪA]`.
+Ứng viên: TPS62840. **Đính chính lần 2, 2026-11-09:** lần sửa trước ghi "DLC = SOT-563 6 chân" là **SAI**. Gói DLC của TPS62840 là **SON-8 1,5×2 mm**; gói 6 chân là bản YBG (WCSP). Bản CAM4G ghi SON-8 là đúng. Bài học: không được "sửa" gói dựa trên suy đoán từ mã đặt hàng khi chưa mở bản vẽ gói trong datasheet. Trước khi vẽ vẫn phải mở datasheet TI, đối chiếu bản vẽ gói DLC, và đưa vào board thử footprint ([07](07-ke-hoach-phat-trien.md) giai đoạn 1) `[CHƯA XÁC MINH]`. Dòng ra tối đa 0,75 A `[KẾ THỪA]`.
 
-**BOM đang thiếu điện trở hồi tiếp** nếu dùng bản chỉnh được: BQ25798/TPS62840 đều là linh kiện cấu hình, cần cặp R cho 3,3 V. Sổ linh kiện báo đây là blocker (U2). Trước khi đặt board phải chốt: bản cố định 3,3 V (bớt 2 linh kiện) hay bản chỉnh được kèm cặp E96. Xem [18](18-tai-lieu-linh-kien.md) §2.1 và O-15.
+**BOM đang thiếu điện trở hồi tiếp** nếu dùng bản chỉnh được: cần cặp R cho 3,3 V và phải lấy Vref từ datasheet. Sổ linh kiện báo đây là blocker (U2). Trước khi đặt board phải chốt: bản cố định 3,3 V (bớt 2 linh kiện) hay bản chỉnh được kèm cặp E96. Xem [18](18-tai-lieu-linh-kien.md) §2.1 và O-15.
+
+**Rail +3V3 không cố định 3,3 V.** Buck chỉ hạ áp; khi pin LFP còn 3,0–3,3 V, đầu ra bám theo pin (chế độ 100 % duty), nên rail thực tế là **3,0–3,3 V**. Hệ quả:
+
+- DS18B20 có điện áp tối thiểu 3,0 V → ở pin yếu chỉ còn đúng ngưỡng, phải đo và có thể phải cấp cảm biến từ +5V hoặc dùng buck-boost.
+- Mức logic I2C/UART giữa MCU, SoC và breakout modem: mức cao 3,0 V vẫn trên ngưỡng VIH 2,0 V của CMOS 3,3 V, nhưng phải kiểm với breakout dùng mức 1,8 V/3,3 V.
+- Nếu đo ở G0 thấy cảm biến hoặc bus không ổn định, đổi sang **buck-boost 3,3 V** (O-16) dù dòng nghỉ cao hơn.
+
+Không được ghi "rail 3,3 V" như một giá trị cố định trong bất kỳ tài liệu nào.
 
 ## 6. Sạc USB-C
 
@@ -94,30 +102,39 @@ Quy tắc layout cho board mới:
 
 ### 6.2 Bộ sạc
 
-**Đổi so với v0.1:** dùng bộ sạc **xung có power-path ngay từ Rev A**, không đợi production. Lý do ở [13](13-tinh-kha-thi.md) F-04: sạc tuyến tính 0,5 A cần 20 giờ cho 10 Ah và 30 giờ cho 15 Ah; tải đấu thẳng VBAT thì pin không bao giờ đầy; tổn hao 1,4 W trong vỏ kín là bài toán nhiệt.
+**Trạng thái: chưa chốt IC.** Yêu cầu cứng, rút ra từ lỗi thiết kế ngày 2026-11-09:
 
-| | Rev A (chốt) | Ghi chú |
+1. Điện áp float LFP 1S (3,6 V) phải đặt được **bằng phần cứng** (điện trở/strap/chọn mã), không phụ thuộc thanh ghi hay host.
+2. Có **power-path** để tải chạy từ nguồn vào khi đang sạc.
+3. Không có watchdog buộc phần mềm phải làm mới cấu hình; nếu có, mặc định khi hết hạn phải vẫn an toàn cho LFP.
+4. Cắt sạc theo nhiệt là đường **phần cứng** độc lập (FR-10), không chỉ dựa vào firmware.
+
+**BQ25798 đã bị loại** cho kiến trúc này: mặc định 1S là 4,2 V/2 A và tự sạc ở default mode; watchdog 40 s đưa VREG/ICHG/VSYSMIN về mặc định, EN_CHG về 1. Trong khi SoC tắt ở Eco/Watch và MCU chỉ là I2C slave, không ai ghi được 3,6 V. Lớp bảo vệ còn lại chỉ là BMS — không chấp nhận được. Chi tiết: [18](18-tai-lieu-linh-kien.md) §2.1.
+
+| Ứng viên | Ưu | Nhược / phải kiểm |
 |---|---|---|
-| Loại | Xung, hỗ trợ LFP 1S, có power-path | Ví dụ LTC4098-3.6 `[CHƯA XÁC MINH]` tình trạng còn hàng; hoặc IC buck-boost lập trình được điện áp sạc 3,6 V |
-| Dòng sạc | 1,5–2 A, giảm nếu nguồn yếu | Nguồn USB-C 5 V/2 A; phải đo dòng thực tế của củ sạc |
-| Thời gian sạc 15 Ah | ~8–10 giờ | So với 30 giờ của bản tuyến tính |
-| Tuyến tính 0,5 A | Chỉ dùng cho board thử trên bàn | Không dùng cho sản phẩm |
+| LTC4162-L | Buck, power-path, họ LFP, có NTC | Phải xác nhận float mặc định/đặt bằng R là 3,6 V và còn hàng `[CHƯA XÁC MINH]` |
+| LTC4098-3.6 | USB power manager +float 3,6 V cố định | Tuyến tính, tổn hao cao; tình trạng còn hàng `[CHƯA XÁC MINH]` |
+| CN3058E/TP5000 + ideal diode | Rẻ, float 3,6 V bằng phần cứng | Tuyến tính 1 A, cần mạch NTC ngoài và diode lý tưởng; chất lượng/giấy tờ `[CHƯA XÁC MINH]` |
 
-Cảnh báo: **không dùng module sạc kiểu TP4056 cho LFP**, vì chúng sạc tới 4,2 V và làm quá áp cell LFP.
+Dòng sạc mục tiêu 1–1,5 A; thời gian sạc 15 Ah khoảng 12–17 giờ. **An toàn trước tốc độ**: nếu chỉ có sạc tuyến tính 1 A, chấp nhận cho prototype và ghi rõ.
 
-Điện áp sạc cuối của bộ sạc phải thấp hơn ngưỡng cắt quá áp của BMS (thường khoảng 3,65 V `[CHƯA XÁC MINH]`).
-
-Điều kiện với pack: BMS phải cho sạc ≥1,5 A; nếu BMS giới hạn 0,5 A thì bộ sạc nhanh cũng vô ích.
+Cấm dùng module TP4056/TP5100 hay bất kỳ sạc Li-ion 4,2 V cho pack LFP.
 
 ### 6.3 Cắt sạc theo nhiệt độ
 
-NTC gắn ở **pack** (sát cell), không đặt trên board, vì board nóng hơn cell. Điểm cắt thực hiện bằng phần cứng, không qua firmware.
+NTC gắn ở **pack** (sát cell), không đặt trên board. FR-10 yêu cầu đường cắt **phần cứng**, không phụ thuộc firmware.
 
-Với NTC 10 kΩ B3950 và điện trở kéo 7,15 kΩ (giá trị CAM4G), ngưỡng dưới của chip nằm trong dải 42,5–47,5 % VIN. Tính lại cho **điểm cắt nóng 40,1 °C** và **điểm cắt lạnh 35,1 °C** `[ƯỚC TÍNH]`, không phải đúng 40 °C. Phép tính và bảng nhiệt độ: [pwr-design](../hardware/pwr-design.md) §4. Đo điểm cắt thực bằng tủ sấy (M-05) và chỉnh lại theo NTC của pack thật.
+Cách làm phụ thuộc IC sạc được chọn:
+
+- Nếu IC có chân NTC/TS với ngưỡng đặt bằng điện trở và không bị watchdog reset → dùng trực tiếp.
+- Nếu không → thêm comparator cửa sổ (ví dụ TLV6700) lấy điện áp từ NTC, đầu ra kéo chân enable/CHG của sạc; firmware chỉ đọc trạng thái, không phải lớp bảo vệ duy nhất.
+
+**Bảng NTC 7,15 kΩ và ngưỡng 42,5–47,5 % VIN của CAM4G không còn áp dụng** — đó là của IC sạc cũ. Phép tính trong [pwr-design](../hardware/pwr-design.md) §4 đang tạm hoãn và không được dùng để chọn linh kiện cho tới khi chốt IC sạc. Đo điểm cắt thực bằng tủ sấy (M-05).
 
 ### 6.4 Sạc và tải dùng chung pin
 
-Ở prototype, tải đấu thẳng vào VBAT cùng bộ sạc. Khi camera chạy, dòng từ pin thường lớn hơn dòng sạc 0,5 A, nên pin không đầy và bộ sạc có thể không bao giờ báo xong. Chấp nhận trong prototype dưới dạng "chỉ sạc khi thiết bị nghỉ" và ghi rõ trong tài liệu thử nghiệm. Production dùng power-path để tách tải khỏi pin (O-05).
+Nếu IC sạc có power-path, tải chạy từ nguồn vào khi có USB và từ pin khi mất nguồn; pin chỉ nhận dòng sạc. Nếu dùng phương án tuyến tính không power-path, giữ nguyên quy tắc "chỉ sạc khi thiết bị nghỉ" và ghi rõ trong tài liệu thử nghiệm.
 
 ## 7. Yêu cầu với pack và BMS
 

@@ -34,20 +34,25 @@ BUCK = {
 }
 
 CHARGER = {
-    "topology": "xung co power-path (D-16)",
+    # 2026-11-09: BQ25798 bi loai (mac dinh 4,2 V + watchdog). Chua chon IC moi.
+    "topology": "CHUA CHON IC - yeu cau float 3,6 V bang phan cung + power-path",
     "vbus_v": 5.0,
     "vbat_v": 3.6,
     "current_a": 1.5,
     "capacity_ah": 15.0,
     "soc_start": 0.20,
     "efficiency": 0.90,
+    "selected": False,
 }
 
 NTC = {
+    # Tam hoan 2026-11-09: bang 7,15 kΩ / 42,5-47,5 % VIN la cua IC CAM4G cu,
+    # khong ap dung cho IC sac moi. Chi tinh lai sau khi chon IC.
+    "suspended": True,
     "r25_ohm": 10_000.0,
     "beta": 3950.0,
     "r_pull_ohm": 7_150.0,
-    "threshold_hot_ratio": 0.425,   # dải chip 42,5–47,5 % VIN
+    "threshold_hot_ratio": 0.425,
     "threshold_cold_ratio": 0.475,
     "expected_hot_min_c": 35.0,
     "expected_hot_max_c": 42.0,
@@ -187,13 +192,7 @@ def checks(values: dict[str, object] | None = None) -> list[Check]:
             adc.mv_per_lsb <= BATTERY_ADC["max_mv_per_lsb"],
         ),
         Check(
-            "Điểm cắt sạc nóng",
-            f"{v['hot_c']:.1f} °C",
-            f"{NTC['expected_hot_min_c']:.0f}–{NTC['expected_hot_max_c']:.0f} °C",
-            NTC["expected_hot_min_c"] <= v["hot_c"] <= NTC["expected_hot_max_c"],
-        ),
-        Check(
-            "Thời gian sạc 15 Ah ở 1,5 A",
+            "Thời gian sạc 15 Ah nếu 1,5 A",
             f"{v['charge_h']:.1f} h",
             "< 12 h",
             v["charge_h"] < 12.0,

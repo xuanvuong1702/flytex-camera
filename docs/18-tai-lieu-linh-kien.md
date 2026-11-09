@@ -13,14 +13,14 @@
 
 ## 2. Kết quả hiện tại
 
-**14 linh kiện + 4 module ngoài BOM; 6 blocker, 3 cảnh báo.**
+**14 linh kiện + 4 module ngoài BOM; 7 blocker, 3 cảnh báo** (sau khi loại BQ25798).
 
 ### 2.1 Blocker phải đóng trước khi đặt
 
 | Mục | Vấn đề | Cách đóng | Nơi ghi |
 |---|---|---|---|
-| U2 buck | BOM **không có điện trở hồi tiếp** cho buck chỉnh được; chưa xác minh Vref/gói | Mở datasheet TPS62840: chọn bản cố định 3,3 V nếu có, hoặc thêm 2 điện trở E96 vào BOM; chốt gói DLC (SOT-563) | O-15 |
-| U3 sạc | Chưa xác nhận **BQ25798 sạc được LFP 1S 3,6 V** và có power-path | Đọc mục charge voltage + JEITA trong datasheet; nếu không đạt, chuyển ứng viên dự phòng LTC4162-L | O-05 |
+| U2 buck | BOM **không có điện trở hồi tiếp** cho buck chỉnh được; chưa xác minh Vref | Mở datasheet TPS62840: chọn bản cố định 3,3 V nếu có, hoặc thêm 2 điện trở E96 vào BOM; gói là **SON-8 1,5×2 (DLC)** | O-15 |
+| U3 sạc | **BQ25798 bị loại**: mặc định 1S 4,2 V, watchdog 40 s reset VREG/ICHG; không có I2C master khi SoC tắt | Chọn IC **float 3,6 V bằng phần cứng** + power-path + NTC phần cứng: LTC4162-L, LTC4098-3.6, hoặc CN3058E + ideal diode | O-05 |
 | MODEM | Chưa xác nhận **breakout đưa RI ra header** | Kiểm bản vẽ breakout hoặc chọn loại khác; nếu không, kênh Watch SMS không chạy | O-04 |
 | SOC | Chưa nạp **bản vẽ 112 chân** Core1106D vào repo | Tải `Core1106D-PinOut.xls` và `Core1106D.pdf` từ tài liệu Luckfox, đối chiếu chân trước khi vẽ CMP | O-11 |
 | CAMERA | Chưa chọn module camera và **pinout FPC 20 chân** | Chọn module có IR-CUT + LED IR, lấy datasheet, ghi pinout vào spec | O-02 |
@@ -39,9 +39,9 @@
 | Linh kiện | Đã xác nhận | Ghi chú |
 |---|---|---|
 | TPS61088 | Gói VQFN-20; Vin 2,7–12 V; Vref 1,204 V; Vout tới 12,6 V | Phù hợp boost 5 V/3 A; ILIM/fsw vẫn cần đối chiếu công thức datasheet |
-| TPS62840 | Vin 1,8–6,5 V; Iout 0,75 A; Iq 60 nA; **DLC = SOT-563** | Đã sửa sai gói SON 1,5×2 của bản nháp |
+| TPS62840 | Vin 1,8–6,5 V; Iout 0,75 A; Iq 60 nA; **DLC = SON-8 1,5×2** | Bản CAM4G đúng; lần sửa sang SOT-563 là sai, đã khôi phục |
 | STM32L031G6U6 | **UFQFPN-28**; STOP 0,4 µA; 24 GPIO; −40…85 °C | Đủ chân; thiết kế không phụ thuộc I2C wakeup vì MCU thức khi SoC bật |
-| M24C32-FMN6TP | **TSSOP-8**; 1,7–5,5 V; I2C | Đã sửa sai gói SO-8 |
+| M24C32-FMN6TP | **SO-8 150 mil**; 1,7–5,5 V; I2C | Bản CAM4G đúng; lần sửa sang TSSOP-8 là sai, đã khôi phục |
 | TPS22918 | 5,5 V; 2 A; Rds(on) ~55 mΩ | Đủ cho +5V_MODEM 1,8 A và +5V_SOC 1,5 A |
 | TS3USB221A | USB 2.0 HS; 2 kênh | Dùng cho mux modem/pad nạp (nếu chốt D-20) |
 | Core1106D1408 | 1 cổng USB; eMMC 8 GB; 112 chân | Khớp D-19/D-20; thiếu bản vẽ chân |
@@ -50,7 +50,7 @@
 ## 4. Tối ưu và điều chỉnh đề xuất
 
 1. **Buck:** nếu TPS62840 chỉ có bản chỉnh được, thêm cặp điện trở hồi tiếp E96 và ghi giá trị vào [pwr-design](../hardware/pwr-design.md) bằng cách mở rộng `hardware/calc/design.py`. Nếu có bản cố định 3,3 V, chọn bản đó để bớt 2 linh kiện và một nguồn sai số.
-2. **Sạc:** BQ25798 là buck-boost 1–4 cell nhưng phải xác nhận ngưỡng sạc thấp nhất 3,6 V và hành vi JEITA. Nếu không đạt, LTC4162-L là ứng viên LFP chuyên dụng, có power-path và lập trình bằng điện trở (bớt phụ thuộc I2C); đổi tốn kém hơn nhưng ít rủi ro hơn.
+2. **Sạc:** BQ25798 **không dùng được** cho kiến trúc này (mặc định 4,2 V, watchdog, không có I2C master khi SoC tắt). Chọn IC float LFP bằng phần cứng; nếu là sạc tuyến tính 1 A thì chấp nhận chậm hơn để đổi lấy an toàn.
 3. **MCU:** không cần I2C wakeup từ STOP nếu MCU chỉ ngủ khi SoC tắt; khi SoC bật, MCU thức và trả lời I2C. Ghi rõ trong port STM32L0 để người viết không đi tìm tính năng không cần.
 4. **B2B:** dòng mỗi chân 1 A của Samtec TSM cần xác nhận trong datasheet; nếu thấp hơn, tăng số chân nguồn hoặc đổi connector.
 5. **USB-C:** chốt phương án chống nước trước khi vẽ vỏ, vì nó quyết định khoét vỏ và chiều cao connector.
@@ -62,7 +62,7 @@
 |---|---|---|
 | `Core1106D-PinOut.xls`, `Core1106D.pdf` (Luckfox) | Vẽ CMP, gán chân 112 | **Chưa nạp** |
 | EC200U Hardware Design (Quectel) | VBAT, đỉnh dòng, RI, USB | Đã dẫn, chưa trích số |
-| BQ25798 datasheet mục charge voltage/JEITA | Chốt sạc LFP | **Chưa đối chiếu** |
+| Datasheet IC sạc mới (LTC4162-L / LTC4098-3.6 / CN3058E) | Chốt float, NTC, power-path | **Chưa có** |
 | TPS62840 datasheet bản gói DLC | Vref, divider, footprint | Chưa đối chiếu |
 | TPS61088 datasheet (ILIM, fsw, COMP) | Chốt giá trị bù | Chưa đối chiếu đầy đủ |
 | STM32L031 datasheet + reference manual | STOP, I2C, ADC, chân | Một phần |
@@ -81,3 +81,17 @@ Danh sách việc và thứ tự ưu tiên trước khi mua: [19-truoc-khi-mua.m
 3. `python -m hardware.parts.check --write` để sinh lại bảng.
 4. `python -m hardware.parts.check --strict` phải hết blocker mới đặt hàng.
 5. Ghi ngày và người xác nhận vào cột `source` hoặc `notes`.
+
+## 7. Đính chính sau rà soát độc lập 2026-11-09
+
+Rà soát bên ngoài (Ubuntu + gcc 13.3 + datasheet) phát hiện các lỗi mà bộ kiểm tra nội bộ không bắt được:
+
+1. **CI đỏ** vì `regmap.c` thiếu `<stddef.h>`; đã sửa 4 file nguồn + 9 file test và thêm lint.
+2. **BQ25798 không an toàn** cho LFP 1S trong kiến trúc này; đã loại, không chỉ "cần xác minh".
+3. **Hai đính chính gói ở vòng 1 là sai**: TPS62840 là SON-8 1,5×2, M24C32 là SO-8; đã khôi phục.
+4. **NTC 7,15 kΩ** thuộc IC cũ; mục 4 của pwr-design đã tạm hoãn.
+5. **+3V3 là 3,0–3,3 V**, không phải 3,3 V cố định.
+6. **BOM thiếu linh kiện phụ**; đã thêm các dòng boost/USB/load-switch và đánh dấu phần phụ thuộc IC sạc là `not-chosen`.
+7. **Ngưỡng pin LFP và SMS đánh thức** vẫn là blocker chưa sửa; ghi ở [17](17-san-sang-prototype.md) vòng 7.
+
+Bài học: test BOM chỉ kiểm **nhất quán nội bộ**, không chứng minh gói hay thông số đúng datasheet. Mọi `verified=yes` phải kèm nguồn và người kiểm.

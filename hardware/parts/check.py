@@ -80,6 +80,8 @@ def structural_issues(parts: dict[str, dict], external: dict[str, dict],
     for row in bom:
         if row["dnp"] != "no" or row["block"] not in CRITICAL_BLOCKS:
             continue
+        if row["verify"] == "not-chosen":
+            continue
         if row["mpn"] not in mpns:
             issues.append(Issue(
                 "blocker", row["mpn"],
@@ -104,6 +106,12 @@ def design_issues(parts: dict[str, dict], external: dict[str, dict],
                   bom: list[dict[str, str]]) -> list[Issue]:
     issues: list[Issue] = []
     blocks = {row["block"] for row in bom}
+    for row in bom:
+        if row["verify"] == "not-chosen" and not row["block"].startswith("charger_"):
+            issues.append(Issue(
+                "blocker", row["ref"],
+                f"linh kien {row['block']} chua chon: {row['notes']}",
+            ))
 
     def need(pid: str, name: str, op: str, limit: float, level: str, message: str) -> None:
         lookup = parts.get(pid) or external.get(pid) or {}
@@ -138,10 +146,10 @@ def design_issues(parts: dict[str, dict], external: dict[str, dict],
     need("U3", "ichg_a", ">=", 1.5, "blocker", "sac khong dat 1,5 A")
     if param(parts.get("U3", {}), "power_path") is not True:
         issues.append(Issue("blocker", "U3", "sac khong co power-path (D-16)"))
-    if param(parts.get("U3", {}), "lfp_1s") is not True:
+    if param(parts.get("U3", {}), "approved") is not True:
         issues.append(Issue(
             "blocker", "U3",
-            "chua xac nhan sac duoc LFP 1S 3,6 V - phai kiem datasheet truoc khi dat",
+            "chua chon IC sac dat float LFP 3,6 V bang phan cung; BQ25798 bi loai",
         ))
 
     need("U4", "stop_ua", "<=", 2.0, "blocker", "MCU nghi qua cao")

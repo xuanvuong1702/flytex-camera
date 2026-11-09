@@ -7,7 +7,7 @@ Mục đích: phát hiện footprint sai **trước** khi đặt board thật. D
 | # | Footprint | Vì sao rủi ro | Kiểm gì |
 |---|---|---|---|
 | 1 | Boost QFN-20 (TPS61088 hoặc tương đương) | Pad nhiệt, khoảng cách chân mịn | Hàn được, pad nhiệt đúng, không cầu chì |
-| 2 | Buck TPS62840 — **gói chưa chốt**: SOT-563 6 chân (DLC) hay gói khác | Bản nháp CAM4G ghi SON 1,5×2 8 pad; mã DLC là SOT-563 — đúng loại lỗi gói | Mở datasheet, đếm pad, đo pitch, so bản in 1:1; chốt mã gói trước khi vẽ |
+| 2 | Buck TPS62840 gói **SON-8 1,5×2 mm (DLC)** | Bản CAM4G đúng; lần "sửa" sang SOT-563 là sai | In 1:1, đếm 8 pad, đo pitch, đối chiếu bản vẽ gói DLC |
 | 3 | IC sạc xung (O-05) | Gói và pad chưa biết | Theo datasheet IC được chọn |
 | 4 | Module Core1106D 112 chân | Stamp hole, bước chân nhỏ | Bản in 1:1 chồng khít, không lệch chân 1 |
 | 5 | FPC camera 20 chân | Pinout riêng từng module | Bản in 1:1, hướng tiếp xúc, chiều dài cáp |

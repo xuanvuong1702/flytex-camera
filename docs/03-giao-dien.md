@@ -12,7 +12,7 @@
 | +5V_BOOST | Boost | 5,0 V | 3 A (giới hạn boost) | Chỉ có trên PWR |
 | +5V_SOC | Công tắc tải | 5,0 V | 1,5 A | Sang CMP, 3 chân B2B |
 | +5V_MODEM | Công tắc tải | 5,0 V | 1,8 A | Sang CMP rồi tới header modem, 3 chân B2B |
-| +3V3 | Buck | 3,3 V | 0,6 A | MCU, cảm biến, tham chiếu logic |
+| +3V3 | Buck | **3,0–3,3 V** (bám pin khi pin yếu, không phải 3,3 V cố định) | 0,6 A | MCU, cảm biến, tham chiếu logic |
 
 **Thay đổi so với v0.1:** `+5V_MODEM` từ "0,5–0,6 A, 2 chân" lên 1,8 A, 3 chân. Lý do: đỉnh dòng của modem Cat-1 lớn hơn con số cũ và boost 3 A phải chia cho cả SoC; xem [13](13-tinh-kha-thi.md) F-03. Con số 1,8 A là cận trên thiết kế, phải thay bằng phép đo (M-10).
 

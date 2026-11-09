@@ -1,9 +1,9 @@
 ref,block,value,mpn,manufacturer,package,qty,dnp,verify,notes
 U1,boost,5V 3A boost,TPS61088RHLR,Texas Instruments,VQFN-20,1,no,candidate,Vref va fsw va ilim phai doi chieu datasheet
-U2,buck,3V3 0.75A buck,TPS62840DLCR,Texas Instruments,SOT-563 6 pin,1,no,candidate,Goi DLC la SOT-563; CAM4G ghi SON 1.5x2 la sai - phai doi chieu datasheet
-U3,charger,1S LFP switching charger power-path,BQ25798RQMR,Texas Instruments,VQFN-29,1,no,candidate,Phai xac minh dat duoc 3.6 V cho LFP va co power-path
+U2,buck,3V3 0.75A buck,TPS62840DLCR,Texas Instruments,SON-8 1.5x2mm,1,no,candidate,Goi DLC = SON-8 1.5x2 (CAM4G dung); Vref va ban ve goi phai doi chieu datasheet
+U3,charger,1S LFP charger float by hardware,,,chua chon,1,no,not-chosen,BQ25798 bi loai: mac dinh 1S 4.2 V va watchdog 40 s dua thanh ghi ve mac dinh; can IC float 3.6 V bang phan cung + power path + NTC
 U4,mcu,STM32L031G6U6,STM32L031G6U6,STMicroelectronics,UFQFPN-28,1,no,candidate,Goi G6 = UFQFPN-28; kiem chan I2C wakeup va STOP
-U5,nvm,32Kbit I2C EEPROM,M24C32-FMN6TP,STMicroelectronics,TSSOP-8,1,no,candidate,Luu mode/lich/boot count
+U5,nvm,32Kbit I2C EEPROM,M24C32-FMN6TP,STMicroelectronics,SO-8 150mil,1,no,candidate,Luu mode/lich/boot count; MN = SO8
 Q1,soc_switch,load switch TPS22918,TPS22918DBVR,Texas Instruments,SOT-23-6,1,no,candidate,Rail +5V_SOC
 Q2,modem_switch,load switch TPS22918,TPS22918DBVR,Texas Instruments,SOT-23-6,1,no,candidate,Rail +5V_MODEM >=1.8 A
 L1,boost,1.2uH Isat 9A,IHLP2525CZER1R2M01,Vishay,2525,1,no,candidate,Kiem Isat o 125 do C
@@ -24,3 +24,19 @@ C3,modem_bulk,470uF 10V low ESR,EEU-FR1A471,Panasonic,radial 8x11,1,no,candidate
 C4,decouple,100nF 50V X7R,CL10B104KB8NNNC,Samsung,0603,12,no,candidate,Theo tung IC
 R5,ntc_pull,7.15k 1%,RC0603FR-077K15L,Yageo,0603,1,no,candidate,Theo tinh toan pwr-design
 TP1,testpoint,test point 1.0mm,TP-107-01-T,Samtec,1 pin,12,no,candidate,Moi rail mot diem
+R6,boost_fsw,267k 1%,RC0603FR-07267KL,Yageo,0603,1,no,candidate,Rfsw theo datasheet TPS61088
+R7,boost_ilim,64.9k 1%,RC0603FR-0764K9L,Yageo,0603,1,no,candidate,Rilim theo datasheet
+R8,boost_comp,10.5k 1%,RC0603FR-0710K5L,Yageo,0603,1,no,candidate,Mang COMP - chua do Bode
+C5,boost_comp,2.2nF 50V X7R,CL10B222KB8NNNC,Samsung,0603,1,no,candidate,Mang COMP
+C6,boost_boot,100nF 50V X7R,CL10B104KB8NNNC,Samsung,0603,1,no,candidate,Tu boot
+C7,boost_vcc,1uF 16V X7R,CL10B105KO8NNNC,Samsung,0603,1,no,candidate,Tu VCC
+C8,boost_ss,10nF 50V X7R,CL10B103KB8NNNC,Samsung,0603,1,no,candidate,Tu soft-start
+R9,usb_cc,5.1k 1%,RC0603FR-075K1L,Yageo,0603,1,no,candidate,Rd cho CC1
+R10,usb_cc,5.1k 1%,RC0603FR-075K1L,Yageo,0603,1,no,candidate,Rd cho CC2
+D2,usb_vbus_tvs,TVS 5V standoff,SMBJ5.0A,Bourns,SMB,1,no,candidate,Bao ve VBUS; USBLC6 chi bao ve data
+C9,load_switch_ct,10nF 50V X7R,CL10B103KB8NNNC,Samsung,0603,2,no,candidate,Chinh slew dong nap 470uF
+L2,charger_inductor,chua chon,,,chua chon,1,no,not-chosen,Phu thuoc IC sac
+C10,charger_pmid,chua chon,,,chua chon,1,no,not-chosen,Phu thuoc IC sac
+C11,charger_vbus,chua chon,,,chua chon,1,no,not-chosen,Phu thuoc IC sac
+C12,charger_sys,chua chon,,,chua chon,1,no,not-chosen,Phu thuoc IC sac
+R11,charger_sense,chua chon,,,chua chon,1,no,not-chosen,Phu thuoc IC sac

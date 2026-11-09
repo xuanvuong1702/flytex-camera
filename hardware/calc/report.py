@@ -70,11 +70,14 @@ def render() -> str:
     w("")
     w("## 3. Sạc pin")
     w("")
+    w("> **Chưa chọn IC sạc.** BQ25798 bị loại vì mặc định 1S 4,2 V và watchdog 40 s. "
+      "Các con số dưới đây chỉ là ước lượng theo yêu cầu 1,5 A, không phải thiết kế đã chốt.")
+    w("")
     w("| Phương án | Tổn hao ở 1,5 A | Ghi chú |")
     w("|---|---|---|")
     w(f"| Tuyến tính (bản nháp) | {v['linear_loss_w']:.2f} W | "
       f"(5 − 3,6) × 1,5; trong vỏ kín là bài toán nhiệt |")
-    w(f"| Xung, hiệu suất 90 % | {v['switching_loss_w']:.2f} W | D-16 chốt dùng loại này |")
+    w(f"| Xung, hiệu suất 90 % | {v['switching_loss_w']:.2f} W | Giả định nếu chọn được IC xung LFP |")
     w("")
     w(f"Thời gian sạc {CHARGER['capacity_ah']:.0f} Ah từ "
       f"{CHARGER['soc_start'] * 100:.0f} % ở {CHARGER['current_a']:.1f} A: "
@@ -82,20 +85,9 @@ def render() -> str:
     w("")
     w("## 4. Cắt sạc theo nhiệt (NTC trên pack)")
     w("")
-    w(f"NTC {NTC['r25_ohm'] / 1000:.0f} kΩ B{NTC['beta']:.0f}, "
-      f"kéo lên bằng {NTC['r_pull_ohm'] / 1000:.2f} kΩ; ngưỡng chip "
-      f"{NTC['threshold_hot_ratio'] * 100:.1f}–{NTC['threshold_cold_ratio'] * 100:.1f} % VIN.")
-    w("")
-    w("| Nhiệt độ | R_NTC | Tỉ lệ V_TEMP/VIN |")
-    w("|---|---|---|")
-    for temp in (0.0, 10.0, 25.0, 35.0, 40.0, 45.0, 60.0):
-        r_ntc = pwr.ntc_resistance_ohm(temp, NTC["r25_ohm"], NTC["beta"])
-        ratio = pwr.ntc_ratio(temp, NTC["r25_ohm"], NTC["beta"], NTC["r_pull_ohm"])
-        w(f"| {temp:.0f} °C | {r_ntc / 1000:.2f} kΩ | {ratio * 100:.1f} % |")
-    w("")
-    w(f"Điểm cắt nóng: **{v['hot_c']:.1f} °C**; điểm cắt lạnh: "
-      f"**{v['cold_c']:.1f} °C**. Không phải đúng 40 °C vì ngưỡng chip có dải; "
-      f"đo thật ở M-05.")
+    w("> **TẠM HOÃN.** Bảng NTC 7,15 kΩ và ngưỡng 42,5–47,5 % VIN thuộc IC sạc CAM4G cũ; "
+      "không áp dụng cho IC sẽ chọn. Chỉ tính lại sau khi chốt IC sạc và mạch NTC phần cứng "
+      "(FR-10), rồi đo M-05.")
     w("")
     w("## 5. Đo điện áp pin")
     w("")
@@ -142,7 +134,7 @@ def render() -> str:
     w("")
     w("1. Vref, tần số chuyển mạch và giới hạn dòng của TPS61088 phải đối chiếu datasheet.")
     w("2. Vref của TPS62840 chưa chọn; không tính được mạch hồi tiếp 3,3 V.")
-    w("3. Chưa chọn IC sạc xung cụ thể (O-05); tổn hao chỉ là ước lượng theo hiệu suất.")
+    w("3. **Chưa chọn IC sạc** (O-05); BQ25798 bị loại; mục 3–4 chỉ là ước lượng/hoãn.")
     w("4. Hệ số tản nhiệt 8 W/m²·K là giả định; nắng chiếu trực tiếp chưa tính.")
     w("5. Không có số đo dòng, nhiệt hay thời gian chạy thật.")
     return "\n".join(out) + "\n"

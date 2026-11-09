@@ -11,6 +11,7 @@
 #include <stdint.h>
 
 #include "flytex/hal.h"
+#include <stddef.h>
 
 #ifdef __cplusplus
 extern "C" {

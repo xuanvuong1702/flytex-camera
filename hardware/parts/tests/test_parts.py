@@ -44,6 +44,8 @@ class RegisterTests(unittest.TestCase):
         for row in self.bom:
             if row["dnp"] != "no" or row["block"] not in check.CRITICAL_BLOCKS:
                 continue
+            if row["verify"] == "not-chosen":
+                continue
             self.assertIn(row["mpn"], mpns, f"{row['ref']} thieu trong so linh kien")
 
     def test_known_blockers_are_reported(self) -> None:

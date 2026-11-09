@@ -7,6 +7,7 @@
 #include "flytex/core.h"
 #include "flytex/ctx.h"
 #include "flytex/regs_gen.h"
+#include <stddef.h>
 
 /* ctx của mọi hàm HAL là &h->hal; hal là field đầu tiên nên trả về h. */
 static hal_host_t *self(void *ctx)

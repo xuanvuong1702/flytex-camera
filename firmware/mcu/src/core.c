@@ -16,6 +16,7 @@
 #include "flytex/regs_gen.h"
 #include "flytex/sched.h"
 #include "flytex/temp.h"
+#include <stddef.h>
 
 static int hal_valid(const fly_hal_t *hal)
 {

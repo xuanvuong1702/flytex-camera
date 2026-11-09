@@ -12,6 +12,7 @@
 #include "ffi.h"
 #include "flytex/core.h"
 #include "flytex/ctx.h"
+#include <stddef.h>
 
 typedef struct {
     hal_host_t host;

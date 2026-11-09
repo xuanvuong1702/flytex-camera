@@ -47,6 +47,7 @@ def build_steps(quick: bool) -> list[tuple[str, list[str]]]:
         ("hardware: sổ linh kiện", [PY, "hardware/parts/tests/test_parts.py"]),
         ("hardware: sổ linh kiện khớp spec", [PY, "-m", "hardware.parts.check", "--check"]),
         ("firmware: build và unit test", [PY, "firmware/mcu/tests/build.py", "test"]),
+        ("firmware: include C di động", [PY, "tools/check_c_includes.py"]),
         ("firmware: thư viện mô phỏng", [PY, "firmware/mcu/tests/build.py", "lib"]),
     ]
     for path in discover("app/tests/test_*.py"):
@@ -74,6 +75,7 @@ REQUIRED = {
     "app/tests/test_*.py": 1,
     "tools/**/test_*.py": 1,
     "tools/docs_check/check.py": 1,
+    "tools/check_c_includes.py": 1,
     "tools/readiness.py": 1,
     "sim/run.py": 1,
 }

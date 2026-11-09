@@ -1,3 +1,4 @@
+#include <stddef.h>
 /*
  * ffi.h — bề mặt FFI cho mô phỏng phía Python (ctypes).
  *
