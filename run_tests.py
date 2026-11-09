@@ -160,7 +160,7 @@ def main(argv: list[str] | None = None) -> int:
             print(f"OK ({elapsed:.1f}s)")
         else:
             print(f"FAIL ma {code} ({elapsed:.1f}s)")
-            failures.append((name, code, elapsed))
+            failures.append((name, code, output))
             tail = "\n".join(output.strip().splitlines()[-40:])
             if tail:
                 print("    " + tail.replace("\n", "\n    "))
@@ -169,9 +169,9 @@ def main(argv: list[str] | None = None) -> int:
     print()
     if failures:
         print(f"THAT BAI: {len(failures)}/{len(steps)} buoc, {elapsed_total:.1f}s")
-        for name, code, _ in failures:
+        for name, code, output in failures:
             print(f"  - {name} (ma {code})")
-        for name, code, _ in failures:
+        for name, code, output in failures:
             detail = output.strip().splitlines()[-6:]
             joined = "%0A".join(line.strip() for line in detail)
             print(
