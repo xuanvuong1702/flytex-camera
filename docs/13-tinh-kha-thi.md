@@ -301,4 +301,4 @@ Dừng hoặc đổi hướng nếu ở G0:
 
 Bản thiết kế đủ tốt để tiếp tục. Nó không đủ tốt để vẽ board ngay: bốn lỗi F-01…F-04 sẽ khiến board Rev A phải làm lại, và ba con số năng lượng (F-05) đang nằm sát giới hạn đến mức một phép đo xấu hơn 20 % là hỏng mục tiêu. Sửa tài liệu và đo ở G0 trước, rồi hãy đặt board — đúng như nguyên tắc "đo trước, chốt sau" mà chính repo này đặt ra.
 
-Phần mềm trong repo đã sẵn sàng cho G0: hợp đồng có test, firmware có test, ứng dụng có test, mô phỏng chạy được. Khi có phần cứng, việc còn lại là thay transport giả bằng transport thật và đo.
+Phần mềm trong repo chạy được trên host: hợp đồng có test, firmware có test, ứng dụng có test, mô phỏng chạy được. **Chưa sẵn sàng cho G0** vì còn 7 blocker phần cứng (đặc biệt IC sạc LFP) và các blocker firmware ở [17](17-san-sang-prototype.md) vòng 7. Khi có phần cứng, việc còn lại là thay transport giả bằng transport thật và đo.

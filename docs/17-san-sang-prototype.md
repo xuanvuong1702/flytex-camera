@@ -116,7 +116,7 @@ Người dùng chạy trên Ubuntu 24.04 + gcc 13.3 và rà datasheet, phát hi�
 
 | # | Phát hiện | Mức | Trạng thái |
 |---|---|---|---|
-| 7-1 | `firmware/mcu/src/regmap.c` (và 3 file C khác) dùng `NULL` thiếu `<stddef.h>`; gcc `-Werror` làm **CI đỏ** ở commit `f5a699e`. Bằng chứng: GitHub Actions run `42611830406` kết luận `failure` | Chặn | Đã thêm include cho 4 file nguồn + 9 file test; thêm `tools/check_c_includes.py` vào CI; **phải xác nhận CI xanh sau push** |
+| 7-1 | `firmware/mcu/src/regmap.c` (và 3 file C khác) dùng `NULL` thiếu `<stddef.h>`; gcc `-Werror` làm **CI đỏ** ở commit `f5a699e`. Bằng chứng: GitHub Actions run `42611830406` kết luận `failure` | Chặn | Đã thêm include cho 4 file nguồn + 3 header + 9 file test; thêm `tools/check_c_includes.py` vào CI. Run `42613060903` cho commit `08a35e7`: **success** |
 | 7-2 | BQ25798 mặc định 1S 4,2 V/2 A, watchdog 40 s reset VREG/ICHG/EN_CHG; MCU không có I2C master, SoC tắt khi Eco/Watch → không ai đặt 3,6 V. Nguy cơ sạc LFP tới 4,2 V | Chặn | **Loại BQ25798**; chuyển yêu cầu sang IC float 3,6 V bằng phần cứng; [02](02-thiet-ke-nguon.md) §6.2 viết lại; BOM đánh dấu `not-chosen` |
 | 7-3 | NTC 7,15 kΩ/42,5–47,5 % VIN là của IC CAM4G cũ, không áp dụng cho IC mới; FR-10 "cắt bằng phần cứng" không còn đúng; firmware CHG_INHIBIT mâu thuẫn | Chặn | pwr-design §4 tạm hoãn; [02](02-thiet-ke-nguon.md) §6.3 viết lại; FR-10 chuyển sang trạng thái chưa đạt |
 | 7-4 | Hai "đính chính" gói ở vòng 1 là **sai**: TPS62840DLCR là SON-8 1,5×2 (DLC), M24C32-FMN6TP là SO-8 150 mil; chỉ STM32 UFQFPN-28 là đúng | Chặn | Khôi phục BOM/parts/checklist; ghi bài học: test BOM chỉ kiểm nhất quán nội bộ, không kiểm datasheet |
@@ -138,7 +138,7 @@ Kết luận vòng 7: **không đạt**. Kết luận "đủ điều kiện dự
 3. BOM còn thiếu linh kiện phụ và còn dòng `not-chosen`.
 4. Pin LFP: ngưỡng cảnh báo/phục hồi chưa phù hợp; chưa lọc.
 5. SMS đánh thức chưa có giới hạn chi phí/chống replay.
-6. CI từng đỏ; chỉ được tuyên bố xanh sau khi GitHub Actions xác nhận run mới `success`.
+6. CI từng đỏ; chỉ được tuyên bố xanh sau khi GitHub Actions xác nhận `success` (run `42613060903` cho `08a35e7` đã xanh).
 
 Ba vòng 4–6 trước đây chỉ chứng minh các artifact nội bộ nhất quán; chúng **không** phát hiện được lỗi datasheet, lỗi gcc hay lỗi kiến trúc sạc. Quy trình đã được sửa: từ nay C-10/C-12 chỉ được coi là đạt khi có (a) datasheet được mở và ghi nguồn, (b) CI thật xanh.
 

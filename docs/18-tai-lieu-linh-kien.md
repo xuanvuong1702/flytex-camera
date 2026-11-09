@@ -86,7 +86,7 @@ Danh sách việc và thứ tự ưu tiên trước khi mua: [19-truoc-khi-mua.m
 
 Rà soát bên ngoài (Ubuntu + gcc 13.3 + datasheet) phát hiện các lỗi mà bộ kiểm tra nội bộ không bắt được:
 
-1. **CI đỏ** vì `regmap.c` thiếu `<stddef.h>`; đã sửa 4 file nguồn + 9 file test và thêm lint.
+1. **CI đỏ** vì `regmap.c` thiếu `<stddef.h>`; đã sửa 4 file nguồn + 3 header + 9 file test và thêm lint. Run `42613060903` (commit `08a35e7`) đã **success**.
 2. **BQ25798 không an toàn** cho LFP 1S trong kiến trúc này; đã loại, không chỉ "cần xác minh".
 3. **Hai đính chính gói ở vòng 1 là sai**: TPS62840 là SON-8 1,5×2, M24C32 là SO-8; đã khôi phục.
 4. **NTC 7,15 kΩ** thuộc IC cũ; mục 4 của pwr-design đã tạm hoãn.
