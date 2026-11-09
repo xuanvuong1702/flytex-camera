@@ -137,14 +137,16 @@ Kết luận vòng 7: **không đạt**. Kết luận "đủ điều kiện dự
 
 ## 4. Kết luận cuối
 
-**CHƯA đủ điều kiện dựng prototype.** Lý do chặn:
+**CHƯA đủ điều kiện dựng prototype.** Bốn blocker còn lại đều cần tài liệu hoặc linh kiện bên ngoài, không thể đóng bằng sửa mã:
 
-1. An toàn sạc: BQ25070, CTRL 11 xung = 935 mA, NTC R1/R2 đã tính; còn đo M-05 và kiểm tồn kho.
-2. FR-10: mạng NTC đã chốt (44,9/−0,6 °C), còn đo thực tế.
-3. BOM còn thiếu linh kiện phụ và còn dòng `not-chosen` (VSET buck).
-4. Pin LFP: đã sửa ngưỡng/lọc; còn đo G0.
-5. SMS: đã có HMAC counter + rate limit; còn whitelist số.
-6. CI đã xanh cho các commit sửa lỗi; phải tiếp tục xác nhận ở commit cuối.
+1. **VSET buck**: chưa chốt giá trị R13 cho 3,3 V. Cần bảng VSET trong datasheet TPS62840; đây là blocker duy nhất của khối nguồn.
+2. **RI của breakout modem**: chưa xác nhận breakout đưa RI ra header. Nếu không có, kênh Watch SMS không hoạt động.
+3. **Camera**: đã có module ứng viên SC3336 3MP (B), nhưng chưa chốt thứ tự 20 chân FPC từ bản vẽ cơ khí.
+4. **Pack/BMS**: chưa chọn nhà cung cấp 15 Ah kèm UN38.3/IEC 62133 và số đo tự tiêu.
+
+Ngoài ra còn các việc đo/kiểm không chặn mua: M-05 (NTC), M-36 (đỉnh modem/TPS22918), ILIM của TPS61088, và port STM32L0 vẫn là khung chưa chạy trên phần cứng. SMS đã có HMAC counter + rate limit; whitelist số cần UART phụ (O-12).
+
+CI GitHub Actions đã xanh ở commit `01931c3` (run `42619397175`).
 
 Ba vòng 4–6 trước đây chỉ chứng minh các artifact nội bộ nhất quán; chúng **không** phát hiện được lỗi datasheet, lỗi gcc hay lỗi kiến trúc sạc. Quy trình đã được sửa: từ nay C-10/C-12 chỉ được coi là đạt khi có (a) datasheet được mở và ghi nguồn, (b) CI thật xanh.
 
