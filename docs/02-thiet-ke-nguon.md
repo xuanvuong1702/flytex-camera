@@ -80,7 +80,9 @@ Quy tắc layout cho board mới:
 
 ## 5. Buck 3,3 V
 
-Ứng viên: TPS62840, vì dòng nghỉ cực thấp (xác nhận trong datasheet). **Đính chính 2026-11-09 (vòng kiểm tra 1):** bản nháp ghi "SON 1,5×2 mm, 8 pad" theo CAM4G; mã đặt hàng `TPS62840DLCR` dùng gói **DLC = SOT-563 6 chân** theo tài liệu TI. Bản nháp đã nhầm lẫn giữa hai gói — đúng loại lỗi footprint mà dự án này muốn tránh. Vì vậy: chưa chốt gói; phải mở datasheet TI, chọn đúng mã gói (SOT-563 hoặc loại khác), vẽ footprint theo đúng bản vẽ gói, và đưa vào board thử footprint ([07](07-ke-hoach-phat-trien.md) giai đoạn 1) `[CHƯA XÁC MINH]`. Dòng ra tối đa 0,75 A `[KẾ THỪA]`. Điện trở đặt áp ra phải lấy từ datasheet đúng gói `[CHƯA XÁC MINH]`.
+Ứng viên: TPS62840, vì dòng nghỉ cực thấp (xác nhận trong datasheet). **Đính chính 2026-11-09 (vòng kiểm tra 1):** bản nháp ghi "SON 1,5×2 mm, 8 pad" theo CAM4G; mã đặt hàng `TPS62840DLCR` dùng gói **DLC = SOT-563 6 chân** theo tài liệu TI. Bản nháp đã nhầm lẫn giữa hai gói — đúng loại lỗi footprint mà dự án này muốn tránh. Vì vậy: chưa chốt gói; phải mở datasheet TI, chọn đúng mã gói (SOT-563 hoặc loại khác), vẽ footprint theo đúng bản vẽ gói, và đưa vào board thử footprint ([07](07-ke-hoach-phat-trien.md) giai đoạn 1) `[CHƯA XÁC MINH]`. Dòng ra tối đa 0,75 A `[KẾ THỪA]`.
+
+**BOM đang thiếu điện trở hồi tiếp** nếu dùng bản chỉnh được: BQ25798/TPS62840 đều là linh kiện cấu hình, cần cặp R cho 3,3 V. Sổ linh kiện báo đây là blocker (U2). Trước khi đặt board phải chốt: bản cố định 3,3 V (bớt 2 linh kiện) hay bản chỉnh được kèm cặp E96. Xem [18](18-tai-lieu-linh-kien.md) §2.1 và O-15.
 
 ## 6. Sạc USB-C
 

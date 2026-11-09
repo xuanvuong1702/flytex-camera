@@ -1,0 +1,266 @@
+# Sổ đăng ký linh kiện: tài liệu, thông số then chốt, và trạng thái xác minh.
+#
+# verified: "yes"     = đã đối chiếu datasheet, số liệu dùng được
+#           "partial" = đã có tài liệu, chỉ xác minh một phần
+#           "no"      = chưa mở datasheet, không được dùng để chốt mua
+#
+# Mỗi thông số có nguồn (datasheet hoặc suy ra từ thiết kế). Số nào chưa mở
+# datasheet thì để verified="no" và ghi rõ cần kiểm gì.
+
+schema = "flytex.parts/1"
+
+[[parts]]
+id = "U1"
+mpn = "TPS61088RHLR"
+manufacturer = "Texas Instruments"
+datasheet = "https://www.ti.com/product/TPS61088"
+package = "VQFN-20"
+verified = "partial"
+notes = "Dung cho boost 5 V. Phai doi chieu Vref, fsw, ILIM va dieu kien nhiet."
+params = [
+  { name = "vin_min_v", value = 2.7, unit = "V", source = "datasheet" },
+  { name = "vin_max_v", value = 12.0, unit = "V", source = "datasheet" },
+  { name = "vout_max_v", value = 12.6, unit = "V", source = "datasheet" },
+  { name = "iout_a", value = 3.0, unit = "A", source = "thiet ke" },
+  { name = "vref_v", value = 1.204, unit = "V", source = "datasheet" },
+  { name = "ilim_a", value = 8.47, unit = "A", source = "tinh theo Rilim" },
+  { name = "temp_min_c", value = -40, unit = "C", source = "datasheet" },
+  { name = "temp_max_c", value = 125, unit = "C", source = "datasheet" },
+]
+
+[[parts]]
+id = "U2"
+mpn = "TPS62840DLCR"
+manufacturer = "Texas Instruments"
+datasheet = "https://www.ti.com/product/TPS62840"
+package = "SOT-563 6 chan"
+verified = "partial"
+notes = "Da sua goi tu SON 1,5x2 sang SOT-563. Chua xac minh Vref va cach dat 3,3 V."
+params = [
+  { name = "vin_min_v", value = 1.8, unit = "V", source = "datasheet" },
+  { name = "vin_max_v", value = 6.5, unit = "V", source = "datasheet" },
+  { name = "iout_a", value = 0.75, unit = "A", source = "datasheet" },
+  { name = "iq_ua", value = 0.06, unit = "uA", source = "datasheet (60 nA)" },
+  { name = "vref_v", value = 0.6, unit = "V", source = "CHUA XAC MINH" },
+  { name = "adjustable", value = true, unit = "", source = "can kiem" },
+]
+
+[[parts]]
+id = "U3"
+mpn = "BQ25798RQMR"
+manufacturer = "Texas Instruments"
+datasheet = "https://www.ti.com/product/BQ25798"
+package = "VQFN-29"
+verified = "no"
+notes = "Ung vien sac xung co power-path. CHUA xac nhan ho tro sac LFP 1S 3,6 V; neu khong, doi ung vien truoc khi dat."
+params = [
+  { name = "cells", value = 4, unit = "cell toi da", source = "datasheet" },
+  { name = "power_path", value = true, unit = "", source = "datasheet" },
+  { name = "vin_min_v", value = 3.6, unit = "V", source = "CHUA XAC MINH" },
+  { name = "vin_max_v", value = 24.0, unit = "V", source = "datasheet" },
+  { name = "ichg_a", value = 5.0, unit = "A", source = "datasheet" },
+  { name = "lfp_1s", value = false, unit = "", source = "CHUA XAC MINH" },
+  { name = "i2c", value = true, unit = "", source = "datasheet" },
+]
+
+[[parts]]
+id = "U4"
+mpn = "STM32L031G6U6"
+manufacturer = "STMicroelectronics"
+datasheet = "https://www.st.com/en/microcontrollers-microprocessors/stm32l031g6.html"
+package = "UFQFPN-28"
+verified = "partial"
+notes = "Da sua goi tu LQFP-32 sang UFQFPN-28. Can kiem so chan GPIO va kha nang I2C slave."
+params = [
+  { name = "stop_ua", value = 0.4, unit = "uA", source = "datasheet (typ, RTC tat)" },
+  { name = "gpio", value = 24, unit = "chan", source = "datasheet" },
+  { name = "temp_min_c", value = -40, unit = "C", source = "datasheet" },
+  { name = "temp_max_c", value = 85, unit = "C", source = "datasheet" },
+  { name = "i2c", value = true, unit = "", source = "datasheet" },
+  { name = "i2c_wakeup_stop", value = false, unit = "", source = "CHUA XAC MINH; thiet ke khong phu thuoc" },
+]
+
+[[parts]]
+id = "U5"
+mpn = "M24C32-FMN6TP"
+manufacturer = "STMicroelectronics"
+datasheet = "https://www.st.com/en/memories/m24c32-f.html"
+package = "TSSOP-8"
+verified = "yes"
+notes = "EEPROM cau hinh. Da sua goi tu SO-8 sang TSSOP-8."
+params = [
+  { name = "vcc_min_v", value = 1.7, unit = "V", source = "datasheet" },
+  { name = "vcc_max_v", value = 5.5, unit = "V", source = "datasheet" },
+  { name = "i2c", value = true, unit = "", source = "datasheet" },
+]
+
+[[parts]]
+id = "Q1Q2"
+mpn = "TPS22918DBVR"
+manufacturer = "Texas Instruments"
+datasheet = "https://www.ti.com/product/TPS22918"
+package = "SOT-23-6"
+verified = "yes"
+notes = "Cong tac tai cho +5V_SOC va +5V_MODEM."
+params = [
+  { name = "vin_max_v", value = 5.5, unit = "V", source = "datasheet" },
+  { name = "imax_a", value = 2.0, unit = "A", source = "datasheet" },
+  { name = "ron_mohm", value = 55, unit = "mOhm", source = "datasheet" },
+]
+
+[[parts]]
+id = "U6"
+mpn = "TS3USB221ARSER"
+manufacturer = "Texas Instruments"
+datasheet = "https://www.ti.com/product/TS3USB221A"
+package = "UQFN-10"
+verified = "partial"
+notes = "Mux USB 2.0 cho modem va pad nap dich vu. Can kiem dong ro va ESD."
+params = [
+  { name = "usb_hs", value = true, unit = "", source = "datasheet" },
+  { name = "channels", value = 2, unit = "kenh", source = "datasheet" },
+  { name = "vin_max_v", value = 3.6, unit = "V", source = "datasheet" },
+]
+
+[[parts]]
+id = "J1"
+mpn = "USB4085-GF-A"
+manufacturer = "GCT"
+datasheet = "https://gct.co/connector/usb4085"
+package = "USB-C 16P"
+verified = "no"
+notes = "Receptacle USB-C thuong, CHUA phai loai chong nuoc. O-06 chua dong."
+params = [
+  { name = "waterproof", value = false, unit = "", source = "datasheet" },
+  { name = "current_a", value = 3.0, unit = "A", source = "datasheet" },
+]
+
+[[parts]]
+id = "J2"
+mpn = "TSM-113-01-L-DV"
+manufacturer = "Samtec"
+datasheet = "https://www.samtec.com/products/tsm-113-01-l-dv"
+package = "2x13 2.54 mm"
+verified = "partial"
+notes = "J_B2B 26 chan. Can doi chieu ban ve co khi va chieu cao khi cap."
+params = [
+  { name = "pins", value = 26, unit = "chan", source = "datasheet" },
+  { name = "current_per_pin_a", value = 1.0, unit = "A", source = "CHUA XAC MINH" },
+]
+
+[[parts]]
+id = "J3"
+mpn = "XT30PW-M"
+manufacturer = "Amass"
+datasheet = "https://www.amass.com/en/product/xt30"
+package = "2 pin"
+verified = "partial"
+notes = "Connector pack. Can kiem dong danh dinh va khoa chong nguoc."
+params = [
+  { name = "current_a", value = 15.0, unit = "A", source = "datasheet" },
+]
+
+[[parts]]
+id = "L1"
+mpn = "IHLP2525CZER1R2M01"
+manufacturer = "Vishay"
+datasheet = "https://www.vishay.com/en/product/34108/"
+package = "2525"
+verified = "partial"
+notes = "Cuon cam boost. Phai kiem Isat o 125 do C va DCR."
+params = [
+  { name = "inductance_uh", value = 1.2, unit = "uH", source = "datasheet" },
+  { name = "isat_a", value = 9.0, unit = "A", source = "CHUA XAC MINH" },
+]
+
+# --- Module ngoài BOM linh kiện ---------------------------------------------
+
+[[external]]
+id = "MODEM"
+mpn = "EC200U-EU"
+name = "EC200U-EU breakout"
+datasheet = "https://www.quectel.com/product/lte-ec200u-series"
+verified = "partial"
+notes = "Can xac nhan RI ra header, dinh dong burst, va ho tro eDRX/PSM tren mang VN."
+params = [
+  { name = "vbat_min_v", value = 3.3, unit = "V", source = "tai lieu Quectel" },
+  { name = "vbat_max_v", value = 4.3, unit = "V", source = "tai lieu Quectel" },
+  { name = "usb_hs", value = true, unit = "", source = "tai lieu Quectel" },
+  { name = "peak_current_a", value = 2.0, unit = "A", source = "CHUA XAC MINH" },
+  { name = "ri_pin", value = false, unit = "", source = "CHUA XAC MINH tren breakout" },
+]
+
+[[external]]
+id = "SOC"
+mpn = "Core1106D1408"
+name = "Core1106D1408"
+datasheet = "https://wiki.luckfox.com/Core1106D/Introduction/"
+verified = "partial"
+notes = "Da xac minh 1 cong USB, H.264, bien the eMMC. Chua nap ban ve chan 112 pin (file XLS cua Luckfox) vao repo."
+params = [
+  { name = "usb_ports", value = 1, unit = "cong", source = "wiki Luckfox" },
+  { name = "emmc_gb", value = 8, unit = "GB", source = "wiki Luckfox" },
+  { name = "pins", value = 112, unit = "chan", source = "wiki Luckfox" },
+  { name = "pinout_ingested", value = false, unit = "", source = "CHUA LAM" },
+]
+
+[[external]]
+id = "CAMERA"
+name = "Module camera FPC 20 chan co IR-CUT"
+datasheet = ""
+verified = "no"
+notes = "CHUA CHON module. Pinout, dien ap, so lane MIPI va thu tu chan deu chua biet. Day la chan cua CMP."
+params = [
+  { name = "pinout_known", value = false, unit = "", source = "CHUA CO" },
+  { name = "ir_cut", value = false, unit = "", source = "CHUA CHON" },
+]
+
+[[external]]
+id = "PACK"
+name = "Pack LFP 1S 15 Ah co BMS"
+datasheet = ""
+verified = "no"
+notes = "CHUA CHON nha cung cap. Can UN38.3, IEC 62133, BMS <=100 uA, sac >=1,5 A, NTC."
+params = [
+  { name = "capacity_ah", value = 15.0, unit = "Ah", source = "D-18" },
+  { name = "bms_quiescent_ua", value = 100.0, unit = "uA", source = "yeu cau, chua co hang" },
+  { name = "charge_a", value = 1.5, unit = "A", source = "yeu cau, chua co hang" },
+  { name = "docs_ready", value = false, unit = "", source = "CHUA CO" },
+]
+
+[[parts]]
+id = "J4"
+mpn = "FH12-20S-0.5SH(55)"
+manufacturer = "Hirose"
+datasheet = "https://www.hirose.com/product/series/FH12"
+package = "FPC 20 pin 0.5 mm"
+verified = "partial"
+notes = "Connector FPC camera. Pinout phu thuoc module camera (O-02)."
+params = [
+  { name = "pins", value = 20, unit = "chan", source = "datasheet" },
+  { name = "pitch_mm", value = 0.5, unit = "mm", source = "datasheet" },
+]
+
+[[parts]]
+id = "J5"
+mpn = "TSW-109-07-G-D"
+manufacturer = "Samtec"
+datasheet = "https://www.samtec.com/products/tsw-109-07-g-d"
+package = "2x9 2.54 mm"
+verified = "partial"
+notes = "Header modem tren CMP; phai khop breakout co RI."
+params = [
+  { name = "pins", value = 18, unit = "chan", source = "datasheet" },
+]
+
+[[parts]]
+id = "J6"
+mpn = "DM3AT-SF-PEJM5"
+manufacturer = "Hirose"
+datasheet = "https://www.hirose.com/product/series/DM3"
+package = "microSD"
+verified = "partial"
+notes = "Khe microSD; tiep can khi mo vo de nap du phong."
+params = [
+  { name = "pins", value = 8, unit = "chan", source = "datasheet" },
+]

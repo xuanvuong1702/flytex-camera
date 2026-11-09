@@ -70,6 +70,7 @@ def artifact_checks() -> list[Item]:
         Item("C-10", "Gói thiết kế PWR/CMP", *exists("hardware/pwr-design.md")),
         Item("C-10b", "Bản vẽ hình học board", *exists("hardware/boards.md")),
         Item("C-10c", "BOM thiết kế Rev A/B", *exists("hardware/bom/pwr-rev-a.csv")),
+        Item("C-10d", "Sổ linh kiện + blocker trước khi mua", *exists("hardware/parts-register.md")),
         Item("C-11", "Quy trình bring-up", *exists("hardware/bringup.md", minimum=2000)),
         Item("C-12", "Định nghĩa sẵn sàng + biên bản", *exists("docs/17-san-sang-prototype.md")),
         Item("D-18", "Pack 15 Ah đã chốt", *contains("docs/11-nhat-ky-quyet-dinh.md", "| D-18 |")),
@@ -88,6 +89,7 @@ def command_checks() -> list[Item]:
         ("C-09c", "tools docs_check", ["tools/docs_check/check.py"]),
         ("C-10c", "hardware calc check", ["-m", "hardware.calc.cli", "--check"]),
         ("C-10d", "hardware geom check", ["-m", "hardware.geom.cli", "--check"]),
+        ("C-10e", "hardware parts check", ["-m", "hardware.parts.check", "--check"]),
     ]
     items = []
     for code, title, argv in results:

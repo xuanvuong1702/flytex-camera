@@ -44,6 +44,8 @@ def build_steps(quick: bool) -> list[tuple[str, list[str]]]:
         ("hardware: test hình học board", [PY, "hardware/geom/tests/test_geom.py"]),
         ("hardware: bản vẽ khớp spec", [PY, "-m", "hardware.geom.cli", "--check"]),
         ("hardware: BOM thiết kế", [PY, "hardware/bom/tests/test_bom.py"]),
+        ("hardware: sổ linh kiện", [PY, "hardware/parts/tests/test_parts.py"]),
+        ("hardware: sổ linh kiện khớp spec", [PY, "-m", "hardware.parts.check", "--check"]),
         ("firmware: build và unit test", [PY, "firmware/mcu/tests/build.py", "test"]),
         ("firmware: thư viện mô phỏng", [PY, "firmware/mcu/tests/build.py", "lib"]),
     ]
@@ -67,6 +69,7 @@ REQUIRED = {
     "hardware/geom/tests/test_geom.py": 1,
     "hardware/boards.md": 1,
     "hardware/bom/pwr-rev-a.csv": 1,
+    "hardware/parts-register.md": 1,
     "firmware/mcu/tests/build.py": 1,
     "app/tests/test_*.py": 1,
     "tools/**/test_*.py": 1,

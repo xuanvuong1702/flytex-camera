@@ -49,7 +49,7 @@ Ba nhóm: đã chốt, đề xuất (chờ xác nhận), và câu hỏi mở. Kh
 | O-02 | Module camera cụ thể và pinout FPC 20 chân | Vẽ CMP | Mở — chặn layout CMP |
 | O-03 | Pack LFP và BMS cụ thể: dòng xả, dòng sạc ≥1,5 A, tự tiêu ≤100 µA, NTC, khôi phục, giấy tờ | Mục 7 của [02](02-thiet-ke-nguon.md) | Mở — chặn mua pack |
 | O-04 | Breakout EC200U-EU nào đủ yêu cầu (USB ra, hạ áp, đổi mức, **RI ra header**)? | Header J_MODEM | Mở |
-| O-05 | IC sạc xung LFP 1S có power-path, còn hàng, giá hợp lý | Layout PWR Rev A | Mở — sớm hơn bản nháp (D-16) |
+| O-05 | IC sạc xung LFP 1S có power-path, còn hàng, giá hợp lý. **Phải xác nhận BQ25798 sạc được LFP 1S 3,6 V; nếu không, xét LTC4162-L** | Layout PWR Rev A | Mở — blocker trong [18](18-tai-lieu-linh-kien.md) §2.1 |
 | O-06 | Giải pháp cổng USB-C chống nước | Vỏ | Mở |
 | O-07 | Vị trí và loại ăng-ten 4G với vỏ nhôm | Vỏ | Mở |
 | O-08 | OTA có khả thi trên SDK Core1106 không? A/B có vừa eMMC không? | FR-07 | Mở |
@@ -59,3 +59,4 @@ Ba nhóm: đã chốt, đề xuất (chờ xác nhận), và câu hỏi mở. Kh
 | O-12 | EC200U có bộ lệnh MQTT hoặc UART phụ để MCU tự hỏi cloud không? | Kênh `MODEM_TCP_POLL` | Mở — nếu đóng, Watch có thêm phương án dự phòng |
 | O-13 | Mux USB cụ thể (ví dụ TS3USB221A) và ai điều khiển `USB_SEL`? | J_B2B phiên bản sau, layout CMP | Mở |
 | O-14 | Có cần gauge pin để báo phần trăm không, hay chỉ báo mV? | Ứng dụng, UI | Mở — LFP có đường cong phẳng, đừng suy phần trăm từ điện áp |
+| O-15 | Buck 3,3 V: dùng bản cố định 3,3 V hay bản chỉnh được (cần thêm cặp điện trở hồi tiếp)? Vref và gói DLC là gì? | BOM, schematic PWR | Mở — blocker trong [18](18-tai-lieu-linh-kien.md) §2.1 |

@@ -1,0 +1,173 @@
+# Sổ linh kiện và đối chiếu thiết kế (sinh tự động)
+
+- Nguồn: `spec/parts.toml`; kiểm tra: `python -m hardware.parts.check --check`.
+- `verified`: **yes** đã đối chiếu datasheet, **partial** mới một phần, **no** chưa mở datasheet.
+- Kết quả: **6 blocker**, 3 cảnh báo. Blocker là việc phải đóng trước khi đặt hàng.
+
+## 1. Linh kiện chính
+
+| ID | MPN | Gói | Xác minh | Datasheet | Ghi chú |
+|---|---|---|---|---|---|
+| U1 | TPS61088RHLR | VQFN-20 | partial | https://www.ti.com/product/TPS61088 | Dung cho boost 5 V. Phai doi chieu Vref, fsw, ILIM va dieu kien nhiet. |
+| U2 | TPS62840DLCR | SOT-563 6 chan | partial | https://www.ti.com/product/TPS62840 | Da sua goi tu SON 1,5x2 sang SOT-563. Chua xac minh Vref va cach dat 3,3 V. |
+| U3 | BQ25798RQMR | VQFN-29 | no | https://www.ti.com/product/BQ25798 | Ung vien sac xung co power-path. CHUA xac nhan ho tro sac LFP 1S 3,6 V; neu khong, doi ung vien truoc khi dat. |
+| U4 | STM32L031G6U6 | UFQFPN-28 | partial | https://www.st.com/en/microcontrollers-microprocessors/stm32l031g6.html | Da sua goi tu LQFP-32 sang UFQFPN-28. Can kiem so chan GPIO va kha nang I2C slave. |
+| U5 | M24C32-FMN6TP | TSSOP-8 | yes | https://www.st.com/en/memories/m24c32-f.html | EEPROM cau hinh. Da sua goi tu SO-8 sang TSSOP-8. |
+| Q1Q2 | TPS22918DBVR | SOT-23-6 | yes | https://www.ti.com/product/TPS22918 | Cong tac tai cho +5V_SOC va +5V_MODEM. |
+| U6 | TS3USB221ARSER | UQFN-10 | partial | https://www.ti.com/product/TS3USB221A | Mux USB 2.0 cho modem va pad nap dich vu. Can kiem dong ro va ESD. |
+| J1 | USB4085-GF-A | USB-C 16P | no | https://gct.co/connector/usb4085 | Receptacle USB-C thuong, CHUA phai loai chong nuoc. O-06 chua dong. |
+| J2 | TSM-113-01-L-DV | 2x13 2.54 mm | partial | https://www.samtec.com/products/tsm-113-01-l-dv | J_B2B 26 chan. Can doi chieu ban ve co khi va chieu cao khi cap. |
+| J3 | XT30PW-M | 2 pin | partial | https://www.amass.com/en/product/xt30 | Connector pack. Can kiem dong danh dinh va khoa chong nguoc. |
+| L1 | IHLP2525CZER1R2M01 | 2525 | partial | https://www.vishay.com/en/product/34108/ | Cuon cam boost. Phai kiem Isat o 125 do C va DCR. |
+| J4 | FH12-20S-0.5SH(55) | FPC 20 pin 0.5 mm | partial | https://www.hirose.com/product/series/FH12 | Connector FPC camera. Pinout phu thuoc module camera (O-02). |
+| J5 | TSW-109-07-G-D | 2x9 2.54 mm | partial | https://www.samtec.com/products/tsw-109-07-g-d | Header modem tren CMP; phai khop breakout co RI. |
+| J6 | DM3AT-SF-PEJM5 | microSD | partial | https://www.hirose.com/product/series/DM3 | Khe microSD; tiep can khi mo vo de nap du phong. |
+
+### Thông số then chốt
+
+**U1 — TPS61088RHLR**
+
+| Thông số | Giá trị | Đơn vị | Nguồn |
+|---|---|---|---|
+| vin_min_v | 2.7 | V | datasheet |
+| vin_max_v | 12.0 | V | datasheet |
+| vout_max_v | 12.6 | V | datasheet |
+| iout_a | 3.0 | A | thiet ke |
+| vref_v | 1.204 | V | datasheet |
+| ilim_a | 8.47 | A | tinh theo Rilim |
+| temp_min_c | -40 | C | datasheet |
+| temp_max_c | 125 | C | datasheet |
+
+**U2 — TPS62840DLCR**
+
+| Thông số | Giá trị | Đơn vị | Nguồn |
+|---|---|---|---|
+| vin_min_v | 1.8 | V | datasheet |
+| vin_max_v | 6.5 | V | datasheet |
+| iout_a | 0.75 | A | datasheet |
+| iq_ua | 0.06 | uA | datasheet (60 nA) |
+| vref_v | 0.6 | V | CHUA XAC MINH |
+| adjustable | True |  | can kiem |
+
+**U3 — BQ25798RQMR**
+
+| Thông số | Giá trị | Đơn vị | Nguồn |
+|---|---|---|---|
+| cells | 4 | cell toi da | datasheet |
+| power_path | True |  | datasheet |
+| vin_min_v | 3.6 | V | CHUA XAC MINH |
+| vin_max_v | 24.0 | V | datasheet |
+| ichg_a | 5.0 | A | datasheet |
+| lfp_1s | False |  | CHUA XAC MINH |
+| i2c | True |  | datasheet |
+
+**U4 — STM32L031G6U6**
+
+| Thông số | Giá trị | Đơn vị | Nguồn |
+|---|---|---|---|
+| stop_ua | 0.4 | uA | datasheet (typ, RTC tat) |
+| gpio | 24 | chan | datasheet |
+| temp_min_c | -40 | C | datasheet |
+| temp_max_c | 85 | C | datasheet |
+| i2c | True |  | datasheet |
+| i2c_wakeup_stop | False |  | CHUA XAC MINH; thiet ke khong phu thuoc |
+
+**U5 — M24C32-FMN6TP**
+
+| Thông số | Giá trị | Đơn vị | Nguồn |
+|---|---|---|---|
+| vcc_min_v | 1.7 | V | datasheet |
+| vcc_max_v | 5.5 | V | datasheet |
+| i2c | True |  | datasheet |
+
+**Q1Q2 — TPS22918DBVR**
+
+| Thông số | Giá trị | Đơn vị | Nguồn |
+|---|---|---|---|
+| vin_max_v | 5.5 | V | datasheet |
+| imax_a | 2.0 | A | datasheet |
+| ron_mohm | 55 | mOhm | datasheet |
+
+**U6 — TS3USB221ARSER**
+
+| Thông số | Giá trị | Đơn vị | Nguồn |
+|---|---|---|---|
+| usb_hs | True |  | datasheet |
+| channels | 2 | kenh | datasheet |
+| vin_max_v | 3.6 | V | datasheet |
+
+**J1 — USB4085-GF-A**
+
+| Thông số | Giá trị | Đơn vị | Nguồn |
+|---|---|---|---|
+| waterproof | False |  | datasheet |
+| current_a | 3.0 | A | datasheet |
+
+**J2 — TSM-113-01-L-DV**
+
+| Thông số | Giá trị | Đơn vị | Nguồn |
+|---|---|---|---|
+| pins | 26 | chan | datasheet |
+| current_per_pin_a | 1.0 | A | CHUA XAC MINH |
+
+**J3 — XT30PW-M**
+
+| Thông số | Giá trị | Đơn vị | Nguồn |
+|---|---|---|---|
+| current_a | 15.0 | A | datasheet |
+
+**L1 — IHLP2525CZER1R2M01**
+
+| Thông số | Giá trị | Đơn vị | Nguồn |
+|---|---|---|---|
+| inductance_uh | 1.2 | uH | datasheet |
+| isat_a | 9.0 | A | CHUA XAC MINH |
+
+**J4 — FH12-20S-0.5SH(55)**
+
+| Thông số | Giá trị | Đơn vị | Nguồn |
+|---|---|---|---|
+| pins | 20 | chan | datasheet |
+| pitch_mm | 0.5 | mm | datasheet |
+
+**J5 — TSW-109-07-G-D**
+
+| Thông số | Giá trị | Đơn vị | Nguồn |
+|---|---|---|---|
+| pins | 18 | chan | datasheet |
+
+**J6 — DM3AT-SF-PEJM5**
+
+| Thông số | Giá trị | Đơn vị | Nguồn |
+|---|---|---|---|
+| pins | 8 | chan | datasheet |
+
+## 2. Module ngoài BOM
+
+| ID | Tên | Xác minh | Tài liệu | Ghi chú |
+|---|---|---|---|---|
+| MODEM | EC200U-EU breakout | partial | https://www.quectel.com/product/lte-ec200u-series | Can xac nhan RI ra header, dinh dong burst, va ho tro eDRX/PSM tren mang VN. |
+| SOC | Core1106D1408 | partial | https://wiki.luckfox.com/Core1106D/Introduction/ | Da xac minh 1 cong USB, H.264, bien the eMMC. Chua nap ban ve chan 112 pin (file XLS cua Luckfox) vao repo. |
+| CAMERA | Module camera FPC 20 chan co IR-CUT | no | — | CHUA CHON module. Pinout, dien ap, so lane MIPI va thu tu chan deu chua biet. Day la chan cua CMP. |
+| PACK | Pack LFP 1S 15 Ah co BMS | no | — | CHUA CHON nha cung cap. Can UN38.3, IEC 62133, BMS <=100 uA, sac >=1,5 A, NTC. |
+
+## 3. Vấn đề phát hiện
+
+| Mức | Mục | Mô tả |
+|---|---|---|
+| blocker | U2 | buck chinh duoc nhung BOM khong co dien tro hoi tiep (block buck_fb) |
+| blocker | U3 | chua xac nhan sac duoc LFP 1S 3,6 V - phai kiem datasheet truoc khi dat |
+| blocker | MODEM | chua xac nhan breakout dua RI ra header - kenh Watch khong chay |
+| blocker | SOC | chua nap ban ve 112 chan cua Core1106D - khong ve duoc CMP |
+| blocker | CAMERA | chua chon camera va pinout FPC |
+| blocker | PACK | chua co pack/BMS kem UN38.3, IEC 62133, tu tieu <=100 uA |
+| warn | MODEM | dinh dong 2 A la gia dinh chua do; xac nhan bang M-36 |
+| warn | J1 | USB-C chua phai loai chong nuoc (O-06) |
+| warn | L1 | Isat 9 A chua xac minh o 125 do C |
+
+## 4. Cách dùng
+
+- `--strict` dùng làm cổng **trước khi đặt hàng**: còn blocker thì không đặt.
+- `--check` chỉ kiểm cấu trúc và file sinh; không chặn CI vì thiếu linh kiện chưa mua.
+- Khi mở datasheet và xác nhận một thông số: sửa `verified` và `source` trong `spec/parts.toml`, chạy `--write`.
+
