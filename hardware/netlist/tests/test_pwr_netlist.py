@@ -17,9 +17,9 @@ class NetlistTests(unittest.TestCase):
     def test_components_and_ic_pin_counts(self) -> None:
         refs = {component.ref: component for component in pwr.COMPONENTS}
         self.assertGreaterEqual(len(refs), 25)
-        self.assertEqual(len(refs["U1"].pins), 11)
-        self.assertEqual(len(refs["U2"].pins), 21)
-        self.assertEqual(len(refs["U3"].pins), 9)
+        self.assertEqual(len(refs["U1"].pins), 21)
+        self.assertEqual(len(refs["U2"].pins), 9)
+        self.assertEqual(len(refs["U3"].pins), 11)
         self.assertEqual(len(refs["Q1"].pins), 6)
         self.assertEqual(len(refs["Q2"].pins), 6)
 
@@ -33,8 +33,8 @@ class NetlistTests(unittest.TestCase):
     def test_power_rails_have_sources(self) -> None:
         by_net = pwr.nets()
         for net, source in (
-            ("+5V_BOOST", "U2"),
-            ("+3V3", "U3"),
+            ("+5V_BOOST", "U1"),
+            ("+3V3", "U2"),
             ("+5V_SOC", "Q1"),
             ("+5V_MODEM", "Q2"),
         ):
@@ -50,6 +50,15 @@ class NetlistTests(unittest.TestCase):
         self.assertIn("## 2. Net", pwr.MD.read_text(encoding="utf-8"))
         self.assertIn("U1", pwr.CSV.read_text(encoding="utf-8"),)
         self.assertIn("VBUS", pwr.CSV.read_text(encoding="utf-8"))
+
+    def test_every_ref_is_in_bom(self) -> None:
+        import csv
+
+        refs = {row["ref"] for row in csv.DictReader(
+            pwr.BOM.open(encoding="utf-8", newline="")
+        )}
+        for component in pwr.COMPONENTS:
+            self.assertIn(component.ref, refs)
 
     def test_check_mode_passes(self) -> None:
         self.assertEqual(pwr.main(["--check"]), 0)

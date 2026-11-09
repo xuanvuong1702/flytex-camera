@@ -35,7 +35,7 @@ R9,usb_cc,5.1k 1%,RC0603FR-075K1L,Yageo,0603,1,no,candidate,Rd cho CC1
 R10,usb_cc,5.1k 1%,RC0603FR-075K1L,Yageo,0603,1,no,candidate,Rd cho CC2
 D2,usb_vbus_tvs,TVS 5V standoff,SMBJ5.0A,Bourns,SMB,1,no,candidate,Bao ve VBUS; USBLC6 chi bao ve data
 C9,load_switch_ct,10nF 50V X7R,CL10B103KB8NNNC,Samsung,0603,2,no,candidate,Chinh slew dong nap 470uF
-L2,charger_inductor,KHONG DUNG (sac tuyen tinh),,,chua chon,1,yes,dnp,BQ25070 la tuyen tinh - khong co cuon cam
+L2,buck_inductor,1.0uH 1.2A,LQH3NPN1R0MM0L,Murata,1210,1,no,candidate,Cuon cam buck 3V3; kiem Isat/DCR
 C10,charger_pmid,chua chon,,,chua chon,1,yes,dnp,Khong dung cho sac tuyen tinh
 C11,charger_vbus,10uF 16V X7R,CL31B106KO8NNNE,Samsung,1206,1,no,candidate,Tu vao VBUS theo datasheet BQ25070
 C12,charger_sys,10uF 10V X7R,CL31B106KPHNNNE,Samsung,1206,2,no,candidate,Tu SYS/BAT theo datasheet BQ25070
@@ -44,3 +44,12 @@ R14,charger_ts_top,20.0k 1%,RC0603FR-0720KL,Yageo,0603,1,no,candidate,R1 LDO->TS
 R15,charger_ts_bottom,8.25k 1%,RC0603FR-078K25L,Yageo,0603,1,no,candidate,R2 TS->GND; cat lanh -0.6 C
 R13,buck_vset,267k 1%,RC0603FR-07267KL,Yageo,0603,1,no,candidate,VSET=267k theo Table 1 datasheet TPS62840 (trang 13) cho VOUT 3.3 V
 R16,buck_mode,0R 1%,RC0603FR-070RL,Yageo,0603,1,no,candidate,Keo MODE xuong GND: PFM cho dong nghi thap
+
+R17,charger_imon,1k 1%,RC0603FR-071KL,Yageo,0603,1,no,candidate,IMON: 1 V tuong ung 1 A
+R18,charger_chg,100k 1%,RC0603FR-07100KL,Yageo,0603,1,no,candidate,Pull-up CHG (open-drain) len +3V3
+C13,buck_in,10uF 10V X7R,CL31B106KPHNNNE,Samsung,1206,1,no,candidate,Tu vao buck 3V3
+C14,buck_out,22uF 6.3V X7R,CL31B226KPHNNNE,Samsung,1206,1,no,candidate,Tu ra buck 3V3
+C15,soc_bulk,470uF 10V low ESR,EEU-FR1A471,Panasonic,radial 8x11,1,no,candidate,Bulk rail +5V_SOC
+C16,load_switch_ct,10nF 50V X7R,CL10B103KB8NNNC,Samsung,0603,1,no,candidate,CT cho cong tac modem
+C17,boost_out,22uF 16V X7R,CL31B226KOHNNNE,Samsung,1206,1,no,candidate,Tu ra boost thu hai
+J6,mcu_if,header 1x9 2.54,TSW-109-07-G-S,Samtec,1x9,1,no,candidate,CHG_CTRL CHG_STAT EN_BOOST SOC/MODEM_PWR_EN 3V3 GND VBAT VBAT_ADC

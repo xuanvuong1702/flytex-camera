@@ -12,3 +12,5 @@ C1,soc_bulk,470uF 10V low ESR,EEU-FR1A471,Panasonic,radial 8x11,1,no,candidate,R
 C2,decouple,100nF 50V X7R,CL10B104KB8NNNC,Samsung,0603,10,no,candidate,Theo tung chan module
 R1,usb_sel,10k 1%,RC0603FR-0710KL,Yageo,0603,1,no,candidate,Dieu khien mux USB_SEL
 TP1,testpoint,test point 1.0mm,TP-107-01-T,Samtec,1 pin,8,no,candidate,Moi rail va I2C
+R14,vbus_div,100k 1%,RC0603FR-07100KL,Yageo,0603,1,no,candidate,Chia +5V_SOC cho USB_VBUSDET
+R15,vbus_div,100k 1%,RC0603FR-07100KL,Yageo,0603,1,no,candidate,Chia +5V_SOC cho USB_VBUSDET

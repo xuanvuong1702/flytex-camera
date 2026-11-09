@@ -51,6 +51,15 @@ class CmpNetlistTests(unittest.TestCase):
         self.assertIn("## 2. Net", text)
         self.assertIn("U1", netlist.CSV.read_text(encoding="utf-8"))
 
+    def test_every_ref_is_in_bom(self) -> None:
+        import csv
+
+        refs = {row["ref"] for row in csv.DictReader(
+            netlist.BOM.open(encoding="utf-8", newline="")
+        )}
+        for component in netlist.COMPONENTS:
+            self.assertIn(component.ref, refs)
+
     def test_check_mode_passes(self) -> None:
         self.assertEqual(netlist.main(["--check"]), 0)
 

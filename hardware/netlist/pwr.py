@@ -24,6 +24,7 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT_DIR = ROOT / "hardware" / "netlist"
 MD = OUT_DIR / "pwr-netlist.md"
 CSV = OUT_DIR / "pwr-netlist.csv"
+BOM = ROOT / "hardware" / "bom" / "pwr-rev-a.csv"
 
 POWER_NETS = {"VBUS", "VBAT", "+5V_BOOST", "+3V3", "+5V_SOC", "+5V_MODEM"}
 
@@ -51,28 +52,34 @@ COMPONENTS = (
     comp("J1", "USB-C 16P", "Connector_USB:USB_C_Receptacle_USB2.0_16P", [
         ("A4", "VBUS", "VBUS"), ("B9", "VBUS", "VBUS"),
         ("A1", "GND", "GND"), ("B12", "GND", "GND"),
-        ("A5", "CC1", ""), ("B5", "CC2", ""),
+        ("A5", "CC1", "CC1"), ("B5", "CC2", "CC2"),
     ]),
-    comp("J2", "Pack LFP 15Ah", "Connector_JST:JST_XT30PW-M", [
+    comp("J3", "Pack LFP 15Ah", "Connector_JST:JST_XT30PW-M", [
         ("1", "BAT+", "VBAT"), ("2", "BAT-", "GND"), ("3", "NTC", "TS"),
     ]),
-    comp("J3", "J_B2B 2x13", "Connector_Generic:Conn_02x13_Odd_Even", [
+    comp("J2", "J_B2B 2x13", "Connector_Generic:Conn_02x13_Odd_Even", [
         ("1", "+3V3", "+3V3"), ("2", "+5V_SOC", "+5V_SOC"),
         ("3", "+5V_MODEM", "+5V_MODEM"), ("4", "GND", "GND"),
     ]),
-    comp("J4", "MCU interface", "Connector_Generic:Conn_01x08", [
+    comp("J6", "MCU interface", "Connector_Generic:Conn_01x09", [
         ("1", "CHG_CTRL", "CHG_CTRL"), ("2", "CHG_STAT", "CHG_STAT"),
         ("3", "EN_BOOST", "EN_BOOST"), ("4", "SOC_PWR_EN", "SOC_PWR_EN"),
         ("5", "MODEM_PWR_EN", "MODEM_PWR_EN"), ("6", "+3V3", "+3V3"),
-        ("7", "GND", "GND"), ("8", "VBAT", "VBAT"),
+        ("7", "GND", "GND"), ("8", "VBAT", "VBAT"), ("9", "VBAT_ADC", "VBAT_ADC"),
     ]),
-    comp("U1", "BQ25070", "Package_SON:TI_DQC0010A", [
+    comp("U3", "BQ25070", "Package_SON:TI_DQC0010A", [
         ("1", "IN", "VBUS"), ("2", "IMON", "IMON"), ("3", "GND", "GND"),
         ("4", "LDO", "LDO"), ("5", "TS", "TS"), ("6", "BAT", "VBAT"),
         ("7", "CTRL", "CHG_CTRL"), ("8", "CHG", "CHG_STAT"),
         ("9", "GND", "GND"), ("10", "OUT", "VBAT"), ("11", "PAD", "GND"),
     ]),
-    comp("U2", "TPS61088", "Package_DFN_QFN:VQFN-20-1EP_3.5x3.5mm_P0.5mm_EP2.1x2.1mm", [
+    comp("R3", "100k 1%", "Resistor_SMD:R_0603_1608Metric", [
+        ("1", "TOP", "VBAT"), ("2", "BOT", "VBAT_ADC"),
+    ]),
+    comp("R4", "100k 1%", "Resistor_SMD:R_0603_1608Metric", [
+        ("1", "TOP", "VBAT_ADC"), ("2", "BOT", "GND"),
+    ]),
+    comp("U1", "TPS61088", "Package_DFN_QFN:VQFN-20-1EP_3.5x3.5mm_P0.5mm_EP2.1x2.1mm", [
         ("1", "VCC", "VCC_BOOST"), ("2", "EN", "EN_BOOST"), ("3", "FSW", "FSW_BOOST"),
         ("4", "SW", "SW_BOOST"), ("5", "SW", "SW_BOOST"), ("6", "SW", "SW_BOOST"),
         ("7", "SW", "SW_BOOST"), ("8", "BOOT", "BOOT_BOOST"), ("9", "VIN", "VBAT"),
@@ -82,7 +89,7 @@ COMPONENTS = (
         ("18", "COMP", "COMP_BOOST"), ("19", "ILIM", "ILIM_BOOST"),
         ("20", "AGND", "GND"), ("21", "PGND", "GND"),
     ]),
-    comp("U3", "TPS62840", "Package_SON:TI_DLC0008A", [
+    comp("U2", "TPS62840", "Package_SON:TI_DLC0008A", [
         ("1", "GND", "GND"), ("2", "VIN", "VBAT"), ("3", "MODE", "GND"),
         ("4", "EN", "VBAT"), ("5", "VSET", "VSET"), ("6", "STOP", "GND"),
         ("7", "SW", "SW_BUCK"), ("8", "VOS", "+3V3"), ("9", "PAD", "GND"),
@@ -101,17 +108,23 @@ COMPONENTS = (
     comp("L2", "1.0uH 1A", "Inductor_SMD:L_0603_1608Metric", [
         ("1", "SW", "SW_BUCK"), ("2", "VOUT", "+3V3"),
     ]),
-    comp("R1", "20.0k 1%", "Resistor_SMD:R_0603_1608Metric", [
+    comp("R14", "20.0k 1%", "Resistor_SMD:R_0603_1608Metric", [
         ("1", "TOP", "LDO"), ("2", "BOT", "TS"),
     ]),
-    comp("R2", "8.25k 1%", "Resistor_SMD:R_0603_1608Metric", [
+    comp("R15", "8.25k 1%", "Resistor_SMD:R_0603_1608Metric", [
         ("1", "TOP", "TS"), ("2", "BOT", "GND"),
     ]),
-    comp("R3", "1k 1%", "Resistor_SMD:R_0603_1608Metric", [
+    comp("R17", "1k 1%", "Resistor_SMD:R_0603_1608Metric", [
         ("1", "TOP", "IMON"), ("2", "BOT", "GND"),
     ]),
-    comp("R4", "100k 1%", "Resistor_SMD:R_0603_1608Metric", [
+    comp("R18", "100k 1%", "Resistor_SMD:R_0603_1608Metric", [
         ("1", "TOP", "+3V3"), ("2", "BOT", "CHG_STAT"),
+    ]),
+    comp("R9", "5.1k 1%", "Resistor_SMD:R_0603_1608Metric", [
+        ("1", "TOP", "CC1"), ("2", "BOT", "GND"),
+    ]),
+    comp("R10", "5.1k 1%", "Resistor_SMD:R_0603_1608Metric", [
+        ("1", "TOP", "CC2"), ("2", "BOT", "GND"),
     ]),
     comp("R6", "267k 1%", "Resistor_SMD:R_0603_1608Metric", [
         ("1", "TOP", "FSW_BOOST"), ("2", "BOT", "SW_BOOST"),
@@ -122,64 +135,64 @@ COMPONENTS = (
     comp("R8", "10.5k 1%", "Resistor_SMD:R_0603_1608Metric", [
         ("1", "TOP", "COMP_BOOST"), ("2", "BOT", "GND"),
     ]),
-    comp("R9", "169k 1%", "Resistor_SMD:R_0603_1608Metric", [
+    comp("R1", "169k 1%", "Resistor_SMD:R_0603_1608Metric", [
         ("1", "TOP", "+5V_BOOST"), ("2", "BOT", "FB_BOOST"),
     ]),
-    comp("R10", "53.6k 1%", "Resistor_SMD:R_0603_1608Metric", [
+    comp("R2", "53.6k 1%", "Resistor_SMD:R_0603_1608Metric", [
         ("1", "TOP", "FB_BOOST"), ("2", "BOT", "GND"),
     ]),
     comp("R13", "267k 1%", "Resistor_SMD:R_0603_1608Metric", [
         ("1", "TOP", "VSET"), ("2", "BOT", "GND"),
     ]),
-    comp("C1", "10uF 25V", "Capacitor_SMD:C_1206_3216Metric", [
+    comp("C11", "10uF 25V", "Capacitor_SMD:C_1206_3216Metric", [
         ("1", "P", "VBUS"), ("2", "N", "GND"),
     ]),
-    comp("C2", "100nF", "Capacitor_SMD:C_0603_1608Metric", [
+    comp("C4", "100nF", "Capacitor_SMD:C_0603_1608Metric", [
         ("1", "P", "LDO"), ("2", "N", "GND"),
     ]),
-    comp("C3", "10uF 10V", "Capacitor_SMD:C_1206_3216Metric", [
+    comp("C1", "10uF 10V", "Capacitor_SMD:C_1206_3216Metric", [
         ("1", "P", "VBAT"), ("2", "N", "GND"),
     ]),
-    comp("C4", "1uF 16V", "Capacitor_SMD:C_0603_1608Metric", [
+    comp("C7", "1uF 16V", "Capacitor_SMD:C_0603_1608Metric", [
         ("1", "P", "VCC_BOOST"), ("2", "N", "GND"),
     ]),
-    comp("C5", "100nF", "Capacitor_SMD:C_0603_1608Metric", [
+    comp("C6", "100nF", "Capacitor_SMD:C_0603_1608Metric", [
         ("1", "P", "BOOT_BOOST"), ("2", "N", "SW_BOOST"),
     ]),
-    comp("C6", "10nF", "Capacitor_SMD:C_0603_1608Metric", [
+    comp("C8", "10nF", "Capacitor_SMD:C_0603_1608Metric", [
         ("1", "P", "SS_BOOST"), ("2", "N", "GND"),
     ]),
-    comp("C7", "22uF 16V", "Capacitor_SMD:C_1206_3216Metric", [
+    comp("C2", "22uF 16V", "Capacitor_SMD:C_1206_3216Metric", [
         ("1", "P", "+5V_BOOST"), ("2", "N", "GND"),
     ]),
-    comp("C8", "22uF 16V", "Capacitor_SMD:C_1206_3216Metric", [
+    comp("C17", "22uF 16V", "Capacitor_SMD:C_1206_3216Metric", [
         ("1", "P", "+5V_BOOST"), ("2", "N", "GND"),
     ]),
-    comp("C9", "2.2nF", "Capacitor_SMD:C_0603_1608Metric", [
+    comp("C5", "2.2nF", "Capacitor_SMD:C_0603_1608Metric", [
         ("1", "P", "COMP_BOOST"), ("2", "N", "GND"),
     ]),
-    comp("C10", "10uF 10V", "Capacitor_SMD:C_1206_3216Metric", [
+    comp("C13", "10uF 10V", "Capacitor_SMD:C_1206_3216Metric", [
         ("1", "P", "VBAT"), ("2", "N", "GND"),
     ]),
-    comp("C11", "22uF 6.3V", "Capacitor_SMD:C_1206_3216Metric", [
+    comp("C14", "22uF 6.3V", "Capacitor_SMD:C_1206_3216Metric", [
         ("1", "P", "+3V3"), ("2", "N", "GND"),
     ]),
-    comp("C12", "10nF", "Capacitor_SMD:C_0603_1608Metric", [
+    comp("C9", "10nF", "Capacitor_SMD:C_0603_1608Metric", [
         ("1", "P", "CT_SOC"), ("2", "N", "GND"),
     ]),
-    comp("C13", "470uF 10V", "Capacitor_SMD:CP_Elec_8x10", [
+    comp("C15", "470uF 10V", "Capacitor_SMD:CP_Elec_8x10", [
         ("1", "P", "+5V_SOC"), ("2", "N", "GND"),
     ]),
-    comp("C14", "10nF", "Capacitor_SMD:C_0603_1608Metric", [
+    comp("C16", "10nF", "Capacitor_SMD:C_0603_1608Metric", [
         ("1", "P", "CT_MODEM"), ("2", "N", "GND"),
     ]),
-    comp("C15", "470uF 10V", "Capacitor_SMD:CP_Elec_8x10", [
+    comp("C3", "470uF 10V", "Capacitor_SMD:CP_Elec_8x10", [
         ("1", "P", "+5V_MODEM"), ("2", "N", "GND"),
     ]),
 )
 
 # Số chân phải khớp hardware/kicad/flytex-power.kicad_sym.
-EXPECTED_IC_PINS = {"U1": 11, "U2": 21, "U3": 9, "Q1": 6, "Q2": 6}
+EXPECTED_IC_PINS = {"U1": 21, "U2": 9, "U3": 11, "Q1": 6, "Q2": 6}
 
 
 def nets() -> dict[str, list[tuple[Component, Pin]]]:
@@ -210,12 +223,19 @@ def validate() -> list[str]:
     for net in POWER_NETS:
         if net not in by_net:
             issues.append(f"thieu rail {net}")
+    bom_refs = set()
+    with BOM.open(encoding="utf-8", newline="") as handle:
+        for row in csv.DictReader(handle):
+            bom_refs.add(row["ref"])
+    for component in COMPONENTS:
+        if component.ref not in bom_refs:
+            issues.append(f"{component.ref} khong co trong BOM PWR")
     sources = {
-        "+5V_BOOST": ("U2",),
-        "+3V3": ("U3",),
+        "+5V_BOOST": ("U1",),
+        "+3V3": ("U2",),
         "+5V_SOC": ("Q1",),
         "+5V_MODEM": ("Q2",),
-        "VBAT": ("U1", "J2"),
+        "VBAT": ("U3", "J3"),
     }
     for net, allowed in sources.items():
         refs_on_net = {component.ref for component, _ in by_net.get(net, [])}

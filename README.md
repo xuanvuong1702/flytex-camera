@@ -15,10 +15,10 @@ Repo này **làm lại từ đầu**. Nó kế thừa *bài học* từ dự án
 | Firmware MCU | Có lõi + HAL giả + **64 test** host; port STM32L0 còn là khung |
 | Ứng dụng Linux | Có module + **182 test** host; chưa chạy camera thật |
 | Mô phỏng end-to-end | Có: firmware C thật + ứng dụng thật, **5 kịch bản** |
-| Gói thiết kế phần cứng | Tính toán PWR, hình học board + SVG, BOM Rev A/B, sổ linh kiện, bring-up; **87 test** |
+| Gói thiết kế phần cứng | Tính toán PWR, hình học board + SVG, BOM Rev A/B, sổ linh kiện, bring-up; **89 test** |
 | Sổ linh kiện | **15 linh kiện + 4 module**; 0 blocker cứng, 1 giả định PACK ([docs/18](docs/18-tai-lieu-linh-kien.md)) |
 | Công cụ đo và kiểm tài liệu | Có, **124 test**; nhập PPK2, lint include C, kiểm tài liệu, checklist readiness |
-| Kiểm thử toàn repo | **510 test + 5 kịch bản**, 47/47 bước đạt: `python run_tests.py` |
+| Kiểm thử toàn repo | **512 test + 5 kịch bản**, 47/47 bước đạt: `python run_tests.py` |
 | Sẵn sàng dựng prototype | **CHƯA ĐẠT** — vòng 7 phát hiện lỗi sạc/CI/BOM/pin ([docs/17](docs/17-san-sang-prototype.md)) |
 | Phần cứng | **Chưa có**: chưa có Gerber/PCB; gói thiết kế đã đủ để vẽ schematic |
 | Số đo thực | **Chưa có.** Mọi con số công suất, nhiệt, thời gian chạy đều là ước tính |

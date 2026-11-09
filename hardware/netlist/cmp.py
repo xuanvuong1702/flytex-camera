@@ -24,6 +24,7 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT_DIR = ROOT / "hardware" / "netlist"
 MD = OUT_DIR / "cmp-netlist.md"
 CSV = OUT_DIR / "cmp-netlist.csv"
+BOM = ROOT / "hardware" / "bom" / "cmp-rev-b.csv"
 PINS_CSV = ROOT / "spec" / "core1106d" / "pins.csv"
 CAMERA = ROOT / "spec" / "camera" / "sc3336-b.toml"
 
@@ -184,6 +185,13 @@ def validate() -> list[str]:
             issues.append(f"thieu rail {net}")
     if any(pin.name == "PWDN" for component in COMPONENTS for pin in component.pins):
         issues.append("camera SC3336 khong co chan PWDN")
+    bom_refs = set()
+    with BOM.open(encoding="utf-8", newline="") as handle:
+        for row in csv.DictReader(handle):
+            bom_refs.add(row["ref"])
+    for component in COMPONENTS:
+        if component.ref not in bom_refs:
+            issues.append(f"{component.ref} khong co trong BOM CMP")
     return issues
 
 

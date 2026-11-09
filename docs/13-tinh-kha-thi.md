@@ -256,7 +256,7 @@ Phần cứng không thể kiểm chứng khi chưa mua linh kiện, nhưng ph�
 | Hợp đồng regmap sinh tự động | Xong | `spec/registers.toml` → header C + module Python + bảng; 29 test đặc tả |
 | Pinout J_B2B sinh tự động, có kiểm dòng | Xong | `spec/b2b.toml` → bảng + kiểm hệ số dư |
 | Hợp đồng MQTT sinh tự động | Xong | `spec/mqtt.toml` → JSON schema + module Python |
-| Thiết kế PWR Rev A: tính toán + hình học | Xong, **87 test** | `hardware/calc/`, `hardware/geom/`, `hardware/bom/`, `hardware/parts/` → [pwr-design](../hardware/pwr-design.md), [boards](../hardware/boards.md) |
+| Thiết kế PWR Rev A: tính toán + hình học | Xong, **89 test** | `hardware/calc/`, `hardware/geom/`, `hardware/bom/`, `hardware/parts/` → [pwr-design](../hardware/pwr-design.md), [boards](../hardware/boards.md) |
 | Firmware MCU: regmap, nguồn, pin, nhiệt, lịch, NVM, STOP | Xong, **64 test host** | `python firmware/mcu/tests/build.py test` |
 | Ứng dụng Linux: máy trạng thái, AT, ghi, hàng đợi, lệnh | Xong, **188 test host** | `app/tests` |
 | Ghi MPEG-TS, tải clip HTTPS, OTA A/B có xác minh | Xong phần mềm, test đầy đủ | `app/flytex/tsmux.py`, `upload.py`, `ota.py` |
