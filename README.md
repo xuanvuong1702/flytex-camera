@@ -138,6 +138,7 @@ Test không cần phần cứng. Test cần phần cứng nằm ở [docs/08](do
 | [16-van-hanh.md](docs/16-van-hanh.md) | Cấp phát thiết bị, systemd, gỡ lỗi hiện trường, quy trình đo |
 | [17-san-sang-prototype.md](docs/17-san-sang-prototype.md) | Điều kiện hoàn thành và biên bản tự kiểm tra 3 vòng |
 | [18-tai-lieu-linh-kien.md](docs/18-tai-lieu-linh-kien.md) | Sổ linh kiện, đối chiếu datasheet với thiết kế, 1 giả định PACK |
+| [20-khoang-cach-va-lo-trinh.md](docs/20-khoang-cach-va-lo-trinh.md) | Khoảng cách tới PCBA/devkit, ước lượng công việc còn lại |
 | [19-truoc-khi-mua.md](docs/19-truoc-khi-mua.md) | Tài liệu và phân tích còn thiếu theo từng cổng trước khi mua/thử |
 
 Bảng sinh tự động: [regmap](spec/generated/regmap.md) · [pinout J_B2B](spec/generated/b2b.md) · [MQTT](spec/generated/mqtt.md) · [JSON schema](spec/generated/mqtt.schema.json).
