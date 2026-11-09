@@ -290,7 +290,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_DFN_QFN:VQFN-20-1EP_3.5x3.5mm_P0.5mm_EP2.1x2.1mm"
+		(property "Footprint" "Package_DFN_QFN:Texas_VQFN-RHL-20"
 			(at 0 0 0)
 			(hide yes)
 			(effects
@@ -726,7 +726,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_SON:TI_DLC0008A"
+		(property "Footprint" "Package_SON:VSON-8_1.5x2mm_P0.5mm"
 			(at 0 0 0)
 			(hide yes)
 			(effects
@@ -1164,7 +1164,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_DFN_QFN:VQFN-20-1EP_3.5x3.5mm_P0.5mm_EP2.1x2.1mm"
+		(property "Footprint" "Package_DFN_QFN:Texas_VQFN-RHL-20"
 			(at 80.00 70.00 0)
 			(hide yes)
 			(effects
@@ -1520,7 +1520,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_SON:TI_DLC0008A"
+		(property "Footprint" "Package_SON:VSON-8_1.5x2mm_P0.5mm"
 			(at 190.00 70.00 0)
 			(hide yes)
 			(effects
