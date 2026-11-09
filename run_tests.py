@@ -172,7 +172,11 @@ def main(argv: list[str] | None = None) -> int:
         for name, code, _ in failures:
             print(f"  - {name} (ma {code})")
         for name, code, _ in failures:
-            print(f"::error title=test-step::BUOC THAT BAI: {name} (ma {code})")
+            detail = output.strip().splitlines()[-6:]
+            joined = "%0A".join(line.strip() for line in detail)
+            print(
+                f"::error title=test-step::BUOC THAT BAI: {name} (ma {code})%0A{joined}"
+            )
         return 1
     print(f"DAT: {len(steps)}/{len(steps)} buoc, {elapsed_total:.1f}s")
     return 0
