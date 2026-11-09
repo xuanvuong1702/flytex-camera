@@ -60,6 +60,12 @@ static int host_gpio_read(void *ctx, int pin)
     return 0;
 }
 
+static void host_delay_us(void *ctx, uint32_t us)
+{
+    (void)ctx;
+    (void)us; /* host không cần thời gian thực; test đếm cạnh */
+}
+
 static void host_gpio_write(void *ctx, int pin, int level)
 {
     hal_host_t *h = self(ctx);
@@ -68,6 +74,9 @@ static void host_gpio_write(void *ctx, int pin, int level)
         return;
     }
     if (fly_pin_is_output(pin)) {
+        if (pin == FLY_PIN_CHG_INHIBIT && level && !h->output_level[pin]) {
+            h->chg_pulses++;
+        }
         h->output_level[pin] = level ? 1 : 0;
     }
 }
@@ -151,6 +160,7 @@ void hal_host_init(hal_host_t *h)
     h->hal.enter_stop = host_enter_stop;
     h->hal.gpio_read = host_gpio_read;
     h->hal.gpio_write = host_gpio_write;
+    h->hal.delay_us = host_delay_us;
     h->hal.adc_mv = host_adc_mv;
     h->hal.temp_c = host_temp_c;
     h->hal.nvm_read = host_nvm_read;
@@ -214,6 +224,11 @@ int hal_host_get_output(const hal_host_t *h, int pin)
         return -1;
     }
     return h->output_level[pin] ? 1 : 0;
+}
+
+uint32_t hal_host_get_chg_pulses(const hal_host_t *h)
+{
+    return h ? h->chg_pulses : 0u;
 }
 
 int hal_host_set_adc_mv(hal_host_t *h, int ch, uint32_t mv)

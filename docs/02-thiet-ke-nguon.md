@@ -113,28 +113,32 @@ Yêu cầu cứng rút ra từ lỗi ngày 2026-11-09 (đều thoả):
 
 | Thông số | Giá trị | Ghi chú |
 |---|---|---|
-| Dòng sạc | 1 A | Đặt bằng chân CTRL; phải lấy giá trị từ datasheet |
+| Dòng sạc | **935 mA** | Đặt bằng **11 xung** trên chân CTRL (không phải điện trở). Không gửi xung: 285 mA |
 | Float | 3,5 V | Thấp hơn 3,6 V, an toàn hơn; dung lượng nạp được giảm vài % |
-| Tổn hao tuyến tính | ~1,5 W ở 1 A | IC có thermal regulation; phải đo trong vỏ |
-| Thời gian sạc 15 Ah | ~12 h | Từ 20 % lên đầy; chậm hơn sạc xung nhưng chấp nhận cho prototype |
+| Tổn hao tuyến tính | ~1,4 W ở 935 mA | IC có thermal regulation; phải đo trong vỏ |
+| Thời gian sạc 15 Ah | ~12,8 h | Từ 20 % lên đầy ở 935 mA; nếu không gửi xung (>50 h) |
 
 **BQ25798 bị loại**: mặc định 1S 4,2 V/2 A, watchdog 40 s đưa VREG/ICHG/EN_CHG về mặc định, trong khi SoC tắt và MCU không có I2C master — nguy cơ sạc LFP tới 4,2 V. Chi tiết: [18](18-tai-lieu-linh-kien.md).
 
-Việc còn lại của khối sạc: tính **điện trở CTRL** cho 1 A và **mạng NTC** theo đúng datasheet BQ25070, rồi đo M-05. Đây là blocker trước khi đặt board, không phải blocker chọn IC.
+**CTRL là giao diện xung một dây**, nối tới GPIO MCU (chân `CHG_CTRL`/`CHG_INHIBIT` trên PWR). Firmware gửi 11 xung cao 200 µs, thấp 200 µs rồi giữ thấp 2 ms để chốt 935 mA. Giữ CTRL cao >2 ms là ngắt sạc (dùng cho bảo vệ nhiệt/phần mềm). Không có điện trở đặt dòng; BOM đã bỏ R11.
+
+Việc còn lại của khối sạc: đo dòng thực và điểm cắt NTC ở M-05. Không còn blocker chọn IC hay giá trị.
 
 Cấm dùng module TP4056/TP5100 hay bất kỳ sạc Li-ion 4,2 V cho pack LFP.
 
 ### 6.3 Cắt sạc theo nhiệt độ
 
-NTC gắn ở **pack** (sát cell), không đặt trên board. FR-10 yêu cầu đường cắt **phần cứng**, không phụ thuộc firmware.
+NTC gắn ở **pack** (sát cell). BQ25070 so V_TS với **12,5 % VLDO** (nóng) và **25 % VLDO** (lạnh), ngắt sạc khi ra ngoài cửa sổ — đường phần cứng, không phụ thuộc firmware.
 
-BQ25070 có chân NTC và tự ngắt/giảm sạc theo nhiệt; ngưỡng và mạng điện trở phải lấy đúng theo datasheet. Không cần thêm comparator nếu mạng NTC đúng, nhưng phải đo M-05.
+Mạng đã tính cho NTC 10 kΩ B3950, mục tiêu 0–45 °C: **R1 = 20,0 kΩ** (LDO→TS), **R2 = 8,25 kΩ** (TS→GND), NTC từ TS xuống GND. Kết quả tính: cắt nóng **44,9 °C**, cắt lạnh **−0,6 °C**; xem [pwr-design](../hardware/pwr-design.md) §4. Bảng NTC 7,15 kΩ của CAM4G **không áp dụng**; R5 trong BOM đã đánh dấu DNP.
 
-**Bảng NTC 7,15 kΩ và ngưỡng 42,5–47,5 % VIN của CAM4G không áp dụng** — đó là của IC sạc cũ. [pwr-design](../hardware/pwr-design.md) §4 ghi rõ mạng NTC của BQ25070 chưa chốt; không được dùng bảng cũ để chọn linh kiện. Đo điểm cắt thực bằng tủ sấy (M-05).
+Đo lại điểm cắt bằng tủ sấy (M-05) với đúng NTC của pack.
 
 ### 6.4 Sạc và tải dùng chung pin
 
-Nếu IC sạc có power-path, tải chạy từ nguồn vào khi có USB và từ pin khi mất nguồn; pin chỉ nhận dòng sạc. Nếu dùng phương án tuyến tính không power-path, giữ nguyên quy tắc "chỉ sạc khi thiết bị nghỉ" và ghi rõ trong tài liệu thử nghiệm.
+BQ25070 có power-path nhưng **dòng qua IN/BAT chỉ tối đa 1,2 A**. Boost 5 V lấy nguồn **trực tiếp từ nút VBAT** (không qua một công tắc hay đường SYS riêng), nên đỉnh 5,56 A ở 3,0 V do **pin cấp**, không do sạc. Khi cắm USB, sạc chia dòng 1,2 A cho tải và pin; nếu tải lớn hơn, pin vẫn xả thêm — chấp nhận vì camera chạy theo sự kiện.
+
+Hệ quả phải ghi trong thử nghiệm: cắm USB không bảo đảm pin đầy nếu camera chạy liên tục; đo M-01/M-02. Không nối boost qua chân BAT của IC sạc.
 
 ## 7. Yêu cầu với pack và BMS
 

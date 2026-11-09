@@ -31,7 +31,7 @@ Kiểm tra tự động: `spec/generated/b2b.md` §"Ngân sách dòng theo net" 
 
 ## 3. Connector giữa PWR và CMP (J_B2B)
 
-**Chốt:** box header 2×13, 2,54 mm, có khóa và chống cắm ngược, 26 chân, mức logic 3,3 V. Bảng chân đầy đủ và ngân sách dòng: [spec/generated/b2b.md](../spec/generated/b2b.md). File CSV để nhập vào EDA: [spec/generated/pinout_pwr_cmp.csv](../spec/generated/pinout_pwr_cmp.csv).
+**Chốt:** 2×13, 2,54 mm, 26 chân, mức logic 3,3 V. **PWR dùng header đực TSM-113-01-L-DV; CMP dùng socket cái SSM-113-L-DV**; cắt chân 26 làm khóa chống cắm ngược (D-24). Bảng chân đầy đủ và ngân sách dòng: [spec/generated/b2b.md](../spec/generated/b2b.md). File CSV để nhập vào EDA: [spec/generated/pinout_pwr_cmp.csv](../spec/generated/pinout_pwr_cmp.csv).
 
 Tóm tắt tín hiệu bắt buộc:
 

@@ -71,13 +71,11 @@ def render() -> str:
     w("## 3. Sạc pin")
     w("")
     w("**Đã chọn BQ25070**: sạc tuyến tính LFP 1S, float 3,5 V cố định, power-path, NTC, "
-      "standalone, 1 A. Đổi từ BQ25798 vì BQ25798 mặc định 1S 4,2 V và watchdog 40 s. "
-      "Đánh đổi: sạc chậm (~12 h cho 15 Ah) và tổn hao tuyến tính ~1,5 W.")
+      "standalone. Dòng sạc đặt bằng **11 xung trên CTRL = 935 mA** (không phải điện trở); "
+      "mặc định không gửi xung chỉ 285 mA. Đổi từ BQ25798 vì BQ25798 mặc định 1S 4,2 V.")
     w("")
-    w("| Phương án | Tổn hao ở 1 A | Ghi chú |")
-    w("|---|---|---|")
     w(f"| Tuyến tính BQ25070 (chốt) | {v['linear_loss_w']:.2f} W | "
-      f"(5 − 3,5) × 1,0; IC có thermal regulation, vẫn phải đo trong vỏ |")
+      f"(5 − 3,5) × 0,935; IC có thermal regulation, vẫn phải đo trong vỏ |")
     w("")
     w(f"Thời gian sạc {CHARGER['capacity_ah']:.0f} Ah từ "
       f"{CHARGER['soc_start'] * 100:.0f} % ở {CHARGER['current_a']:.1f} A: "
@@ -85,9 +83,9 @@ def render() -> str:
     w("")
     w("## 4. Cắt sạc theo nhiệt (NTC trên pack)")
     w("")
-    w("**BQ25070 có chân NTC**, nhưng mạng điện trở và ngưỡng phải lấy đúng theo datasheet. "
-      "Bảng NTC 7,15 kΩ / 42,5–47,5 % VIN của CAM4G **không áp dụng**. Chốt mạng NTC và đo M-05 "
-      "trước khi đặt board.")
+    w(f"BQ25070: V_TS = 12,5 % VLDO khi nóng, 25 % khi lạnh; NTC 10 kΩ B3950 song song R2. "
+      f"Chọn **R1 = {v['ntc_r1_ohm'] / 1000:.2f} kΩ** (LDO→TS), **R2 = {v['ntc_r2_ohm'] / 1000:.2f} kΩ** (TS→GND): "
+      f"cắt nóng **{v['hot_c']:.1f} °C**, cắt lạnh **{v['cold_c']:.1f} °C**. Đo lại bằng tủ sấy (M-05).")
     w("")
     w("## 5. Đo điện áp pin")
     w("")
@@ -134,7 +132,7 @@ def render() -> str:
     w("")
     w("1. Vref, tần số chuyển mạch và giới hạn dòng của TPS61088 phải đối chiếu datasheet.")
     w("2. Vref của TPS62840 chưa chọn; không tính được mạch hồi tiếp 3,3 V.")
-    w("3. Mạng CTRL và NTC của BQ25070 chưa tính; phải lấy từ datasheet và đo M-05.")
+    w("3. Dòng sạc 935 mA và mạng NTC đã tính; vẫn phải đo M-05 và kiểm tồn kho BQ25070.")
     w("4. Hệ số tản nhiệt 8 W/m²·K là giả định; nắng chiếu trực tiếp chưa tính.")
     w("5. Không có số đo dòng, nhiệt hay thời gian chạy thật.")
     return "\n".join(out) + "\n"

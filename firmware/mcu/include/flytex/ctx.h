@@ -65,7 +65,9 @@ struct fly_ctx {
     /* ---- đầu vào ---- */
     uint8_t vbus_present;
     uint8_t modem_status;
-    uint8_t modem_ri; /* mức RI đã lấy mẫu, để phát hiện cạnh lên */
+    uint8_t modem_ri;
+    uint8_t ri_wake_valid;
+    uint32_t ri_last_wake_ms; /* mức RI đã lấy mẫu, để phát hiện cạnh lên */
     uint8_t low_batt;
 
     /* ---- sự kiện, lỗi, IRQ ---- */

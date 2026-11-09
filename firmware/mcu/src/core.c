@@ -7,6 +7,7 @@
 #include <stdlib.h>
 
 #include "flytex/battery.h"
+#include "flytex/charger.h"
 #include "flytex/core.h"
 #include "flytex/ctx.h"
 #include "flytex/events.h"
@@ -95,6 +96,7 @@ fly_ctx_t *fly_init(const fly_hal_t *hal)
 
     drive_idle_outputs(ctx);
     load_config(ctx);
+    fly_charger_program(ctx, (int)FLY_CHG_PULSES);
 
     ctx->state = (uint8_t)FLY_ST_OFF;
     ctx->batt_next_ms = now;
@@ -157,8 +159,17 @@ static void sample_inputs(fly_ctx_t *ctx, uint32_t now)
     if (level != (int)ctx->modem_ri) {
         ctx->modem_ri = (uint8_t)level;
         if (level && ctx->wake_chan == (uint8_t)FLY_WAKE_CHAN_SMS) {
-            fly_events_post(ctx, FLY_EVENT_WAKE_ALARM);
-            fly_power_request_wake(ctx, now);
+            /* Gioi han tan suat: RI do SMS rac/cuoc goi khong duoc dot pin
+             * nhieu lan; van cho phep lai sau FLY_WAKE_MIN_INTERVAL_MS. */
+            if (ctx->ri_wake_valid &&
+                (uint32_t)(now - ctx->ri_last_wake_ms) < FLY_WAKE_MIN_INTERVAL_MS) {
+                fly_log_push(ctx, FLY_LOG_EVENT, FLY_EVENT_WAKE_ALARM);
+            } else {
+                ctx->ri_wake_valid = 1u;
+                ctx->ri_last_wake_ms = now;
+                fly_events_post(ctx, FLY_EVENT_WAKE_ALARM);
+                fly_power_request_wake(ctx, now);
+            }
         }
     }
 

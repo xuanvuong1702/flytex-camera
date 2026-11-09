@@ -56,7 +56,13 @@ notes = "Sac tuyen tinh LFP 1S 1 A, float 3,5 V co dinh, power-path, NTC, standa
 params = [
   { name = "vin_min_v", value = 3.75, unit = "V", source = "datasheet" },
   { name = "vin_max_v", value = 10.2, unit = "V", source = "datasheet" },
-  { name = "ichg_a", value = 1.0, unit = "A", source = "datasheet" },
+  { name = "ichg_a", value = 0.935, unit = "A", source = "11 xung CTRL" },
+  { name = "ichg_default_a", value = 0.285, unit = "A", source = "khong gui xung" },
+  { name = "ctrl_pulses", value = 11, unit = "xung", source = "bang 1 datasheet" },
+  { name = "ntc_r1_ohm", value = 20000, unit = "ohm", source = "tinh theo datasheet" },
+  { name = "ntc_r2_ohm", value = 8250, unit = "ohm", source = "tinh theo datasheet" },
+  { name = "ts_hot_c", value = 44.9, unit = "C", source = "tinh toan" },
+  { name = "ts_cold_c", value = -0.6, unit = "C", source = "tinh toan" },
   { name = "vfloat_v", value = 3.5, unit = "V", source = "datasheet (co dinh)" },
   { name = "power_path", value = true, unit = "", source = "datasheet" },
   { name = "lfp_1s", value = true, unit = "", source = "datasheet" },
@@ -198,12 +204,12 @@ mpn = "Core1106D1408"
 name = "Core1106D1408"
 datasheet = "https://wiki.luckfox.com/Core1106D/Introduction/"
 verified = "partial"
-notes = "Da xac minh 1 cong USB, H.264, bien the eMMC. Chua nap ban ve chan 112 pin (file XLS cua Luckfox) vao repo."
+notes = "Da xac minh 1 cong USB, H.264, bien the eMMC; da nap 112 chan tu Core1106D-PinOut.xls vao spec/core1106d/pins.csv."
 params = [
   { name = "usb_ports", value = 1, unit = "cong", source = "wiki Luckfox" },
   { name = "emmc_gb", value = 8, unit = "GB", source = "wiki Luckfox" },
   { name = "pins", value = 112, unit = "chan", source = "wiki Luckfox" },
-  { name = "pinout_ingested", value = false, unit = "", source = "CHUA LAM" },
+  { name = "pinout_ingested", value = true, unit = "", source = "spec/core1106d/pins.csv" },
 ]
 
 [[external]]
@@ -265,4 +271,16 @@ verified = "partial"
 notes = "Khe microSD; tiep can khi mo vo de nap du phong."
 params = [
   { name = "pins", value = 8, unit = "chan", source = "datasheet" },
+]
+
+[[parts]]
+id = "J7"
+mpn = "SSM-113-L-DV"
+manufacturer = "Samtec"
+datasheet = "https://www.samtec.com/products/ssm-113-l-dv"
+package = "2x13 2.54 mm socket"
+verified = "partial"
+notes = "Socket tren CMP de ghep voi header duc TSM tren PWR; cat chan 26 lam khoa."
+params = [
+  { name = "pins", value = 26, unit = "chan", source = "datasheet" },
 ]

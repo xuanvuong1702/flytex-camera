@@ -107,6 +107,9 @@
 #define FLY_RAIL_ON_LEVEL 1
 #define FLY_IRQ_ASSERT_LEVEL 0        /* MCU_IRQ mức thấp là có sự kiện */
 #define FLY_CHG_INHIBIT_LEVEL 1       /* mức cấm sạc tới chân charger */
+#define FLY_CHG_PULSES 11             /* 11 xung = 935 mA; 0 = 285 mA mặc định */
+#define FLY_CHG_PULSE_US 200u         /* độ rộng xung và khoảng nghỉ, datasheet 50..1000 us */
+#define FLY_WAKE_MIN_INTERVAL_MS 600000u /* 10 phut: gioi han tan suat danh thuc do RI */
 
 /* ------------------------------------------------------------------ */
 /* Bão hòa thanh ghi — spec/registers.toml                             */

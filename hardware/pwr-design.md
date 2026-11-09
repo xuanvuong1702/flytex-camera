@@ -10,7 +10,7 @@
 |---|---|---|
 | Boost 5 V | TPS61088 | 3.0 A, 597 kHz, cuộn 1.2 µH |
 | Buck 3,3 V | TPS62840 | 0.75 A; Vref **chưa xác minh** |
-| Sạc | tuyen tinh LFP BQ25070, float 3,5 V, power-path, 1 A | 1.0 A, 5 V vào |
+| Sạc | tuyen tinh LFP BQ25070, float 3,5 V, power-path, 935 mA (11 xung) | 0.9 A, 5 V vào |
 | Pack | LFP 1S 15 Ah | 48 Wh danh định |
 
 ## 2. Boost 5 V
@@ -32,17 +32,15 @@ Cuộn cảm chọn: 1.2 µH, Isat ≥ 9 A. Giới hạn dòng theo Rilim: 8.47 
 
 ## 3. Sạc pin
 
-**Đã chọn BQ25070**: sạc tuyến tính LFP 1S, float 3,5 V cố định, power-path, NTC, standalone, 1 A. Đổi từ BQ25798 vì BQ25798 mặc định 1S 4,2 V và watchdog 40 s. Đánh đổi: sạc chậm (~12 h cho 15 Ah) và tổn hao tuyến tính ~1,5 W.
+**Đã chọn BQ25070**: sạc tuyến tính LFP 1S, float 3,5 V cố định, power-path, NTC, standalone. Dòng sạc đặt bằng **11 xung trên CTRL = 935 mA** (không phải điện trở); mặc định không gửi xung chỉ 285 mA. Đổi từ BQ25798 vì BQ25798 mặc định 1S 4,2 V.
 
-| Phương án | Tổn hao ở 1 A | Ghi chú |
-|---|---|---|
-| Tuyến tính BQ25070 (chốt) | 1.50 W | (5 − 3,5) × 1,0; IC có thermal regulation, vẫn phải đo trong vỏ |
+| Tuyến tính BQ25070 (chốt) | 1.40 W | (5 − 3,5) × 0,935; IC có thermal regulation, vẫn phải đo trong vỏ |
 
-Thời gian sạc 15 Ah từ 20 % ở 1.0 A: **12.0 giờ** (hiệu suất 100 %).
+Thời gian sạc 15 Ah từ 20 % ở 0.9 A: **12.8 giờ** (hiệu suất 100 %).
 
 ## 4. Cắt sạc theo nhiệt (NTC trên pack)
 
-**BQ25070 có chân NTC**, nhưng mạng điện trở và ngưỡng phải lấy đúng theo datasheet. Bảng NTC 7,15 kΩ / 42,5–47,5 % VIN của CAM4G **không áp dụng**. Chốt mạng NTC và đo M-05 trước khi đặt board.
+BQ25070: V_TS = 12,5 % VLDO khi nóng, 25 % khi lạnh; NTC 10 kΩ B3950 song song R2. Chọn **R1 = 20.00 kΩ** (LDO→TS), **R2 = 8.25 kΩ** (TS→GND): cắt nóng **44.9 °C**, cắt lạnh **-0.6 °C**. Đo lại bằng tủ sấy (M-05).
 
 ## 5. Đo điện áp pin
 
@@ -73,7 +71,9 @@ Kịch bản đêm 3.8 W trong 7 h cần 26.6 Wh → hệ số dư **1.53×**.
 | Đỉnh dòng dưới giới hạn chuyển mạch | 6.52 A | < 8.47 A | ĐẠT |
 | Điện áp vào ADC khi pin đầy | 1825 mV | ≤ 3300 mV | ĐẠT |
 | Độ phân giải đo pin | 1.61 mV/LSB | ≤ 5.0 mV/LSB | ĐẠT |
-| Thời gian sạc 15 Ah ở 1 A | 12.0 h | < 14 h | ĐẠT |
+| Ngưỡng nóng NTC (TS) | 44.9 °C | 43–47 °C | ĐẠT |
+| Ngưỡng lạnh NTC (TS) | -0.6 °C | -3–3 °C | ĐẠT |
+| Thời gian sạc 15 Ah ở 935 mA | 12.8 h | < 14 h | ĐẠT |
 | Nhiệt mặt vỏ (không nắng), 45 °C | 57.8 °C | < 60 °C | ĐẠT |
 | Dư pin kịch bản đêm, pack 15 Ah | 1.53× | ≥ 1.30× | ĐẠT |
 
@@ -83,6 +83,6 @@ Tất cả kiểm tra đạt.
 
 1. Vref, tần số chuyển mạch và giới hạn dòng của TPS61088 phải đối chiếu datasheet.
 2. Vref của TPS62840 chưa chọn; không tính được mạch hồi tiếp 3,3 V.
-3. Mạng CTRL và NTC của BQ25070 chưa tính; phải lấy từ datasheet và đo M-05.
+3. Dòng sạc 935 mA và mạng NTC đã tính; vẫn phải đo M-05 và kiểm tồn kho BQ25070.
 4. Hệ số tản nhiệt 8 W/m²·K là giả định; nắng chiếu trực tiếp chưa tính.
 5. Không có số đo dòng, nhiệt hay thời gian chạy thật.

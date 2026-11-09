@@ -206,7 +206,12 @@ _VALIDATORS = {
 }
 
 #: Các khóa được đổi qua `config.set`. `schedule` dùng lệnh riêng.
-ALLOWED_KEYS: tuple[str, ...] = tuple(_VALIDATORS)
+# Khóa được phép đổi từ xa. Secret/token đánh thức chỉ ghi từ file cấu hình,
+# không bao giờ nhận qua MQTT.
+REMOTE_KEYS: tuple[str, ...] = tuple(
+    key for key in _VALIDATORS if key not in {"wake_secret", "wake_token"}
+)
+ALLOWED_KEYS: tuple[str, ...] = REMOTE_KEYS
 
 FIELD_NAMES: tuple[str, ...] = tuple(_VALIDATORS) + ("schedule",)
 
@@ -320,7 +325,7 @@ class Config:
     # -- thay đổi có kiểm soát ----------------------------------------
     def set_allowed(self, key: str, value: object) -> object:
         """Đổi một khóa trong danh sách cho phép, trả giá trị đã chuẩn hóa."""
-        if key not in ALLOWED_KEYS:
+        if key not in REMOTE_KEYS:
             raise ConfigError(
                 "khoa khong duoc phep: "
                 f"{key!r}; cho phep: {', '.join(ALLOWED_KEYS)}"

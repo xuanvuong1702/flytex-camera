@@ -22,7 +22,7 @@ C1,boost_in,10uF 25V X7R,CL31B106KBHNNNE,Samsung,1206,2,no,candidate,Sat IC boos
 C2,boost_out,22uF 10V X7R,CL31B226KPHNNNE,Samsung,1206,2,no,candidate
 C3,modem_bulk,470uF 10V low ESR,EEU-FR1A471,Panasonic,radial 8x11,1,no,candidate,Dat SAU cong tac tai va sat modem; kiem dong nap voi CT C9
 C4,decouple,100nF 50V X7R,CL10B104KB8NNNC,Samsung,0603,12,no,candidate,Theo tung IC
-R5,ntc_pull,7.15k 1%,RC0603FR-077K15L,Yageo,0603,1,no,candidate,Theo tinh toan pwr-design
+R5,ntc_pull,7.15k 1%,RC0603FR-077K15L,Yageo,0603,1,yes,dnp,KHONG DUNG: gia tri cua IC CAM4G cu
 TP1,testpoint,test point 1.0mm,TP-107-01-T,Samtec,1 pin,12,no,candidate,Moi rail mot diem
 R6,boost_fsw,267k 1%,RC0603FR-07267KL,Yageo,0603,1,no,candidate,Rfsw theo datasheet TPS61088
 R7,boost_ilim,64.9k 1%,RC0603FR-0764K9L,Yageo,0603,1,no,candidate,Rilim theo datasheet
@@ -39,6 +39,8 @@ L2,charger_inductor,KHONG DUNG (sac tuyen tinh),,,chua chon,1,yes,dnp,BQ25070 la
 C10,charger_pmid,chua chon,,,chua chon,1,yes,dnp,Khong dung cho sac tuyen tinh
 C11,charger_vbus,10uF 16V X7R,CL31B106KO8NNNE,Samsung,1206,1,no,candidate,Tu vao VBUS theo datasheet BQ25070
 C12,charger_sys,10uF 10V X7R,CL31B106KPHNNNE,Samsung,1206,2,no,candidate,Tu SYS/BAT theo datasheet BQ25070
-R11,charger_ctrl,chua chon,,,chua chon,1,no,not-chosen,CTRL dat dong sac 1 A - gia tri theo bang datasheet BQ25070
-R12,charger_ntc,chua chon,,,chua chon,1,no,not-chosen,Mang NTC theo datasheet BQ25070 - phai tinh lai
+R11,charger_ctrl,KHONG DUNG (CTRL xung),,,chua chon,1,yes,dnp,BQ25070 CTRL la giao dien xung 1 day - khong co dien tro; can GPIO MCU
+R14,charger_ts_top,20.0k 1%,RC0603FR-0720KL,Yageo,0603,1,no,candidate,R1 LDO->TS theo datasheet BQ25070; cat nong 44.9 C
+R15,charger_ts_bottom,8.25k 1%,RC0603FR-078K25L,Yageo,0603,1,no,candidate,R2 TS->GND; cat lanh -0.6 C
 R13,buck_vset,chua chon,,,chua chon,1,no,not-chosen,Gia tri theo bang VSET cua datasheet TPS62840; chua chot
+R16,buck_mode,0R 1%,RC0603FR-070RL,Yageo,0603,1,no,candidate,Keo MODE xuong GND: PFM cho dong nghi thap

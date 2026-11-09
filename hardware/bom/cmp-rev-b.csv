@@ -1,6 +1,6 @@
 ref,block,value,mpn,manufacturer,package,qty,dnp,verify,notes
 U1,soc,Core1106D1408 eMMC 8GB,Core1106D1408,Luckfox,112 pin 30x30mm,1,no,candidate,Chot bien the eMMC D-19; xac nhan chan khi co ban ve
-J1,b2b,header 2x13 2.54 keyed,TSM-113-01-L-DV,Samtec,2x13,1,no,candidate,Phai khop spec/b2b.toml 26 chan
+J1,b2b,socket 2x13 2.54,SSM-113-L-DV,Samtec,2x13 socket,1,no,candidate,Board CMP dung socket; PWR dung header duc TSM; khoa bang cach cat chan 26
 J2,camera,FPC 20 pin 0.5mm,FH12-20S-0.5SH(55),Hirose,20 pin,1,no,candidate,Pinout theo module camera O-02
 J3,modem,header 2x9 2.54,TSW-109-07-G-D,Samtec,2x9,1,no,candidate,Khop breakout O-04 co RI
 J4,sd,microSD push-push,DM3AT-SF-PEJM5,Hirose,microSD,1,no,candidate,Tiep can khi mo vo

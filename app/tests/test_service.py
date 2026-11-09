@@ -23,6 +23,7 @@ from flytex.diagnostics import Diagnostics
 from flytex.identity import Identity
 from flytex.media import FakeSource
 from flytex.mcu import McuClient
+from flytex.config import ConfigError
 from flytex.modem import AtClient, FakeModem, SmsMessage
 from flytex.recorder import SegmentRecorder
 from flytex.service import DeviceService
@@ -326,47 +327,55 @@ class AsyncUploadTests(ServiceFixture):
 class SmsWakeTests(ServiceFixture):
     SECRET = "00112233445566778899aabbccddeeff"
 
-    def _sms(self, ts: int, sig: str | None = None) -> SmsMessage:
+    def _sms(self, counter: int, sig: str | None = None) -> SmsMessage:
         import hashlib
         import hmac
 
         if sig is None:
             sig = hmac.new(
-                bytes.fromhex(self.SECRET), str(ts).encode("ascii"), hashlib.sha256
+                bytes.fromhex(self.SECRET), str(counter).encode("ascii"), hashlib.sha256
             ).hexdigest()[:16]
-        return SmsMessage(index=1, number="+8490", text=f"W {ts} {sig}")
+        return SmsMessage(index=1, number="+8490", text=f"W {counter} {sig}")
 
-    def _setup_sms(self) -> int:
+    def _setup_sms(self) -> None:
         self.service.config.wake_chan = "sms"
         self.service.config.wake_secret = self.SECRET
-        return int(self.clock.now())
 
     def test_valid_hmac_accepted(self) -> None:
-        now = self._setup_sms()
-        self.modem.sms_read = lambda index=None: [self._sms(now)]
+        self._setup_sms()
+        self.modem.sms_read = lambda index=None: [self._sms(1)]
         self.service._consume_wake_sms()
         self.assertTrue(self.service.wake_sms_ok)
 
     def test_wrong_hmac_rejected(self) -> None:
-        now = self._setup_sms()
-        self.modem.sms_read = lambda index=None: [self._sms(now, sig="0" * 16)]
+        self._setup_sms()
+        self.modem.sms_read = lambda index=None: [self._sms(1, sig="0" * 16)]
         self.service._consume_wake_sms()
         self.assertFalse(self.service.wake_sms_ok)
 
-    def test_stale_timestamp_rejected(self) -> None:
-        now = self._setup_sms()
-        self.modem.sms_read = lambda index=None: [self._sms(now - 3600)]
+    def test_low_counter_rejected(self) -> None:
+        self._setup_sms()
+        self.service._wake_last_ts = 100
+        self.modem.sms_read = lambda index=None: [self._sms(99)]
         self.service._consume_wake_sms()
         self.assertFalse(self.service.wake_sms_ok)
 
     def test_replay_rejected(self) -> None:
-        now = self._setup_sms()
-        self.modem.sms_read = lambda index=None: [self._sms(now)]
+        self._setup_sms()
+        self.modem.sms_read = lambda index=None: [self._sms(1)]
         self.service._consume_wake_sms()
         self.assertTrue(self.service.wake_sms_ok)
         self.service.wake_sms_ok = False
+        self._consume_same = True
         self.service._consume_wake_sms()
         self.assertFalse(self.service.wake_sms_ok)
+
+    def test_cold_boot_without_clock_accepted(self) -> None:
+        self._setup_sms()
+        self.service._wake_last_ts = 0
+        self.modem.sms_read = lambda index=None: [self._sms(1)]
+        self.service._consume_wake_sms()
+        self.assertTrue(self.service.wake_sms_ok)
 
     def test_missing_secret_rejected(self) -> None:
         self.service.config.wake_chan = "sms"
@@ -374,6 +383,18 @@ class SmsWakeTests(ServiceFixture):
         self.modem.sms_read = lambda index=None: [self._sms(0)]
         self.service._consume_wake_sms()
         self.assertFalse(self.service.wake_sms_ok)
+
+    def test_secret_not_settable_remotely(self) -> None:
+        self._setup_sms()
+        with self.assertRaises(ConfigError):
+            self.service.config.set_allowed("wake_secret", "00" * 16)
+
+    def test_secret_not_in_mqtt_payloads(self) -> None:
+        self._setup_sms()
+        self.service.boot()
+        topic = mqtt_gen.event_topic(self.identity.device_id)
+        payloads = b" ".join(self.bus.messages_of(topic)).decode("utf-8", "replace")
+        self.assertNotIn(self.SECRET, payloads)
 
     def test_ignored_when_channel_is_not_sms(self) -> None:
         self.service.config.wake_chan = "off"

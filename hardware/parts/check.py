@@ -149,13 +149,15 @@ def design_issues(parts: dict[str, dict], external: dict[str, dict],
 
     need("U3", "vin_min_v", "<=", 4.5, "blocker", "sac khong nhan duoc 5 V")
     need("U3", "vin_max_v", ">=", 5.5, "blocker", "sac khong chiu duoc 5 V")
-    need("U3", "ichg_a", ">=", 1.0, "blocker", "sac khong dat 1 A")
+    need("U3", "ichg_a", ">=", 0.9, "blocker", "sac khong dat 900 mA")
     need("U3", "vfloat_v", "<=", 3.6, "blocker", "float cao hon 3,6 V cho LFP")
     need("U3", "vfloat_v", ">=", 3.4, "blocker", "float qua thap, khong nap duoc")
     if param(parts.get("U3", {}), "power_path") is not True:
         issues.append(Issue("blocker", "U3", "sac khong co power-path (D-16)"))
     if param(parts.get("U3", {}), "ntc") is not True:
         issues.append(Issue("blocker", "U3", "sac khong co NTC phan cung (FR-10)"))
+    need("U3", "ntc_r1_ohm", ">=", 1000.0, "warn", "thieu R1 NTC")
+    need("U3", "ntc_r2_ohm", ">=", 1000.0, "warn", "thieu R2 NTC")
     if param(parts.get("U3", {}), "approved") is not True:
         issues.append(Issue("blocker", "U3", "chua chon IC sac"))
 

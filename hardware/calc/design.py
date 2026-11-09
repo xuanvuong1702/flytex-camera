@@ -35,10 +35,10 @@ BUCK = {
 
 CHARGER = {
     # 2026-11-09: chon BQ25070 (LFP, float 3,5 V co dinh, power-path, NTC, standalone).
-    "topology": "tuyen tinh LFP BQ25070, float 3,5 V, power-path, 1 A",
+    "topology": "tuyen tinh LFP BQ25070, float 3,5 V, power-path, 935 mA (11 xung)",
     "vbus_v": 5.0,
     "vbat_v": 3.5,
-    "current_a": 1.0,
+    "current_a": 0.935,
     "capacity_ah": 15.0,
     "soc_start": 0.20,
     "efficiency": 1.0,
@@ -46,15 +46,15 @@ CHARGER = {
 }
 
 NTC = {
-    # BQ25070 co NTC nhung nguong/CTRL phai lay theo datasheet; chua chot mang NTC.
-    "suspended": False,
+    # BQ25070: V_TS = 12,5 % VLDO khi nong, 25 % khi lanh; NTC 10k B3950.
     "r25_ohm": 10_000.0,
     "beta": 3950.0,
-    "r_pull_ohm": 7_150.0,
-    "threshold_hot_ratio": 0.425,
-    "threshold_cold_ratio": 0.475,
-    "expected_hot_min_c": 35.0,
-    "expected_hot_max_c": 42.0,
+    "hot_target_c": 45.0,
+    "cold_target_c": 0.0,
+    "hot_min_c": 43.0,
+    "hot_max_c": 47.0,
+    "cold_min_c": -3.0,
+    "cold_max_c": 3.0,
 }
 
 BATTERY_ADC = {
@@ -118,12 +118,13 @@ def design_values() -> dict[str, object]:
         CHARGER["capacity_ah"], CHARGER["current_a"],
         CHARGER["soc_start"], 1.0, CHARGER["efficiency"],
     )
-    hot_c = pwr.ntc_temperature_at_ratio(
-        NTC["threshold_hot_ratio"], NTC["r25_ohm"], NTC["beta"], NTC["r_pull_ohm"]
-    )
-    cold_c = pwr.ntc_temperature_at_ratio(
-        NTC["threshold_cold_ratio"], NTC["r25_ohm"], NTC["beta"], NTC["r_pull_ohm"]
-    )
+    r_hot = pwr.ntc_resistance_ohm(NTC["hot_target_c"], NTC["r25_ohm"], NTC["beta"])
+    r_cold = pwr.ntc_resistance_ohm(NTC["cold_target_c"], NTC["r25_ohm"], NTC["beta"])
+    ntc_r1_raw, ntc_r2_raw = pwr.bq25070_ts_divider(r_hot, r_cold)
+    ntc_r1 = pwr.e96_nearest(ntc_r1_raw)
+    ntc_r2 = pwr.e96_nearest(ntc_r2_raw)
+    hot_c = pwr.bq25070_ts_temperature(0.125, ntc_r1, ntc_r2, NTC["r25_ohm"], NTC["beta"])
+    cold_c = pwr.bq25070_ts_temperature(0.250, ntc_r1, ntc_r2, NTC["r25_ohm"], NTC["beta"])
     adc = pwr.battery_adc(
         BATTERY_ADC["vbat_max_v"], BATTERY_ADC["vadc_ref_v"], BATTERY_ADC["bits"],
         BATTERY_ADC["r_top_ohm"], BATTERY_ADC["r_bottom_ohm"],
@@ -146,6 +147,8 @@ def design_values() -> dict[str, object]:
         "charge_h": charge_h,
         "hot_c": hot_c,
         "cold_c": cold_c,
+        "ntc_r1_ohm": ntc_r1,
+        "ntc_r2_ohm": ntc_r2,
         "adc": adc,
         "surface_c": surface_c,
         "pack_wh": pack_wh,
@@ -191,7 +194,19 @@ def checks(values: dict[str, object] | None = None) -> list[Check]:
             adc.mv_per_lsb <= BATTERY_ADC["max_mv_per_lsb"],
         ),
         Check(
-            "Thời gian sạc 15 Ah ở 1 A",
+            "Ngưỡng nóng NTC (TS)",
+            f"{v['hot_c']:.1f} °C",
+            f"{NTC['hot_min_c']:.0f}–{NTC['hot_max_c']:.0f} °C",
+            NTC["hot_min_c"] <= v["hot_c"] <= NTC["hot_max_c"],
+        ),
+        Check(
+            "Ngưỡng lạnh NTC (TS)",
+            f"{v['cold_c']:.1f} °C",
+            f"{NTC['cold_min_c']:.0f}–{NTC['cold_max_c']:.0f} °C",
+            NTC["cold_min_c"] <= v["cold_c"] <= NTC["cold_max_c"],
+        ),
+        Check(
+            "Thời gian sạc 15 Ah ở 935 mA",
             f"{v['charge_h']:.1f} h",
             "< 14 h",
             v["charge_h"] < 14.0,

@@ -13,16 +13,16 @@
 
 ## 2. Kết quả hiện tại
 
-**14 linh kiện + 4 module ngoài BOM; 5 blocker, 3 cảnh báo** (sau khi chọn BQ25070).
+**15 linh kiện + 4 module ngoài BOM; 4 blocker, 3 cảnh báo** (sau khi chọn BQ25070 và nhập pinout).
 
 ### 2.1 Blocker phải đóng trước khi đặt
 
 | Mục | Vấn đề | Cách đóng | Nơi ghi |
 |---|---|---|---|
 | U2 buck | **Chưa chốt điện trở VSET** cho 3,3 V; BOM đã có vị trí R13 nhưng giá trị `not-chosen` | Đọc bảng VSET của TPS62840, chọn E96, ghi vào BOM; gói là **SON-8 1,5×2 (DLC)** | O-15 |
-| U3 sạc | **Đã chọn BQ25070** (float 3,5 V cứng, power-path, NTC, standalone). | Còn tính CTRL cho 1 A và mạng NTC theo datasheet; đo M-05. BQ25798 bị loại | O-05 |
+| U3 sạc | **BQ25070**: float 3,5 V, power-path (1,2 A), NTC, standalone; **935 mA bằng 11 xung CTRL**; R1/R2 = 20 kΩ/8,25 kΩ | Còn đo M-05, kiểm tồn kho và đo đỉnh tải | O-05 |
 | MODEM | Chưa xác nhận **breakout đưa RI ra header** | Kiểm bản vẽ breakout hoặc chọn loại khác; nếu không, kênh Watch SMS không chạy | O-04 |
-| SOC | Chưa nạp **bản vẽ 112 chân** Core1106D vào repo | Tải `Core1106D-PinOut.xls` và `Core1106D.pdf` từ tài liệu Luckfox, đối chiếu chân trước khi vẽ CMP | O-11 |
+| SOC | Đã nạp **112 chân** Core1106D vào `spec/core1106d/pins.csv` | Đối chiếu với bản vẽ cơ khí và bảng ánh xạ CMP trước khi vẽ | O-11 |
 | CAMERA | Chưa chọn module camera và **pinout FPC 20 chân** | Chọn module có IR-CUT + LED IR, lấy datasheet, ghi pinout vào spec | O-02 |
 | PACK | Chưa có pack/BMS kèm **UN38.3, IEC 62133, tự tiêu ≤100 µA** | Chọn nhà cung cấp, lấy datasheet và báo cáo; đo tự tiêu bằng PPK2 | O-03 |
 

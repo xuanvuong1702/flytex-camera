@@ -449,31 +449,27 @@ class DeviceService:
                 "error", "SMS danh thuc bi tu choi: wake_secret qua ngan"
             )
             return
-        now = int(self.clock.now())
         for message in messages:
             parts = message.text.strip().split()
             if len(parts) != 3 or parts[0] != "W":
                 continue
             try:
-                ts = int(parts[1])
+                counter = int(parts[1])
             except ValueError:
                 continue
-            if abs(now - ts) > 600:
-                self.diagnostics.log("warning", "SMS danh thuc qua cu, bo qua")
-                continue
             expected = hmac.new(
-                key, str(ts).encode("ascii"), hashlib.sha256
+                key, str(counter).encode("ascii"), hashlib.sha256
             ).hexdigest()[:16]
             if not hmac.compare_digest(parts[2].lower(), expected):
                 self.diagnostics.log("warning", "SMS danh thuc sai HMAC, bo qua")
                 continue
-            if ts <= self._wake_last_ts:
+            if counter <= self._wake_last_ts:
                 self.diagnostics.log("warning", "SMS danh thuc replay, bo qua")
                 continue
-            self._wake_last_ts = ts
+            self._wake_last_ts = counter
             if self._wake_ts_path is not None:
                 try:
-                    self._wake_ts_path.write_text(str(ts), encoding="utf-8")
+                    self._wake_ts_path.write_text(str(counter), encoding="utf-8")
                 except OSError as exc:
                     self.diagnostics.log(
                         "warning", f"khong luu duoc moc SMS: {exc}"

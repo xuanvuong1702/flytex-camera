@@ -257,12 +257,12 @@ Phần cứng không thể kiểm chứng khi chưa mua linh kiện, nhưng ph�
 | Pinout J_B2B sinh tự động, có kiểm dòng | Xong | `spec/b2b.toml` → bảng + kiểm hệ số dư |
 | Hợp đồng MQTT sinh tự động | Xong | `spec/mqtt.toml` → JSON schema + module Python |
 | Thiết kế PWR Rev A: tính toán + hình học | Xong, **57 test** | `hardware/calc/`, `hardware/geom/`, `hardware/bom/`, `hardware/parts/` → [pwr-design](../hardware/pwr-design.md), [boards](../hardware/boards.md) |
-| Firmware MCU: regmap, nguồn, pin, nhiệt, lịch, NVM, STOP | Xong, **60 test host** | `python firmware/mcu/tests/build.py test` |
-| Ứng dụng Linux: máy trạng thái, AT, ghi, hàng đợi, lệnh | Xong, **179 test host** | `app/tests` |
+| Firmware MCU: regmap, nguồn, pin, nhiệt, lịch, NVM, STOP | Xong, **64 test host** | `python firmware/mcu/tests/build.py test` |
+| Ứng dụng Linux: máy trạng thái, AT, ghi, hàng đợi, lệnh | Xong, **182 test host** | `app/tests` |
 | Ghi MPEG-TS, tải clip HTTPS, OTA A/B có xác minh | Xong phần mềm, test đầy đủ | `app/flytex/tsmux.py`, `upload.py`, `ota.py` |
 | Mô phỏng end-to-end firmware C + app | Xong, **5 kịch bản** | `python sim/run.py --scenario all` |
 | Công cụ đo G0, nhập PPK2, kiểm tài liệu | Xong, **120 test** | `tools/measure`, `tools/docs_check`, `tools/readiness.py` |
-| Toàn bộ chạy một lệnh | **35/35 bước đạt** | `python run_tests.py` |
+| Toàn bộ chạy một lệnh | **36/36 bước đạt** | `python run_tests.py` |
 | Mã chạy camera thật (RK MPI) | **Chưa** | Cần SDK và dev board |
 | Port STM32L0 thật | **Khung** | Cần SDK và board |
 | Backend xác minh chữ ký + Installer thật | **Chưa** | Chốt thuật toán/khóa và SDK ở G0 |
@@ -301,4 +301,4 @@ Dừng hoặc đổi hướng nếu ở G0:
 
 Bản thiết kế đủ tốt để tiếp tục. Nó không đủ tốt để vẽ board ngay: bốn lỗi F-01…F-04 sẽ khiến board Rev A phải làm lại, và ba con số năng lượng (F-05) đang nằm sát giới hạn đến mức một phép đo xấu hơn 20 % là hỏng mục tiêu. Sửa tài liệu và đo ở G0 trước, rồi hãy đặt board — đúng như nguyên tắc "đo trước, chốt sau" mà chính repo này đặt ra.
 
-Phần mềm trong repo chạy được trên host: hợp đồng có test, firmware có test, ứng dụng có test, mô phỏng chạy được. **Chưa sẵn sàng cho G0** vì còn 5 blocker phần cứng trong sổ linh kiện (VSET buck, RI modem, pinout Core1106D, camera, pack) cùng 2 việc giá trị sạc (CTRL/NTC) và các blocker firmware ở [17](17-san-sang-prototype.md) vòng 7. Khi có phần cứng, việc còn lại là thay transport giả bằng transport thật và đo.
+Phần mềm trong repo chạy được trên host: hợp đồng có test, firmware có test, ứng dụng có test, mô phỏng chạy được. **Chưa sẵn sàng cho G0** vì còn 4 blocker phần cứng trong sổ linh kiện (VSET buck, RI modem, pinout Core1106D, camera, pack) cùng 2 việc giá trị sạc (CTRL/NTC) và các blocker firmware ở [17](17-san-sang-prototype.md) vòng 7. Khi có phần cứng, việc còn lại là thay transport giả bằng transport thật và đo.

@@ -173,6 +173,66 @@ def ntc_temperature_at_ratio(ratio: float, r25_ohm: float = 10_000.0,
     return (low_c + high_c) / 2.0
 
 
+_E96 = (
+    1.00, 1.02, 1.05, 1.07, 1.10, 1.13, 1.15, 1.18, 1.21, 1.24, 1.27, 1.30,
+    1.33, 1.37, 1.40, 1.43, 1.47, 1.50, 1.54, 1.58, 1.62, 1.65, 1.69, 1.74,
+    1.78, 1.82, 1.87, 1.91, 1.96, 2.00, 2.05, 2.10, 2.15, 2.21, 2.26, 2.32,
+    2.37, 2.43, 2.49, 2.55, 2.61, 2.67, 2.74, 2.80, 2.87, 2.94, 3.01, 3.09,
+    3.16, 3.24, 3.32, 3.40, 3.48, 3.57, 3.65, 3.74, 3.83, 3.92, 4.02, 4.12,
+    4.22, 4.32, 4.42, 4.53, 4.64, 4.75, 4.87, 4.99, 5.11, 5.23, 5.36, 5.49,
+    5.62, 5.76, 5.90, 6.04, 6.19, 6.34, 6.49, 6.65, 6.81, 6.98, 7.15, 7.32,
+    7.50, 7.68, 7.87, 8.06, 8.25, 8.45, 8.66, 8.87, 9.09, 9.31, 9.53, 9.76,
+)
+
+
+def e96_nearest(value_ohm: float) -> float:
+    """Giá trị E96 gần nhất trong cùng decade."""
+    if value_ohm <= 0:
+        raise ValueError("gia tri phai > 0")
+    decade = 10.0 ** math.floor(math.log10(value_ohm))
+    return min(_E96, key=lambda item: abs(item * decade - value_ohm)) * decade
+
+
+def bq25070_ts_divider(r_hot_ohm: float, r_cold_ohm: float) -> tuple[float, float]:
+    """R1 (LDO→TS) và R2 (TS→GND) cho BQ25070.
+
+    TS = 12,5 % VLDO khi nóng và 25 % khi lạnh; NTC song song R2.
+    Điều kiện: R1 = 7·(RHOT∥R2) = 3·(RCOLD∥R2).
+    """
+    if r_hot_ohm <= 0 or r_cold_ohm <= 0 or r_cold_ohm <= r_hot_ohm:
+        raise ValueError("RCOLD phai lon hon RHOT")
+    r2 = 4.0 * r_hot_ohm * r_cold_ohm / (3.0 * r_cold_ohm - 7.0 * r_hot_ohm)
+    if r2 <= 0:
+        raise ValueError("khong co nghiem R2 duong")
+    parallel = r_hot_ohm * r2 / (r_hot_ohm + r2)
+    return 7.0 * parallel, r2
+
+
+def bq25070_ts_temperature(ratio: float, r1_ohm: float, r2_ohm: float,
+                           r25_ohm: float = 10_000.0, beta: float = 3950.0,
+                           low_c: float = -30.0, high_c: float = 80.0) -> float:
+    """Nhiệt độ tại đó V_TS/V_LDO = ratio với mạng R1/R2/NTC của BQ25070."""
+    if not 0.0 < ratio < 1.0 or r1_ohm <= 0 or r2_ohm <= 0:
+        raise ValueError("tham so TS khong hop le")
+
+    def f(temp_c: float) -> float:
+        r_ntc = ntc_resistance_ohm(temp_c, r25_ohm, beta)
+        parallel = r_ntc * r2_ohm / (r_ntc + r2_ohm)
+        return parallel / (r1_ohm + parallel) - ratio
+
+    if f(low_c) < 0 or f(high_c) > 0:
+        raise ValueError("ratio nam ngoai dai nhiet do")
+    for _ in range(200):
+        mid = (low_c + high_c) / 2.0
+        if abs(f(mid)) < 1e-12:
+            return mid
+        if f(mid) > 0:
+            low_c = mid
+        else:
+            high_c = mid
+    return (low_c + high_c) / 2.0
+
+
 def battery_adc(vbat_max_v: float, vadc_ref_v: float, bits: int,
                 r_top_ohm: float, r_bottom_ohm: float) -> AdcInput:
     """Kiểm mạch chia áp đo pin: không vượt rail ADC và đủ độ phân giải."""

@@ -45,6 +45,7 @@ typedef struct hal_host {
     int16_t temp_c[FLY_TEMP_SENSORS];
 
     uint8_t nvm[FLY_HOST_NVM_SIZE];
+    uint32_t chg_pulses;
     hal_host_stats_t stats;
 } hal_host_t;
 
@@ -66,6 +67,9 @@ int hal_host_set_input(hal_host_t *h, int pin, int level);
 /* Mức chân vào/ra; -1 nếu sai hướng hoặc sai số chân. */
 int hal_host_get_input(const hal_host_t *h, int pin);
 int hal_host_get_output(const hal_host_t *h, int pin);
+
+/* Số xung đã phát trên chân CHG_CTRL (đếm cạnh lên). */
+uint32_t hal_host_get_chg_pulses(const hal_host_t *h);
 
 /* Đặt giá trị ADC (mV tại chân) và nhiệt độ (int8, -128 = không có). */
 int hal_host_set_adc_mv(hal_host_t *h, int ch, uint32_t mv);

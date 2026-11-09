@@ -8,7 +8,7 @@
 
 | # | Tài liệu / phân tích | Trạng thái | Bằng chứng hoặc việc phải làm |
 |---|---|---|---|
-| A1 | Sổ linh kiện + đối chiếu thiết kế | **Một phần** | [parts-register](../hardware/parts-register.md); còn 5 blocker, `--strict` cố ý fail |
+| A1 | Sổ linh kiện + đối chiếu thiết kế | **Một phần** | [parts-register](../hardware/parts-register.md); còn 4 blocker, `--strict` cố ý fail |
 | A2 | BOM có MPN, gói, trạng thái xác minh | **Có** | [hardware/bom](../hardware/bom/) |
 | A3 | Schematic PWR/CMP | **Thiếu** | Vẽ trong KiCad từ block và net đã chốt ([03](03-giao-dien.md), [pwr-design](../hardware/pwr-design.md), [bom](../hardware/bom/)) |
 | A4 | Thư viện symbol/footprint đã kiểm | **Thiếu** | Mỗi footprint từ datasheet + bản in 1:1; checklist [footprint-test](../hardware/footprint-test/checklist.md) |
@@ -91,7 +91,7 @@
 
 ## 7. Thứ tự làm đề xuất (2 tuần tới)
 
-1. Đóng 5 blocker trong [18](18-tai-lieu-linh-kien.md) §2.1 — VSET buck, RI modem, Core1106D pinout, camera, pack — và tính CTRL/NTC cho BQ25070.
+1. Đóng 4 blocker trong [18](18-tai-lieu-linh-kien.md) §2.1 — VSET buck, RI modem, camera, pack.
 2. Vẽ schematic PWR trước (đã có đủ giá trị), rồi CMP sau khi có pinout camera và chân module.
 3. Làm thư viện footprint + board thử footprint (G1) trước khi đặt board thật.
 4. Chốt vỏ/ăng-ten/USB-C song song, vì ba thứ này khoá lẫn nhau.

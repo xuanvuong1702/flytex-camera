@@ -60,7 +60,7 @@ class BomTests(unittest.TestCase):
             refs = [row["ref"] for row in rows]
             self.assertEqual(len(refs), len(set(refs)), f"{name}: trung ref")
 
-    def test_b2b_matches_between_boards(self) -> None:
+    def test_b2b_is_male_and_female_pair(self) -> None:
         def b2b(rows: list[dict[str, str]]) -> dict[str, str]:
             found = [row for row in rows if row["block"] == "b2b"]
             self.assertEqual(len(found), 1)
@@ -68,9 +68,12 @@ class BomTests(unittest.TestCase):
 
         pwr = b2b(self.pwr)
         cmp = b2b(self.cmp)
-        self.assertEqual(pwr["mpn"], cmp["mpn"])
+        self.assertNotEqual(pwr["mpn"], cmp["mpn"], "hai board khong duoc dung cung mot gioi tinh")
+        self.assertIn("TSM", pwr["mpn"])
+        self.assertIn("SSM", cmp["mpn"])
         self.assertEqual(pwr["qty"], "1")
         self.assertEqual(cmp["qty"], "1")
+        self.assertIn("cat chan 26", (pwr["notes"] + cmp["notes"]).lower())
 
     def test_required_blocks_present(self) -> None:
         pwr_blocks = {row["block"] for row in self.pwr}

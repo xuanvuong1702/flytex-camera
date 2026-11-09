@@ -17,6 +17,8 @@ Ba nhóm: đã chốt, đề xuất (chờ xác nhận), và câu hỏi mở. Kh
 | D-19 | Module **eMMC 8 GB** (Core1106D1408 hoặc D1808), không dùng bản 256 MB SPI NAND | 2026-11-09 | Chủ dự án chốt. NAND không đủ OTA A/B + runtime Python (F-08) |
 | D-21 | Đổi một chân dự phòng trên J_B2B lấy `MODEM_RI` (chân 21) | 2026-11-09 | Chủ dự án chốt. RI là đường đánh thức SMS; ban đầu còn 2 chân dự phòng, sau D-22 còn 1 |
 | D-22 | Dùng chân 20 (trước là `SPARE_SOC1`) làm `USB_SEL` do MCU điều khiển | 2026-11-09 | Chốt sau rà soát: mux USB cần chân điều khiển mà J_B2B chưa có; giữ chân 20 là spare sẽ không bao giờ chọn được mux. Số chân dự phòng còn 1 (`SPARE_SOC2`). Mux cụ thể vẫn ở O-13 |
+| D-24 | J_B2B: PWR dùng header đực `TSM-113-01-L-DV`, CMP dùng socket cái `SSM-113-L-DV`; cắt chân 26 làm khóa | 2026-11-09 | Trước đây cả hai board đều dùng header đực, không ghép được và không khóa. Cắt chân 26 tạo khóa cơ khí; ghi rõ trong bản vẽ lắp ráp |
+| D-25 | Dòng sạc BQ25070 đặt bằng **11 xung CTRL = 935 mA**; MCU phát xung lúc boot qua chân `CHG_CTRL` | 2026-11-09 | CTRL là giao diện xung một dây, không có điện trở. Không gửi xung chỉ 285 mA. Giữ CTRL cao >2 ms để ngắt sạc |
 | D-23 | Chọn **BQ25070** làm IC sạc: LFP 1S, float 3,5 V cố định, power-path, NTC, standalone 1 A | 2026-11-09 | Thay BQ25798 (mặc định 4,2 V + watchdog). Đánh đổi: sạc tuyến tính ~1,5 W, 15 Ah mất ~12 h; chấp nhận cho prototype để đổi lấy an toàn. Còn phải tính CTRL và mạng NTC theo datasheet |
 
 ## 2. Đề xuất

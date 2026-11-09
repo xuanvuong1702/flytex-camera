@@ -39,6 +39,7 @@ def build_steps(quick: bool) -> list[tuple[str, list[str]]]:
     steps: list[tuple[str, list[str]]] = [
         ("spec: file sinh khớp spec", [PY, "spec/generate.py", "--check"]),
         ("spec: test spec và bộ sinh", [PY, "spec/tests/test_spec.py"]),
+        ("spec: pinout Core1106D", [PY, "spec/tests/test_core1106d.py"]),
         ("hardware: test tính toán thiết kế", [PY, "hardware/calc/tests/test_pwr.py"]),
         ("hardware: báo cáo khớp tính toán", [PY, "-m", "hardware.calc.cli", "--check"]),
         ("hardware: test hình học board", [PY, "hardware/geom/tests/test_geom.py"]),
@@ -65,6 +66,8 @@ def build_steps(quick: bool) -> list[tuple[str, list[str]]]:
 
 REQUIRED = {
     "spec/tests/test_spec.py": 1,
+    "spec/tests/test_core1106d.py": 1,
+    "spec/core1106d/pins.csv": 1,
     "hardware/calc/tests/test_pwr.py": 1,
     "hardware/pwr-design.md": 1,
     "hardware/geom/tests/test_geom.py": 1,

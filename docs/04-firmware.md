@@ -115,11 +115,11 @@ Giá trị mặc định: clip 30 s, nghỉ trước khi ngủ 10 s, giữ live 
 **Rủi ro chi phí và replay của SMS (2026-11-09, chưa sửa):** MCU bật SoC khi RI kéo, trước khi token được kiểm; SMS rác hoặc cuộc gọi đến có thể đánh thức nhiều lần; token hiện là chuỗi tĩnh, có thể replay. Kế hoạch bắt buộc trước G0:
 
 1. MCU giới hạn tần suất: tối đa một lần bật SoC mỗi 10 phút do RI, kể cả khi token sai.
-2. Token dạng `W <timestamp> <hmac16>`; SoC kiểm HMAC-SHA256 bằng khóa thiết bị, từ chối timestamp lệch quá 10 phút và ghi nhớ nonce để chống replay.
+2. Token dạng `W <counter> <hmac16>`; SoC kiểm HMAC-SHA256 trên counter, chỉ nhận counter lớn hơn mốc đã lưu. **Không phụ thuộc đồng hồ/RTC**, nên cold boot hoặc RTC_LOST vẫn nhận SMS hợp lệ.
 3. Nếu modem cho đọc số gửi trước khi bật SoC (cần UART phụ, O-12), thêm whitelist số.
 4. Đo chi phí một lần đánh thức (M-35) và đưa vào ngân sách pin.
 
-**Đã hiện thực một phần (2026-11-09):** SoC kiểm HMAC-SHA256, timestamp ±10 phút, chống replay và lưu mốc xuống `wake_last_ts`; từ chối nếu chưa cấu hình `wake_secret`. **Chưa hiện thực:** giới hạn tần suất ở MCU và whitelist số gửi — vẫn là blocker của vòng 7 trong [17](17-san-sang-prototype.md).
+**Đã hiện thực một phần (2026-11-09):** SoC kiểm HMAC-SHA256 trên counter, chống replay và lưu mốc xuống `wake_last_ts`; từ chối nếu chưa cấu hình `wake_secret`. Không dùng timestamp nên không phụ thuộc RTC. **Chưa hiện thực:** giới hạn tần suất ở MCU và whitelist số gửi — vẫn là blocker của vòng 7 trong [17](17-san-sang-prototype.md).
 - Tên lệnh cụ thể (`AT+QNETDEVCTL` hay tương đương) phải đối chiếu datasheet EC200U `[CHƯA XÁC MINH]`.
 
 ### 3.5 Uplink

@@ -90,6 +90,9 @@ typedef struct {
     /* Đặt mức chân ra. */
     void (*gpio_write)(void *ctx, int pin, int level);
 
+    /* Delay ngắn cho giao diện xung (CTRL của sạc). Có thể là no-op trên host. */
+    void (*delay_us)(void *ctx, uint32_t us);
+
     /*
      * Đọc ADC đã hiệu chuẩn: *mv là mili vôn TẠI CHÂN ADC, tức sau mạch chia.
      * Lõi tự nhân hệ số chia trong config.h (FLY_BATT_DIV_NUM/DEN).

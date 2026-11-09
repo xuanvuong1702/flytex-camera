@@ -2,7 +2,7 @@
 
 - Nguồn: `spec/parts.toml`; kiểm tra: `python -m hardware.parts.check --check`.
 - `verified`: **yes** đã đối chiếu datasheet, **partial** mới một phần, **no** chưa mở datasheet.
-- Kết quả: **5 blocker**, 3 cảnh báo. Blocker là việc phải đóng trước khi đặt hàng.
+- Kết quả: **4 blocker**, 3 cảnh báo. Blocker là việc phải đóng trước khi đặt hàng.
 
 ## 1. Linh kiện chính
 
@@ -22,6 +22,7 @@
 | J4 | FH12-20S-0.5SH(55) | FPC 20 pin 0.5 mm | partial | https://www.hirose.com/product/series/FH12 | Connector FPC camera. Pinout phu thuoc module camera (O-02). |
 | J5 | TSW-109-07-G-D | 2x9 2.54 mm | partial | https://www.samtec.com/products/tsw-109-07-g-d | Header modem tren CMP; phai khop breakout co RI. |
 | J6 | DM3AT-SF-PEJM5 | microSD | partial | https://www.hirose.com/product/series/DM3 | Khe microSD; tiep can khi mo vo de nap du phong. |
+| J7 | SSM-113-L-DV | 2x13 2.54 mm socket | partial | https://www.samtec.com/products/ssm-113-l-dv | Socket tren CMP de ghep voi header duc TSM tren PWR; cat chan 26 lam khoa. |
 
 ### Thông số then chốt
 
@@ -55,7 +56,13 @@
 |---|---|---|---|
 | vin_min_v | 3.75 | V | datasheet |
 | vin_max_v | 10.2 | V | datasheet |
-| ichg_a | 1.0 | A | datasheet |
+| ichg_a | 0.935 | A | 11 xung CTRL |
+| ichg_default_a | 0.285 | A | khong gui xung |
+| ctrl_pulses | 11 | xung | bang 1 datasheet |
+| ntc_r1_ohm | 20000 | ohm | tinh theo datasheet |
+| ntc_r2_ohm | 8250 | ohm | tinh theo datasheet |
+| ts_hot_c | 44.9 | C | tinh toan |
+| ts_cold_c | -0.6 | C | tinh toan |
 | vfloat_v | 3.5 | V | datasheet (co dinh) |
 | power_path | True |  | datasheet |
 | lfp_1s | True |  | datasheet |
@@ -144,12 +151,18 @@
 |---|---|---|---|
 | pins | 8 | chan | datasheet |
 
+**J7 — SSM-113-L-DV**
+
+| Thông số | Giá trị | Đơn vị | Nguồn |
+|---|---|---|---|
+| pins | 26 | chan | datasheet |
+
 ## 2. Module ngoài BOM
 
 | ID | Tên | Xác minh | Tài liệu | Ghi chú |
 |---|---|---|---|---|
 | MODEM | EC200U-EU breakout | partial | https://www.quectel.com/product/lte-ec200u-series | Can xac nhan RI ra header, dinh dong burst, va ho tro eDRX/PSM tren mang VN. |
-| SOC | Core1106D1408 | partial | https://wiki.luckfox.com/Core1106D/Introduction/ | Da xac minh 1 cong USB, H.264, bien the eMMC. Chua nap ban ve chan 112 pin (file XLS cua Luckfox) vao repo. |
+| SOC | Core1106D1408 | partial | https://wiki.luckfox.com/Core1106D/Introduction/ | Da xac minh 1 cong USB, H.264, bien the eMMC; da nap 112 chan tu Core1106D-PinOut.xls vao spec/core1106d/pins.csv. |
 | CAMERA | Module camera FPC 20 chan co IR-CUT | no | — | CHUA CHON module. Pinout, dien ap, so lane MIPI va thu tu chan deu chua biet. Day la chan cua CMP. |
 | PACK | Pack LFP 1S 15 Ah co BMS | no | — | CHUA CHON nha cung cap. Can UN38.3, IEC 62133, BMS <=100 uA, sac >=1,5 A, NTC. |
 
@@ -159,7 +172,6 @@
 |---|---|---|
 | blocker | U2 | chua chot gia tri dien tro VSET (R_SET) cho TPS62840 |
 | blocker | MODEM | chua xac nhan breakout dua RI ra header - kenh Watch khong chay |
-| blocker | SOC | chua nap ban ve 112 chan cua Core1106D - khong ve duoc CMP |
 | blocker | CAMERA | chua chon camera va pinout FPC |
 | blocker | PACK | chua co pack/BMS kem UN38.3, IEC 62133, tu tieu <=100 uA |
 | warn | MODEM | dinh dong 2 A la gia dinh chua do; xac nhan bang M-36 |

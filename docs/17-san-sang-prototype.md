@@ -118,13 +118,19 @@ Người dùng chạy trên Ubuntu 24.04 + gcc 13.3 và rà datasheet, phát hi�
 |---|---|---|---|
 | 7-1 | `firmware/mcu/src/regmap.c` (và 3 file C khác) dùng `NULL` thiếu `<stddef.h>`; gcc `-Werror` làm **CI đỏ** ở commit `f5a699e`. Bằng chứng: GitHub Actions run `42611830406` kết luận `failure` | Chặn | Đã thêm include cho 4 file nguồn + 3 header + 9 file test; thêm `tools/check_c_includes.py` vào CI. Run `42613060903` cho commit `08a35e7`: **success** |
 | 7-2 | BQ25798 mặc định 1S 4,2 V/2 A, watchdog 40 s reset VREG/ICHG/EN_CHG; MCU không có I2C master, SoC tắt khi Eco/Watch → không ai đặt 3,6 V. Nguy cơ sạc LFP tới 4,2 V | Chặn | **Loại BQ25798**, chọn **BQ25070** (float 3,5 V cố định, power-path, NTC, standalone 1 A — D-23); BOM/parts/docs cập nhật |
-| 7-3 | NTC 7,15 kΩ/42,5–47,5 % VIN là của IC CAM4G cũ, không áp dụng cho IC mới; FR-10 "cắt bằng phần cứng" không còn đúng; firmware CHG_INHIBIT mâu thuẫn | Chặn | [02](02-thiet-ke-nguon.md) §6.3 viết lại cho BQ25070; pwr-design §4 ghi mạng NTC chưa chốt; **còn phải tính và đo M-05** |
+| 7-3 | NTC 7,15 kΩ/42,5–47,5 % VIN là của IC CAM4G cũ, không áp dụng cho IC mới; FR-10 "cắt bằng phần cứng" không còn đúng; firmware CHG_INHIBIT mâu thuẫn | Chặn | Đã tính mạng BQ25070: R1=20 kΩ, R2=8,25 kΩ, cắt nóng 44,9 °C/lạnh −0,6 °C; R5 DNP; còn đo M-05 |
 | 7-4 | Hai "đính chính" gói ở vòng 1 là **sai**: TPS62840DLCR là SON-8 1,5×2 (DLC), M24C32-FMN6TP là SO-8 150 mil; chỉ STM32 UFQFPN-28 là đúng | Chặn | Khôi phục BOM/parts/checklist; ghi bài học: test BOM chỉ kiểm nhất quán nội bộ, không kiểm datasheet |
 | 7-5 | +3V3 không phải 3,3 V: buck ở VIN 3,0–3,3 V chuyển 100 % duty, đầu ra bám pin; DS18B20 min 3,0 V | Chặn | Ghi rõ dải 3,0–3,3 V trong [02](02-thiet-ke-nguon.md) §5; thêm O-16; phải đo M-02/M-41 |
 | 7-6 | BOM thiếu linh kiện phụ: cuộn cảm/tụ sạc, Rd USB-C, TVS VBUS, Rfsw/Rilim/COMP/boot/VCC/SS boost, CT load switch; 470 µF chưa rõ trước/sau công tắc; tụ ra boost mất dung lượng do DC bias; docs/02 §4 còn 178k/56k mâu thuẫn 169k/53,6k | Chặn | Đã thêm các dòng còn thiếu + đánh dấu phần phụ thuộc IC sạc; sửa docs/02; ghi chú derating |
 | 7-7 | Pin LFP: ngưỡng cảnh báo 3,1 V/phục hồi 3,3 V và lấy mẫu tức thời dễ khóa thiết bị sai; cần lọc và ngưỡng theo tải | Chặn | **Đã sửa:** 3,05/2,90/3,20 V, đếm 6/3/12 mẫu (EMA chỉ log); 6 test battery; vẫn phải đo lại G0 |
-| 7-8 | SMS đánh thức: token kiểm sau khi SoC đã boot; SMS rác/cuộc gọi có thể tiêu pin; token plaintext, replay, không whitelist số | Chặn | **Đã sửa một phần:** HMAC-SHA256 + timestamp ±10 phút + chống replay + lưu mốc; **còn** giới hạn tần suất ở MCU và whitelist |
+| 7-8 | SMS đánh thức: token kiểm sau khi SoC đã boot; SMS rác/cuộc gọi có thể tiêu pin; token plaintext, replay, không whitelist số | Chặn | **Đã sửa:** HMAC-SHA256 trên counter + chống replay + lưu mốc + **giới hạn 1 wake/10 phút ở MCU**; còn whitelist số (cần UART phụ O-12) |
 | 7-9 | IWDG chạy trong STOP chưa chốt; eDRX/PSM phụ thuộc nhà mạng nên mọi ước tính tuổi thọ Watch là có điều kiện | Cao | Ghi quyết định/đo ở G0; không dùng số 3–5 mA như số chắc chắn |
+| 7-11 | BQ25070 CTRL là **giao diện xung một dây**, không phải điện trở; mặc định 285 mA, 11 xung ≈ 935 mA; BOM ghi R11 "điện trở" và không có GPIO | Chặn | Sửa BOM (R11 DNP), thêm GPIO `CHG_CTRL` + firmware phát 11 xung lúc boot (2 test); docs/02 §6.2 viết lại |
+| 7-12 | "Power-path" BQ25070 chỉ chịu 1,2 A; boost 5 V đỉnh 5,56 A, phải nối thẳng VBAT; tài liệu chưa nói rõ | Chặn | docs/02 §6.4 viết rõ boost đấu thẳng VBAT, pin cấp đỉnh, sạc chia 1,2 A; đo M-01/M-36 |
+| 7-13 | J_B2B dùng **header đực ở cả hai board** và không khóa; R5 7,15 kΩ còn trong BOM | Chặn | CMP đổi sang socket cái SSM-113-L-DV; cắt chân 26 làm khóa (D-24); R5 DNP |
+| 7-14 | `wake_secret` nằm trong ALLOWED_KEYS nên **đổi được từ xa** qua MQTT | Chặn | Tách REMOTE_KEYS, cấm secret/token; test MQTT payload không chứa secret |
+| 7-15 | Token SMS dùng timestamp, cold boot/RTC_LOST từ chối SMS hợp lệ | Cao | Đổi sang **counter** tăng dần + HMAC; không phụ thuộc RTC; test cold boot |
+| 7-16 | Chưa có pinout Core1106D | Chặn | Đã nhập 112 chân từ XLS Luckfox vào `spec/core1106d/pins.csv` + 5 test |
 | 7-10 | Port STM32L0 chỉ là khung; nvm/temp trả ENOSYS; test "đạt" là test host với HAL giả | Cao | Không đổi: đây là giới hạn đã biết, nhưng phải ghi rõ trong mọi tuyên bố "chạy được" |
 
 Kết luận vòng 7: **không đạt**. Kết luận "đủ điều kiện dựng prototype" ở §4 bị **thu hồi**.
@@ -133,12 +139,12 @@ Kết luận vòng 7: **không đạt**. Kết luận "đủ điều kiện dự
 
 **CHƯA đủ điều kiện dựng prototype.** Lý do chặn:
 
-1. An toàn sạc: đã chọn BQ25070 (float 3,5 V cứng, power-path, NTC), nhưng **chưa tính CTRL/mạng NTC** và chưa đo M-05.
-2. FR-10: IC có NTC phần cứng, nhưng mạng NTC và ngưỡng thực tế chưa chốt/đo.
-3. BOM còn thiếu linh kiện phụ và còn dòng `not-chosen`.
-4. Pin LFP: ngưỡng cảnh báo/phục hồi chưa phù hợp; chưa lọc.
-5. SMS đánh thức chưa có giới hạn chi phí/chống replay.
-6. CI từng đỏ; chỉ được tuyên bố xanh sau khi GitHub Actions xác nhận `success` (run `42613060903` cho `08a35e7` đã xanh).
+1. An toàn sạc: BQ25070, CTRL 11 xung = 935 mA, NTC R1/R2 đã tính; còn đo M-05 và kiểm tồn kho.
+2. FR-10: mạng NTC đã chốt (44,9/−0,6 °C), còn đo thực tế.
+3. BOM còn thiếu linh kiện phụ và còn dòng `not-chosen` (VSET buck).
+4. Pin LFP: đã sửa ngưỡng/lọc; còn đo G0.
+5. SMS: đã có HMAC counter + rate limit; còn whitelist số.
+6. CI đã xanh cho các commit sửa lỗi; phải tiếp tục xác nhận ở commit cuối.
 
 Ba vòng 4–6 trước đây chỉ chứng minh các artifact nội bộ nhất quán; chúng **không** phát hiện được lỗi datasheet, lỗi gcc hay lỗi kiến trúc sạc. Quy trình đã được sửa: từ nay C-10/C-12 chỉ được coi là đạt khi có (a) datasheet được mở và ghi nguồn, (b) CI thật xanh.
 
