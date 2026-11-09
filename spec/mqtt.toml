@@ -194,3 +194,8 @@ fields = [
   { name = "result", type = "object", required = false },
   { name = "error", type = ["string", "null"], required = true, desc = "Mã lỗi dạng BAD_ARGS, BUSY, NOT_IMPLEMENTED" },
 ]
+
+[command_wire]
+shape = "flat"
+desc = "Bản tin lệnh: `type` là tên lệnh, tham số nằm ở mức ngoài cùng. Không có trường `cmd` hay `args`; bản tin dạng lồng nhau bị từ chối BAD_ARGS."
+example = '{"v":1,"id":"0123456789abcdef","dev":"abc123def456","ts":1700000000,"type":"mode.set","mode":"watch"}'

@@ -1,0 +1,47 @@
+name: ci
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Lay ma nguon
+        uses: actions/checkout@v4
+
+      - name: Cai Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Kiem tra compiler
+        run: |
+          gcc --version
+          python --version
+
+      - name: File sinh phai khop spec
+        run: |
+          python spec/generate.py --check
+          git diff --exit-code
+
+      - name: Chay toan bo test
+        run: python run_tests.py
+        env:
+          PYTHONIOENCODING: utf-8
+          PYTHONUTF8: "1"
+
+      - name: Luu bao cao mo phong
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sim-report
+          path: |
+            sim/build/*.json
+            sim/build/*.log
+          if-no-files-found: ignore
+          retention-days: 7

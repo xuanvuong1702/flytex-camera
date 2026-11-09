@@ -166,9 +166,10 @@ dir = "CMP->PWR"
 
 [[pins]]
 num = 21
-name = "SPARE_MCU1"
-net = "SPARE_MCU1"
-dir = "PWR->CMP"
+name = "MODEM_RI"
+net = "MODEM_RI"
+dir = "CMP->PWR"
+desc = "Ring Indicator từ modem về MCU. Kênh đánh thức khi SoC tắt (docs/15 §4.2)"
 
 [[pins]]
 num = 22

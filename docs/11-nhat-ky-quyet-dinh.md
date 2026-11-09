@@ -1,6 +1,6 @@
 # 11 — Nhật ký quyết định
 
-- Trạng thái: Dự thảo v0.1
+- Trạng thái: v1.3, chốt thêm 4 quyết định ngày 2026-11-09
 - Ngày: 2026-11-09
 
 Ba nhóm: đã chốt, đề xuất (chờ xác nhận), và câu hỏi mở. Khi một mục đổi trạng thái, ghi ngày và lý do thay vì xóa.
@@ -12,6 +12,10 @@ Ba nhóm: đã chốt, đề xuất (chờ xác nhận), và câu hỏi mở. Kh
 | D-01 | Làm lại từ đầu; tài liệu nằm ở repo này, không kế thừa file thiết kế của CAM4G | 2026-11-09 | Kế thừa bài học ([12](12-bai-hoc-tu-cam4g.md)) |
 | D-02 | Pin là pack 1S LFP có sẵn BMS, không tự ghép cell | 2026-11-09 | Kéo theo mục 7 của [02](02-thiet-ke-nguon.md) |
 | D-03 | Sạc bằng USB-C 5 V | 2026-11-09 | Giữ pack 1S và boost; không dùng pack điện áp cao với buck |
+| D-16 | Dùng **bộ sạc xung có power-path ngay từ Rev A**, không dùng sạc tuyến tính | 2026-11-09 | Chủ dự án chốt. Lý do: F-04 — 0,5 A cần 20–30 giờ và tải không bao giờ đầy. Chọn IC cụ thể vẫn mở (O-05) |
+| D-18 | Pack LFP 1S **15 Ah** (48 Wh danh định) | 2026-11-09 | Chủ dự án chốt. 10 Ah không còn dư cho kịch bản đêm (F-05). Kéo theo: BMS sạc ≥1,5 A, tự tiêu ≤100 µA |
+| D-19 | Module **eMMC 8 GB** (Core1106D1408 hoặc D1808), không dùng bản 256 MB SPI NAND | 2026-11-09 | Chủ dự án chốt. NAND không đủ OTA A/B + runtime Python (F-08) |
+| D-21 | Đổi một chân dự phòng trên J_B2B lấy `MODEM_RI` (chân 21) | 2026-11-09 | Chủ dự án chốt. RI là đường đánh thức SMS; số chân dự phòng còn 2 |
 
 ## 2. Đề xuất
 
@@ -20,29 +24,38 @@ Ba nhóm: đã chốt, đề xuất (chờ xác nhận), và câu hỏi mở. Kh
 | D-04 | Tách PWR, CMP, MDM | Mỗi board một luật layout, mỗi lần đặt chỉ sửa một board | Chủ dự án đồng ý |
 | D-05 | Giữ MCU giám sát | Luôn bật, quản lý nguồn và PIR | Đo dòng ở G2 |
 | D-06 | Không dùng INA226; dùng header đo dòng ngoài | Chip không đo được dòng ngủ; bớt linh kiện | |
-| D-07 | Modem: USB cho dữ liệu, UART cho AT | UART 921600 baud không đủ cho video | Xác minh ở G0 (O-01) |
+| D-07 | Modem: USB cho dữ liệu, UART cho AT | UART 921600 baud không đủ cho video | G0 |
 | D-08 | Camera có IR-CUT và LED IR tích hợp | Bớt mạch điều khiển IR | Chọn module (O-02) |
 | D-09 | Core1106 dạng module OEM, chưa chip-down | Giảm rủi ro và công sức | |
 | D-10 | Giai đoạn 0 đo trên dev board | Mọi con số công suất đang là ước tính | |
 | D-11 | Board thử footprint trước mỗi lần spin | Footprint là nhóm lỗi nhiều nhất ở CAM4G | |
 | D-12 | Relay mã nguồn mở cho xem trực tiếp | Tránh tự viết signaling | Thử độ trễ ở G0 |
-| D-13 | USB-C chỉ cấp nguồn, không nối D+/D− | Cổng USB của SoC dành cho modem | Xác minh (O-01) |
-| D-14 | Board PWR thiết kế cho pack tới 15 Ah; prototype 10 Ah | 10 Ah gần như không dư cho kịch bản đêm | Đo ở G0 |
+| D-13 | USB-C chỉ cấp nguồn, không nối D+/D− | Cổng USB của SoC dành cho modem | **Đã xác nhận bằng tài liệu kỹ thuật**: Core1106 có 1 cổng USB; đây vẫn là đề xuất chờ chủ dự án chốt |
+| D-14 | Board PWR thiết kế cho pack tới 15 Ah | Nay D-18 chốt đúng 15 Ah | Đã đáp ứng bởi D-18 |
 | D-15 | NTC cắt sạc đặt trên pack | Đo đúng nhiệt độ cell | Pack có dây NTC (O-03) |
-| D-16 | Prototype dùng bộ sạc tuyến tính, sạc khi nghỉ; production dùng bộ sạc xung có power-path | Đơn giản trước, chuẩn sau | O-05 |
+| D-17 | Kênh đánh thức khi ngủ: **SMS + `MODEM_RI`**; `EDRX_MQTT` chỉ dùng khi cần độ trễ thấp; `MODEM_TCP_POLL` chờ O-12 | Ở chế độ Watch SoC tắt, không ai giữ MQTT; MCU không chạy TLS ([13](13-tinh-kha-thi.md) F-02) | Thử ba mạng (M-35) |
+| D-20 | Đường nạp dịch vụ: pad USB trên board + mux USB 2.0 điều khiển bằng GPIO (phương án A) | Một cổng USB vừa cho modem vừa cho nạp (F-01) | Chốt ở G0 sau khi thử (M-34) |
+| D-22 | Xem trực tiếp dùng **WebRTC/WHEP** qua MediaMTX, không dùng HLS | HLS 2–6 s, không đạt 1,5 s (F-06) | Đo M-31, M-39 |
+| D-23 | Regmap v1.1: mọi trường nhiều byte big-endian; `spec/*.toml` là nguồn sự thật, mã và bảng sinh tự động | Bản nháp mâu thuẫn little/big-endian; chép tay gây trôi số liệu | Chủ dự án xác nhận |
+| D-24 | Ứng dụng Linux viết bằng **Python 3 thuần thư viện chuẩn**, paho-mqtt là tùy chọn | Dựng nhanh, test được trên máy tính; camera và mã hóa vẫn do SDK C lo | Đo RAM/flash trên thiết bị (R-27) |
+| D-25 | CI chạy `spec/generate.py --check`, test firmware/app/tools, mô phỏng end-to-end | Thực thi nguyên tắc "mỗi con số một nguồn" bằng máy, không bằng lời hứa | |
+| D-26 | Hợp đồng MQTT theo `spec/mqtt.toml`: phong bì chung, QoS 1, `status` retained, `ack` theo `id`, lệnh dạng phẳng (`type` = tên lệnh) | Một nguồn cho cả thiết bị và cloud | Cloud team xác nhận |
 
 ## 3. Câu hỏi mở
 
-| ID | Câu hỏi | Cần để | Đóng ở |
+| ID | Câu hỏi | Cần để | Trạng thái |
 |---|---|---|---|
-| O-01 | Core1106 có mấy cổng USB? Có host cho modem đồng thời với nạp firmware không? | D-07, D-13 | G0 |
-| O-02 | Module camera cụ thể và pinout FPC 20 chân | Vẽ CMP | G0 |
-| O-03 | Pack LFP và BMS cụ thể: dòng xả, ngưỡng, NTC, khôi phục, giấy tờ | Mục 7 của [02](02-thiet-ke-nguon.md) | G0 |
-| O-04 | Breakout EC200U-EU nào đủ yêu cầu (USB ra, hạ áp, đổi mức)? | Header J_MODEM | G0 |
-| O-05 | Chip sạc production và power-path | Giai đoạn 5 | G2 |
-| O-06 | Giải pháp cổng USB-C chống nước | Vỏ | G4 |
-| O-07 | Vị trí và loại ăng-ten 4G với vỏ nhôm | Vỏ | G0 |
-| O-08 | OTA có khả thi trên SDK Core1106 không? | FR-07 | G0 |
-| O-09 | eDRX/PSM có dùng được trên các nhà mạng Việt Nam không? | Chế độ Watch | G0 |
-| O-10 | Lộ trình chứng nhận và quy định tại Việt Nam | Giai đoạn 5 | G5 |
-| O-11 | Số cổng GPIO, UART mà Core1106 mở ra có đủ cho J_B2B và header | Vẽ CMP | G0 |
+| O-01 | Core1106 có mấy cổng USB? Có host cho modem đồng thời với nạp firmware không? | D-07, D-13 | **Đã đóng 2026-11-09**: đúng 1 cổng USB 2.0 Host/Device, theo [tài liệu Luckfox Core1106D](https://wiki.luckfox.com/Core1106D/Introduction/). Hệ quả: D-20 |
+| O-02 | Module camera cụ thể và pinout FPC 20 chân | Vẽ CMP | Mở — chặn layout CMP |
+| O-03 | Pack LFP và BMS cụ thể: dòng xả, dòng sạc ≥1,5 A, tự tiêu ≤100 µA, NTC, khôi phục, giấy tờ | Mục 7 của [02](02-thiet-ke-nguon.md) | Mở — chặn mua pack |
+| O-04 | Breakout EC200U-EU nào đủ yêu cầu (USB ra, hạ áp, đổi mức, **RI ra header**)? | Header J_MODEM | Mở |
+| O-05 | IC sạc xung LFP 1S có power-path, còn hàng, giá hợp lý | Layout PWR Rev A | Mở — sớm hơn bản nháp (D-16) |
+| O-06 | Giải pháp cổng USB-C chống nước | Vỏ | Mở |
+| O-07 | Vị trí và loại ăng-ten 4G với vỏ nhôm | Vỏ | Mở |
+| O-08 | OTA có khả thi trên SDK Core1106 không? A/B có vừa eMMC không? | FR-07 | Mở |
+| O-09 | eDRX/PSM có dùng được trên các nhà mạng Việt Nam không? | Chế độ Watch | Mở |
+| O-10 | Lộ trình chứng nhận và quy chuẩn áp dụng tại Việt Nam | Giai đoạn 5 | Mở — hỏi sớm, trước khi làm vỏ |
+| O-11 | Số cổng GPIO, UART mà Core1106 mở ra có đủ cho J_B2B và header? | Vẽ CMP | Mở — đã biết module có 6 UART, 5 I2C, 12 PWM nhưng chưa biết chân nào ra stamp hole |
+| O-12 | EC200U có bộ lệnh MQTT hoặc UART phụ để MCU tự hỏi cloud không? | Kênh `MODEM_TCP_POLL` | Mở — nếu đóng, Watch có thêm phương án dự phòng |
+| O-13 | Mux USB cụ thể (ví dụ TS3USB221A) và ai điều khiển `USB_SEL`? | J_B2B phiên bản sau, layout CMP | Mở |
+| O-14 | Có cần gauge pin để báo phần trăm không, hay chỉ báo mV? | Ứng dụng, UI | Mở — LFP có đường cong phẳng, đừng suy phần trăm từ điện áp |

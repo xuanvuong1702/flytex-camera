@@ -1,0 +1,32 @@
+[Unit]
+Description=Flytex camera device service
+Documentation=file:/data/docs/16-van-hanh.md
+After=network-online.target
+Wants=network-online.target
+# Không khởi động lại vô hạn khi thiếu chứng chỉ: để Restart=on-failure xử lý,
+# nhưng giới hạn để tránh quay vòng pin khi pin yếu.
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 -m flytex.cli run --config /data/config.json
+WorkingDirectory=/data
+Restart=on-failure
+RestartSec=5
+WatchdogSec=60
+TimeoutStopSec=20
+Environment=PYTHONUNBUFFERED=1
+# Quyền tối thiểu: cần I2C, UART modem, thẻ nhớ, phân vùng định danh.
+User=flytex
+Group=flytex
+SupplementaryGroups=i2c dialout
+# Không cho ghi vào hệ thống file gốc; chỉ /data và /tmp.
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+NoNewPrivileges=true
+ReadWritePaths=/data
+
+[Install]
+WantedBy=multi-user.target

@@ -26,7 +26,7 @@
 | 18 | MODEM_RESET | PWR->CMP |  | Từ MCU ra header modem |
 | 19 | MODEM_STATUS | CMP->PWR |  | Từ modem về MCU |
 | 20 | SPARE_SOC1 | CMP->PWR |  |  |
-| 21 | SPARE_MCU1 | PWR->CMP |  |  |
+| 21 | MODEM_RI | CMP->PWR |  | Ring Indicator từ modem về MCU. Kênh đánh thức khi SoC tắt (docs/15 §4.2) |
 | 22 | SPARE_SOC2 | CMP->PWR |  |  |
 | 23 | +5V_MODEM | PWR->CMP | 1.0 |  |
 | 24 | GND | - | 1.0 |  |

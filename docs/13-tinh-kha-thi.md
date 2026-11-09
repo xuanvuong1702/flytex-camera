@@ -64,19 +64,21 @@ Nếu giữ SoC bật để giữ MQTT: SoC Linux nghỉ ở mức 30–80 mA `[
 
 **Hệ quả.** Nếu không sửa, chế độ Watch hoặc không chạy được, hoặc chạy được nhưng phá mục tiêu pin.
 
-**Cách sửa.** Tách "kênh đánh thức" khỏi MQTT. Chốt ba kênh, chọn bằng thanh ghi `WAKE_CHAN` (đã thêm vào spec v1.1):
+**Cách sửa.** Tách "kênh đánh thức" khỏi MQTT và chốt theo khả năng thực của phần cứng:
 
-| Kênh | Cơ chế | Độ trễ lệnh | Dòng trung bình `[ƯỚC TÍNH]` |
-|---|---|---|---|
-| `MODEM_TCP_POLL` | MCU đánh thức modem theo chu kỳ, modem mở TCP ngắn tới cloud, hỏi có lệnh không | 1–3 chu kỳ, mặc định 15 phút | ~15–25 mW (gồm cả chân ngủ) |
-| `SMS` | Cloud gửi SMS, modem báo `+CMTI`, MCU đánh thức SoC | 5–30 s | ~10–20 mW |
-| `EDRX_MQTT` | SoC bật, giữ MQTT | 1–2 s | 130–300 mW |
+| Kênh | Cơ chế | Ai chạy TCP | Độ trễ lệnh `[ƯỚC TÍNH]` | Dòng trung bình `[ƯỚC TÍNH]` |
+|---|---|---|---|---|
+| `SMS` + `MODEM_RI` | Modem ở eDRX nhận SMS, kéo RI, MCU bật SoC | SoC, sau khi thức | 5–30 s | 10–25 mW |
+| `MODEM_TCP_POLL` | MCU mở socket ngắn qua TCP stack của modem | **Cần UART phụ modem→MCU**, hiện chưa có | 1–3 chu kỳ (15 phút) | 15–25 mW |
+| `EDRX_MQTT` | SoC bật, giữ MQTT | SoC | 1–2 s | 130–300 mW |
 
-Với pack 27,2 Wh: `MODEM_TCP_POLL` cho ~40 ngày chờ, `SMS` ~45 ngày, `EDRX_MQTT` ~4 ngày. Chế độ Eco (modem tắt) ~300 ngày. Đây là lý do Watch và Eco phải là hai chế độ khác nhau, không phải một tham số của cùng một cơ chế.
+**Chốt:** Watch dùng `SMS` + `MODEM_RI`. Kênh này không cần MCU hiểu TCP, chỉ cần một chân RI — đã thêm vào J_B2B chân 21 (`spec/b2b.toml`). Kênh `MODEM_TCP_POLL` chỉ khả thi nếu thêm một UART phụ từ modem tới MCU hoặc modem có bộ lệnh MQTT; cả hai chưa xác minh (O-12), nên **không** được dùng làm giả định thiết kế.
 
-**Điểm còn hở:** MCU không tự chạy được TCP; nó chỉ cấp nguồn modem và báo `WAKE_ALARM`, còn phần TCP do modem thực hiện qua lệnh AT, phần xử lý lệnh do SoC sau khi thức. Nếu muốn MCU tự quyết định "có lệnh hay không" mà không bật SoC, phải thêm một MCU có TCP stack hoặc dùng modem có MQTT AT command — chưa xác minh EC200U có bộ lệnh MQTT. Ghi thành O-12.
+**Hệ quả năng lượng** (pack 27,2 Wh dùng được): Watch ~60–100 ngày, Eco ~300 ngày, `EDRX_MQTT` ~7 ngày. Con số này phải thay bằng M-02, M-03, M-10.
 
-**Sửa ở đâu:** [05](05-ket-noi-va-cloud.md) §2, [01](01-kien-truc.md) §3, spec `WAKE_CHAN`/`WAKE_PERIOD_S`, [15](15-giao-thuc-va-cloud.md) §4.
+**Chi phí ẩn:** mỗi lần đánh thức bằng SMS tốn một SMS của nhà mạng. Với sản phẩm bán ra, đây là chi phí vận hành, không chỉ là chi phí kỹ thuật; phải tính trong giá dịch vụ hoặc xin nhà mạng gói SMS doanh nghiệp.
+
+**Sửa ở đâu:** [05](05-ket-noi-va-cloud.md) §2, [01](01-kien-truc.md) §3, [15](15-giao-thuc-va-cloud.md) §4, spec `WAKE_CHAN`/`WAKE_PERIOD_S`, `spec/b2b.toml` chân 21.
 
 ### F-03 `[CHẶN NHẸ]` Ngân sách rail 5 V thiếu khi modem phát
 
@@ -98,11 +100,11 @@ Tụ bulk 470 µF trên breakout giúp san burst, nhưng công tắc tải và c
 
 **Hệ quả.** Người dùng cắm sạc qua đêm 12 giờ được 6 Ah, trong khi một ngày dùng có thể tiêu 5–10 Wh. Pin không bao giờ đầy; tuổi thọ thực tế giảm một nửa; và tổn hao (5−3,6)×1 A = 1,4 W nằm trong vỏ kín ở 45 °C là bài toán nhiệt, không chỉ là hiệu suất.
 
-**Cách sửa.** Đưa bộ sạc xung có power-path vào **prototype**, không đợi production:
+**Cách sửa.** `[ĐÃ CHỐT]` (D-16) dùng bộ sạc xung có power-path ngay từ **Rev A**, không đợi production:
 - IC chuyên LFP 1S có power-path (ví dụ LTC4098-3.6, hoặc IC buck-boost chọn được điện áp sạc 3,6 V); dòng sạc 1,5–2 A;
-- hoặc chấp nhận chậm nhưng **phải** có power-path để tải không lấy từ pin khi đang sạc.
+- **phải** có power-path để tải không lấy từ pin khi đang sạc.
 
-Điều kiện đi kèm: pack/BMS phải cho sạc ≥1,5 A; nguồn USB-C phải cấp được ≥1,5 A (với CC chỉ Rd, nhiều củ sạc vẫn cấp 5 V/2 A, nhưng không đảm bảo — cần đo).
+Điều kiện đi kèm: pack/BMS phải cho sạc ≥1,5 A; nguồn USB-C phải cấp được ≥1,5 A (với CC chỉ Rd, nhiều củ sạc vẫn cấp 5 V/2 A, nhưng không đảm bảo — cần đo). Chọn IC cụ thể vẫn mở (O-05).
 
 **Sửa ở đâu:** [02](02-thiet-ke-nguon.md) §6.2, D-16 đổi thành "sạc xung có power-path ngay từ Rev A".
 
@@ -122,7 +124,7 @@ Ba vấn đề nằm sau con số 98 %:
 2. LFP mất 15–20 % dung lượng ở 0 °C; đêm lạnh làm con số 7,2 h tụt xuống dưới 6 h.
 3. Dòng tự tiêu của BMS (50–500 µA `[ƯỚC TÍNH]`) không nằm trong phép đo của board nhưng vẫn tiêu pin.
 
-**Cách sửa.** Chọn pack 15 Ah ngay từ prototype (board đã thiết kế cho 15 Ah), hoặc giảm công suất IR (PWM, chỉ bật IR khi ghi chứ không khi live), hoặc cả hai. Ghi yêu cầu **BMS tự tiêu ≤100 µA** vào tiêu chí mua pack.
+**Cách sửa.** `[ĐÃ CHỐT]` (D-18) pack 15 Ah ngay từ prototype. Nếu buộc phải dùng pack nhỏ hơn: giảm công suất IR (PWM, chỉ bật IR khi ghi chứ không khi live). Ghi yêu cầu **BMS tự tiêu ≤100 µA** vào tiêu chí mua pack.
 
 ### F-06 `[QUAN TRỌNG]` Chỉ số trễ live ≤1,5 s loại bỏ HLS
 
@@ -154,7 +156,7 @@ Tính sơ bộ `[ƯỚC TÍNH]`: vỏ 120×80×45 mm, diện tích ngoài 0,037 
 
 Core1106D có bốn biến thể: 256 MB SPI NAND hoặc 8 GB eMMC; DDR 256/512 MB. Kế hoạch OTA A/B hai phân vùng rootfs cộng runtime Python (~20–40 MB) không vừa 256 MB NAND một cách thoải mái. `[ƯỚC TÍNH]`
 
-**Cách sửa.** Chốt biến thể **eMMC** (Core1106D1408 hoặc D1808) cho thiết bị; dùng bản NAND chỉ cho dev board nếu đã mua. Cập nhật A-01.
+**Cách sửa.** `[ĐÃ CHỐT]` (D-19): biến thể **eMMC** (Core1106D1408 hoặc D1808) cho thiết bị; dùng bản NAND chỉ cho dev board nếu đã mua. A-01 đã cập nhật.
 
 ### F-09 `[NHỎ]` Tài liệu tự mâu thuẫn
 
@@ -205,19 +207,20 @@ Thiết bị có modem LTE cần chứng nhận hợp quy thiết bị đầu cu
 
 ### 7.1 Linh kiện cho một bộ prototype
 
-| Hạng mục | Giá tham khảo (USD) | Ghi chú |
+| Hạng mục | Giá tham khảo (USD/bộ) | Ghi chú |
 |---|---|---|
-| Core1106D14N256 hoặc D1408 | 12–25 | Chọn eMMC (F-08) |
-| Dev board Luckfox Pico Max (cho G0) | 15–30 | Chỉ dùng để đo, không lên sản phẩm |
-| Breakout EC200U-EU | 15–35 | Phải có USB ra, hạ áp, đổi mức |
+| Core1106D1408 (eMMC 8 GB) | 15–25 | Chọn eMMC (F-08); bản NAND rẻ hơn nhưng không dùng cho sản phẩm |
+| Breakout EC200U-EU | 15–35 | Phải có USB ra, hạ áp, đổi mức, RI |
 | Module camera SC3336 có IR-CUT + IR LED | 8–18 | Pinout FPC 20 chân |
-| Pack LFP 10 Ah có BMS | 25–45 | Cần UN38.3, NTC, BMS ≤100 µA |
-| Pack LFP 15 Ah có BMS | 40–75 | Phương án khuyến nghị |
-| PCB 4 lớp, 5 bộ | 60–120 | Tuỳ kích thước |
-| PCBA (2 loại board, 5 bộ) | 250–600 | Stencil + lắp + linh kiện |
+| Pack LFP 15 Ah có BMS | 40–75 | Cấu hình chốt; 10 Ah (25–45) chỉ để thử trên bàn |
+| PCB 4 lớp | 12–24 | 5 bộ khoảng 60–120 USD |
+| PCBA 2 loại board | 50–120 | 5 bộ khoảng 250–600 USD, gồm stencil và linh kiện |
 | Vỏ nhôm CNC hoặc hộp có sẵn | 20–80 | Prototype |
 | Phụ kiện (ăng-ten, cáp, SIM) | 30–60 | Ba nhà mạng |
-| **Tổng một bộ** | **~150–300** | Không gồm dev board và dụng cụ |
+| **Tổng một bộ** | **~190–440** | Không gồm dev board và dụng cụ |
+| **Năm bộ** | **~950–2.200** | Đủ cho hai vòng board |
+
+Dev board Luckfox Pico Max (15–30 USD) chỉ dùng cho G0, không tính vào bộ sản phẩm.
 
 ### 7.2 Dụng cụ đo (mua một lần)
 
@@ -250,13 +253,15 @@ Phần cứng không thể kiểm chứng khi chưa mua linh kiện, nhưng ph�
 
 | Hạng mục | Trạng thái | Bằng chứng |
 |---|---|---|
-| Hợp đồng regmap sinh tự động | Xong | `spec/registers.toml` → header C + module Python + bảng |
+| Hợp đồng regmap sinh tự động | Xong | `spec/registers.toml` → header C + module Python + bảng; 29 test đặc tả |
 | Pinout J_B2B sinh tự động, có kiểm dòng | Xong | `spec/b2b.toml` → bảng + kiểm hệ số dư |
 | Hợp đồng MQTT sinh tự động | Xong | `spec/mqtt.toml` → JSON schema + module Python |
-| Firmware MCU: regmap, nguồn, pin, nhiệt, lịch, NVM, STOP | Xong, test host | `firmware/mcu/tests` |
-| Ứng dụng Linux: máy trạng thái, AT, ghi, hàng đợi, lệnh | Xong, test host | `app/tests` |
-| Mô phỏng end-to-end firmware C + app | Xong | `sim/` |
-| Công cụ đo G0 | Xong | `tools/measure` |
+| Tính toán thiết kế PWR Rev A | Xong, **28 test** | `hardware/calc/` → [hardware/pwr-design.md](../hardware/pwr-design.md) |
+| Firmware MCU: regmap, nguồn, pin, nhiệt, lịch, NVM, STOP | Xong, **59 test host** | `python firmware/mcu/tests/build.py test` |
+| Ứng dụng Linux: máy trạng thái, AT, ghi, hàng đợi, lệnh | Xong, **125 test host** | `app/tests` |
+| Mô phỏng end-to-end firmware C + app | Xong, **5 kịch bản** | `python sim/run.py --scenario all` |
+| Công cụ đo G0 và kiểm tài liệu | Xong, **108 test** | `tools/measure`, `tools/docs_check` |
+| Toàn bộ chạy một lệnh | **23/23 bước đạt** | `python run_tests.py` |
 | Mã chạy camera thật (RK MPI) | **Chưa** | Cần SDK và dev board |
 | Port STM32L0 thật | **Khung** | Cần SDK và board |
 | OTA có chữ ký | **Chưa** | Cần chốt A/B ở G0 |

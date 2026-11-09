@@ -29,16 +29,18 @@
 ## 4. Kiểm tra sản xuất (DFT)
 
 - Test point đủ cho jig kim: rail, SWD, UART, I2C.
-- Jig nạp MCU qua SWD; SoC nạp qua thẻ SD hoặc pad riêng `[CHƯA XÁC MINH]`.
-- Kịch bản kiểm cuối dây chuyền: rail đúng, đọc `PROTO_VER` qua I2C, UART console có log, camera có hình, modem nhận SIM và đăng ký mạng, ghi số serial và cấp chứng chỉ riêng.
+- Jig nạp MCU qua SWD; SoC nạp qua pad dịch vụ/mux hoặc thẻ SD `[CHƯA XÁC MINH]`.
+- Kiểm tra đường nạp dịch vụ: nạp được image khi modem đã gắn và đang chiếm cổng USB (M-34).
+- Kịch bản kiểm cuối dây chuyền: rail đúng, đọc `PROTO_VER` qua I2C, UART console có log, camera có hình, modem nhận SIM và đăng ký mạng, thử đánh thức bằng SMS, ghi số serial và cấp chứng chỉ riêng.
 
 ## 5. Giữ và đổi giữa prototype và production
 
 | Hạng mục | Prototype | Production |
 |---|---|---|
-| SoC | Module Core1106 | Module (chip-down chỉ khi sản lượng đủ lớn) |
+| SoC | Module Core1106D **eMMC 8 GB** | Module (chip-down chỉ khi sản lượng đủ lớn) |
 | Modem | Breakout EC200U-EU | Module EC200U-EU trực tiếp trên board, giữ nguyên giao diện |
-| Sạc | Tuyến tính, sạc khi nghỉ | Xung, có power-path |
+| Sạc | **Xung, có power-path (từ Rev A)** | Xung, có power-path, tối ưu nhiệt |
+| Nạp firmware | Pad dịch vụ + mux USB | Giữ pad dịch vụ |
 | Đo dòng | Header ngoài | Gauge nếu cần phần trăm pin |
 | Board | PWR và CMP tách | Quyết định gộp sau G4 |
 | Vỏ | Hộp có sẵn / CNC | Đúc áp lực |
@@ -64,4 +66,4 @@ Tiêu chí cho module OEM `[KẾ THỪA]`: tài liệu đầy đủ (datasheet, 
 
 ## 8. Chi phí tham khảo
 
-CAM4G ước tính khoảng 120 USD mỗi bộ cho lô 5 bộ (linh kiện board khoảng 34 USD, module và phụ kiện khoảng 87 USD). Đó là tham khảo cho bản đã bỏ một phần linh kiện và chưa phản ánh thiết kế này. Chưa tính lại chi phí cho dự án này.
+Bảng chi phí linh kiện, dụng cụ và tiến độ nằm ở [13](13-tinh-kha-thi.md) §7, có ghi rõ là `[ƯỚC TÍNH]`. Con số 120 USD/bộ trong bản nháp v0.1 là số của CAM4G cho lô 5 bộ, chưa bao gồm pack 15 Ah, bộ sạc xung và mux USB; **không dùng làm ngân sách cho dự án này**. Cập nhật lại sau khi có báo giá thật ở G0.

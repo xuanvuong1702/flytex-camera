@@ -45,3 +45,17 @@ CAM4G đạt nhiều thứ: schematic ERC sạch, PCB route xong và DRC sạch,
 - Kiểm thử đơn vị với HAL giả và transport giả cho firmware.
 - Rà soát sẵn sàng sản xuất theo bảng lỗi có bằng chứng.
 - Tách quyết định phần cứng khỏi tình trạng thương mại (mã LCSC, nhà cung cấp, vỏ).
+
+## 5. Bài học từ chính bản nháp v0.1 của dự án này
+
+Bản nháp v0.1 tránh được nhiều lỗi của CAM4G, nhưng lần rà soát ngày 2026-11-09 tìm ra các lỗi cùng loại, ở mức kiến trúc. Ghi lại để không lặp:
+
+| # | Chuyện gì | Bài học | Sửa ở |
+|---|---|---|---|
+| 18 | Ghi SoC là "Core1106G3 N256" mà không biết module có mấy cổng USB; thực tế đúng 1 cổng | Đọc datasheet trước khi chốt giả định; một con số sai làm hỏng cả đường nạp firmware | [13](13-tinh-kha-thi.md) F-01, D-20 |
+| 19 | Viết "Watch = eDRX + MQTT" trong khi chính tài liệu nói SoC tắt ở Watch | Trước khi ghi một giao thức vào kiến trúc, hỏi: máy nào chạy nó, tốn bao nhiêu điện? | F-02, D-17 |
+| 20 | Ghi kịch bản đêm dùng 98 % pin là "gần như không còn dư" và vẫn giữ pack 10 Ah | 98 % không phải là dư; phải có ngưỡng dừng bằng số, không bằng cảm giác | F-05, D-18 |
+| 21 | Chọn biến thể module theo RAM (256 MB) mà quên flash; NAND 256 MB không đủ OTA A/B | Kiểm RAM, flash, boot, OTA cùng lúc | F-08, D-19 |
+| 22 | Bảng giao thức tự mâu thuẫn: một chỗ little-endian, một chỗ "đọc byte cao chốt byte thấp" | Sinh mã và bảng từ một spec máy đọc được, đừng chép tay | D-23 |
+
+Điểm chung: các lỗi này không nằm ở mạch điện, mà ở **giả định chưa kiểm** được viết thành câu khẳng định. Đó cũng là lý do phần mềm trong repo này được viết kèm test: chỗ nào kiểm được bằng máy thì đừng để bằng lời.

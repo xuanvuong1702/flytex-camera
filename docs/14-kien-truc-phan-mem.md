@@ -39,19 +39,20 @@ tools/docs_check/        kiểm tra tham chiếu ID và bảng mục lục
 
 ### 3.1 HAL
 
-HAL là một bảng con trỏ hàm, không có biến toàn cục. Mọi hàm trả `0` khi thành công, số âm khi lỗi.
+HAL là một bảng con trỏ hàm, không có biến toàn cục. Mỗi hàm nhận `void *ctx`, và `ctx` chính là con trỏ tới bảng `fly_hal_t` (HAL đặt bảng này là thành viên đầu của struct trạng thái riêng). Mọi hàm trả `0` khi thành công, số âm khi lỗi.
 
 | Hàm | Ngữ nghĩa |
 |---|---|
-| `uint32_t millis(void)` | Đồng hồ đơn điệu, ms, tràn sau 49 ngày |
-| `uint32_t enter_stop(uint32_t max_ms)` | Vào STOP, trả về bitmask nguồn đánh thức; `max_ms = 0` là không hẹn giờ |
-| `int gpio_read(int id)` | Đọc mức chân, `id` theo `enum fly_pin` |
-| `void gpio_write(int id, int level)` | Đặt mức chân ra |
-| `int adc_mv(int ch, uint32_t *mv)` | Đọc ADC đã hiệu chuẩn, mV |
-| `int temp_c(int sensor, int8_t *c)` | Nhiệt độ; `-ENOSYS` nếu cảm biến không có |
-| `int nvm_read/write(off, buf, len)` | Bộ nhớ cấu hình, ghi phải bền qua mất điện |
-| `void wdg_kick(void)` | Cho watchdog ăn |
-| `uint64_t epoch_s(void)` | Giờ thực, nếu có RTC |
+| `uint32_t millis(ctx)` | Đồng hồ đơn điệu, ms, tràn sau 49 ngày |
+| `uint32_t enter_stop(ctx, max_ms)` | Vào STOP, trả về bitmask nguồn đánh thức; `max_ms = 0` là không hẹn giờ |
+| `int gpio_read(ctx, id)` | Đọc mức chân, `id` theo `enum fly_pin` |
+| `void gpio_write(ctx, id, level)` | Đặt mức chân ra |
+| `int adc_mv(ctx, ch, *mv)` | Đọc ADC đã hiệu chuẩn, mV |
+| `int temp_c(ctx, sensor, *c)` | Nhiệt độ; `-ENOSYS` nếu cảm biến không có |
+| `int nvm_read/write(ctx, off, buf, len)` | Bộ nhớ cấu hình, ghi phải bền qua mất điện |
+| `void wdg_kick(ctx)` | Cho watchdog ăn |
+| `uint64_t epoch_s(ctx)` | Giờ thực, nếu có RTC |
+| `uint8_t reset_cause(ctx)` | Nguyên nhân reset, cùng bố cục bit với `SYS_FLAGS` |
 
 `enter_stop` là điểm khác biệt giữa bản này và CAM4G: nó phải thật sự vào STOP, không chỉ `WFI`. Test host kiểm bằng bộ đếm số lần vào STOP và khẳng định không có tick định kỳ.
 
@@ -118,6 +119,8 @@ Giống [04](04-firmware.md) §3.2 nhưng là mã thật, có test:
 - lỗi nhiệt hoặc pin cạn vào `SF`, thoát khi điều kiện hết;
 - `mode.set` bị từ chối khi đang ghi (`BUSY`).
 
+**Cắt rail khi ngủ.** Về `S0`/`S1` trong phần mềm không có nghĩa là SoC đã tắt: rail vẫn do MCU giữ. Vì vậy `PowerController` gọi hook `on_sleep` khi đã đóng file xong; `DeviceService` dùng hook này để gửi `CMD = SOC_SHUTDOWN_DONE` rồi dừng tiến trình, và MCU cắt `+5V_SOC`. Thiếu bước này, thiết bị "ngủ" mà vẫn tiêu 30–80 mA, phá mục tiêu pin. Hook có test riêng.
+
 ### 4.3 Ghi hình
 
 - Mỗi clip chia thành đoạn có giới hạn thời gian và kích thước.
@@ -163,12 +166,16 @@ Thẻ nhớ là điểm hỏng dữ liệu khi mất điện; mọi lần ghi đ
 | Tầng | Cách chạy | Phạm vi |
 |---|---|---|
 | Spec | `python -m unittest discover -s spec/tests` | Sinh mã khớp spec, không chồng địa chỉ, pinout đủ dòng |
+| Hardware | `python hardware/calc/tests/test_pwr.py` | Dòng boost, hồi tiếp, NTC, ADC, nhiệt, kiểm tra đạt/không |
 | Firmware | `python firmware/mcu/tests/build.py test` | Regmap, state machine, pin, nhiệt, bắt tay, STOP |
-| Ứng dụng | `python -m unittest discover -s app/tests` | Máy trạng thái, AT timeout, hàng đợi, ghi, lệnh |
-| Mô phỏng | `python sim/run.py` | Firmware C thật + app thật + modem/cloud giả |
+| Ứng dụng | `python -m unittest discover -s app/tests -t .` | Máy trạng thái, AT timeout, hàng đợi, ghi, lệnh |
+| Mô phỏng | `python sim/run.py --scenario all` | Firmware C thật + app thật + modem/cloud giả |
 | Tài liệu | `python tools/docs_check/check.py` | Tham chiếu ID, mục lục, file sinh lệch |
+| Tất cả | `python run_tests.py` | 23 bước: spec, hardware, firmware, app, tools, CLI, sim |
 
-Không test nào cần phần cứng. Test cần phần cứng nằm ở [08](08-kiem-chung.md) và vẫn là "Chưa làm".
+Số test hiện tại: spec 29, hardware 28, firmware 59, ứng dụng 125, công cụ 108. Tổng 349 test cộng 5 kịch bản mô phỏng. Không test nào cần phần cứng.
+
+Test cần phần cứng nằm ở [08](08-kiem-chung.md) và vẫn là "Chưa làm".
 
 ## 7. Việc chưa làm, có chủ đích
 

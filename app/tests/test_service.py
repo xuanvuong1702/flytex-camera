@@ -1,0 +1,207 @@
+"""Test tích hợp mức dịch vụ: boot, PIR, lệnh MQTT, đi ngủ."""
+
+from __future__ import annotations
+
+import json
+import random
+import tempfile
+import unittest
+from pathlib import Path
+
+try:
+    from _helpers import FakeClock, make_mcu
+except ImportError:  # pragma: no cover
+    from app.tests._helpers import FakeClock, make_mcu
+
+from flytex import mqtt_gen
+from flytex.cloud import MemoryBus
+from flytex.commands import CommandRouter
+from flytex.config import Config
+from flytex.diagnostics import Diagnostics
+from flytex.identity import Identity
+from flytex.media import FakeSource
+from flytex.mcu import McuClient
+from flytex.modem import AtClient, FakeModem
+from flytex.recorder import RawMuxer, SegmentRecorder
+from flytex.service import DeviceService
+from flytex.uplink import UplinkQueue
+
+
+class ServiceFixture(unittest.TestCase):
+    def setUp(self) -> None:
+        self._tmp = tempfile.TemporaryDirectory()
+        self.root = Path(self._tmp.name)
+        self.clock = FakeClock(start=1_700_000_000.0)
+        self.mcu_client, self.memory, _ = make_mcu(self.clock)
+        self.identity = Identity.generate_for_test(self.root / "identity")
+        self.config = Config(
+            clip_s=5,
+            settle_s=1,
+            live_s=10,
+            apn="internet",
+            mqtt_host="broker.test",
+            relay_url="rtsp://relay.test/live",
+            allow_raw_muxer=True,
+        )
+        with (self.root / "config.json").open("w", encoding="utf-8") as handle:
+            json.dump(self.config.to_dict(), handle)
+        fake_modem = FakeModem(self.clock)
+        self.modem = AtClient(fake_modem, self.clock, pwrkey=fake_modem)
+        self.media = FakeSource(self.clock, fps=5.0)
+        self.recorder = SegmentRecorder(
+            self.root / "clips", self.clock, RawMuxer(),
+            segment_s=2.0, max_bytes=1 << 20, pin_budget_bytes=1 << 19,
+        )
+        self.queue = UplinkQueue(
+            self.root / "queue.jsonl", self.clock,
+            max_bytes=1 << 20, rng=random.Random(7),
+        )
+        self.bus = MemoryBus()
+        self.publisher = self.bus.publisher()
+        self.router = CommandRouter({}, dev=self.identity.device_id, clock=self.clock)
+        self.diagnostics = Diagnostics(self.root / "diag", self.clock)
+        self.service = DeviceService(
+            self.identity,
+            self.config,
+            self.clock,
+            self.mcu_client,
+            self.modem,
+            self.media,
+            self.recorder,
+            self.queue,
+            self.publisher,
+            self.router,
+            self.diagnostics,
+            config_path=self.root / "config.json",
+        )
+
+    def tearDown(self) -> None:
+        self.service.stop()
+        self._tmp.cleanup()
+
+    def _run(self, seconds: float, step: float = 0.5) -> None:
+        elapsed = 0.0
+        while elapsed < seconds:
+            self.clock.advance(step)
+            self.service.step(self.clock.now())
+            elapsed += step
+
+    def _publish_command(self, cmd: str, **params: object) -> str:
+        message_id = f"{random.Random(len(cmd)).getrandbits(64):016x}"
+        payload = {
+            "v": mqtt_gen.VERSION,
+            "id": message_id,
+            "dev": self.identity.device_id,
+            "ts": int(self.clock.now()),
+            "type": cmd,
+        }
+        payload.update(params)
+        self.bus.publish_message(
+            mqtt_gen.cmd_topic(self.identity.device_id),
+            json.dumps(payload).encode("utf-8"),
+        )
+        return message_id
+
+    def _acks(self) -> list[dict]:
+        acks = []
+        for payload in self.bus.messages_of(mqtt_gen.ack_topic(self.identity.device_id)):
+            acks.append(json.loads(payload.decode("utf-8")))
+        return acks
+
+    def _status(self) -> dict:
+        raw = self.bus.retained(mqtt_gen.status_topic(self.identity.device_id))
+        self.assertIsNotNone(raw, "phải có status retained")
+        return json.loads(raw.decode("utf-8"))
+
+
+class BootTests(ServiceFixture):
+    def test_boot_publishes_status_and_boot(self) -> None:
+        self.service.boot()
+        self.assertTrue(self.service.booted)
+        status = self._status()
+        self.assertEqual(status["type"], "status")
+        self.assertEqual(status["dev"], self.identity.device_id)
+        self.assertIn(status["state"], {"s0", "s1"})
+        self.assertEqual(status["proto"], "1.1")
+        types = [json.loads(item)["type"] for item in self.bus.messages_of(mqtt_gen.event_topic(self.identity.device_id))]
+        self.assertIn("boot", types)
+
+    def test_boot_is_idempotent(self) -> None:
+        self.service.boot()
+        before = len(self.bus.messages_of(mqtt_gen.event_topic(self.identity.device_id)))
+        self.service.boot()
+        after = len(self.bus.messages_of(mqtt_gen.event_topic(self.identity.device_id)))
+        self.assertEqual(before, after)
+
+
+class RecordTests(ServiceFixture):
+    def test_pir_records_clip_and_publishes_motion(self) -> None:
+        self.service.boot()
+        self.memory.raise_event("PIR")
+        self._run(7.0)
+        self.assertFalse(self.recorder.recording)
+        types = [json.loads(item)["type"] for item in self.bus.messages_of(mqtt_gen.event_topic(self.identity.device_id))]
+        self.assertIn("motion", types)
+        self.assertGreaterEqual(len(self.recorder.list_clips()), 1)
+
+    def test_sleep_is_requested_after_clip(self) -> None:
+        self.service.boot()
+        self.memory.raise_event("PIR")
+        self._run(9.0)
+        self.assertTrue(self.service.sleep_requested)
+        self.assertIn("SOC_SHUTDOWN_DONE", self.memory.commands)
+
+
+class CommandTests(ServiceFixture):
+    def test_status_get_is_acked(self) -> None:
+        self.service.boot()
+        message_id = self._publish_command("status.get")
+        self.service.step(self.clock.now())
+        acks = [ack for ack in self._acks() if ack["id"] == message_id]
+        self.assertTrue(acks)
+        self.assertTrue(acks[0]["ok"])
+
+    def test_ota_is_not_implemented(self) -> None:
+        self.service.boot()
+        message_id = self._publish_command(
+            "ota.start", url="https://x/y", sha256="a" * 64, version="1.2"
+        )
+        self.service.step(self.clock.now())
+        acks = [ack for ack in self._acks() if ack["id"] == message_id]
+        self.assertTrue(acks)
+        self.assertFalse(acks[0]["ok"])
+        self.assertEqual(acks[0]["error"], "NOT_IMPLEMENTED")
+
+    def test_mode_set_busy_while_recording(self) -> None:
+        self.service.boot()
+        self.memory.raise_event("PIR")
+        self._run(1.0)
+        message_id = self._publish_command("mode.set", mode="watch")
+        self.service.step(self.clock.now())
+        acks = [ack for ack in self._acks() if ack["id"] == message_id]
+        self.assertTrue(acks)
+        self.assertFalse(acks[0]["ok"])
+        self.assertEqual(acks[0]["error"], "BUSY")
+
+    def test_live_start_enters_live(self) -> None:
+        self.service.boot()
+        message_id = self._publish_command("live.start", duration_s=10)
+        self.service.step(self.clock.now())
+        acks = [ack for ack in self._acks() if ack["id"] == message_id]
+        self.assertTrue(acks)
+        self.assertTrue(acks[0]["ok"])
+        self.assertIn("live_url", acks[0]["result"])
+        self.assertEqual(self.service.power.state.value, "s3")
+
+    def test_unknown_command_rejected(self) -> None:
+        self.service.boot()
+        message_id = self._publish_command("do.magic")
+        self.service.step(self.clock.now())
+        acks = [ack for ack in self._acks() if ack["id"] == message_id]
+        self.assertTrue(acks)
+        self.assertFalse(acks[0]["ok"])
+        self.assertEqual(acks[0]["error"], "BAD_ARGS")
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)

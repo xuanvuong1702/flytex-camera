@@ -525,6 +525,7 @@ def gen_mqtt_json(spec: dict) -> str:
             }
             for cmd in spec["commands"]
         },
+        "command_wire": spec.get("command_wire", {}),
         "ack": spec["ack"]["fields"],
     }
     return json.dumps(doc, ensure_ascii=False, indent=2) + "\n"
@@ -587,6 +588,9 @@ def gen_mqtt_py(spec: dict) -> str:
         "def ack_topic(dev: str) -> str:",
         "    return TOPIC_ACK.format(dev=dev)",
     ]
+    wire = spec.get("command_wire", {})
+    if wire:
+        out += ["", f'COMMAND_WIRE = "{wire.get("shape", "flat")}"', ""]
     return "\n".join(out) + "\n"
 
 
@@ -660,6 +664,17 @@ def gen_mqtt_md(spec: dict) -> str:
           f"{field.get('desc', '')} |")
     w("")
     w("Mã lỗi trong `ack.error`: `BAD_ARGS`, `BAD_ID`, `BUSY`, `NOT_IMPLEMENTED`, `INTERNAL`.")
+    wire = spec.get("command_wire")
+    if wire:
+        w("")
+        w("## 6. Cách gửi lệnh")
+        w("")
+        w(f"- Dạng: **{wire.get('shape', 'flat')}** — {wire.get('desc', '')}")
+        if wire.get("example"):
+            w("")
+            w("```json")
+            w(str(wire["example"]))
+            w("```")
     return "\n".join(out) + "\n"
 
 

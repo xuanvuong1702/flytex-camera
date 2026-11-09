@@ -15,10 +15,19 @@ __pycache__/
 *.py[cod]
 .venv/
 venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
 # Build
 build/
 dist/
+*.so
+*.dll
+*.dylib
+*.o
+*.obj
+*.exe
 
 # Hệ điều hành
 .DS_Store

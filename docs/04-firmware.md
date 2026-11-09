@@ -1,35 +1,42 @@
 # 04 — Firmware
 
-- Trạng thái: Dự thảo v0.1
+- Trạng thái: v1.1, cập nhật theo mã trong repo
 - Ngày: 2026-11-09
 
 ## 1. Phạm vi
 
-Hai khối firmware: **MCU giám sát** (luôn bật, C, STM32L0) và **ứng dụng Linux** trên SoC (nhiều dịch vụ nhỏ). Giao thức giữa chúng ở [03](03-giao-dien.md) §5.
+Hai khối firmware: **MCU giám sát** (luôn bật, C, STM32L0) và **ứng dụng Linux** trên SoC (Python, một tiến trình nhiều module). Giao thức giữa chúng ở [15](15-giao-thuc-va-cloud.md) §2 và sinh từ `spec/registers.toml`.
+
+Trong repo này, cả hai khối đã có lõi chạy được trên máy tính, có test; phần chạm phần cứng (port STM32L0, RK MPI, I2C thật) còn là khung hoặc lớp mỏng chưa kiểm chứng. Kiến trúc module ở [14](14-kien-truc-phan-mem.md).
 
 ## 2. MCU giám sát
 
 ### 2.1 Nhiệm vụ
 
 - Cấp và cắt nguồn cho SoC và modem; thực hiện bắt tay tắt máy an toàn.
-- Nhận PIR, lịch, cắm/rút USB-C, trạng thái modem.
+- Nhận PIR, lịch, cắm/rút USB-C, trạng thái modem, **RI** (SMS đến).
 - Đo điện áp pin và nhiệt độ; báo lên SoC qua I2C.
 - Giám sát pin cạn.
 - Làm slave I2C, kéo `MCU_IRQ`.
 
 ### 2.2 Yêu cầu hiện thực
 
-| Yêu cầu | Lý do |
-|---|---|
-| Vào STOP mode thật giữa các sự kiện | Dòng ngủ là yêu cầu then chốt (NFR-04). `WFI` thuần chưa phải STOP |
-| Đánh thức bằng ngắt ngoài: PIR, VBUS, STATUS modem; bằng RTC cho lịch | Không cần polling theo chu kỳ |
-| Không dùng tick 1 ms cố định trong lúc ngủ | Tick cố định làm MCU thức liên tục |
-| Đánh thức bằng địa chỉ I2C nếu vi điều khiển hỗ trợ | `[CHƯA XÁC MINH]` trong reference manual; nếu không, dùng `MCU_IRQ` hai chiều hoặc thức theo chu kỳ khi SoC bật |
-| Watchdog độc lập (IWDG) và phát hiện brown-out | Thiết bị ngoài trời không có người reset |
-| ADC có hiệu chuẩn VREFINT và mạch chia áp | LFP có thể 3,65 V, cao hơn rail 3,3 V |
-| Ngưỡng pin theo điện áp *có tải* | Điện áp LFP rất phẳng và sụt khi tải; ngưỡng đo ở giai đoạn 0 |
-| Cắt sạc theo nhiệt độ là phần cứng độc lập | Firmware chỉ báo cáo, không là lớp an toàn duy nhất |
-| Mọi chức năng chưa hiện thực phải trả lỗi rõ (không trả giá trị giả) | Tránh tình huống đo nhiệt độ luôn là 25 °C mà không ai biết |
+| Yêu cầu | Lý do | Trạng thái trong mã |
+|---|---|---|
+| Vào STOP mode thật giữa các sự kiện | Dòng ngủ là yêu cầu then chốt (NFR-04). `WFI` thuần chưa phải STOP | Có: `fly_run_slice` chỉ gọi `hal->enter_stop`; HAL host đếm số lần vào STOP |
+| Đánh thức bằng ngắt ngoài: PIR, VBUS, modem STATUS/RI; bằng RTC cho lịch | Không cần polling theo chu kỳ | Có ở lớp lõi; chân thật thuộc port STM32L0 |
+| Không dùng tick 1 ms cố định trong lúc ngủ | Tick cố định làm MCU thức liên tục | Có: test 24 giờ không sự kiện kiểm số lần vào STOP |
+| Đánh thức bằng địa chỉ I2C | SoC là master, MCU là slave | `[CHƯA XÁC MINH]`: STM32L0 có tính năng wakeup on address match; phải xác nhận trên silicon |
+| Watchdog độc lập (IWDG) và phát hiện brown-out | Thiết bị ngoài trời không có người reset | Có ở HAL interface; chưa có port thật |
+| ADC có hiệu chuẩn VREFINT và mạch chia áp | LFP có thể 3,65 V, cao hơn rail 3,3 V | Hệ số chia trong `config.h`; hiệu chuẩn thuộc port |
+| Ngưỡng pin theo điện áp *có tải* | Điện áp LFP rất phẳng và sụt khi tải | Có ngưỡng cảnh báo/tắt/khôi phục, có hysteresis; số phải đo lại ở G0 |
+| Cắt sạc theo nhiệt độ là phần cứng độc lập | Firmware chỉ báo cáo, không là lớp an toàn duy nhất | Có: firmware đọc và báo `CHARGE_INHIBIT` |
+| Mọi chức năng chưa hiện thực phải trả lỗi rõ (không trả giá trị giả) | Tránh tình trạng đo nhiệt độ luôn là 25 °C mà không ai biết | Có: `FLY_ENOSYS` → 0x80 + `SENSOR_STALE`; có test khẳng định |
+
+Hai điểm còn mở ở port STM32L0, đã ghi thành rủi ro:
+
+- **IWDG trong STOP:** watchdog vẫn đếm khi ngủ. Nếu bật mà không có ai kick, thiết bị reset sau vài chục giây. Phải chốt: tắt trước STOP rồi bật lại sau, hoặc thức ngắn định kỳ để kick, và đo dòng ngủ (M-02). Xem R-32.
+- **MCU reset khi SoC đang chạy:** `fly_init` cắt `+5V_SOC` ngay theo trạng thái đã khôi phục, có thể làm hỏng thẻ. Cần mạch giữ nguồn hoặc cờ "SoC đang chạy" trong NVM trước khi coi là an toàn. Xem R-31.
 
 ### 2.3 Pin cạn
 
@@ -41,24 +48,35 @@ Hai khối firmware: **MCU giám sát** (luôn bật, C, STM32L0) và **ứng d�
 ### 2.4 Nạp và cập nhật
 
 - Prototype: SWD qua J_SWD.
-- Production: kiểm tra bootloader hệ thống của dòng chip (UART/I2C) `[CHƯA XÁC MINH]`; cập nhật MCU từ SoC là mục tiêu sau.
+- Production: kiểm tra bootloader của dòng chip `[CHƯA XÁC MINH]`; cập nhật MCU từ SoC là mục tiêu sau.
+- SoC: nạp qua pad dịch vụ/mux USB hoặc thẻ SD, vì modem chiếm cổng USB duy nhất ([03](03-giao-dien.md) §4.1).
 
 ### 2.5 Kiểm thử
 
-Giữ mô hình HAL tách khỏi logic để chạy kiểm thử đơn vị trên máy tính (HAL giả). Bài học từ CAM4G: các stub (nhiệt độ, ADC) phải có kiểm thử thất bại nếu còn là stub.
+Mô hình HAL tách khỏi logic để chạy test đơn vị trên máy tính. Test host kiểm cả những thứ dễ giả: nhiệt độ thiếu cảm biến, ADC không có hệ số chia, tickless, CRC NVM hỏng, bắt tay tắt máy quá hạn.
+
+```powershell
+python firmware/mcu/tests/build.py test
+```
+
+Bài học từ CAM4G: stub (nhiệt độ, ADC) phải có test thất bại nếu còn là stub. Trong bản này, test `temperature_missing_sensor` đỏ nếu ai đó trả 25 °C.
 
 ## 3. Ứng dụng Linux trên SoC
 
 ### 3.1 Dịch vụ
 
-| Dịch vụ | Việc |
+Một tiến trình `flytex-device` gồm các module, tách ranh giới để có thể thành daemon sau này. Lý do ở [14](14-kien-truc-phan-mem.md) §4.1.
+
+| Module (thay cho tên cũ) | Việc |
 |---|---|
-| `powerd` | Máy trạng thái nguồn; nói chuyện với MCU qua I2C và `MCU_IRQ` |
-| `camerad` | Lấy hình, mã hóa phần cứng |
-| `recorderd` | Ghi đoạn lên SD |
-| `modemd` | Lệnh AT, bật/tắt modem, theo dõi mạng |
-| `uplinkd` | Hàng đợi sự kiện, MQTT, tải clip |
-| `otad` | Cập nhật `[CHƯA XÁC MINH]` |
+| `power` (powerd) | Máy trạng thái nguồn; nói chuyện với MCU qua I2C và `MCU_IRQ` |
+| `media` (camerad) | Lấy hình, mã hóa phần cứng — chưa có mã thật, xem §3.3 |
+| `recorder` (recorderd) | Ghi đoạn lên thẻ, an toàn khi mất điện |
+| `modem` (modemd) | Lệnh AT, bật/tắt modem, theo dõi mạng |
+| `uplink` (uplinkd) | Hàng đợi sự kiện bền, MQTT, tải clip |
+| `cloud`, `commands` | MQTT, xử lý lệnh và ack |
+| `identity`, `config`, `diagnostics` | Định danh, cấu hình, log |
+| OTA (`otad`) | **Chưa hiện thực**: `ota.start` trả `NOT_IMPLEMENTED` |
 
 ### 3.2 Máy trạng thái nguồn
 
@@ -73,38 +91,47 @@ Trạng thái: S0 Eco, S1 Watch, S2 Record, S3 Live, SF Fault (xem [01](01-kien-
 | Lỗi nhiệt hoặc pin cạn | bất kỳ | SF |
 | Hết lỗi | SF | Chế độ ngủ đã cấu hình |
 
-Giá trị mặc định (kế thừa từ CAM4G, điều chỉnh bằng cấu hình): clip 30 s, nghỉ trước khi ngủ 10 s, giữ live 120 s. Thiếu điều này là một lỗi của CAM4G: sau khi ghi nó luôn về ngủ sâu, nên không có chế độ Watch.
+Giá trị mặc định: clip 30 s, nghỉ trước khi ngủ 10 s, giữ live 120 s. Thiếu điều này là một lỗi của CAM4G: sau khi ghi nó luôn về ngủ sâu, nên không có chế độ Watch. Test `test_returns_to_configured_mode` khẳng định không tái diễn.
 
 ### 3.3 Ghi hình
 
-- Dùng bộ mã hóa phần cứng của SoC (H.264/H.265) và đóng gói thành đoạn có container (MP4 phân mảnh hoặc MPEG-TS) `[CHƯA XÁC MINH]` API trong SDK. MJPEG thô chỉ để bring-up.
-- An toàn khi mất điện: mỗi đoạn đóng đúng cách, mất tối đa một đoạn.
-- Vòng ghi: xóa đoạn cũ khi đầy, giữ đoạn gắn với sự kiện.
-- Thẻ nhớ chịu ghi cao; ghi nhận hao mòn.
+- Mỗi clip chia thành đoạn có giới hạn thời gian và kích thước.
+- Ghi `.part`, `fsync`, đóng, rồi `rename` — mất điện tối đa một đoạn. Chỉ mục JSONL append + fsync; khởi động lại thì `recover()` dọn `.part` mồ côi.
+- Vòng ghi: xóa clip cũ khi đầy; clip gắn sự kiện được `pin`, có trần riêng để thẻ không đầy.
+- **Container chưa hiện thực.** `RawMuxer` chỉ để bring-up và bị từ chối khi `allow_raw_muxer=False`; MP4 phân mảnh/MPEG-TS phải làm khi có dữ liệu camera thật `[CHƯA XÁC MINH]`.
+- Nguồn hình thật dùng RK MPI của SDK; trong repo chỉ có nguồn giả và lớp `RkMpiSource` trả `NotImplementedError` kèm hướng dẫn.
 
 ### 3.4 Modem
 
-- Lệnh AT qua UART; dữ liệu qua giao diện mạng USB (ECM/RNDIS) `[CHƯA XÁC MINH]` trên kernel của SDK. Phương án dự phòng: PPP qua UART, băng thông bị giới hạn ([05](05-ket-noi-va-cloud.md) §1).
-- Mọi lệnh AT có thời gian chờ thực sự.
+- Lệnh AT qua UART; dữ liệu qua giao diện mạng USB (ECM/RNDIS) `[CHƯA XÁC MINH]` trên kernel của SDK. Phương án dự phòng: PPP qua UART, băng thông bị giới hạn.
+- Mọi lệnh AT có deadline tuyệt đối; transport treo thì trả `AtTimeout`, không treo tiến trình. URC được tách khỏi kết quả lệnh.
 - Theo dõi: SIM, đăng ký mạng, cường độ sóng, băng tần.
+- Kênh đánh thức: xem [15](15-giao-thuc-va-cloud.md) §4; MCU giữ chân RI, SoC đọc SMS sau khi thức.
+- Tên lệnh cụ thể (`AT+QNETDEVCTL` hay tương đương) phải đối chiếu datasheet EC200U `[CHƯA XÁC MINH]`.
 
 ### 3.5 Uplink
 
-- MQTT QoS 1, hàng đợi lưu xuống đĩa, mỗi bản tin có ID duy nhất (tránh trộn bản tin trùng nội dung), lùi thời gian khi lỗi.
-- Giới hạn kích thước hàng đợi; ưu tiên sự kiện hơn log.
+- MQTT QoS 1, hàng đợi lưu xuống đĩa, mỗi bản tin có ID duy nhất; lùi thời gian khi lỗi, có jitter và trần.
+- Giới hạn kích thước hàng đợi; ưu tiên `fault` > `motion` > `status` > `battery`/`temp`; khi đầy thì bỏ bản tin ưu tiên thấp nhất và ghi log.
 
 ### 3.6 Cấu hình và định danh
 
-Định danh thiết bị, chứng chỉ và cấu hình lưu ở phân vùng riêng, không nằm trong image firmware.
+Định danh thiết bị, chứng chỉ và cấu hình lưu ở phân vùng riêng, không nằm trong image firmware. Ghi cấu hình theo kiểu nguyên tử (file tạm + `rename`).
 
 ### 3.7 OTA
 
-Mục tiêu: phân vùng A/B cho rootfs, có quay lui. Khả năng của SDK Core1106 `[CHƯA XÁC MINH]` (O-08); đánh giá ở giai đoạn 0.
+Mục tiêu: phân vùng A/B cho rootfs, có quay lui, chữ ký. Khả năng của SDK Core1106 `[CHƯA XÁC MINH]` (O-08); đánh giá ở giai đoạn 0. Hiện chưa hiện thực.
 
 ### 3.8 Chẩn đoán
 
-Nhật ký vòng, tải lên theo yêu cầu; ghi số lần khởi động lại, lý do tắt, điện áp pin lúc tắt.
+Log vòng, tải lên theo yêu cầu; ghi số lần khởi động lại, lý do tắt, điện áp pin lúc tắt. Không ghi khóa, token, nội dung SMS.
 
 ### 3.9 Kiểm thử
 
-Kiểm thử đơn vị với đồng hồ và transport giả (đã có tiền lệ ở CAM4G), cộng kiểm thử tích hợp trên dev board ở giai đoạn 0 trước khi có board thật.
+Kiểm thử đơn vị với đồng hồ và transport giả, cộng mô phỏng tích hợp dùng **chính firmware C** qua FFI. Chạy toàn bộ:
+
+```powershell
+python run_tests.py
+```
+
+Chưa có test nào chạy trên thiết bị thật; mục M-41 trong [08](08-kiem-chung.md) là việc phải làm khi có board.

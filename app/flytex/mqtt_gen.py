@@ -98,3 +98,6 @@ def cmd_topic(dev: str) -> str:
 
 def ack_topic(dev: str) -> str:
     return TOPIC_ACK.format(dev=dev)
+
+COMMAND_WIRE = "flat"
+

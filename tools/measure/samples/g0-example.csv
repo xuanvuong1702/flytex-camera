@@ -1,0 +1,8 @@
+id,date,board_rev,condition,instrument,quantity,value,unit,uncertainty_pct,pass_fail,notes
+M-01,2026-11-09,Rev0,bench,PPK2,power,1.35,W,10,PASS,DU LIEU MINH HOA - KHONG PHAI DO
+M-02,2026-11-09,Rev0,bench,PPK2,current,0.42,mA,5,PASS,DU LIEU MINH HOA - KHONG PHAI DO
+M-03,2026-11-09,Rev0,bench,PPK2,current,12.0,mA,5,PASS,DU LIEU MINH HOA - KHONG PHAI DO
+M-03,2026-11-09,Rev0,bench,stopwatch,latency,8.0,s,10,PASS,DU LIEU MINH HOA - KHONG PHAI DO
+M-30,2026-11-09,Rev0,field,iPerf,bandwidth,2.5,Mbps,15,PASS,DU LIEU MINH HOA - KHONG PHAI DO
+M-31,2026-11-09,Rev0,field,relay-log,latency,1.8,s,10,FAIL,DU LIEU MINH HOA - KHONG PHAI DO
+M-32,2026-11-09,Rev0,field,AT+CGDCONT,boolean,1,bool,0,PASS,DU LIEU MINH HOA - KHONG PHAI DO

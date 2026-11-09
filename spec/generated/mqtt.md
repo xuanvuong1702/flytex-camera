@@ -210,3 +210,11 @@ Bắt đầu cập nhật firmware. Chưa hiện thực: phải trả lỗi NOT_
 | error | string hoặc null | có | Mã lỗi dạng BAD_ARGS, BUSY, NOT_IMPLEMENTED |
 
 Mã lỗi trong `ack.error`: `BAD_ARGS`, `BAD_ID`, `BUSY`, `NOT_IMPLEMENTED`, `INTERNAL`.
+
+## 6. Cách gửi lệnh
+
+- Dạng: **flat** — Bản tin lệnh: `type` là tên lệnh, tham số nằm ở mức ngoài cùng. Không có trường `cmd` hay `args`; bản tin dạng lồng nhau bị từ chối BAD_ARGS.
+
+```json
+{"v":1,"id":"0123456789abcdef","dev":"abc123def456","ts":1700000000,"type":"mode.set","mode":"watch"}
+```

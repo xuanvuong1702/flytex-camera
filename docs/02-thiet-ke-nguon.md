@@ -3,6 +3,7 @@
 - Trạng thái: Dự thảo v0.1
 - Ngày: 2026-11-09
 - Phạm vi: board PWR. Các giá trị linh kiện lấy từ tính toán của dự án CAM4G là *điểm khởi đầu*, chưa kiểm chứng trên phần cứng; phải tính lại trên board mới.
+- **Giá trị linh kiện tính toán và kiểm tra tự động** nằm ở [hardware/pwr-design.md](../hardware/pwr-design.md), sinh từ `hardware/calc/`; tài liệu này giữ phần lựa chọn và lý do.
 
 ## 1. Cấu trúc
 
@@ -44,9 +45,11 @@ Dòng nghỉ của boost ở tải rất nhẹ ảnh hưởng trực tiếp tớ
 
 Công thức: thời gian chạy (h) = Wh dùng được ÷ W.
 
-**Hệ quả.** Kịch bản đêm cuối cùng gần như không còn dư. Để có dư 30 % ở kịch bản này cần ≥ 34,6 Wh dùng được, tức khoảng 40,7 Wh danh định, tức khoảng **12,7 Ah**. Pack 15 Ah (48 Wh danh định, 40,8 Wh dùng được) cho dư khoảng 53 %.
+**Hệ quả.** Kịch bản đêm dùng 98 % năng lượng dùng được. Để có dư 30 % ở kịch bản này cần ≥ 34,6 Wh dùng được, tức khoảng 40,7 Wh danh định, tức khoảng **12,7 Ah**. Pack 15 Ah (48 Wh danh định, 40,8 Wh dùng được) cho dư khoảng 53 %.
 
-`[ĐỀ XUẤT]` Thiết kế board PWR (connector, dòng, nhiệt) cho pack tới 15 Ah; prototype dùng 10 Ah. Chốt dung lượng sau khi đo ở giai đoạn 0 ([07](07-ke-hoach-phat-trien.md)). Phương án khác: giới hạn công suất IR ban đêm.
+`[ĐÃ CHỐT]` (D-18) **Đổi so với v0.1:** pack **15 Ah** ngay từ prototype; 10 Ah chỉ dùng khi thử trên bàn và không dùng để nghiệm thu. Lý do: 98 % không phải là dư, cộng thêm LFP mất 15–20 % dung lượng ở 0 °C và dòng tự tiêu của BMS. Phân tích đầy đủ ở [13](13-tinh-kha-thi.md) F-05. Board PWR thiết kế cho 15 Ah; nếu buộc phải dùng pack nhỏ hơn thì giảm công suất IR ban đêm (PWM hoặc chỉ bật IR khi ghi, không khi live).
+
+**Yêu cầu mới với BMS:** tự tiêu ≤ 100 µA. Dòng này không đi qua header đo của board nhưng vẫn tiêu pin 24/7; BMS 500 µA làm hỏng mục tiêu ngủ sâu ngay từ đầu.
 
 ## 4. Boost 5 V
 
@@ -57,7 +60,9 @@ Công thức: thời gian chạy (h) = Wh dùng được ÷ W.
 | Dòng ra tối đa | 3 A | `[KẾ THỪA]` |
 | Dòng vào đỉnh | 5,56 A tại 3,0 V, hiệu suất 90 % | tính lại: 5 × 3 ÷ (3,0 × 0,9) |
 
-Ứng viên: TPS61088 (QFN-20). Điểm khởi đầu từ CAM4G, chưa kiểm chứng:
+**Ngân sách đỉnh chưa khớp.** SoC + camera + thẻ SD đỉnh ~1,5 A, modem Cat-1 quy về 5 V đỉnh ~1,7 A `[CHƯA XÁC MINH]`: tổng 3,2 A > 3 A. Tụ bulk 470 µF trên breakout san được burst ngắn, nhưng nếu boost chạm giới hạn dòng thì 5 V tụt và SoC có thể reset giữa lúc ghi. Phải đo đỉnh modem (M-10) trước khi chốt. Phương án: boost thứ hai cho modem lấy trực tiếp từ VBAT, hoặc boost 3,5–4 A. Chi tiết ở [13](13-tinh-kha-thi.md) F-03.
+
+Ứng viên: TPS61088 (QFN-20). Điểm khởi đầu từ CAM4G, chưa kiểm chứng. Cặp hồi tiếp E96 tính lại cho 5,00 V là 169 kΩ / 53,6 kΩ (sai số 0,00 %); dòng đỉnh cuộn cảm 6,52 A ở 3,0 V, thấp hơn Isat 9 A với dư 38 %. Bảng đầy đủ: [pwr-design](../hardware/pwr-design.md).
 
 | Phần tử | Giá trị | Mục đích |
 |---|---|---|
@@ -87,22 +92,26 @@ Quy tắc layout cho board mới:
 
 ### 6.2 Bộ sạc
 
-| | Prototype | Production |
+**Đổi so với v0.1:** dùng bộ sạc **xung có power-path ngay từ Rev A**, không đợi production. Lý do ở [13](13-tinh-kha-thi.md) F-04: sạc tuyến tính 0,5 A cần 20 giờ cho 10 Ah và 30 giờ cho 15 Ah; tải đấu thẳng VBAT thì pin không bao giờ đầy; tổn hao 1,4 W trong vỏ kín là bài toán nhiệt.
+
+| | Rev A (chốt) | Ghi chú |
 |---|---|---|
-| Loại | Tuyến tính LFP 3,6 V (ví dụ CN3058E) | Xung, hỗ trợ LFP, có power-path |
-| Dòng sạc | ≤ 0,5 A | 1–1,5 A `[ĐỀ XUẤT]` |
-| Tổn hao | (5 − 3,6) × I = 0,7 W tại 0,5 A, 1,4 W tại 1 A | Thấp hơn nhiều |
-| Thời gian sạc 10 Ah | khoảng 20 giờ | khoảng 7–10 giờ |
+| Loại | Xung, hỗ trợ LFP 1S, có power-path | Ví dụ LTC4098-3.6 `[CHƯA XÁC MINH]` tình trạng còn hàng; hoặc IC buck-boost lập trình được điện áp sạc 3,6 V |
+| Dòng sạc | 1,5–2 A, giảm nếu nguồn yếu | Nguồn USB-C 5 V/2 A; phải đo dòng thực tế của củ sạc |
+| Thời gian sạc 15 Ah | ~8–10 giờ | So với 30 giờ của bản tuyến tính |
+| Tuyến tính 0,5 A | Chỉ dùng cho board thử trên bàn | Không dùng cho sản phẩm |
 
 Cảnh báo: **không dùng module sạc kiểu TP4056 cho LFP**, vì chúng sạc tới 4,2 V và làm quá áp cell LFP.
 
 Điện áp sạc cuối của bộ sạc phải thấp hơn ngưỡng cắt quá áp của BMS (thường khoảng 3,65 V `[CHƯA XÁC MINH]`).
 
+Điều kiện với pack: BMS phải cho sạc ≥1,5 A; nếu BMS giới hạn 0,5 A thì bộ sạc nhanh cũng vô ích.
+
 ### 6.3 Cắt sạc theo nhiệt độ
 
 NTC gắn ở **pack** (sát cell), không đặt trên board, vì board nóng hơn cell. Điểm cắt thực hiện bằng phần cứng, không qua firmware.
 
-Với NTC 10 kΩ B3950 và điện trở kéo 7,15 kΩ (giá trị CAM4G), ngưỡng dưới của chip nằm trong dải 42,5–47,5 % VIN, nên điểm cắt thực tế rơi vào khoảng **35–40 °C**, không phải đúng 40 °C `[ƯỚC TÍNH]`. Phía lạnh, ở 0 °C điện áp TEMP sát ngưỡng trên, tức điểm cắt lạnh cũng sát. Đo điểm cắt thực bằng tủ sấy (M-05) và chỉnh lại theo NTC của pack thật.
+Với NTC 10 kΩ B3950 và điện trở kéo 7,15 kΩ (giá trị CAM4G), ngưỡng dưới của chip nằm trong dải 42,5–47,5 % VIN. Tính lại cho **điểm cắt nóng 40,1 °C** và **điểm cắt lạnh 35,1 °C** `[ƯỚC TÍNH]`, không phải đúng 40 °C. Phép tính và bảng nhiệt độ: [pwr-design](../hardware/pwr-design.md) §4. Đo điểm cắt thực bằng tủ sấy (M-05) và chỉnh lại theo NTC của pack thật.
 
 ### 6.4 Sạc và tải dùng chung pin
 
@@ -113,8 +122,10 @@ Với NTC 10 kΩ B3950 và điện trở kéo 7,15 kΩ (giá trị CAM4G), ngư�
 | Mục | Yêu cầu |
 |---|---|
 | Hóa học | LFP 1S, 3,2 V danh định |
-| Dung lượng | 10 Ah (prototype), tới 15 Ah (thiết kế) |
+| Dung lượng | **15 Ah** (chốt), không nhỏ hơn 10 Ah |
 | Dòng xả liên tục của BMS | ≥ 8–10 A, đủ cho đỉnh 5,6 A cộng dư |
+| Dòng sạc cho phép của BMS | ≥ 1,5 A, để dùng được bộ sạc xung |
+| Tự tiêu của BMS | **≤ 100 µA**, đo ở 25 °C |
 | Ngưỡng cắt sạc quá áp | Cao hơn 3,6 V; ghi lại giá trị nhà cung cấp |
 | NTC | Có dây NTC kéo ra connector riêng |
 | Cắt xả thấp | Khoảng 2–2,5 V; firmware phải tắt hệ thống sớm hơn |
@@ -133,11 +144,12 @@ Lý do: dòng ngủ 0,3 mA qua shunt 0,01 Ω chỉ cho khoảng 3 µV, dưới �
 
 ## 9. Test point bắt buộc
 
-VBUS, VBAT trước và sau header đo dòng, +5V_BOOST, +5V_SOC, +5V_MODEM, +3V3, GND (nhiều điểm), SW của boost, CHRG, DONE, TEMP, MCU_IRQ, SDA, SCL.
+VBUS, VBAT trước và sau header đo dòng, +5V_BOOST, +5V_SOC, +5V_MODEM, +3V3, GND (nhiều điểm), SW của boost, CHRG, DONE, TEMP, MCU_IRQ, SDA, SCL, SOC_READY, MODEM_STATUS, **MODEM_RI**, **USB_SEL** (nếu dùng mux USB).
 
 ## 10. Việc còn mở
 
-- Chọn pack và BMS cụ thể (O-03).
-- Chọn chip sạc production và power-path (O-05).
-- Đo dòng nghỉ của boost và của modem breakout ở chế độ Watch (R-04).
-- ADC đo pin: điện áp LFP có thể tới 3,65 V, cao hơn rail 3,3 V, nên mạch chia áp là bắt buộc.
+- Chọn pack và BMS cụ thể (O-03), với ràng buộc mới: 15 Ah, sạc ≥1,5 A, tự tiêu ≤100 µA.
+- Chọn IC sạc xung có power-path cho Rev A (O-05) — không còn để đến giai đoạn 5.
+- Đo đỉnh dòng của modem (M-10) và dòng nghỉ của boost/breakout ở Watch (R-04).
+- ADC đo pin: điện áp LFP có thể tới 3,65 V, cao hơn rail 3,3 V, nên mạch chia áp là bắt buộc. Phương án 100 kΩ/100 kΩ cho 1,825 V ở ADC và 1,61 mV/LSB `[ĐỀ XUẤT]`, xem [pwr-design](../hardware/pwr-design.md) §5.
+- Nếu chọn mux USB: chọn mux và cách điều khiển `USB_SEL` (O-13).
