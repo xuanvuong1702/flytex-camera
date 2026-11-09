@@ -13,7 +13,7 @@
 
 ### 1.1 Tính sơ bộ, chưa đo
 
-Vỏ 120×80×45 mm có diện tích ngoài khoảng 0,037 m². Với tản tự nhiên + bức xạ ~8 W/m²·K, độ dẫn nhiệt của vỏ khoảng 0,30 W/K. Ở 3,8 W, vỏ nóng hơn môi trường ~13 K; ở 45 °C môi trường là ~58 °C, sát giới hạn 60 °C của module và **chưa tính nắng chiếu trực tiếp** (có thể cộng thêm 10–20 K trên mặt hướng nắng). Đây là lý do [13](13-tinh-kha-thi.md) F-07 xếp nhiệt là rủi ro tiến độ số một.
+Vỏ 120×80×45 mm có diện tích ngoài khoảng 0,037 m². Với tản tự nhiên + bức xạ ~8 W/m²·K, độ dẫn nhiệt của vỏ khoảng 0,30 W/K. Ở 3,8 W, vỏ nóng hơn môi trường ~12,8 K; ở 45 °C môi trường là **57,8 °C**, sát giới hạn 60 °C của module và **chưa tính nắng chiếu trực tiếp** (có thể cộng thêm 10–20 K trên mặt hướng nắng). Con số và phép tính nằm ở [pwr-design](../hardware/pwr-design.md) §6; đây là lý do [13](13-tinh-kha-thi.md) F-07 xếp nhiệt là rủi ro tiến độ số một.
 
 Biện pháp nếu đo thấy vượt: giảm hiệu năng khi nhiệt cao (720p15), giảm công suất IR, tăng diện tích tản (vỏ có cánh), hoặc tách khoang nóng. Không dùng lỗ thông hơi nếu giữ mục tiêu IP65, trừ khi có màng thoáng khí đúng cấp.
 

@@ -13,11 +13,13 @@ Repo này **làm lại từ đầu**. Nó kế thừa *bài học* từ dự án
 | Tài liệu thiết kế | v1.1, đã qua rà soát khả thi |
 | Đặc tả giao diện máy đọc được | Có: regmap, J_B2B, MQTT sinh tự động từ `spec/` |
 | Firmware MCU | Có lõi + HAL giả + **59 test** host; port STM32L0 còn là khung |
-| Ứng dụng Linux | Có module + **172 test** host; chưa chạy camera thật |
+| Ứng dụng Linux | Có module + **176 test** host; chưa chạy camera thật |
 | Mô phỏng end-to-end | Có: firmware C thật + ứng dụng thật, **5 kịch bản** |
-| Công cụ đo và kiểm tài liệu | Có, **108 test** |
+| Gói thiết kế phần cứng | Tính toán PWR, hình học board + SVG, BOM Rev A/B, quy trình bring-up; **46 test** |
+| Công cụ đo và kiểm tài liệu | Có, **120 test**; nhập PPK2, kiểm tài liệu, checklist readiness |
 | Kiểm thử toàn repo | **430 test + 5 kịch bản**, 31/31 bước đạt: `python run_tests.py` |
-| Phần cứng | **Chưa có**, chưa vẽ schematic |
+| Sẵn sàng dựng prototype | **Đạt**: 3 vòng kiểm tra liên tiếp 4–6 ([docs/17](docs/17-san-sang-prototype.md)) |
+| Phần cứng | **Chưa có**: chưa có Gerber/PCB; gói thiết kế đã đủ để vẽ schematic |
 | Số đo thực | **Chưa có.** Mọi con số công suất, nhiệt, thời gian chạy đều là ước tính |
 
 Phân tích khả thi, các lỗi thiết kế phải sửa và lộ trình: [docs/13-tinh-kha-thi.md](docs/13-tinh-kha-thi.md).
@@ -80,8 +82,11 @@ python spec/generate.py --check
 # Sinh lại mã và bảng sau khi sửa spec/*.toml
 python spec/generate.py
 
-# Chạy toàn bộ: spec, firmware C, ứng dụng, công cụ, mô phỏng
+# Chạy toàn bộ: spec, hardware, firmware C, ứng dụng, công cụ, mô phỏng
 python run_tests.py
+
+# Checklist "sẵn sàng dựng prototype" (docs/17)
+python tools/readiness.py --full
 
 # Chỉ chạy mô phỏng end-to-end
 python sim/run.py --scenario basic

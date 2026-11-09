@@ -56,19 +56,69 @@ Mỗi vòng ghi: ngày, các lệnh đã chạy, kết quả, phát hiện, vi�
 
 Kết luận vòng 1: **chưa đủ**. Sửa xong 1-1…1-6, chạy lại từ vòng 1 theo §4.
 
-### Vòng 2 — chờ chạy
+### Vòng 2 — 2026-11-09 — ĐẠT
 
-- Trạng thái: chờ.
+Đã chạy lại từ đầu:
 
-### Vòng 3 — chờ chạy
+| Việc | Lệnh | Kết quả |
+|---|---|---|
+| Toàn bộ test | `python run_tests.py` | 31/31 bước, 430 test |
+| Checklist artifact | `python tools/readiness.py --full` | 24/24 đạt |
+| Phủ lệnh MQTT | so `mqtt_gen.COMMANDS` với handler trong `service.py` | 10/10, không thiếu, không thừa |
+| Dịch vụ end-to-end | `python -m flytex.cli sim --seconds 20` | ack=3, clip_ready=1, uploaded=1, sleep_cmd=1 |
+| Mô phỏng firmware thật | `python sim/run.py --scenario all` | 5/5 kịch bản |
 
-- Trạng thái: chờ.
+Phát hiện sản phẩm: **0**. Ghi chú phương pháp: script kiểm phủ lệnh lần đầu dùng regex bỏ sót lệnh không có dấu chấm (`reboot`) nên báo thiếu sai; đã sửa regex và chạy lại. Đây là lỗi công cụ kiểm tra, không phải lỗi sản phẩm.
 
-### Vòng 4 — chờ chạy
+Kết luận: đạt.
 
-- Trạng thái: chờ.
+### Vòng 3 — 2026-11-09 — KHÔNG TÍNH (1 phát hiện nhỏ)
 
-## 4. Quy tắc kết luận
+Đã chạy: `python run_tests.py` (31/31), `python tools/readiness.py --full` (24/24), kiểm nhất quán số liệu giữa docs/02, docs/06 và pwr-design, kiểm 26 chân B2B, kiểm gói linh kiện trong BOM.
+
+| # | Phát hiện | Mức | Đã sửa |
+|---|---|---|---|
+| 3-1 | Nhiệt vỏ ghi "~13 K / ~58 °C" ở [06](06-co-khi-nhiet.md) trong khi pwr-design tính chính xác 12,8 K / 57,8 °C; hai nơi có thể trôi số | Nhỏ | Sửa docs/06 dùng 12,8 K / 57,8 °C và trỏ về pwr-design §6 làm nguồn |
+
+Kết luận vòng 3: không tính; sửa xong, chạy lại toàn bộ từ vòng 4.
+
+### Vòng 4 — 2026-11-09 — ĐẠT
+
+Đã chạy lại từ đầu: `python run_tests.py` → 31/31 bước, 430 test; `python tools/readiness.py --full` → 24/24; kiểm nhất quán số liệu docs/02, docs/06, pwr-design (hồi tiếp, NTC, ADC, nhiệt) → 0 lỗi.
+
+Phát hiện sản phẩm: **0**. Kết luận: đạt.
+
+### Vòng 5 — 2026-11-09 — ĐẠT
+
+Đã chạy lại từ đầu: `python run_tests.py` → 31/31; `python tools/readiness.py --full` → 24/24; kiểm artifact độc lập:
+
+| Việc | Kết quả |
+|---|---|
+| Đọc file `.ts` do mô phỏng sinh | 5 gói, 3 PID (0, 0x1000, 0x100), có PAT và PMT |
+| Cấu trúc gói | chia hết 188, sync 0x47 |
+| SVG bản vẽ | cả hai file parse được bằng XML |
+| BOM | mọi dòng `dnp=no` có MPN |
+| pwr-design | "Tất cả kiểm tra đạt" |
+
+Phát hiện sản phẩm: **0**. Ghi chú phương pháp: script kiểm PSI ban đầu chỉ quét PID 0 nên báo thiếu PMT sai; đã sửa để quét cả PID PMT.
+
+Kết luận: đạt.
+
+### Vòng 6 — 2026-11-09 — ĐẠT
+
+Đã chạy lại từ đầu: `python run_tests.py` → 31/31 bước, 430 test; `python tools/readiness.py --full` → 24/24; `python -m flytex.cli sim --seconds 20` → chạy hết, có `uploaded=1`, `sleep_cmd=1`; phủ lệnh MQTT 10/10, không thiếu.
+
+Phát hiện sản phẩm: **0**. Kết luận: đạt.
+
+## 4. Kết luận cuối
+
+**Đủ điều kiện dựng prototype.** Ba vòng liên tiếp 4, 5, 6 đều đạt toàn bộ C-01…C-12 với cùng bộ kiểm tra, sau khi đã sửa 6 phát hiện của vòng 1 và 1 phát hiện nhỏ của vòng 3.
+
+Việc còn lại thuộc §2 (không thể làm trong repo): chuyển gói thiết kế sang KiCad và làm Gerber; xác minh symbol/footprint bằng linh kiện thật; mua BOM; đo công suất/nhiệt/độ trễ trên board thật; chứng nhận.
+
+Bằng chứng cuối cùng: commit trên `origin/master` của phiên này, `python run_tests.py` 31/31, `python tools/readiness.py --full` 24/24.
+
+## 5. Quy tắc kết luận
 
 1. Ba vòng liên tiếp phải đạt **tất cả** C-01…C-12.
 2. Mỗi vòng chạy lại từ đầu, không dựa vào kết quả vòng trước.
