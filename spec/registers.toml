@@ -1,0 +1,250 @@
+# Nguồn sự thật duy nhất cho hợp đồng I2C giữa MCU giám sát và SoC.
+#
+# File này sinh ra:
+#   firmware/mcu/include/flytex/regs_gen.h   (C, firmware MCU)
+#   app/flytex/regs_gen.py                   (Python, ứng dụng Linux)
+#   spec/generated/regmap.md                 (bảng cho người đọc)
+# Sửa tay các file sinh là lỗi: CI chạy `python spec/generate.py --check`.
+#
+# Quy ước (v1.1, supersedes bản nháp v0.1 trong docs/03 §5):
+#   - Mọi thanh ghi nhiều byte dùng thứ tự BIG-ENDIAN: byte cao ở địa chỉ thấp.
+#   - Đọc byte cao (địa chỉ thấp nhất của nhóm) sẽ chốt (latch) toàn bộ nhóm.
+#   - Ghi nhiều byte: ghi từ địa chỉ thấp tới cao, byte cuối cùng kích hoạt (commit).
+#   - EVENT xóa khi đọc. Ghi vào thanh ghi ro hoặc địa chỉ ngoài dải: NACK.
+schema = "flytex.regmap/1"
+
+[bus]
+i2c_address = 0x30
+proto_major = 1
+proto_minor = 1
+speed_hz_default = 100_000
+reg_count = 0x18
+
+[[regs]]
+name = "PROTO_VER"
+addr = 0x00
+access = "ro"
+size = 1
+reset = 0x11
+desc = "Phiên bản giao thức: [7:4] chính, [3:0] phụ. SoC phải từ chối làm việc nếu khác major."
+
+[[regs]]
+name = "FW_VER"
+addr = 0x01
+access = "ro"
+size = 1
+reset = 0x10
+desc = "Phiên bản firmware MCU: [7:4] chính, [3:0] phụ."
+
+[[regs]]
+name = "STATUS"
+addr = 0x02
+access = "ro"
+size = 1
+reset = 0x00
+desc = "Trạng thái nguồn và hệ thống."
+bits = [
+  { bit = 0, name = "SOC_READY", desc = "SoC đã bật và chạm SOC_READY" },
+  { bit = 1, name = "SOC_POWER_ON", desc = "Rail +5V_SOC đang bật" },
+  { bit = 2, name = "MODEM_POWER_ON", desc = "Rail +5V_MODEM đang bật" },
+  { bit = 3, name = "FAULT", desc = "Có lỗi đang hoạt động, xem FAULT_CODE" },
+  { bit = 4, name = "LOW_BATT", desc = "Pin dưới ngưỡng cảnh báo (có tải)" },
+  { bit = 5, name = "VBUS_PRESENT", desc = "Có nguồn USB-C" },
+  { bit = 6, name = "MODEM_READY", desc = "Chân STATUS của modem đang ở mức cao (v1.1)" },
+  { bit = 7, name = "SURVIVAL", desc = "Đang ở chế độ sinh tồn, chỉ thức khi có VBUS (v1.1)" },
+]
+
+[[regs]]
+name = "CHG"
+addr = 0x03
+access = "ro"
+size = 1
+reset = 0x00
+desc = "Trạng thái bộ sạc. Nghĩa bit phụ thuộc chip sạc được chọn."
+bits = [
+  { bit = 0, name = "CHARGING", desc = "Đang sạc" },
+  { bit = 1, name = "CHARGE_DONE", desc = "Sạc xong" },
+  { bit = 2, name = "CHARGE_INHIBIT", desc = "Sạc bị cấm do nhiệt (phần cứng hoặc firmware)" },
+  { bit = 3, name = "CHARGE_TIMEOUT", desc = "Hết thời gian sạc an toàn (v1.1)" },
+]
+
+[[regs]]
+name = "EVENT"
+addr = 0x04
+access = "ro"
+size = 1
+reset = 0x00
+clear_on_read = true
+desc = "Bit sự kiện. Xóa khi đọc: mỗi lần đọc trả về các bit đã đặt rồi xóa."
+bits = [
+  { bit = 0, name = "PIR", desc = "PIR vừa phát hiện chuyển động" },
+  { bit = 1, name = "SCHEDULE", desc = "Đến giờ theo lịch" },
+  { bit = 2, name = "VBUS_CHANGE", desc = "Cắm hoặc rút USB-C" },
+  { bit = 3, name = "LOW_BATT", desc = "Vừa xuống dưới ngưỡng cảnh báo" },
+  { bit = 4, name = "MODEM_STATUS", desc = "Chân STATUS của modem đổi mức" },
+  { bit = 5, name = "SHUTDOWN_REQ", desc = "MCU yêu cầu SoC tắt an toàn" },
+  { bit = 6, name = "WAKE_ALARM", desc = "Hết thời gian của kênh đánh thức khi ngủ (v1.1)" },
+  { bit = 7, name = "BUTTON", desc = "Nút nhấn (dự phòng, v1.1)" },
+]
+
+[[regs]]
+name = "FAULT_CODE"
+addr = 0x05
+access = "ro"
+size = 1
+reset = 0x00
+desc = "0 là không lỗi. Mã lỗi xem bảng values."
+values = [
+  { value = 0, name = "NONE", desc = "Không lỗi" },
+  { value = 1, name = "BATT_UNDERVOLTAGE", desc = "Pin dưới ngưỡng tắt" },
+  { value = 2, name = "BATT_OVERTEMP", desc = "Nhiệt độ pin cao" },
+  { value = 3, name = "BATT_UNDERTEMP", desc = "Nhiệt độ pin thấp, cấm sạc" },
+  { value = 4, name = "SOC_NO_HANDSHAKE", desc = "SoC không trả lời bắt tay tắt máy" },
+  { value = 5, name = "SOC_NO_BOOT", desc = "SoC không báo SOC_READY trong thời gian cho phép" },
+  { value = 6, name = "MODEM_NO_BOOT", desc = "Modem không lên trong thời gian cho phép" },
+  { value = 7, name = "I2C_BUS", desc = "Lỗi bus I2C" },
+  { value = 8, name = "SENSOR_STALE", desc = "Cảm biến nhiệt không đọc được" },
+  { value = 9, name = "NVM", desc = "Lỗi bộ nhớ cấu hình" },
+  { value = 10, name = "BAD_CMD", desc = "SoC ghi mã lệnh không hợp lệ" },
+]
+
+[[regs]]
+name = "VBAT_MV"
+addr = 0x06
+access = "ro"
+size = 2
+order = "be"
+latch_read = true
+reset = 0x0000
+unit = "mV"
+desc = "Điện áp pin, 0..65535 mV. Đọc 0x06 chốt giá trị, 0x07 trả byte thấp."
+
+[[regs]]
+name = "BAT_TEMP_C"
+addr = 0x08
+access = "ro"
+size = 1
+signed = true
+invalid = 0x80
+unit = "degC"
+reset = 0x80
+desc = "Nhiệt độ pin (NTC trên pack). 0x80 = không hợp lệ, không được trả giá trị giả."
+
+[[regs]]
+name = "AMB_TEMP_C"
+addr = 0x09
+access = "ro"
+size = 1
+signed = true
+invalid = 0x80
+unit = "degC"
+reset = 0x80
+desc = "Nhiệt độ môi trường từ DS18B20. 0x80 = không hợp lệ."
+
+[[regs]]
+name = "CMD"
+addr = 0x0A
+access = "wo"
+size = 1
+reset = 0x00
+desc = "Lệnh từ SoC. Mã lạ bị bỏ qua và đặt FAULT_CODE = BAD_CMD."
+values = [
+  { value = 1, name = "SOC_WAKE", desc = "SoC đã thức, bắt đầu bắt tay" },
+  { value = 2, name = "SOC_SHUTDOWN_DONE", desc = "SoC đã đóng file, sẵn sàng mất nguồn" },
+  { value = 3, name = "MODEM_ON", desc = "Bật rail modem" },
+  { value = 4, name = "MODEM_OFF", desc = "Tắt rail modem" },
+  { value = 5, name = "MODEM_RESET", desc = "Xung RESET modem (v1.1)" },
+  { value = 6, name = "CLEAR_FAULT", desc = "Xóa lỗi đang chốt (v1.1)" },
+  { value = 7, name = "MODEM_PWRKEY", desc = "Xung PWRKEY modem (v1.1)" },
+]
+
+[[regs]]
+name = "MODE"
+addr = 0x0B
+access = "rw"
+size = 1
+reset = 0x00
+desc = "Chế độ ngủ đã cấu hình. 0 = Eco, 1 = Watch."
+values = [
+  { value = 0, name = "ECO", desc = "Chỉ PIR và lịch, SoC và modem tắt" },
+  { value = 1, name = "WATCH", desc = "Giữ modem để nhận lệnh trong vài giây" },
+]
+
+[[regs]]
+name = "WAKE_IN_S"
+addr = 0x0C
+access = "rw"
+size = 4
+order = "be"
+commit_write = true
+reset = 0x00000000
+unit = "s"
+desc = "Số giây tới lần thức theo lịch. Ghi từ 0x0C tới 0x0F, byte 0x0F kích hoạt. 0 là tắt."
+
+[[regs]]
+name = "EVENT_MASK"
+addr = 0x10
+access = "rw"
+size = 1
+reset = 0x3F
+desc = "Bit nào bật thì MCU mới kéo MCU_IRQ cho sự kiện tương ứng. Cùng thứ tự bit với EVENT."
+
+[[regs]]
+name = "SYS_FLAGS"
+addr = 0x11
+access = "ro"
+size = 1
+reset = 0x02
+desc = "Nguyên nhân khởi động lại gần nhất (v1.1)."
+bits = [
+  { bit = 0, name = "WDT_RESET", desc = "Watchdog độc lập" },
+  { bit = 1, name = "POR_BOR", desc = "Cấp nguồn hoặc brown-out" },
+  { bit = 2, name = "PIN_RESET", desc = "Chân NRST" },
+  { bit = 3, name = "SOFTWARE", desc = "Reset mềm" },
+  { bit = 4, name = "CHG_INHIBIT", desc = "Sạc đang bị cấm do nhiệt" },
+  { bit = 5, name = "RTC_LOST", desc = "Mất giờ RTC" },
+]
+
+[[regs]]
+name = "WAKE_CHAN"
+addr = 0x12
+access = "rw"
+size = 1
+reset = 0x00
+desc = "Kênh đánh thức khi SoC tắt (v1.1). Xem docs/15 §4."
+values = [
+  { value = 0, name = "OFF", desc = "Không dùng kênh đánh thức" },
+  { value = 1, name = "MODEM_TCP_POLL", desc = "MCU hỏi cloud qua TCP stack của modem theo chu kỳ" },
+  { value = 2, name = "SMS", desc = "Chỉ thức khi có SMS đánh thức" },
+  { value = 3, name = "EDRX_MQTT", desc = "SoC thức, giữ MQTT (tốn pin, chỉ khi cần)" },
+]
+
+[[regs]]
+name = "WAKE_PERIOD_S"
+addr = 0x13
+access = "rw"
+size = 2
+order = "be"
+commit_write = true
+reset = 0x0000
+unit = "s"
+desc = "Chu kỳ hỏi của kênh đánh thức (v1.1). 0 là dùng giá trị mặc định của firmware."
+
+[[regs]]
+name = "UPTIME_S"
+addr = 0x15
+access = "ro"
+size = 2
+order = "be"
+latch_read = true
+reset = 0x0000
+unit = "s"
+desc = "Thời gian từ lúc MCU khởi động, bão hòa ở 65535 (v1.1)."
+
+[[regs]]
+name = "BOOT_COUNT"
+addr = 0x17
+access = "ro"
+size = 1
+reset = 0x00
+desc = "Số lần khởi động lại đã đếm, lưu trong NVM, bão hòa ở 255 (v1.1)."

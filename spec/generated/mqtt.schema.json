@@ -1,0 +1,489 @@
+{
+  "schema": "flytex.mqtt/1",
+  "version": 1,
+  "topics": {
+    "evt": "dev/{dev}/evt",
+    "status": "dev/{dev}/status",
+    "cmd": "dev/{dev}/cmd",
+    "ack": "dev/{dev}/ack"
+  },
+  "envelope": [
+    {
+      "name": "v",
+      "type": "int",
+      "required": true,
+      "desc": "Phiên bản lược đồ, hiện tại là 1"
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "required": true,
+      "desc": "ID duy nhất của bản tin, 16 hex, do nguồn gửi sinh"
+    },
+    {
+      "name": "dev",
+      "type": "string",
+      "required": true,
+      "desc": "Device ID, 12 ký tự [a-z0-9]"
+    },
+    {
+      "name": "ts",
+      "type": "int",
+      "required": true,
+      "desc": "Unix time giây UTC lúc sinh bản tin"
+    },
+    {
+      "name": "type",
+      "type": "string",
+      "required": true,
+      "desc": "Loại bản tin"
+    }
+  ],
+  "events": {
+    "motion": {
+      "qos": 1,
+      "retain": false,
+      "description": "Có chuyển động, kèm clip đã ghi.",
+      "fields": [
+        {
+          "name": "clip_id",
+          "type": "string",
+          "required": true,
+          "desc": "ID clip 16 hex"
+        },
+        {
+          "name": "duration_s",
+          "type": "int",
+          "required": true,
+          "desc": "Độ dài clip"
+        },
+        {
+          "name": "ir",
+          "type": "bool",
+          "required": true,
+          "desc": "Có bật đèn IR khi ghi"
+        },
+        {
+          "name": "batt_mv",
+          "type": "int",
+          "required": true,
+          "desc": "Điện áp pin lúc bắt đầu ghi"
+        },
+        {
+          "name": "batt_pct",
+          "type": [
+            "int",
+            "null"
+          ],
+          "required": true,
+          "desc": "Phần trăm pin ước tính, null nếu chưa có gauge"
+        }
+      ]
+    },
+    "battery": {
+      "qos": 1,
+      "retain": false,
+      "description": "Đo pin định kỳ hoặc khi đổi trạng thái sạc.",
+      "fields": [
+        {
+          "name": "batt_mv",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "batt_pct",
+          "type": [
+            "int",
+            "null"
+          ],
+          "required": true
+        },
+        {
+          "name": "charging",
+          "type": "bool",
+          "required": true
+        },
+        {
+          "name": "vbus",
+          "type": "bool",
+          "required": true
+        },
+        {
+          "name": "low",
+          "type": "bool",
+          "required": true,
+          "desc": "Đang dưới ngưỡng cảnh báo"
+        }
+      ]
+    },
+    "temp": {
+      "qos": 1,
+      "retain": false,
+      "description": "Nhiệt độ định kỳ.",
+      "fields": [
+        {
+          "name": "soc_c",
+          "type": [
+            "float",
+            "null"
+          ],
+          "required": true,
+          "desc": "Nhiệt độ SoC, null nếu không đọc được"
+        },
+        {
+          "name": "amb_c",
+          "type": [
+            "float",
+            "null"
+          ],
+          "required": true
+        },
+        {
+          "name": "batt_c",
+          "type": [
+            "float",
+            "null"
+          ],
+          "required": true
+        }
+      ]
+    },
+    "fault": {
+      "qos": 1,
+      "retain": false,
+      "description": "Lỗi. Gửi ngay, ưu tiên cao nhất.",
+      "fields": [
+        {
+          "name": "code",
+          "type": "string",
+          "required": true,
+          "desc": "Tên mã lỗi, xem FAULT_CODE trong regmap"
+        },
+        {
+          "name": "detail",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    "status": {
+      "qos": 1,
+      "retain": true,
+      "description": "Trạng thái thiết bị, retained để app mở là thấy ngay.",
+      "fields": [
+        {
+          "name": "mode",
+          "type": "string",
+          "required": true,
+          "enum": [
+            "eco",
+            "watch"
+          ]
+        },
+        {
+          "name": "state",
+          "type": "string",
+          "required": true,
+          "enum": [
+            "s0",
+            "s1",
+            "s2",
+            "s3",
+            "sf"
+          ]
+        },
+        {
+          "name": "fw",
+          "type": "string",
+          "required": true,
+          "desc": "Phiên bản firmware ứng dụng"
+        },
+        {
+          "name": "mcu_fw",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "proto",
+          "type": "string",
+          "required": true,
+          "desc": "Phiên bản giao thức MCU, dạng 1.1"
+        },
+        {
+          "name": "rssi_dbm",
+          "type": [
+            "int",
+            "null"
+          ],
+          "required": true
+        },
+        {
+          "name": "band",
+          "type": [
+            "string",
+            "null"
+          ],
+          "required": true
+        },
+        {
+          "name": "uptime_s",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "batt_mv",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "sd_free_mb",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "wake_chan",
+          "type": "string",
+          "required": true,
+          "enum": [
+            "off",
+            "modem_tcp_poll",
+            "sms",
+            "edrx_mqtt"
+          ]
+        },
+        {
+          "name": "live_url",
+          "type": [
+            "string",
+            "null"
+          ],
+          "required": false,
+          "desc": "URL relay đang phát, null nếu không live"
+        }
+      ]
+    },
+    "boot": {
+      "qos": 1,
+      "retain": false,
+      "description": "Thiết bị vừa khởi động, gửi một lần sau khi có mạng.",
+      "fields": [
+        {
+          "name": "reason",
+          "type": "string",
+          "required": true,
+          "desc": "Nguồn gốc reset, lấy từ SYS_FLAGS"
+        },
+        {
+          "name": "sw",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "boot_count",
+          "type": "int",
+          "required": true
+        }
+      ]
+    },
+    "shutdown": {
+      "qos": 1,
+      "retain": false,
+      "description": "Thiết bị sắp mất nguồn, gửi ngay nếu còn mạng.",
+      "fields": [
+        {
+          "name": "reason",
+          "type": "string",
+          "required": true,
+          "enum": [
+            "low_batt",
+            "thermal",
+            "user",
+            "fault"
+          ]
+        },
+        {
+          "name": "batt_mv",
+          "type": "int",
+          "required": true
+        }
+      ]
+    },
+    "clip_ready": {
+      "qos": 1,
+      "retain": false,
+      "description": "Clip đã tải lên kho đối tượng, kèm URL.",
+      "fields": [
+        {
+          "name": "clip_id",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "url",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "size_b",
+          "type": "int",
+          "required": true
+        }
+      ]
+    }
+  },
+  "commands": {
+    "live.start": {
+      "description": "Bật xem trực tiếp trong duration_s giây.",
+      "args": [
+        {
+          "name": "duration_s",
+          "type": "int",
+          "required": false,
+          "default": 120,
+          "min": 10,
+          "max": 600
+        }
+      ],
+      "result": [
+        {
+          "name": "live_url",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "expires_s",
+          "type": "int",
+          "required": true
+        }
+      ]
+    },
+    "live.stop": {
+      "description": "Tắt xem trực tiếp.",
+      "args": [],
+      "result": []
+    },
+    "mode.set": {
+      "description": "Đổi chế độ ngủ. Từ chối khi đang ghi.",
+      "args": [
+        {
+          "name": "mode",
+          "type": "string",
+          "required": true,
+          "enum": [
+            "eco",
+            "watch"
+          ]
+        }
+      ],
+      "result": []
+    },
+    "schedule.set": {
+      "description": "Đặt lịch thức. Thay toàn bộ lịch cũ.",
+      "args": [
+        {
+          "name": "entries",
+          "type": "array",
+          "required": true,
+          "desc": "Tối đa 8 mục, mỗi mục {start, end, days, enabled}"
+        }
+      ],
+      "result": [
+        {
+          "name": "count",
+          "type": "int",
+          "required": true
+        }
+      ]
+    },
+    "time.sync": {
+      "description": "Đặt giờ thiết bị. Kết quả trả lại độ lệch đã áp dụng.",
+      "args": [
+        {
+          "name": "ts",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "result": []
+    },
+    "status.get": {
+      "description": "Yêu cầu gửi bản tin status ngay.",
+      "args": [],
+      "result": []
+    },
+    "config.set": {
+      "description": "Đổi một khóa cấu hình có trong danh sách cho phép.",
+      "args": [
+        {
+          "name": "key",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "result": []
+    },
+    "clip.request": {
+      "description": "Yêu cầu tải một clip còn lưu cục bộ lên kho.",
+      "args": [
+        {
+          "name": "clip_id",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "result": []
+    },
+    "reboot": {
+      "description": "Khởi động lại thiết bị.",
+      "args": [],
+      "result": []
+    },
+    "ota.start": {
+      "description": "Bắt đầu cập nhật firmware. Chưa hiện thực: phải trả lỗi NOT_IMPLEMENTED, không được giả vờ thành công.",
+      "args": [
+        {
+          "name": "url",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "sha256",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "result": []
+    }
+  },
+  "ack": [
+    {
+      "name": "ok",
+      "type": "bool",
+      "required": true
+    },
+    {
+      "name": "result",
+      "type": "object",
+      "required": false
+    },
+    {
+      "name": "error",
+      "type": [
+        "string",
+        "null"
+      ],
+      "required": true,
+      "desc": "Mã lỗi dạng BAD_ARGS, BUSY, NOT_IMPLEMENTED"
+    }
+  ]
+}

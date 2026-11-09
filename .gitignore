@@ -1,0 +1,26 @@
+# KiCad
+*.kicad_prl
+*.lck
+~*.lck
+*.bak
+*-backups/
+fp-info-cache
+
+# Autorouter trung gian
+*.dsn
+*.ses
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Build
+build/
+dist/
+
+# Hệ điều hành
+.DS_Store
+Thumbs.db
+*.log

@@ -1,0 +1,196 @@
+# Nguồn sự thật duy nhất cho hợp đồng MQTT giữa thiết bị và cloud.
+# Sinh: spec/generated/mqtt.schema.json, app/flytex/mqtt_gen.py, spec/generated/mqtt.md
+schema = "flytex.mqtt/1"
+version = 1
+qos_default = 1
+
+[topic]
+evt = "dev/{dev}/evt"
+status = "dev/{dev}/status"
+cmd = "dev/{dev}/cmd"
+ack = "dev/{dev}/ack"
+
+[envelope]
+# Mọi bản tin đều có các trường này ở mức ngoài cùng.
+fields = [
+  { name = "v", type = "int", required = true, desc = "Phiên bản lược đồ, hiện tại là 1" },
+  { name = "id", type = "string", required = true, desc = "ID duy nhất của bản tin, 16 hex, do nguồn gửi sinh" },
+  { name = "dev", type = "string", required = true, desc = "Device ID, 12 ký tự [a-z0-9]" },
+  { name = "ts", type = "int", required = true, desc = "Unix time giây UTC lúc sinh bản tin" },
+  { name = "type", type = "string", required = true, desc = "Loại bản tin" },
+]
+
+[[events]]
+type = "motion"
+qos = 1
+retain = false
+desc = "Có chuyển động, kèm clip đã ghi."
+fields = [
+  { name = "clip_id", type = "string", required = true, desc = "ID clip 16 hex" },
+  { name = "duration_s", type = "int", required = true, desc = "Độ dài clip" },
+  { name = "ir", type = "bool", required = true, desc = "Có bật đèn IR khi ghi" },
+  { name = "batt_mv", type = "int", required = true, desc = "Điện áp pin lúc bắt đầu ghi" },
+  { name = "batt_pct", type = ["int", "null"], required = true, desc = "Phần trăm pin ước tính, null nếu chưa có gauge" },
+]
+
+[[events]]
+type = "battery"
+qos = 1
+desc = "Đo pin định kỳ hoặc khi đổi trạng thái sạc."
+fields = [
+  { name = "batt_mv", type = "int", required = true },
+  { name = "batt_pct", type = ["int", "null"], required = true },
+  { name = "charging", type = "bool", required = true },
+  { name = "vbus", type = "bool", required = true },
+  { name = "low", type = "bool", required = true, desc = "Đang dưới ngưỡng cảnh báo" },
+]
+
+[[events]]
+type = "temp"
+qos = 1
+desc = "Nhiệt độ định kỳ."
+fields = [
+  { name = "soc_c", type = ["float", "null"], required = true, desc = "Nhiệt độ SoC, null nếu không đọc được" },
+  { name = "amb_c", type = ["float", "null"], required = true },
+  { name = "batt_c", type = ["float", "null"], required = true },
+]
+
+[[events]]
+type = "fault"
+qos = 1
+desc = "Lỗi. Gửi ngay, ưu tiên cao nhất."
+fields = [
+  { name = "code", type = "string", required = true, desc = "Tên mã lỗi, xem FAULT_CODE trong regmap" },
+  { name = "detail", type = "string", required = false },
+]
+
+[[events]]
+type = "status"
+qos = 1
+retain = true
+desc = "Trạng thái thiết bị, retained để app mở là thấy ngay."
+fields = [
+  { name = "mode", type = "string", required = true, enum = ["eco", "watch"] },
+  { name = "state", type = "string", required = true, enum = ["s0", "s1", "s2", "s3", "sf"] },
+  { name = "fw", type = "string", required = true, desc = "Phiên bản firmware ứng dụng" },
+  { name = "mcu_fw", type = "string", required = true },
+  { name = "proto", type = "string", required = true, desc = "Phiên bản giao thức MCU, dạng 1.1" },
+  { name = "rssi_dbm", type = ["int", "null"], required = true },
+  { name = "band", type = ["string", "null"], required = true },
+  { name = "uptime_s", type = "int", required = true },
+  { name = "batt_mv", type = "int", required = true },
+  { name = "sd_free_mb", type = "int", required = true },
+  { name = "wake_chan", type = "string", required = true, enum = ["off", "modem_tcp_poll", "sms", "edrx_mqtt"] },
+  { name = "live_url", type = ["string", "null"], required = false, desc = "URL relay đang phát, null nếu không live" },
+]
+
+[[events]]
+type = "boot"
+qos = 1
+desc = "Thiết bị vừa khởi động, gửi một lần sau khi có mạng."
+fields = [
+  { name = "reason", type = "string", required = true, desc = "Nguồn gốc reset, lấy từ SYS_FLAGS" },
+  { name = "sw", type = "string", required = true },
+  { name = "boot_count", type = "int", required = true },
+]
+
+[[events]]
+type = "shutdown"
+qos = 1
+desc = "Thiết bị sắp mất nguồn, gửi ngay nếu còn mạng."
+fields = [
+  { name = "reason", type = "string", required = true, enum = ["low_batt", "thermal", "user", "fault"] },
+  { name = "batt_mv", type = "int", required = true },
+]
+
+[[events]]
+type = "clip_ready"
+qos = 1
+desc = "Clip đã tải lên kho đối tượng, kèm URL."
+fields = [
+  { name = "clip_id", type = "string", required = true },
+  { name = "url", type = "string", required = true },
+  { name = "size_b", type = "int", required = true },
+]
+
+[[commands]]
+cmd = "live.start"
+desc = "Bật xem trực tiếp trong duration_s giây."
+args = [
+  { name = "duration_s", type = "int", required = false, default = 120, min = 10, max = 600 },
+]
+result = [
+  { name = "live_url", type = "string", required = true },
+  { name = "expires_s", type = "int", required = true },
+]
+
+[[commands]]
+cmd = "live.stop"
+desc = "Tắt xem trực tiếp."
+args = []
+
+[[commands]]
+cmd = "mode.set"
+desc = "Đổi chế độ ngủ. Từ chối khi đang ghi."
+args = [
+  { name = "mode", type = "string", required = true, enum = ["eco", "watch"] },
+]
+
+[[commands]]
+cmd = "schedule.set"
+desc = "Đặt lịch thức. Thay toàn bộ lịch cũ."
+args = [
+  { name = "entries", type = "array", required = true, desc = "Tối đa 8 mục, mỗi mục {start, end, days, enabled}" },
+]
+result = [
+  { name = "count", type = "int", required = true },
+]
+
+[[commands]]
+cmd = "time.sync"
+desc = "Đặt giờ thiết bị. Kết quả trả lại độ lệch đã áp dụng."
+args = [
+  { name = "ts", type = "int", required = true },
+]
+
+[[commands]]
+cmd = "status.get"
+desc = "Yêu cầu gửi bản tin status ngay."
+args = []
+
+[[commands]]
+cmd = "config.set"
+desc = "Đổi một khóa cấu hình có trong danh sách cho phép."
+args = [
+  { name = "key", type = "string", required = true },
+  { name = "value", type = "string", required = true },
+]
+
+[[commands]]
+cmd = "clip.request"
+desc = "Yêu cầu tải một clip còn lưu cục bộ lên kho."
+args = [
+  { name = "clip_id", type = "string", required = true },
+]
+
+[[commands]]
+cmd = "reboot"
+desc = "Khởi động lại thiết bị."
+args = []
+
+[[commands]]
+cmd = "ota.start"
+desc = "Bắt đầu cập nhật firmware. Chưa hiện thực: phải trả lỗi NOT_IMPLEMENTED, không được giả vờ thành công."
+args = [
+  { name = "url", type = "string", required = true },
+  { name = "sha256", type = "string", required = true },
+  { name = "version", type = "string", required = true },
+]
+
+[ack]
+desc = "Xác nhận lệnh. Cùng id với lệnh."
+fields = [
+  { name = "ok", type = "bool", required = true },
+  { name = "result", type = "object", required = false },
+  { name = "error", type = ["string", "null"], required = true, desc = "Mã lỗi dạng BAD_ARGS, BUSY, NOT_IMPLEMENTED" },
+]

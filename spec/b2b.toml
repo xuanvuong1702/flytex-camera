@@ -1,0 +1,205 @@
+# Nguồn sự thật duy nhất cho connector J_B2B giữa board PWR và board CMP.
+# Sinh: spec/generated/b2b.md, spec/generated/pinout_pwr_cmp.csv
+schema = "flytex.b2b/1"
+
+[connector]
+name = "J_B2B"
+type = "Box header 2x13, 2.54 mm, có khóa và chống cắm ngược"
+mating = "Cùng loại trên CMP, chiều dài cáp tối đa 60 mm cho prototype"
+pins_total = 26
+logic_level_v = 3.3
+
+# Giới hạn thiết kế để kiểm tra tự động. Đơn vị A.
+[limits]
+max_current_per_pin_a = 1.0
+min_current_margin = 1.25
+
+# Dòng thiết kế thực tế của từng net (không phải dòng tối đa của nguồn).
+# Số ở đây là cận trên có căn cứ; xem docs/13 §4.3 về đỉnh dòng của modem.
+[requirements]
+"+5V_SOC" = { require_a = 1.5, note = "SoC + camera + thẻ SD, đỉnh ngắn hạn" }
+"+5V_MODEM" = { require_a = 1.8, note = "Đỉnh burst modem Cat-1 quy về 5 V, chờ datasheet xác nhận" }
+"+3V3" = { require_a = 0.6, note = "MCU, cảm biến, tham chiếu logic" }
+"GND" = { require_a = 3.0, note = "Tổng dòng quay về" }
+
+[[pins]]
+num = 1
+name = "+5V_SOC"
+net = "+5V_SOC"
+dir = "PWR->CMP"
+max_a = 1.0
+desc = "Rail SoC, 3 chân, tổng 3 A"
+
+[[pins]]
+num = 2
+name = "+5V_MODEM"
+net = "+5V_MODEM"
+dir = "PWR->CMP"
+max_a = 1.0
+desc = "Rail modem, 3 chân. Đỉnh của modem Cat-1 lớn hơn bản nháp 0.6 A"
+
+[[pins]]
+num = 3
+name = "+5V_SOC"
+net = "+5V_SOC"
+dir = "PWR->CMP"
+max_a = 1.0
+
+[[pins]]
+num = 4
+name = "+5V_MODEM"
+net = "+5V_MODEM"
+dir = "PWR->CMP"
+max_a = 1.0
+
+[[pins]]
+num = 5
+name = "+5V_SOC"
+net = "+5V_SOC"
+dir = "PWR->CMP"
+max_a = 1.0
+
+[[pins]]
+num = 6
+name = "GND"
+net = "GND"
+dir = "-"
+max_a = 1.0
+
+[[pins]]
+num = 7
+name = "GND"
+net = "GND"
+dir = "-"
+max_a = 1.0
+
+[[pins]]
+num = 8
+name = "GND"
+net = "GND"
+dir = "-"
+max_a = 1.0
+
+[[pins]]
+num = 9
+name = "+3V3"
+net = "+3V3"
+dir = "PWR->CMP"
+max_a = 0.75
+desc = "Tham chiếu logic và cảm biến"
+
+[[pins]]
+num = 10
+name = "GND"
+net = "GND"
+dir = "-"
+max_a = 1.0
+
+[[pins]]
+num = 11
+name = "+3V3"
+net = "+3V3"
+dir = "PWR->CMP"
+max_a = 0.75
+
+[[pins]]
+num = 12
+name = "GND"
+net = "GND"
+dir = "-"
+max_a = 1.0
+
+[[pins]]
+num = 13
+name = "I2C_SDA"
+net = "I2C_SDA"
+dir = "bidir"
+pullup = "trên PWR, 2.2 kOhm tới +3V3"
+
+[[pins]]
+num = 14
+name = "I2C_SCL"
+net = "I2C_SCL"
+dir = "bidir"
+pullup = "trên PWR, 2.2 kOhm tới +3V3"
+
+[[pins]]
+num = 15
+name = "MCU_IRQ"
+net = "MCU_IRQ"
+dir = "PWR->CMP"
+desc = "Open-drain, mức thấp là có sự kiện"
+
+[[pins]]
+num = 16
+name = "SOC_READY"
+net = "SOC_READY"
+dir = "CMP->PWR"
+desc = "SoC báo đã khởi động xong"
+
+[[pins]]
+num = 17
+name = "MODEM_PWRKEY"
+net = "MODEM_PWRKEY"
+dir = "PWR->CMP"
+desc = "Từ MCU ra header modem"
+
+[[pins]]
+num = 18
+name = "MODEM_RESET"
+net = "MODEM_RESET"
+dir = "PWR->CMP"
+desc = "Từ MCU ra header modem"
+
+[[pins]]
+num = 19
+name = "MODEM_STATUS"
+net = "MODEM_STATUS"
+dir = "CMP->PWR"
+desc = "Từ modem về MCU"
+
+[[pins]]
+num = 20
+name = "SPARE_SOC1"
+net = "SPARE_SOC1"
+dir = "CMP->PWR"
+
+[[pins]]
+num = 21
+name = "SPARE_MCU1"
+net = "SPARE_MCU1"
+dir = "PWR->CMP"
+
+[[pins]]
+num = 22
+name = "SPARE_SOC2"
+net = "SPARE_SOC2"
+dir = "CMP->PWR"
+
+[[pins]]
+num = 23
+name = "+5V_MODEM"
+net = "+5V_MODEM"
+dir = "PWR->CMP"
+max_a = 1.0
+
+[[pins]]
+num = 24
+name = "GND"
+net = "GND"
+dir = "-"
+max_a = 1.0
+
+[[pins]]
+num = 25
+name = "GND"
+net = "GND"
+dir = "-"
+max_a = 1.0
+
+[[pins]]
+num = 26
+name = "GND"
+net = "GND"
+dir = "-"
+max_a = 1.0
