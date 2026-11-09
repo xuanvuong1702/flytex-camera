@@ -19,6 +19,17 @@ python tools/fab_check.py --check
 | Stackup | **Thiếu** |
 | Footprint thật | **Thiếu 5**: B2B PWR (J2), B2B CMP (J1), Core1106D (U1), service pad (J6), test point 4 chân (TP1) |
 
+## Footprint đã kiểm
+
+- Có sẵn trong KiCad: `Texas_VQFN-RHL-20` cho TPS61088 (đúng RHL 3.5×3.5).
+- **Không có** footprint đúng cho:
+  - TPS62840 DLC SON-8 1.5×2 mm (chỉ có VSON-8 gần giống).
+  - BQ25070 DQC WSON-10 3×2 mm.
+  - Samtec SSM-113-L-DV / TSM-113 (B2B).
+  - Core1106D 112-pin 30×30.
+  - Service pad 4 chân, test point 4 chân.
+- Dùng footprint gần đúng sẽ làm board không hàn được; không thể gọi là fab.
+
 ## Việc bắt buộc trước khi gửi
 
 1. Tạo footprint cơ khí: Samtec SSM-113-L-DV (socket B2B), TSM-113 header, Core1106D 112-pin 30×30, FPC 20-pin nếu chưa khớp, service pad, test point 4 chân.
