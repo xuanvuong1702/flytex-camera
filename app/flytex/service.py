@@ -9,6 +9,7 @@ hàng đợi và xử lý lệnh MQTT.
 
 from __future__ import annotations
 
+import hashlib
 import hmac
 import json
 import os
@@ -90,6 +91,19 @@ class DeviceService:
             raise ServiceError("uploader va spool phai duoc cau hinh cung nhau")
         self.sleep_requested = False
         self.wake_sms_ok = False
+        self._wake_last_ts = 0
+        self._wake_ts_path = (
+            self.config_path.parent / "wake_last_ts"
+            if self.config_path is not None
+            else None
+        )
+        if self._wake_ts_path is not None and self._wake_ts_path.exists():
+            try:
+                self._wake_last_ts = int(
+                    self._wake_ts_path.read_text(encoding="utf-8").strip()
+                )
+            except (OSError, ValueError):
+                self._wake_last_ts = 0
         self.power = PowerController(
             mcu,
             clock,
@@ -406,29 +420,67 @@ class DeviceService:
         )
 
     def _consume_wake_sms(self) -> None:
-        """Đọc SMS đánh thức sau khi SoC thức; chỉ token đúng mới được tính.
+        """Đọc SMS đánh thức; yêu cầu HMAC, timestamp tươi và chống replay.
 
-        SMS sai/không có token bị bỏ qua và ghi log, không đánh thức gì thêm.
+        Định dạng: ``W <unix_ts> <hmac16>``. HMAC-SHA256 trên chuỗi timestamp,
+        khóa là ``wake_secret`` (hex). Không có secret thì từ chối, không mở.
         """
         if self.config.wake_chan != "sms":
+            return
+        if not self.config.wake_secret:
+            self.diagnostics.log(
+                "warning", "SMS danh thuc bi tu choi: chua cau hinh wake_secret"
+            )
             return
         try:
             messages = self.modem.sms_read()
         except (AtError, AtTimeout) as exc:
             self.diagnostics.log("warning", f"doc SMS danh thuc loi: {exc}")
             return
+        try:
+            key = bytes.fromhex(self.config.wake_secret)
+        except ValueError:
+            self.diagnostics.log(
+                "error", "SMS danh thuc bi tu choi: wake_secret khong phai hex"
+            )
+            return
+        if len(key) < 16:
+            self.diagnostics.log(
+                "error", "SMS danh thuc bi tu choi: wake_secret qua ngan"
+            )
+            return
+        now = int(self.clock.now())
         for message in messages:
-            text = message.text.strip()
-            if not text.startswith("W "):
+            parts = message.text.strip().split()
+            if len(parts) != 3 or parts[0] != "W":
                 continue
-            token = text[2:].strip()
-            if self.config.wake_token and hmac.compare_digest(
-                token, self.config.wake_token
-            ):
-                self.wake_sms_ok = True
-                self.diagnostics.log("info", "SMS danh thuc hop le")
-                return
-            self.diagnostics.log("warning", "SMS danh thuc sai token, bo qua")
+            try:
+                ts = int(parts[1])
+            except ValueError:
+                continue
+            if abs(now - ts) > 600:
+                self.diagnostics.log("warning", "SMS danh thuc qua cu, bo qua")
+                continue
+            expected = hmac.new(
+                key, str(ts).encode("ascii"), hashlib.sha256
+            ).hexdigest()[:16]
+            if not hmac.compare_digest(parts[2].lower(), expected):
+                self.diagnostics.log("warning", "SMS danh thuc sai HMAC, bo qua")
+                continue
+            if ts <= self._wake_last_ts:
+                self.diagnostics.log("warning", "SMS danh thuc replay, bo qua")
+                continue
+            self._wake_last_ts = ts
+            if self._wake_ts_path is not None:
+                try:
+                    self._wake_ts_path.write_text(str(ts), encoding="utf-8")
+                except OSError as exc:
+                    self.diagnostics.log(
+                        "warning", f"khong luu duoc moc SMS: {exc}"
+                    )
+            self.wake_sms_ok = True
+            self.diagnostics.log("info", "SMS danh thuc hop le")
+            return
         if messages:
             self.diagnostics.log("info", f"doc {len(messages)} SMS, khong co token hop le")
 

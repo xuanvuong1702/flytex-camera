@@ -107,6 +107,12 @@ def design_issues(parts: dict[str, dict], external: dict[str, dict],
     issues: list[Issue] = []
     blocks = {row["block"] for row in bom}
     for row in bom:
+        if row["verify"] == "not-chosen" and row["block"] == "buck_vset":
+            issues.append(Issue(
+                "blocker", "U2",
+                "chua chot gia tri dien tro VSET (R_SET) cho TPS62840",
+            ))
+            continue
         if row["verify"] == "not-chosen" and not row["block"].startswith("charger_"):
             issues.append(Issue(
                 "blocker", row["ref"],
@@ -135,22 +141,23 @@ def design_issues(parts: dict[str, dict], external: dict[str, dict],
     need("U2", "vin_max_v", ">=", 3.65, "blocker", "buck khong chiu pack day")
     need("U2", "iout_a", ">=", 0.75, "blocker", "buck thieu dong")
     need("U2", "iq_ua", "<=", 5.0, "warn", "dong nghi buck qua cao")
-    if param(parts.get("U2", {}), "adjustable") is True and "buck_fb" not in blocks:
+    if "buck_vset" not in blocks:
         issues.append(Issue(
             "blocker", "U2",
-            "buck chinh duoc nhung BOM khong co dien tro hoi tiep (block buck_fb)",
+            "BOM thieu dien tro VSET cho TPS62840",
         ))
 
     need("U3", "vin_min_v", "<=", 4.5, "blocker", "sac khong nhan duoc 5 V")
     need("U3", "vin_max_v", ">=", 5.5, "blocker", "sac khong chiu duoc 5 V")
-    need("U3", "ichg_a", ">=", 1.5, "blocker", "sac khong dat 1,5 A")
+    need("U3", "ichg_a", ">=", 1.0, "blocker", "sac khong dat 1 A")
+    need("U3", "vfloat_v", "<=", 3.6, "blocker", "float cao hon 3,6 V cho LFP")
+    need("U3", "vfloat_v", ">=", 3.4, "blocker", "float qua thap, khong nap duoc")
     if param(parts.get("U3", {}), "power_path") is not True:
         issues.append(Issue("blocker", "U3", "sac khong co power-path (D-16)"))
+    if param(parts.get("U3", {}), "ntc") is not True:
+        issues.append(Issue("blocker", "U3", "sac khong co NTC phan cung (FR-10)"))
     if param(parts.get("U3", {}), "approved") is not True:
-        issues.append(Issue(
-            "blocker", "U3",
-            "chua chon IC sac dat float LFP 3,6 V bang phan cung; BQ25798 bi loai",
-        ))
+        issues.append(Issue("blocker", "U3", "chua chon IC sac"))
 
     need("U4", "stop_ua", "<=", 2.0, "blocker", "MCU nghi qua cao")
     need("U4", "gpio", ">=", 15, "warn", "co the thieu GPIO")

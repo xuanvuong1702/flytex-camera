@@ -12,13 +12,13 @@ Repo này **làm lại từ đầu**. Nó kế thừa *bài học* từ dự án
 |---|---|
 | Tài liệu thiết kế | v1.1, đã qua rà soát khả thi |
 | Đặc tả giao diện máy đọc được | Có: regmap, J_B2B, MQTT sinh tự động từ `spec/` |
-| Firmware MCU | Có lõi + HAL giả + **59 test** host; port STM32L0 còn là khung |
-| Ứng dụng Linux | Có module + **176 test** host; chưa chạy camera thật |
+| Firmware MCU | Có lõi + HAL giả + **60 test** host; port STM32L0 còn là khung |
+| Ứng dụng Linux | Có module + **179 test** host; chưa chạy camera thật |
 | Mô phỏng end-to-end | Có: firmware C thật + ứng dụng thật, **5 kịch bản** |
 | Gói thiết kế phần cứng | Tính toán PWR, hình học board + SVG, BOM Rev A/B, sổ linh kiện, bring-up; **57 test** |
-| Sổ linh kiện | **14 linh kiện + 4 module**; 7 blocker phải đóng trước khi mua ([docs/18](docs/18-tai-lieu-linh-kien.md)) |
+| Sổ linh kiện | **14 linh kiện + 4 module**; 5 blocker phải đóng trước khi mua ([docs/18](docs/18-tai-lieu-linh-kien.md)) |
 | Công cụ đo và kiểm tài liệu | Có, **124 test**; nhập PPK2, lint include C, kiểm tài liệu, checklist readiness |
-| Kiểm thử toàn repo | **445 test + 5 kịch bản**, 35/35 bước đạt: `python run_tests.py` |
+| Kiểm thử toàn repo | **449 test + 5 kịch bản**, 35/35 bước đạt: `python run_tests.py` |
 | Sẵn sàng dựng prototype | **CHƯA ĐẠT** — vòng 7 phát hiện lỗi sạc/CI/BOM/pin ([docs/17](docs/17-san-sang-prototype.md)) |
 | Phần cứng | **Chưa có**: chưa có Gerber/PCB; gói thiết kế đã đủ để vẽ schematic |
 | Số đo thực | **Chưa có.** Mọi con số công suất, nhiệt, thời gian chạy đều là ước tính |
@@ -137,7 +137,7 @@ Test không cần phần cứng. Test cần phần cứng nằm ở [docs/08](do
 | [15-giao-thuc-va-cloud.md](docs/15-giao-thuc-va-cloud.md) | Giao thức I2C, kênh đánh thức, MQTT, WebRTC, OTA, bảo mật |
 | [16-van-hanh.md](docs/16-van-hanh.md) | Cấp phát thiết bị, systemd, gỡ lỗi hiện trường, quy trình đo |
 | [17-san-sang-prototype.md](docs/17-san-sang-prototype.md) | Điều kiện hoàn thành và biên bản tự kiểm tra 3 vòng |
-| [18-tai-lieu-linh-kien.md](docs/18-tai-lieu-linh-kien.md) | Sổ linh kiện, đối chiếu datasheet với thiết kế, 7 blocker trước khi mua |
+| [18-tai-lieu-linh-kien.md](docs/18-tai-lieu-linh-kien.md) | Sổ linh kiện, đối chiếu datasheet với thiết kế, 5 blocker trước khi mua |
 | [19-truoc-khi-mua.md](docs/19-truoc-khi-mua.md) | Tài liệu và phân tích còn thiếu theo từng cổng trước khi mua/thử |
 
 Bảng sinh tự động: [regmap](spec/generated/regmap.md) · [pinout J_B2B](spec/generated/b2b.md) · [MQTT](spec/generated/mqtt.md) · [JSON schema](spec/generated/mqtt.schema.json).

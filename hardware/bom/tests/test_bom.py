@@ -87,14 +87,15 @@ class BomTests(unittest.TestCase):
         ):
             self.assertIn(part, text)
 
-    def test_charger_is_explicitly_unresolved(self) -> None:
+    def test_charger_is_hardware_limited_lfp(self) -> None:
         charger = [row for row in self.pwr if row["block"] == "charger"]
         self.assertEqual(len(charger), 1)
         row = charger[0]
-        self.assertEqual(row["verify"], "not-chosen")
+        self.assertEqual(row["mpn"], "BQ25070DQCR")
         text = (row["notes"] + " " + row["value"]).lower()
-        self.assertIn("4.2", text)
-        self.assertIn("hardware", text)
+        self.assertIn("3.5", text)
+        self.assertIn("power path", text)
+        self.assertIn("ntc", text)
 
     def test_package_regressions(self) -> None:
         expected = {

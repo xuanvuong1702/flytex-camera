@@ -40,7 +40,7 @@ TEST_CASE(test_24h_idle_survival_stop_count)
     }
     /* Pin cạn → sinh tồn. */
     (void)hal_host_set_adc_mv(&host, FLY_ADC_VBAT, 1400u);
-    fly_run_slice(core, 1u);
+    fly_run_slice(core, 30000u);
     TEST_ASSERT(t_rd(core, FLY_REG_STATUS) & FLY_STATUS_SURVIVAL);
 
     hal_host_clear_stats(&host);
@@ -97,7 +97,7 @@ TEST_CASE(test_survival_has_no_periodic_deadline)
         return;
     }
     (void)hal_host_set_adc_mv(&host, FLY_ADC_VBAT, 1400u);
-    fly_run_slice(core, 1u);
+    fly_run_slice(core, 30000u);
     TEST_ASSERT(t_rd(core, FLY_REG_STATUS) & FLY_STATUS_SURVIVAL);
     /* Không hẹn giờ nào: được ngủ vô hạn cho tới khi có VBUS. */
     TEST_ASSERT(fly_next_timeout_ms(core) == UINT32_MAX);

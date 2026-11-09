@@ -8,7 +8,7 @@
 
 | # | Tài liệu / phân tích | Trạng thái | Bằng chứng hoặc việc phải làm |
 |---|---|---|---|
-| A1 | Sổ linh kiện + đối chiếu thiết kế | **Một phần** | [parts-register](../hardware/parts-register.md); còn 7 blocker, `--strict` cố ý fail |
+| A1 | Sổ linh kiện + đối chiếu thiết kế | **Một phần** | [parts-register](../hardware/parts-register.md); còn 5 blocker, `--strict` cố ý fail |
 | A2 | BOM có MPN, gói, trạng thái xác minh | **Có** | [hardware/bom](../hardware/bom/) |
 | A3 | Schematic PWR/CMP | **Thiếu** | Vẽ trong KiCad từ block và net đã chốt ([03](03-giao-dien.md), [pwr-design](../hardware/pwr-design.md), [bom](../hardware/bom/)) |
 | A4 | Thư viện symbol/footprint đã kiểm | **Thiếu** | Mỗi footprint từ datasheet + bản in 1:1; checklist [footprint-test](../hardware/footprint-test/checklist.md) |
@@ -23,7 +23,7 @@
 | A13 | Phân tích EMC sơ bộ (nguồn xung, USB, LTE) | **Thiếu** | Danh sách nguồn nhiễu, lọc, ferrite, thứ tự đo pre-scan |
 | A14 | BOM báo giá và thời gian giao | **Thiếu** | Gửi BOM cho 2 nhà cung cấp, đối chiếu tồn kho, MOQ |
 | A15 | Kế hoạch kiểm tra sản xuất (DFT) và jig | **Một phần** | Có test point trong [02](02-thiet-ke-nguon.md) §9; cần bản vẽ jig, kịch bản nạp/kiểm |
-| A16 | **IC sạc float LFP 3,6 V bằng phần cứng** + mạch NTC phần cứng | **Thiếu** | BQ25798 bị loại; chọn trong LTC4162-L / LTC4098-3.6 / CN3058E + ideal diode; tính lại NTC, cập nhật BOM |
+| A16 | IC sạc LFP float bằng phần cứng + mạch NTC | **Một phần** | Đã chọn BQ25070; còn tính CTRL 1 A và mạng NTC theo datasheet, cập nhật BOM |
 | A17 | Linh kiện phụ cho sạc và bảo vệ | **Một phần** | BOM đã thêm cuộn cảm/tụ/Rd/TVS/COMP nhưng phần phụ thuộc IC sạc còn `not-chosen` |
 
 **Điều kiện qua cổng A:** A1–A5, A8, A14, **A16** xong; A6–A7, A9–A10 có bản phát hành; A11–A13 có kế hoạch đo. A1 chỉ được coi là xong khi `--strict` hết blocker.
@@ -91,7 +91,7 @@
 
 ## 7. Thứ tự làm đề xuất (2 tuần tới)
 
-1. Đóng 7 blocker trong [18](18-tai-lieu-linh-kien.md) §2.1 — bắt đầu bằng **IC sạc float 3,6 V**, Core1106D pinout, camera, pack.
+1. Đóng 5 blocker trong [18](18-tai-lieu-linh-kien.md) §2.1 — VSET buck, RI modem, Core1106D pinout, camera, pack — và tính CTRL/NTC cho BQ25070.
 2. Vẽ schematic PWR trước (đã có đủ giá trị), rồi CMP sau khi có pinout camera và chân module.
 3. Làm thư viện footprint + board thử footprint (G1) trước khi đặt board thật.
 4. Chốt vỏ/ăng-ten/USB-C song song, vì ba thứ này khoá lẫn nhau.

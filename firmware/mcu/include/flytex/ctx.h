@@ -92,6 +92,10 @@ struct fly_ctx {
     /* ---- pin ---- */
     uint8_t vbat_valid;
     uint16_t vbat_mv;
+    uint16_t vbat_filt_mv;   /* loc EMA de bo qua sup ap thoang qua */
+    uint8_t batt_low_n;      /* so mau lien tiep duoi nguong canh bao */
+    uint8_t batt_ok_n;       /* so mau lien tiep tren nguong khoi phuc */
+    uint8_t batt_cut_n;      /* so mau lien tiep duoi nguong cat */
     uint16_t vbat_latch;
     uint8_t vbat_latched;
 

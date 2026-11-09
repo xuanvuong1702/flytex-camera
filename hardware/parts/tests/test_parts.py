@@ -50,7 +50,7 @@ class RegisterTests(unittest.TestCase):
 
     def test_known_blockers_are_reported(self) -> None:
         blockers = {issue.item for issue in self.issues if issue.level == "blocker"}
-        for item in ("U2", "U3", "MODEM", "SOC", "CAMERA", "PACK"):
+        for item in ("U2", "MODEM", "SOC", "CAMERA", "PACK"):
             self.assertIn(item, blockers, f"phai bao blocker cho {item}")
 
     def test_known_warnings_are_reported(self) -> None:
@@ -60,7 +60,7 @@ class RegisterTests(unittest.TestCase):
 
     def test_buck_divider_gap_is_explicit(self) -> None:
         messages = " ".join(issue.message for issue in self.issues)
-        self.assertIn("buck_fb", messages)
+        self.assertIn("VSET", messages)
 
     def test_report_renders_blockers(self) -> None:
         text = check.render()

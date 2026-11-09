@@ -181,7 +181,7 @@ Thẻ nhớ là điểm hỏng dữ liệu khi mất điện; mọi lần ghi đ
 | Tài liệu | `python tools/docs_check/check.py` | Tham chiếu ID, mục lục, file sinh lệch |
 | Tất cả | `python run_tests.py` | 35 bước: spec, hardware, firmware, app, tools, readiness, CLI, sim |
 
-Số test hiện tại: spec 29, hardware 57, firmware 59, ứng dụng 176, công cụ 124. Tổng 445 test cộng 5 kịch bản mô phỏng. Không test nào cần phần cứng.
+Số test hiện tại: spec 29, hardware 57, firmware 60, ứng dụng 179, công cụ 124. Tổng 449 test cộng 5 kịch bản mô phỏng. Không test nào cần phần cứng.
 
 Test cần phần cứng nằm ở [08](08-kiem-chung.md) và vẫn là "Chưa làm".
 

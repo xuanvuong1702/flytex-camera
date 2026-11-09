@@ -13,14 +13,14 @@
 
 ## 2. Kết quả hiện tại
 
-**14 linh kiện + 4 module ngoài BOM; 7 blocker, 3 cảnh báo** (sau khi loại BQ25798).
+**14 linh kiện + 4 module ngoài BOM; 5 blocker, 3 cảnh báo** (sau khi chọn BQ25070).
 
 ### 2.1 Blocker phải đóng trước khi đặt
 
 | Mục | Vấn đề | Cách đóng | Nơi ghi |
 |---|---|---|---|
-| U2 buck | BOM **không có điện trở hồi tiếp** cho buck chỉnh được; chưa xác minh Vref | Mở datasheet TPS62840: chọn bản cố định 3,3 V nếu có, hoặc thêm 2 điện trở E96 vào BOM; gói là **SON-8 1,5×2 (DLC)** | O-15 |
-| U3 sạc | **BQ25798 bị loại**: mặc định 1S 4,2 V, watchdog 40 s reset VREG/ICHG; không có I2C master khi SoC tắt | Chọn IC **float 3,6 V bằng phần cứng** + power-path + NTC phần cứng: LTC4162-L, LTC4098-3.6, hoặc CN3058E + ideal diode | O-05 |
+| U2 buck | **Chưa chốt điện trở VSET** cho 3,3 V; BOM đã có vị trí R13 nhưng giá trị `not-chosen` | Đọc bảng VSET của TPS62840, chọn E96, ghi vào BOM; gói là **SON-8 1,5×2 (DLC)** | O-15 |
+| U3 sạc | **Đã chọn BQ25070** (float 3,5 V cứng, power-path, NTC, standalone). | Còn tính CTRL cho 1 A và mạng NTC theo datasheet; đo M-05. BQ25798 bị loại | O-05 |
 | MODEM | Chưa xác nhận **breakout đưa RI ra header** | Kiểm bản vẽ breakout hoặc chọn loại khác; nếu không, kênh Watch SMS không chạy | O-04 |
 | SOC | Chưa nạp **bản vẽ 112 chân** Core1106D vào repo | Tải `Core1106D-PinOut.xls` và `Core1106D.pdf` từ tài liệu Luckfox, đối chiếu chân trước khi vẽ CMP | O-11 |
 | CAMERA | Chưa chọn module camera và **pinout FPC 20 chân** | Chọn module có IR-CUT + LED IR, lấy datasheet, ghi pinout vào spec | O-02 |
@@ -87,12 +87,12 @@ Danh sách việc và thứ tự ưu tiên trước khi mua: [19-truoc-khi-mua.m
 Rà soát bên ngoài (Ubuntu + gcc 13.3 + datasheet) phát hiện các lỗi mà bộ kiểm tra nội bộ không bắt được:
 
 1. **CI đỏ** vì `regmap.c` thiếu `<stddef.h>`; đã sửa 4 file nguồn + 3 header + 9 file test và thêm lint. Run `42613060903` (commit `08a35e7`) đã **success**.
-2. **BQ25798 không an toàn** cho LFP 1S trong kiến trúc này; đã loại, không chỉ "cần xác minh".
+2. **BQ25798 không an toàn** cho LFP 1S; đã loại và thay bằng **BQ25070** (D-23).
 3. **Hai đính chính gói ở vòng 1 là sai**: TPS62840 là SON-8 1,5×2, M24C32 là SO-8; đã khôi phục.
 4. **NTC 7,15 kΩ** thuộc IC cũ; mục 4 của pwr-design đã tạm hoãn.
 5. **+3V3 là 3,0–3,3 V**, không phải 3,3 V cố định.
 6. **BOM thiếu linh kiện phụ**; đã thêm các dòng boost/USB/load-switch và đánh dấu phần phụ thuộc IC sạc là `not-chosen`.
-7. **Ngưỡng pin LFP và SMS đánh thức** vẫn là blocker chưa sửa; ghi ở [17](17-san-sang-prototype.md) vòng 7.
+7. **Ngưỡng pin LFP** đã sửa (3,05/2,90/3,20 V + lọc/đếm mẫu). **SMS** đã có HMAC/timestamp/chống replay; còn thiếu giới hạn tần suất ở MCU và whitelist số — ghi ở [17](17-san-sang-prototype.md) vòng 7.
 8. **Công tắc tải modem TPS22918 (2 A) dùng cho rail 1,8 A** chỉ dư ~11 %; tụ 470 µF sau công tắc có thể tạo dòng nạp vượt 2 A. Đã thêm tụ CT (C9) nhưng phải đo dòng khởi động ở M-36; nếu vượt, đổi công tắc tải lớn hơn hoặc giảm tụ/soft-start.
 9. **Tụ ra boost 2×22 µF 1206 10 V X7R** mất nhiều dung lượng do DC bias ở 5 V. Phải tra đường cong C(V) trong datasheet tụ, có thể phải tăng số tụ hoặc dùng 16 V; kiểm gợn và ổn định ở M-08.
 

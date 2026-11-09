@@ -15,8 +15,9 @@ Ba nhóm: đã chốt, đề xuất (chờ xác nhận), và câu hỏi mở. Kh
 | D-16 | Dùng **bộ sạc có power-path ngay từ Rev A**, không dùng sạc tuyến tính | 2026-11-09 | Chủ dự án chốt. Lý do: F-04 — 0,5 A cần 20–30 giờ và tải không bao giờ đầy. **Sửa 2026-11-09:** yêu cầu "xung" hạ xuống "float LFP bằng phần cứng + power-path"; IC cụ thể chưa chọn (O-05), BQ25798 bị loại |
 | D-18 | Pack LFP 1S **15 Ah** (48 Wh danh định) | 2026-11-09 | Chủ dự án chốt. 10 Ah không còn dư cho kịch bản đêm (F-05). Kéo theo: BMS sạc ≥1,5 A, tự tiêu ≤100 µA |
 | D-19 | Module **eMMC 8 GB** (Core1106D1408 hoặc D1808), không dùng bản 256 MB SPI NAND | 2026-11-09 | Chủ dự án chốt. NAND không đủ OTA A/B + runtime Python (F-08) |
-| D-21 | Đổi một chân dự phòng trên J_B2B lấy `MODEM_RI` (chân 21) | 2026-11-09 | Chủ dự án chốt. RI là đường đánh thức SMS; số chân dự phòng còn 2 |
+| D-21 | Đổi một chân dự phòng trên J_B2B lấy `MODEM_RI` (chân 21) | 2026-11-09 | Chủ dự án chốt. RI là đường đánh thức SMS; ban đầu còn 2 chân dự phòng, sau D-22 còn 1 |
 | D-22 | Dùng chân 20 (trước là `SPARE_SOC1`) làm `USB_SEL` do MCU điều khiển | 2026-11-09 | Chốt sau rà soát: mux USB cần chân điều khiển mà J_B2B chưa có; giữ chân 20 là spare sẽ không bao giờ chọn được mux. Số chân dự phòng còn 1 (`SPARE_SOC2`). Mux cụ thể vẫn ở O-13 |
+| D-23 | Chọn **BQ25070** làm IC sạc: LFP 1S, float 3,5 V cố định, power-path, NTC, standalone 1 A | 2026-11-09 | Thay BQ25798 (mặc định 4,2 V + watchdog). Đánh đổi: sạc tuyến tính ~1,5 W, 15 Ah mất ~12 h; chấp nhận cho prototype để đổi lấy an toàn. Còn phải tính CTRL và mạng NTC theo datasheet |
 
 ## 2. Đề xuất
 
@@ -50,7 +51,7 @@ Ba nhóm: đã chốt, đề xuất (chờ xác nhận), và câu hỏi mở. Kh
 | O-02 | Module camera cụ thể và pinout FPC 20 chân | Vẽ CMP | Mở — chặn layout CMP |
 | O-03 | Pack LFP và BMS cụ thể: dòng xả, dòng sạc ≥1,5 A, tự tiêu ≤100 µA, NTC, khôi phục, giấy tờ | Mục 7 của [02](02-thiet-ke-nguon.md) | Mở — chặn mua pack |
 | O-04 | Breakout EC200U-EU nào đủ yêu cầu (USB ra, hạ áp, đổi mức, **RI ra header**)? | Header J_MODEM | Mở |
-| O-05 | IC sạc LFP 1S **float 3,6 V đặt bằng phần cứng**, power-path, không phụ thuộc host/watchdog. BQ25798 **bị loại** (mặc định 4,2 V). Ứng viên: LTC4162-L, LTC4098-3.6, CN3058E + ideal diode | Layout PWR Rev A | Mở — blocker, chặn đặt board |
+| O-05 | IC sạc LFP 1S float bằng phần cứng, power-path, NTC. **Đã chọn BQ25070** (D-23) | Layout PWR Rev A | Đóng phần chọn IC; còn mở phần tính CTRL/NTC và kiểm tồn kho |
 | O-06 | Giải pháp cổng USB-C chống nước | Vỏ | Mở |
 | O-07 | Vị trí và loại ăng-ten 4G với vỏ nhôm | Vỏ | Mở |
 | O-08 | OTA có khả thi trên SDK Core1106 không? A/B có vừa eMMC không? | FR-07 | Mở |

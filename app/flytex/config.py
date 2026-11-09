@@ -199,6 +199,7 @@ _VALIDATORS = {
     "wake_chan": lambda value: _as_enum(value, "wake_chan", WAKE_CHANNELS),
     "wake_period_s": lambda value: _as_int(value, "wake_period_s", 0, 86400),
     "wake_token": lambda value: _as_text(value, "wake_token", max_len=64),
+    "wake_secret": lambda value: _as_text(value, "wake_secret", max_len=64),
     "allow_raw_muxer": lambda value: _as_bool(value, "allow_raw_muxer"),
     "log_level": lambda value: _as_enum(value, "log_level", LOG_LEVELS),
     "timezone": _validate_timezone,
@@ -225,6 +226,7 @@ class Config:
     wake_chan: str = "off"
     wake_period_s: int = 0
     wake_token: str = ""
+    wake_secret: str = ""
     allow_raw_muxer: bool = True
     log_level: str = "info"
     schedule: list[dict] = field(default_factory=list)
@@ -249,6 +251,7 @@ class Config:
             "wake_chan": self.wake_chan,
             "wake_period_s": self.wake_period_s,
             "wake_token": self.wake_token,
+            "wake_secret": self.wake_secret,
             "allow_raw_muxer": self.allow_raw_muxer,
             "log_level": self.log_level,
             "schedule": [dict(entry) for entry in self.schedule],

@@ -21,25 +21,45 @@ static void battery_eval(fly_ctx_t *ctx, uint32_t now)
 {
     uint16_t mv = ctx->vbat_mv;
 
-    if (mv < (uint16_t)FLY_BATT_CUTOFF_MV) {
-        /* Dưới ngưỡng tắt: cắt ngay, không chờ bắt tay. BMS còn cắt thấp hơn,
-         * nên MCU phải tắt trước để không mất dữ liệu thẻ SD (docs/04 §2.3). */
+    /* Mọi ngưỡng dùng mẫu thô + đếm mẫu liên tiếp; EMA chỉ để hiển thị/log.
+     * Cách này vẫn bỏ qua sụt áp ngắn mà không trễ 6-10 mẫu như lọc. */
+    if (ctx->vbat_mv < (uint16_t)FLY_BATT_CUTOFF_MV) {
+        if (ctx->batt_cut_n < 255u) {
+            ctx->batt_cut_n++;
+        }
+        if (ctx->batt_cut_n < (uint8_t)FLY_BATT_CUTOFF_N) {
+            return; /* chưa đủ số mẫu liên tiếp: có thể chỉ là sụt áp tải */
+        }
         ctx->low_batt = 1u;
         fly_fault_set_active_batt(ctx, (uint8_t)FLY_FAULT_BATT_UNDERVOLTAGE);
-        /* Lỗi đang hoạt động, không chốt: tự hết khi pin hồi phục. */
         fly_power_enter_survival(ctx, (uint8_t)FLY_FAULT_NONE);
         return;
     }
+    ctx->batt_cut_n = 0u;
     fly_fault_set_active_batt(ctx, (uint8_t)FLY_FAULT_NONE);
 
     if (mv < (uint16_t)FLY_BATT_WARN_MV) {
-        if (!ctx->low_batt) {
+        ctx->batt_ok_n = 0u;
+        if (ctx->batt_low_n < 255u) {
+            ctx->batt_low_n++;
+        }
+        if (!ctx->low_batt && ctx->batt_low_n >= (uint8_t)FLY_BATT_WARN_N) {
             ctx->low_batt = 1u;
             fly_events_post(ctx, FLY_EVENT_LOW_BATT);
             fly_power_request_shutdown(ctx, now, 1u);
         }
     } else if (mv >= (uint16_t)FLY_BATT_RECOVER_MV) {
-        ctx->low_batt = 0u;
+        ctx->batt_low_n = 0u;
+        if (ctx->batt_ok_n < 255u) {
+            ctx->batt_ok_n++;
+        }
+        if (ctx->low_batt && ctx->batt_ok_n >= (uint8_t)FLY_BATT_RECOVER_N) {
+            ctx->low_batt = 0u;
+        }
+    } else {
+        /* vùng hysteresis: không đổi trạng thái, không tích lũy */
+        ctx->batt_low_n = 0u;
+        ctx->batt_ok_n = 0u;
     }
 }
 
@@ -64,6 +84,11 @@ static void battery_sample(fly_ctx_t *ctx, uint32_t now)
     }
     ctx->vbat_mv = (uint16_t)mv;
     ctx->vbat_valid = 1u;
+    if (ctx->vbat_filt_mv == 0u) {
+        ctx->vbat_filt_mv = (uint16_t)mv;
+    } else {
+        ctx->vbat_filt_mv = (uint16_t)((ctx->vbat_filt_mv + mv) / 2u);
+    }
     battery_eval(ctx, now);
 }
 

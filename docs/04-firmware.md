@@ -41,6 +41,9 @@ Hai điểm còn mở ở port STM32L0, đã ghi thành rủi ro:
 ### 2.3 Pin cạn
 
 1. Điện áp có tải xuống dưới ngưỡng cảnh báo → đặt `LOW_BATT`, kéo `MCU_IRQ`.
+   - Ngưỡng LFP (2026-11-09): cảnh báo **3,05 V**, cắt **2,90 V**, khôi phục **3,20 V**.
+   - Cảnh báo dùng mẫu thô và phải giữ **6 mẫu** (60 s); cắt **3 mẫu** (30 s); khôi phục **12 mẫu** (120 s). EMA 1/2 vẫn được tính để log nhưng không quyết định ngưỡng, tránh trễ 6–10 mẫu.
+   - Số này vẫn phải đo lại ở G0 (M-01/M-02); điện áp LFP sụt theo tải nên ngưỡng phải xét trạng thái tải.
 2. SoC lưu việc đang làm, đóng file, báo `SOC_SHUTDOWN_DONE`.
 3. MCU cắt `+5V_SOC` và `+5V_MODEM`, vào chế độ sinh tồn: chỉ thức khi có VBUS.
 4. BMS cắt ở mức thấp hơn nữa (khoảng 2–2,5 V); MCU phải tắt hệ thống **trước** điểm này để không mất dữ liệu SD.
@@ -116,7 +119,7 @@ Giá trị mặc định: clip 30 s, nghỉ trước khi ngủ 10 s, giữ live 
 3. Nếu modem cho đọc số gửi trước khi bật SoC (cần UART phụ, O-12), thêm whitelist số.
 4. Đo chi phí một lần đánh thức (M-35) và đưa vào ngân sách pin.
 
-Chưa hiện thực — là blocker của vòng 7 trong [17](17-san-sang-prototype.md).
+**Đã hiện thực một phần (2026-11-09):** SoC kiểm HMAC-SHA256, timestamp ±10 phút, chống replay và lưu mốc xuống `wake_last_ts`; từ chối nếu chưa cấu hình `wake_secret`. **Chưa hiện thực:** giới hạn tần suất ở MCU và whitelist số gửi — vẫn là blocker của vòng 7 trong [17](17-san-sang-prototype.md).
 - Tên lệnh cụ thể (`AT+QNETDEVCTL` hay tương đương) phải đối chiếu datasheet EC200U `[CHƯA XÁC MINH]`.
 
 ### 3.5 Uplink

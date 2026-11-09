@@ -70,14 +70,14 @@ def render() -> str:
     w("")
     w("## 3. Sạc pin")
     w("")
-    w("> **Chưa chọn IC sạc.** BQ25798 bị loại vì mặc định 1S 4,2 V và watchdog 40 s. "
-      "Các con số dưới đây chỉ là ước lượng theo yêu cầu 1,5 A, không phải thiết kế đã chốt.")
+    w("**Đã chọn BQ25070**: sạc tuyến tính LFP 1S, float 3,5 V cố định, power-path, NTC, "
+      "standalone, 1 A. Đổi từ BQ25798 vì BQ25798 mặc định 1S 4,2 V và watchdog 40 s. "
+      "Đánh đổi: sạc chậm (~12 h cho 15 Ah) và tổn hao tuyến tính ~1,5 W.")
     w("")
-    w("| Phương án | Tổn hao ở 1,5 A | Ghi chú |")
+    w("| Phương án | Tổn hao ở 1 A | Ghi chú |")
     w("|---|---|---|")
-    w(f"| Tuyến tính (bản nháp) | {v['linear_loss_w']:.2f} W | "
-      f"(5 − 3,6) × 1,5; trong vỏ kín là bài toán nhiệt |")
-    w(f"| Xung, hiệu suất 90 % | {v['switching_loss_w']:.2f} W | Giả định nếu chọn được IC xung LFP |")
+    w(f"| Tuyến tính BQ25070 (chốt) | {v['linear_loss_w']:.2f} W | "
+      f"(5 − 3,5) × 1,0; IC có thermal regulation, vẫn phải đo trong vỏ |")
     w("")
     w(f"Thời gian sạc {CHARGER['capacity_ah']:.0f} Ah từ "
       f"{CHARGER['soc_start'] * 100:.0f} % ở {CHARGER['current_a']:.1f} A: "
@@ -85,9 +85,9 @@ def render() -> str:
     w("")
     w("## 4. Cắt sạc theo nhiệt (NTC trên pack)")
     w("")
-    w("> **TẠM HOÃN.** Bảng NTC 7,15 kΩ và ngưỡng 42,5–47,5 % VIN thuộc IC sạc CAM4G cũ; "
-      "không áp dụng cho IC sẽ chọn. Chỉ tính lại sau khi chốt IC sạc và mạch NTC phần cứng "
-      "(FR-10), rồi đo M-05.")
+    w("**BQ25070 có chân NTC**, nhưng mạng điện trở và ngưỡng phải lấy đúng theo datasheet. "
+      "Bảng NTC 7,15 kΩ / 42,5–47,5 % VIN của CAM4G **không áp dụng**. Chốt mạng NTC và đo M-05 "
+      "trước khi đặt board.")
     w("")
     w("## 5. Đo điện áp pin")
     w("")
@@ -134,7 +134,7 @@ def render() -> str:
     w("")
     w("1. Vref, tần số chuyển mạch và giới hạn dòng của TPS61088 phải đối chiếu datasheet.")
     w("2. Vref của TPS62840 chưa chọn; không tính được mạch hồi tiếp 3,3 V.")
-    w("3. **Chưa chọn IC sạc** (O-05); BQ25798 bị loại; mục 3–4 chỉ là ước lượng/hoãn.")
+    w("3. Mạng CTRL và NTC của BQ25070 chưa tính; phải lấy từ datasheet và đo M-05.")
     w("4. Hệ số tản nhiệt 8 W/m²·K là giả định; nắng chiếu trực tiếp chưa tính.")
     w("5. Không có số đo dòng, nhiệt hay thời gian chạy thật.")
     return "\n".join(out) + "\n"

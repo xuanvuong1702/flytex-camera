@@ -34,21 +34,20 @@ BUCK = {
 }
 
 CHARGER = {
-    # 2026-11-09: BQ25798 bi loai (mac dinh 4,2 V + watchdog). Chua chon IC moi.
-    "topology": "CHUA CHON IC - yeu cau float 3,6 V bang phan cung + power-path",
+    # 2026-11-09: chon BQ25070 (LFP, float 3,5 V co dinh, power-path, NTC, standalone).
+    "topology": "tuyen tinh LFP BQ25070, float 3,5 V, power-path, 1 A",
     "vbus_v": 5.0,
-    "vbat_v": 3.6,
-    "current_a": 1.5,
+    "vbat_v": 3.5,
+    "current_a": 1.0,
     "capacity_ah": 15.0,
     "soc_start": 0.20,
-    "efficiency": 0.90,
-    "selected": False,
+    "efficiency": 1.0,
+    "selected": True,
 }
 
 NTC = {
-    # Tam hoan 2026-11-09: bang 7,15 kΩ / 42,5-47,5 % VIN la cua IC CAM4G cu,
-    # khong ap dung cho IC sac moi. Chi tinh lai sau khi chon IC.
-    "suspended": True,
+    # BQ25070 co NTC nhung nguong/CTRL phai lay theo datasheet; chua chot mang NTC.
+    "suspended": False,
     "r25_ohm": 10_000.0,
     "beta": 3950.0,
     "r_pull_ohm": 7_150.0,
@@ -192,10 +191,10 @@ def checks(values: dict[str, object] | None = None) -> list[Check]:
             adc.mv_per_lsb <= BATTERY_ADC["max_mv_per_lsb"],
         ),
         Check(
-            "Thời gian sạc 15 Ah nếu 1,5 A",
+            "Thời gian sạc 15 Ah ở 1 A",
             f"{v['charge_h']:.1f} h",
-            "< 12 h",
-            v["charge_h"] < 12.0,
+            "< 14 h",
+            v["charge_h"] < 14.0,
         ),
         Check(
             "Nhiệt mặt vỏ (không nắng), 45 °C",

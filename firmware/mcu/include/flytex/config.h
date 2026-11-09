@@ -20,10 +20,14 @@
 #define FLY_BATT_DIV_NUM 2u
 #define FLY_BATT_DIV_DEN 1u
 
-/* Ngưỡng có tải, mV. Có hysteresis: cảnh báo dưới 3100, khôi phục từ 3300. */
-#define FLY_BATT_WARN_MV 3100u
+/* Ngưỡng có tải, mV. LFP: cảnh báo 3,05 V, cắt 2,90 V, khôi phục 3,20 V.
+ * Mọi ngưỡng phải giữ liên tục N mẫu (10 s/mẫu) mới có hiệu lực — xem battery.c. */
+#define FLY_BATT_WARN_MV 3050u
 #define FLY_BATT_CUTOFF_MV 2900u
-#define FLY_BATT_RECOVER_MV 3300u
+#define FLY_BATT_RECOVER_MV 3200u
+#define FLY_BATT_WARN_N 6u
+#define FLY_BATT_CUTOFF_N 3u
+#define FLY_BATT_RECOVER_N 12u
 
 /* Chu kỳ lấy mẫu ADC, ms. */
 #define FLY_BATT_SAMPLE_MS 10000u

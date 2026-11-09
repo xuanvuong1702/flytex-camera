@@ -55,13 +55,15 @@ def scenario_basic(rig: SimRig) -> str:
 
 def scenario_low_battery(rig: SimRig) -> str:
     """Pin cạn: đóng file, gửi shutdown, MCU cắt rail, vào sinh tồn."""
+    # Giữ clip dài hơn 60 s để firmware kịp 6 mẫu cảnh báo (10 s/mẫu).
+    rig.controller.config.clip_s = 70.0
     rig.wake_by_pir()
     check(rig.controller.state.value == "s2", "phải đang ghi")
     rig.advance(1.0)
 
     # 3,04 V: dưới ngưỡng cảnh báo, trên ngưỡng tắt của MCU.
     rig.sim.set_adc_mv(0, 1520)
-    rig.advance(12.0)
+    rig.advance(65.0)
 
     check(rig.controller.shutdown_requested, "phải yêu cầu tắt an toàn")
     check(rig.controller.shutdown_done, "phải báo SOC_SHUTDOWN_DONE cho MCU")

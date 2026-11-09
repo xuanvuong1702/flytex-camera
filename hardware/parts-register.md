@@ -2,15 +2,15 @@
 
 - Nguồn: `spec/parts.toml`; kiểm tra: `python -m hardware.parts.check --check`.
 - `verified`: **yes** đã đối chiếu datasheet, **partial** mới một phần, **no** chưa mở datasheet.
-- Kết quả: **7 blocker**, 3 cảnh báo. Blocker là việc phải đóng trước khi đặt hàng.
+- Kết quả: **5 blocker**, 3 cảnh báo. Blocker là việc phải đóng trước khi đặt hàng.
 
 ## 1. Linh kiện chính
 
 | ID | MPN | Gói | Xác minh | Datasheet | Ghi chú |
 |---|---|---|---|---|---|
 | U1 | TPS61088RHLR | VQFN-20 | partial | https://www.ti.com/product/TPS61088 | Dung cho boost 5 V. Phai doi chieu Vref, fsw, ILIM va dieu kien nhiet. |
-| U2 | TPS62840DLCR | SON-8 1.5x2 mm (DLC) | partial | https://www.ti.com/product/TPS62840 | Goi DLC = SON-8 1,5x2 (CAM4G dung). Dinh chinh lan 2 ngay 2026-11-09: lan sua truoc sang SOT-563 la SAI. Chua xac minh Vref va cach dat 3,3 V. |
-| U3 | BQ25798RQMR | VQFN-29 | no | https://www.ti.com/product/BQ25798 | BI LOAI 2026-11-09: mac dinh 1S 4,2 V va watchdog 40 s dua thanh ghi ve mac dinh; he thong khong co I2C master khi SoC tat. Can IC float 3,6 V bang phan cung + power path + NTC. |
+| U2 | TPS62840DLCR | SON-8 1.5x2 mm (DLC) | partial | https://www.ti.com/product/TPS62840 | Goi DLC = SON-8 1,5x2 (CAM4G dung). Dat VOUT bang mot dien tro VSET (khong phai divider 2R); gia tri phai lay tu bang VSET cua datasheet. |
+| U3 | BQ25070DQCR | WSON-10 (DQC) 3x2 mm | partial | https://www.ti.com/product/BQ25070 | Sac tuyen tinh LFP 1S 1 A, float 3,5 V co dinh, power-path, NTC, standalone. Doi tu BQ25798 vi mac dinh 4,2 V + watchdog. Can doc datasheet de tinh CTRL va mang NTC. |
 | U4 | STM32L031G6U6 | UFQFPN-28 | partial | https://www.st.com/en/microcontrollers-microprocessors/stm32l031g6.html | Da sua goi tu LQFP-32 sang UFQFPN-28. Can kiem so chan GPIO va kha nang I2C slave. |
 | U5 | M24C32-FMN6TP | SO-8 150 mil | yes | https://www.st.com/en/memories/m24c32-f.html | EEPROM cau hinh. MN = SO8 150 mil; dinh chinh lan 2: lan sua truoc sang TSSOP-8 la SAI. |
 | Q1Q2 | TPS22918DBVR | SOT-23-6 | yes | https://www.ti.com/product/TPS22918 | Cong tac tai cho +5V_SOC va +5V_MODEM. |
@@ -49,18 +49,19 @@
 | vref_v | 0.6 | V | CHUA XAC MINH |
 | adjustable | True |  | can kiem |
 
-**U3 — BQ25798RQMR**
+**U3 — BQ25070DQCR**
 
 | Thông số | Giá trị | Đơn vị | Nguồn |
 |---|---|---|---|
-| cells | 4 | cell toi da | datasheet |
+| vin_min_v | 3.75 | V | datasheet |
+| vin_max_v | 10.2 | V | datasheet |
+| ichg_a | 1.0 | A | datasheet |
+| vfloat_v | 3.5 | V | datasheet (co dinh) |
 | power_path | True |  | datasheet |
-| vin_min_v | 3.6 | V | CHUA XAC MINH |
-| vin_max_v | 24.0 | V | datasheet |
-| ichg_a | 5.0 | A | datasheet |
-| lfp_1s | False |  | BI LOAI: mac dinh 4,2 V |
-| approved | False |  | bi loai |
-| i2c | True |  | datasheet |
+| lfp_1s | True |  | datasheet |
+| ntc | True |  | datasheet |
+| standalone | True |  | datasheet |
+| approved | True |  | chon cho prototype |
 
 **U4 — STM32L031G6U6**
 
@@ -156,9 +157,7 @@
 
 | Mức | Mục | Mô tả |
 |---|---|---|
-| blocker | U3 | linh kien charger chua chon: BQ25798 bi loai: mac dinh 1S 4.2 V va watchdog 40 s dua thanh ghi ve mac dinh; can IC float 3.6 V bang phan cung + power path + NTC |
-| blocker | U2 | buck chinh duoc nhung BOM khong co dien tro hoi tiep (block buck_fb) |
-| blocker | U3 | chua chon IC sac dat float LFP 3,6 V bang phan cung; BQ25798 bi loai |
+| blocker | U2 | chua chot gia tri dien tro VSET (R_SET) cho TPS62840 |
 | blocker | MODEM | chua xac nhan breakout dua RI ra header - kenh Watch khong chay |
 | blocker | SOC | chua nap ban ve 112 chan cua Core1106D - khong ve duoc CMP |
 | blocker | CAMERA | chua chon camera va pinout FPC |

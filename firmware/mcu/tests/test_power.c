@@ -110,8 +110,8 @@ TEST_CASE(test_shutdown_handshake_success)
     TEST_ASSERT_EQ(1, hal_host_get_output(&host, FLY_PIN_SOC_PWR));
 
     /* Pin dưới ngưỡng cảnh báo: yêu cầu SoC tắt an toàn. */
-    (void)hal_host_set_adc_mv(&host, FLY_ADC_VBAT, 1525u); /* → 3050 mV */
-    advance(1000u);
+    (void)hal_host_set_adc_mv(&host, FLY_ADC_VBAT, 1524u); /* → 3048 mV */
+    advance(51000u);
     {
         uint8_t events = t_rd(core, FLY_REG_EVENT);
         TEST_ASSERT(events & FLY_EVENT_LOW_BATT);
@@ -136,8 +136,8 @@ TEST_CASE(test_shutdown_timeout_forced_cut)
         return;
     }
     TEST_ASSERT_EQ(FLY_OK, t_wr(core, FLY_REG_CMD, (uint8_t)FLY_CMD_SOC_WAKE));
-    (void)hal_host_set_adc_mv(&host, FLY_ADC_VBAT, 1525u);
-    advance(1000u);
+    (void)hal_host_set_adc_mv(&host, FLY_ADC_VBAT, 1524u);
+    advance(60000u);
     TEST_ASSERT(t_rd(core, FLY_REG_EVENT) & FLY_EVENT_SHUTDOWN_REQ);
 
     /* Không gửi SOC_SHUTDOWN_DONE: quá 10 s thì cắt cưỡng bức. */
@@ -154,7 +154,7 @@ TEST_CASE(test_survival_enter_and_exit_on_vbus)
         return;
     }
     (void)hal_host_set_adc_mv(&host, FLY_ADC_VBAT, 1400u); /* → 2800 mV */
-    advance(1u);
+    advance(30000u);
     TEST_ASSERT(t_rd(core, FLY_REG_STATUS) & FLY_STATUS_SURVIVAL);
     TEST_ASSERT_EQ(0, hal_host_get_output(&host, FLY_PIN_SOC_PWR));
     TEST_ASSERT_EQ(FLY_FAULT_BATT_UNDERVOLTAGE, t_rd(core, FLY_REG_FAULT_CODE));

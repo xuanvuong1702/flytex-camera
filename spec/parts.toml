@@ -35,7 +35,7 @@ manufacturer = "Texas Instruments"
 datasheet = "https://www.ti.com/product/TPS62840"
 package = "SON-8 1.5x2 mm (DLC)"
 verified = "partial"
-notes = "Goi DLC = SON-8 1,5x2 (CAM4G dung). Dinh chinh lan 2 ngay 2026-11-09: lan sua truoc sang SOT-563 la SAI. Chua xac minh Vref va cach dat 3,3 V."
+notes = "Goi DLC = SON-8 1,5x2 (CAM4G dung). Dat VOUT bang mot dien tro VSET (khong phai divider 2R); gia tri phai lay tu bang VSET cua datasheet."
 params = [
   { name = "vin_min_v", value = 1.8, unit = "V", source = "datasheet" },
   { name = "vin_max_v", value = 6.5, unit = "V", source = "datasheet" },
@@ -47,21 +47,22 @@ params = [
 
 [[parts]]
 id = "U3"
-mpn = "BQ25798RQMR"
+mpn = "BQ25070DQCR"
 manufacturer = "Texas Instruments"
-datasheet = "https://www.ti.com/product/BQ25798"
-package = "VQFN-29"
-verified = "no"
-notes = "BI LOAI 2026-11-09: mac dinh 1S 4,2 V va watchdog 40 s dua thanh ghi ve mac dinh; he thong khong co I2C master khi SoC tat. Can IC float 3,6 V bang phan cung + power path + NTC."
+datasheet = "https://www.ti.com/product/BQ25070"
+package = "WSON-10 (DQC) 3x2 mm"
+verified = "partial"
+notes = "Sac tuyen tinh LFP 1S 1 A, float 3,5 V co dinh, power-path, NTC, standalone. Doi tu BQ25798 vi mac dinh 4,2 V + watchdog. Can doc datasheet de tinh CTRL va mang NTC."
 params = [
-  { name = "cells", value = 4, unit = "cell toi da", source = "datasheet" },
+  { name = "vin_min_v", value = 3.75, unit = "V", source = "datasheet" },
+  { name = "vin_max_v", value = 10.2, unit = "V", source = "datasheet" },
+  { name = "ichg_a", value = 1.0, unit = "A", source = "datasheet" },
+  { name = "vfloat_v", value = 3.5, unit = "V", source = "datasheet (co dinh)" },
   { name = "power_path", value = true, unit = "", source = "datasheet" },
-  { name = "vin_min_v", value = 3.6, unit = "V", source = "CHUA XAC MINH" },
-  { name = "vin_max_v", value = 24.0, unit = "V", source = "datasheet" },
-  { name = "ichg_a", value = 5.0, unit = "A", source = "datasheet" },
-  { name = "lfp_1s", value = false, unit = "", source = "BI LOAI: mac dinh 4,2 V" },
-  { name = "approved", value = false, unit = "", source = "bi loai" },
-  { name = "i2c", value = true, unit = "", source = "datasheet" },
+  { name = "lfp_1s", value = true, unit = "", source = "datasheet" },
+  { name = "ntc", value = true, unit = "", source = "datasheet" },
+  { name = "standalone", value = true, unit = "", source = "datasheet" },
+  { name = "approved", value = true, unit = "", source = "chon cho prototype" },
 ]
 
 [[parts]]

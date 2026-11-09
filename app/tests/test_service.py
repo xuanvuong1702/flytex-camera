@@ -324,29 +324,60 @@ class AsyncUploadTests(ServiceFixture):
 
 
 class SmsWakeTests(ServiceFixture):
-    def test_valid_token_accepted(self) -> None:
+    SECRET = "00112233445566778899aabbccddeeff"
+
+    def _sms(self, ts: int, sig: str | None = None) -> SmsMessage:
+        import hashlib
+        import hmac
+
+        if sig is None:
+            sig = hmac.new(
+                bytes.fromhex(self.SECRET), str(ts).encode("ascii"), hashlib.sha256
+            ).hexdigest()[:16]
+        return SmsMessage(index=1, number="+8490", text=f"W {ts} {sig}")
+
+    def _setup_sms(self) -> int:
         self.service.config.wake_chan = "sms"
-        self.service.config.wake_token = "tok"
-        self.modem.sms_read = lambda index=None: [
-            SmsMessage(index=1, number="+8490", text="W tok")
-        ]
+        self.service.config.wake_secret = self.SECRET
+        return int(self.clock.now())
+
+    def test_valid_hmac_accepted(self) -> None:
+        now = self._setup_sms()
+        self.modem.sms_read = lambda index=None: [self._sms(now)]
         self.service._consume_wake_sms()
         self.assertTrue(self.service.wake_sms_ok)
 
-    def test_wrong_token_rejected(self) -> None:
+    def test_wrong_hmac_rejected(self) -> None:
+        now = self._setup_sms()
+        self.modem.sms_read = lambda index=None: [self._sms(now, sig="0" * 16)]
+        self.service._consume_wake_sms()
+        self.assertFalse(self.service.wake_sms_ok)
+
+    def test_stale_timestamp_rejected(self) -> None:
+        now = self._setup_sms()
+        self.modem.sms_read = lambda index=None: [self._sms(now - 3600)]
+        self.service._consume_wake_sms()
+        self.assertFalse(self.service.wake_sms_ok)
+
+    def test_replay_rejected(self) -> None:
+        now = self._setup_sms()
+        self.modem.sms_read = lambda index=None: [self._sms(now)]
+        self.service._consume_wake_sms()
+        self.assertTrue(self.service.wake_sms_ok)
+        self.service.wake_sms_ok = False
+        self.service._consume_wake_sms()
+        self.assertFalse(self.service.wake_sms_ok)
+
+    def test_missing_secret_rejected(self) -> None:
         self.service.config.wake_chan = "sms"
-        self.service.config.wake_token = "tok"
-        self.modem.sms_read = lambda index=None: [
-            SmsMessage(index=1, number="+8490", text="W other")
-        ]
+        self.service.config.wake_secret = ""
+        self.modem.sms_read = lambda index=None: [self._sms(0)]
         self.service._consume_wake_sms()
         self.assertFalse(self.service.wake_sms_ok)
 
     def test_ignored_when_channel_is_not_sms(self) -> None:
         self.service.config.wake_chan = "off"
-        self.modem.sms_read = lambda index=None: [
-            SmsMessage(index=1, number="+8490", text="W tok")
-        ]
+        self.modem.sms_read = lambda index=None: [self._sms(0)]
         self.service._consume_wake_sms()
         self.assertFalse(self.service.wake_sms_ok)
 
