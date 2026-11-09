@@ -121,10 +121,16 @@ J6,Service pads,Connector_Generic:Conn_01x04,1,DP,SVC_USB_DP
 J6,Service pads,Connector_Generic:Conn_01x04,2,DM,SVC_USB_DM
 J6,Service pads,Connector_Generic:Conn_01x04,3,GND,GND
 J6,Service pads,Connector_Generic:Conn_01x04,4,GND,GND
-J7,Test points,Connector_Generic:Conn_01x04,1,SOC_READY,SOC_READY
-J7,Test points,Connector_Generic:Conn_01x04,2,IRQ,IRQ
-J7,Test points,Connector_Generic:Conn_01x04,3,USB_SEL,USB_SEL
-J7,Test points,Connector_Generic:Conn_01x04,4,RI,RI
+TP1,Test points,Connector_Generic:Conn_01x04,1,SOC_READY,SOC_READY
+TP1,Test points,Connector_Generic:Conn_01x04,2,IRQ,IRQ
+TP1,Test points,Connector_Generic:Conn_01x04,3,USB_SEL,USB_SEL
+TP1,Test points,Connector_Generic:Conn_01x04,4,RI,RI
+R1,10k 1%,Resistor_SMD:R_0603_1608Metric,1,TOP,USB_SEL
+R1,10k 1%,Resistor_SMD:R_0603_1608Metric,2,BOT,GND
+C1,470uF 10V,Capacitor_SMD:CP_Elec_8x10,1,P,+5V_SOC
+C1,470uF 10V,Capacitor_SMD:CP_Elec_8x10,2,N,GND
+C2,100nF,Capacitor_SMD:C_0603_1608Metric,1,P,+3V3
+C2,100nF,Capacitor_SMD:C_0603_1608Metric,2,N,GND
 R14,100k 1%,Resistor_SMD:R_0603_1608Metric,1,TOP,+5V_SOC
 R14,100k 1%,Resistor_SMD:R_0603_1608Metric,2,BOT,USB_VBUSDET
 R15,100k 1%,Resistor_SMD:R_0603_1608Metric,1,TOP,USB_VBUSDET

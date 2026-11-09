@@ -120,9 +120,18 @@ COMPONENTS = (
         ("1", "DP", "SVC_USB_DP"), ("2", "DM", "SVC_USB_DM"),
         ("3", "GND", "GND"), ("4", "GND", "GND"),
     ]),
-    comp("J7", "Test points", "Connector_Generic:Conn_01x04", [
+    comp("TP1", "Test points", "Connector_Generic:Conn_01x04", [
         ("1", "SOC_READY", "SOC_READY"), ("2", "IRQ", "IRQ"),
         ("3", "USB_SEL", "USB_SEL"), ("4", "RI", "RI"),
+    ]),
+    comp("R1", "10k 1%", "Resistor_SMD:R_0603_1608Metric", [
+        ("1", "TOP", "USB_SEL"), ("2", "BOT", "GND"),
+    ]),
+    comp("C1", "470uF 10V", "Capacitor_SMD:CP_Elec_8x10", [
+        ("1", "P", "+5V_SOC"), ("2", "N", "GND"),
+    ]),
+    comp("C2", "100nF", "Capacitor_SMD:C_0603_1608Metric", [
+        ("1", "P", "+3V3"), ("2", "N", "GND"),
     ]),
     comp("R14", "100k 1%", "Resistor_SMD:R_0603_1608Metric", [
         ("1", "TOP", "+5V_SOC"), ("2", "BOT", "USB_VBUSDET"),
