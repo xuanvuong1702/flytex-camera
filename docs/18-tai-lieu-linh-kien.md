@@ -93,5 +93,7 @@ Rà soát bên ngoài (Ubuntu + gcc 13.3 + datasheet) phát hiện các lỗi m�
 5. **+3V3 là 3,0–3,3 V**, không phải 3,3 V cố định.
 6. **BOM thiếu linh kiện phụ**; đã thêm các dòng boost/USB/load-switch và đánh dấu phần phụ thuộc IC sạc là `not-chosen`.
 7. **Ngưỡng pin LFP và SMS đánh thức** vẫn là blocker chưa sửa; ghi ở [17](17-san-sang-prototype.md) vòng 7.
+8. **Công tắc tải modem TPS22918 (2 A) dùng cho rail 1,8 A** chỉ dư ~11 %; tụ 470 µF sau công tắc có thể tạo dòng nạp vượt 2 A. Đã thêm tụ CT (C9) nhưng phải đo dòng khởi động ở M-36; nếu vượt, đổi công tắc tải lớn hơn hoặc giảm tụ/soft-start.
+9. **Tụ ra boost 2×22 µF 1206 10 V X7R** mất nhiều dung lượng do DC bias ở 5 V. Phải tra đường cong C(V) trong datasheet tụ, có thể phải tăng số tụ hoặc dùng 16 V; kiểm gợn và ổn định ở M-08.
 
 Bài học: test BOM chỉ kiểm **nhất quán nội bộ**, không chứng minh gói hay thông số đúng datasheet. Mọi `verified=yes` phải kèm nguồn và người kiểm.

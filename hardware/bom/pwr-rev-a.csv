@@ -20,7 +20,7 @@ R3,batt_div,100k 1%,RC0603FR-07100KL,Yageo,0603,1,no,candidate,Chia ap pin
 R4,batt_div,100k 1%,RC0603FR-07100KL,Yageo,0603,1,no,candidate,Chia ap pin
 C1,boost_in,10uF 25V X7R,CL31B106KBHNNNE,Samsung,1206,2,no,candidate,Sat IC boost
 C2,boost_out,22uF 10V X7R,CL31B226KPHNNNE,Samsung,1206,2,no,candidate
-C3,modem_bulk,470uF 10V low ESR,EEU-FR1A471,Panasonic,radial 8x11,1,no,candidate,Dat sat breakout modem
+C3,modem_bulk,470uF 10V low ESR,EEU-FR1A471,Panasonic,radial 8x11,1,no,candidate,Dat SAU cong tac tai va sat modem; kiem dong nap voi CT C9
 C4,decouple,100nF 50V X7R,CL10B104KB8NNNC,Samsung,0603,12,no,candidate,Theo tung IC
 R5,ntc_pull,7.15k 1%,RC0603FR-077K15L,Yageo,0603,1,no,candidate,Theo tinh toan pwr-design
 TP1,testpoint,test point 1.0mm,TP-107-01-T,Samtec,1 pin,12,no,candidate,Moi rail mot diem
