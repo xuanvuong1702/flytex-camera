@@ -256,13 +256,13 @@ Phần cứng không thể kiểm chứng khi chưa mua linh kiện, nhưng ph�
 | Hợp đồng regmap sinh tự động | Xong | `spec/registers.toml` → header C + module Python + bảng; 29 test đặc tả |
 | Pinout J_B2B sinh tự động, có kiểm dòng | Xong | `spec/b2b.toml` → bảng + kiểm hệ số dư |
 | Hợp đồng MQTT sinh tự động | Xong | `spec/mqtt.toml` → JSON schema + module Python |
-| Thiết kế PWR Rev A: tính toán + hình học | Xong, **73 test** | `hardware/calc/`, `hardware/geom/`, `hardware/bom/`, `hardware/parts/` → [pwr-design](../hardware/pwr-design.md), [boards](../hardware/boards.md) |
+| Thiết kế PWR Rev A: tính toán + hình học | Xong, **80 test** | `hardware/calc/`, `hardware/geom/`, `hardware/bom/`, `hardware/parts/` → [pwr-design](../hardware/pwr-design.md), [boards](../hardware/boards.md) |
 | Firmware MCU: regmap, nguồn, pin, nhiệt, lịch, NVM, STOP | Xong, **64 test host** | `python firmware/mcu/tests/build.py test` |
 | Ứng dụng Linux: máy trạng thái, AT, ghi, hàng đợi, lệnh | Xong, **188 test host** | `app/tests` |
 | Ghi MPEG-TS, tải clip HTTPS, OTA A/B có xác minh | Xong phần mềm, test đầy đủ | `app/flytex/tsmux.py`, `upload.py`, `ota.py` |
 | Mô phỏng end-to-end firmware C + app | Xong, **5 kịch bản** | `python sim/run.py --scenario all` |
 | Công cụ đo G0, nhập PPK2, kiểm tài liệu | Xong, **120 test** | `tools/measure`, `tools/docs_check`, `tools/readiness.py` |
-| Toàn bộ chạy một lệnh | **43/43 bước đạt** | `python run_tests.py` |
+| Toàn bộ chạy một lệnh | **45/45 bước đạt** | `python run_tests.py` |
 | Mã chạy camera thật (RK MPI) | **Chưa** | Cần SDK và dev board |
 | Port STM32L0 thật | **Khung** | Cần SDK và board |
 | Backend xác minh chữ ký + Installer thật | **Chưa** | Chốt thuật toán/khóa và SDK ở G0 |

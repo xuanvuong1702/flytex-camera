@@ -15,6 +15,7 @@ Trạng thái: **chưa có schematic, chưa có board.** Thư mục này chứa 
 |---|---|
 | [g0-bom.md](g0-bom.md) | Danh sách mua cho giai đoạn 0, có ghi rõ cái gì phải xác minh |
 | [pwr-design.md](pwr-design.md) | **Sinh tự động** từ `calc/`: giá trị linh kiện, dòng đỉnh, điểm cắt NTC, nhiệt, và bảng kiểm tra đạt/không |
+| [netlist/](netlist/) | Netlist pin-level PWR, ERC net và bảng chân |
 | [kicad/](kicad/) | Thư viện ký hiệu KiCad cho IC nguồn, sinh từ bảng chân datasheet |
 | [schematic/](schematic/) | Schematic khối PWR/CMP (SVG) + kiểm tra net |
 | [boards.md](boards.md) | **Sinh tự động** từ `spec/boards.toml`: kích thước, lỗ bắt vít, vị trí connector |

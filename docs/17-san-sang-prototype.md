@@ -148,7 +148,7 @@ RI modem đã đóng bằng **module EC200U-EU** (MAIN_RI chân 62) thay vì bre
 
 CI GitHub Actions đã xanh ở commit `01931c3` (run `42619397175`).
 
-Các số 31/430 trong vòng 1–6 là số tại thời điểm đó; hiện tại 43/496.
+Các số 31/430 trong vòng 1–6 là số tại thời điểm đó; hiện tại 45/503.
 
 Ba vòng 4–6 trước đây chỉ chứng minh các artifact nội bộ nhất quán; chúng **không** phát hiện được lỗi datasheet, lỗi gcc hay lỗi kiến trúc sạc. Quy trình đã được sửa: từ nay C-10/C-12 chỉ được coi là đạt khi có (a) datasheet được mở và ghi nguồn, (b) CI thật xanh.
 
