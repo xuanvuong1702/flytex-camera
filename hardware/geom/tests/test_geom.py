@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[3]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from hardware.geom import cli, draw, model  # noqa: E402
+from hardware.geom import cli, draw, model
 
 
 def as_dict(geometry: model.Geometry) -> dict:

@@ -75,15 +75,20 @@ class HttpDownloader:
         self.chunk_size = int(chunk_size)
 
     def download(self, url: str, dest: Path, expected_size: int, timeout: float) -> int:
+        import contextlib
         import urllib.error
         import urllib.request
 
-        if not url.startswith(("http://", "https://")):
-            raise OtaError(f"url khong hop le: {url}")
+        if not url.startswith("https://"):
+            raise OtaError(f"chi chap nhan HTTPS: {url}")
         dest.parent.mkdir(parents=True, exist_ok=True)
         written = 0
         try:
-            with urllib.request.urlopen(url, timeout=timeout or self.timeout) as response:
+            with urllib.request.urlopen(  # nosec B310
+                url, timeout=timeout or self.timeout
+            ) as response:
+                if not response.geturl().startswith("https://"):
+                    raise OtaError("redirect ra khoi HTTPS")
                 with dest.open("wb") as handle:
                     while True:
                         chunk = response.read(self.chunk_size)
@@ -96,10 +101,8 @@ class HttpDownloader:
                     handle.flush()
                     os.fsync(handle.fileno())
         except urllib.error.HTTPError as exc:
-            try:
+            with contextlib.suppress(OSError):
                 exc.close()
-            except Exception:  # noqa: BLE001
-                pass
             raise OtaError(f"HTTP {exc.code}") from exc
         except (urllib.error.URLError, TimeoutError, OSError) as exc:
             raise OtaError(f"loi tai image: {exc}") from exc

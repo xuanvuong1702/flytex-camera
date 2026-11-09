@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import hashlib
-import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -19,6 +18,7 @@ from flytex.ota import (
     STATE_HEALTHY,
     STATE_ROLLED_BACK,
     STATE_STAGED,
+    HttpDownloader,
     OtaError,
     OtaManager,
 )
@@ -221,6 +221,20 @@ class OtaTests(unittest.TestCase):
         (self.root / "ota-state.json").write_text("{broken", encoding="utf-8")
         with self.assertRaises(OtaError):
             self._make()
+
+
+class HttpDownloaderTests(unittest.TestCase):
+    def test_http_is_rejected(self) -> None:
+        with self.assertRaises(OtaError):
+            HttpDownloader().download(
+                "http://example.com/x.img", Path("unused.img"), 1, 1.0
+            )
+
+    def test_non_url_is_rejected(self) -> None:
+        with self.assertRaises(OtaError):
+            HttpDownloader().download(
+                "file:///tmp/x.img", Path("unused.img"), 1, 1.0
+            )
 
 
 if __name__ == "__main__":

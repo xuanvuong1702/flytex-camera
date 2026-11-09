@@ -35,7 +35,7 @@ Trong repo này, cả hai khối đã có lõi chạy được trên máy tính,
 
 Hai điểm còn mở ở port STM32L0, đã ghi thành rủi ro:
 
-- **IWDG trong STOP (chốt tạm 2026-11-09):** tắt IWDG ngay trước khi vào STOP và bật lại sau khi thức; ghi nhận đây là đánh đổi có chủ đích (mất bảo vệ watchdog trong lúc ngủ sâu, bù bằng brown-out và RTC/PIR wake). Đo lại M-02; nếu cần watchdog cả trong ngủ thì chuyển sang thức 20 s để kick và giảm tần suất lấy mẫu pin. Xem R-32.
+- **IWDG trong STOP (chốt 2026-11-09):** prototype **không khởi động IWDG** (`FLY_IWDG_ENABLE=0`) vì IWDG vẫn đếm trong STOP và giới hạn giấc ngủ dưới ~28 s. Nếu bật, phải giảm `max_ms` hoặc thức định kỳ để kick; đo lại M-02. Port đã chọn RTC clock LSI, PRER A=127/S=255 và WUCKSEL: /16 cho ≤28 s, ck_spre 1 Hz cho >28 s — **chưa chạy trên target**, phải scope/đo. Xem R-32.
 - **MCU reset khi SoC đang chạy:** `fly_init` cắt `+5V_SOC` ngay theo trạng thái đã khôi phục, có thể làm hỏng thẻ. Cần mạch giữ nguồn hoặc cờ "SoC đang chạy" trong NVM trước khi coi là an toàn. Xem R-31.
 
 ### 2.3 Pin cạn
@@ -116,7 +116,7 @@ Giá trị mặc định: clip 30 s, nghỉ trước khi ngủ 10 s, giữ live 
 
 1. MCU giới hạn tần suất: tối đa một lần bật SoC mỗi 10 phút do RI, kể cả khi token sai.
 2. Token dạng `W <counter> <hmac16>`; SoC kiểm HMAC-SHA256 trên counter, chỉ nhận counter lớn hơn mốc đã lưu. **Không phụ thuộc đồng hồ/RTC**, nên cold boot hoặc RTC_LOST vẫn nhận SMS hợp lệ.
-3. Nếu modem cho đọc số gửi trước khi bật SoC (cần UART phụ, O-12), thêm whitelist số.
+3. Whitelist số gửi: đã có `wake_numbers` (danh sách phẩy); chỉ nhận SMS từ số trong danh sách khi cấu hình. Việc đọc số trước khi bật SoC vẫn cần UART phụ (O-12).
 4. Đo chi phí một lần đánh thức (M-35) và đưa vào ngân sách pin.
 
 **Đã hiện thực một phần (2026-11-09):** SoC kiểm HMAC-SHA256 trên counter, chống replay và lưu mốc xuống `wake_last_ts`; từ chối nếu chưa cấu hình `wake_secret`. Không dùng timestamp nên không phụ thuộc RTC. **Chưa hiện thực:** giới hạn tần suất ở MCU và whitelist số gửi — vẫn là blocker của vòng 7 trong [17](17-san-sang-prototype.md).

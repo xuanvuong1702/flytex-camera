@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 try:  # chạy trực tiếp: python app/tests/test_x.py
-    from _bootstrap import APP, ROOT  # noqa: F401
+    from _bootstrap import APP, ROOT
 except ImportError:  # chạy bằng discover: app.tests.test_x
     from app.tests._bootstrap import APP, ROOT  # noqa: F401
 

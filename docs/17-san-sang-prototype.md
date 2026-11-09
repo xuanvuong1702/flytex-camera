@@ -43,7 +43,7 @@ Mỗi vòng ghi: ngày, các lệnh đã chạy, kết quả, phát hiện, vi�
 
 ### Vòng 1 — 2026-11-09 — KHÔNG TÍNH (có phát hiện)
 
-Đã chạy: `python run_tests.py` (31/31 bước), `python tools/readiness.py --full`, rà BOM và mã nguồn theo §1.
+Đã chạy: `python run_tests.py` (31/31 bước tại thời điểm vòng 1), `python tools/readiness.py --full`, rà BOM và mã nguồn theo §1.
 
 | # | Phát hiện | Mức | Đã sửa |
 |---|---|---|---|
@@ -84,7 +84,7 @@ Kết luận vòng 3: không tính; sửa xong, chạy lại toàn bộ từ vò
 
 ### Vòng 4 — 2026-11-09 — ĐẠT
 
-Đã chạy lại từ đầu: `python run_tests.py` → 31/31 bước, 430 test; `python tools/readiness.py --full` → 24/24; kiểm nhất quán số liệu docs/02, docs/06, pwr-design (hồi tiếp, NTC, ADC, nhiệt) → 0 lỗi.
+Đã chạy lại từ đầu: `python run_tests.py` → 31/31 bước, 430 test (tại thời điểm vòng 4); `python tools/readiness.py --full` → 24/24; kiểm nhất quán số liệu docs/02, docs/06, pwr-design (hồi tiếp, NTC, ADC, nhiệt) → 0 lỗi.
 
 Phát hiện sản phẩm: **0**. Kết luận: đạt.
 
@@ -106,7 +106,7 @@ Kết luận: đạt.
 
 ### Vòng 6 — 2026-11-09 — ĐẠT
 
-Đã chạy lại từ đầu: `python run_tests.py` → 31/31 bước, 430 test; `python tools/readiness.py --full` → 24/24; `python -m flytex.cli sim --seconds 20` → chạy hết, có `uploaded=1`, `sleep_cmd=1`; phủ lệnh MQTT 10/10, không thiếu.
+Đã chạy lại từ đầu: `python run_tests.py` → 31/31 bước, 430 test (tại thời điểm vòng 4); `python tools/readiness.py --full` → 24/24; `python -m flytex.cli sim --seconds 20` → chạy hết, có `uploaded=1`, `sleep_cmd=1`; phủ lệnh MQTT 10/10, không thiếu.
 
 Phát hiện sản phẩm: **0**. Kết luận: đạt.
 
@@ -131,6 +131,9 @@ Người dùng chạy trên Ubuntu 24.04 + gcc 13.3 và rà datasheet, phát hi�
 | 7-14 | `wake_secret` nằm trong ALLOWED_KEYS nên **đổi được từ xa** qua MQTT | Chặn | Tách REMOTE_KEYS, cấm secret/token; test MQTT payload không chứa secret |
 | 7-15 | Token SMS dùng timestamp, cold boot/RTC_LOST từ chối SMS hợp lệ | Cao | Đổi sang **counter** tăng dần + HMAC; không phụ thuộc RTC; test cold boot |
 | 7-16 | Chưa có pinout Core1106D | Chặn | Đã nhập 112 chân từ XLS Luckfox vào `spec/core1106d/pins.csv` + 5 test |
+| 7-17 | Port STM32L0: RTC chưa chọn nguồn LSI/WUCKSEL; IWDG vẫn chạy trong STOP; hẹn giờ có thể thức sớm ~16 lần | Chặn | Chọn LSI, PRER 127/255, WUCKSEL /16 hoặc ck_spre; IWDG mặc định tắt; thêm bước compile port; README ghi rõ chưa chạy target |
+| 7-18 | OTA/upload chấp nhận `http://` | Chặn | Bắt buộc HTTPS, kiểm cả redirect; test reject http |
+| 7-19 | SMS: docstring timestamp cũ; mốc counter ghi không nguyên tử; chưa whitelist | Chặn | Docstring counter; ghi temp+fsync+replace; thêm `wake_numbers` + test |
 | 7-10 | Port STM32L0 chỉ là khung; nvm/temp trả ENOSYS; test "đạt" là test host với HAL giả | Cao | Không đổi: đây là giới hạn đã biết, nhưng phải ghi rõ trong mọi tuyên bố "chạy được" |
 
 Kết luận vòng 7: **không đạt**. Kết luận "đủ điều kiện dựng prototype" ở §4 bị **thu hồi**.
@@ -144,6 +147,8 @@ Kết luận vòng 7: **không đạt**. Kết luận "đủ điều kiện dự
 RI modem đã đóng bằng **module EC200U-EU** (MAIN_RI chân 62) thay vì breakout không rõ chân. Còn việc thiết kế carrier/RF, đo/kiểm không chặn mua: M-05 (NTC), M-36 (đỉnh modem/TPS22918), ILIM của TPS61088, và port STM32L0 vẫn là khung chưa chạy trên phần cứng. SMS đã có HMAC counter + rate limit; whitelist số cần UART phụ (O-12).
 
 CI GitHub Actions đã xanh ở commit `01931c3` (run `42619397175`).
+
+Các số 31/430 trong vòng 1–6 là số tại thời điểm đó; hiện tại 41/487.
 
 Ba vòng 4–6 trước đây chỉ chứng minh các artifact nội bộ nhất quán; chúng **không** phát hiện được lỗi datasheet, lỗi gcc hay lỗi kiến trúc sạc. Quy trình đã được sửa: từ nay C-10/C-12 chỉ được coi là đạt khi có (a) datasheet được mở và ghi nguồn, (b) CI thật xanh.
 

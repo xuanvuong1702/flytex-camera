@@ -9,9 +9,11 @@ công. TLS thật **CHƯA XÁC MINH** vì chưa có chứng chỉ thiết bị.
 
 from __future__ import annotations
 
+import contextlib
 import os
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Callable, Protocol
+from typing import Any, Protocol
 
 __all__ = [
     "CloudError",
@@ -163,7 +165,7 @@ class MemoryBus:
             return dict(self._retained)
         return self._retained.get(topic)
 
-    def publisher(self) -> "MemoryPublisher":
+    def publisher(self) -> MemoryPublisher:
         return MemoryPublisher(self)
 
     def messages_of(self, topic: str) -> list[bytes]:
@@ -313,9 +315,9 @@ class PahoPublisher:
             raise CloudError("MQTT chua ket noi")
         _validate_filter(topic_filter)
 
-        def _on_message(client: object, userdata: object, message: object) -> None:
-            topic = getattr(message, "topic")
-            payload = bytes(getattr(message, "payload"))
+        def _on_message(client: object, userdata: object, message: Any) -> None:
+            topic = message.topic
+            payload = bytes(message.payload)
             cb(str(topic), payload)
 
         try:
@@ -336,9 +338,7 @@ class PahoPublisher:
 
     def disconnect(self) -> None:
         if self._client is not None:
-            try:
+            with contextlib.suppress(Exception):
                 self._client.disconnect()  # type: ignore[attr-defined]
-            except Exception:
-                pass
         self._connected = False
         self._client = None

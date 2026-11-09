@@ -560,9 +560,12 @@ class I2cLink(McuLink):
             _I2cMsg(self._address, 0, 1, write_buf),
             _I2cMsg(self._address, self.I2C_M_RD, n, read_buf),
         )
-        data = _I2cRdwrIoctlData(messages, 2)
+        ioctl_data = _I2cRdwrIoctlData(messages, 2)
+        fcntl = self._fcntl
+        if fcntl is None:
+            raise McuError("fcntl khong kha dung")
         try:
-            self._fcntl.ioctl(self._fd, self.I2C_RDWR, ctypes.addressof(data))
+            fcntl.ioctl(self._fd, self.I2C_RDWR, ctypes.addressof(ioctl_data))
         except OSError as exc:
             raise McuError(f"I2C read 0x{addr:02X}/{n} loi: {exc}") from exc
         return bytes(bytearray(read_buf))
@@ -581,9 +584,12 @@ class I2cLink(McuLink):
         for index, value in enumerate(payload):
             buf[index + 1] = value
         messages = (_I2cMsg * 1)(_I2cMsg(self._address, 0, len(payload) + 1, buf))
-        data = _I2cRdwrIoctlData(messages, 1)
+        ioctl_data = _I2cRdwrIoctlData(messages, 1)
+        fcntl = self._fcntl
+        if fcntl is None:
+            raise McuError("fcntl khong kha dung")
         try:
-            self._fcntl.ioctl(self._fd, self.I2C_RDWR, ctypes.addressof(data))
+            fcntl.ioctl(self._fd, self.I2C_RDWR, ctypes.addressof(ioctl_data))
         except OSError as exc:
             raise McuError(f"I2C write 0x{addr:02X}/{len(payload)} loi: {exc}") from exc
 

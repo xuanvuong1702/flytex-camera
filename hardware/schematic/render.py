@@ -82,9 +82,9 @@ def net_colour(net: str) -> str:
         return "#222222"
     if net.startswith("+") or net in {"VBAT", "VBUS"}:
         return "#b02020"
-    if net.startswith("USB") or net.startswith("SVC"):
+    if net.startswith(("USB", "SVC")):
         return "#1f7a1f"
-    if net.startswith("MIPI") or net.startswith("CAM"):
+    if net.startswith(("MIPI", "CAM")):
         return "#6a1b9a"
     if net.startswith("TBD"):
         return "#888888"
@@ -100,14 +100,14 @@ def render_sheet(sheet: dict, page: dict) -> str:
     width = page["width_mm"] * SCALE
     height = page["height_mm"] * SCALE
     out = [
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width:.0f}" '
-        f'height="{height:.0f}" viewBox="0 0 {width:.0f} {height:.0f}">',
+        (f'<svg xmlns="http://www.w3.org/2000/svg" width="{width:.0f}" '
+        f'height="{height:.0f}" viewBox="0 0 {width:.0f} {height:.0f}">'),
         '<rect width="100%" height="100%" fill="#fbfbf8"/>',
-        f'<text x="20" y="28" font-family="sans-serif" font-size="18" '
-        f'font-weight="bold">{escape(sheet["title"])}</text>',
-        f'<text x="20" y="46" font-family="sans-serif" font-size="10">'
+        (f'<text x="20" y="28" font-family="sans-serif" font-size="18" '
+        f'font-weight="bold">{escape(sheet["title"])}</text>'),
+        (f'<text x="20" y="46" font-family="sans-serif" font-size="10">'
         f'{escape(sheet.get("rev", ""))} — block-level, không phải pin-level. '
-        f'Nhãn net thay cho dây; xem hardware/schematic/README.md</text>',
+        f'Nhãn net thay cho dây; xem hardware/schematic/README.md</text>'),
     ]
     for block in sheet["blocks"]:
         x = block["x"] * SCALE

@@ -6,7 +6,7 @@ nên hành vi của MCU trong mô phỏng là hành vi của mã C thật.
 
 from __future__ import annotations
 
-from typing import Callable
+from collections.abc import Callable
 
 from .ffi import PIN_MODEM_PWR, PIN_MODEM_STATUS, PIN_SOC_PWR, PIN_SOC_READY, McuSim
 
@@ -19,7 +19,7 @@ class SimClock:
         self._wall0 = float(start_wall)
         self._mono = 0.0
         self._step_ms = max(1, int(step_ms))
-        self._callbacks: list[Callable[["SimClock"], None]] = []
+        self._callbacks: list[Callable[[SimClock], None]] = []
 
     # -- giao thức Clock ------------------------------------------------
     def now(self) -> float:
@@ -36,7 +36,7 @@ class SimClock:
         if seconds <= 0:
             self._run_callbacks()
             return
-        remaining_ms = int(round(seconds * 1000.0))
+        remaining_ms = round(seconds * 1000.0)
         if remaining_ms <= 0:
             remaining_ms = 1
         while remaining_ms > 0:
@@ -51,7 +51,7 @@ class SimClock:
     def set_wall(self, wall: float) -> None:
         self._wall0 = float(wall) - self._mono
 
-    def add_callback(self, callback: Callable[["SimClock"], None]) -> None:
+    def add_callback(self, callback: Callable[[SimClock], None]) -> None:
         self._callbacks.append(callback)
 
     def _run_callbacks(self) -> None:

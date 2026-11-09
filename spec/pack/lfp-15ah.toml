@@ -16,6 +16,7 @@ docs = ["UN38.3 (nha cung cap)", "IEC 62133 (nha cung cap)", "datasheet cell"]
 type = "1S LFP, 15 A, co NTC"
 candidate = "Daly 1S 15A hardware BMS"
 continuous_a = 15.0
+discharge_peak_a = 30.0
 charge_a = 8.0
 quiescent_ua_max = 100.0
 ntc = "10 kOhm B3950"
@@ -27,4 +28,4 @@ connector = "XT30PW-M"
 fuse = "PTC hoac fuse 10 A"
 nct_on_cell = true
 docs_ready = false
-notes = "Phai do tu tieu <=100 uA, dong sac/xa, diem cat BMS; xin UN38.3/IEC 62133 truoc khi mua lo."
+notes = "Phai do tu tieu <=100 uA, dong sac/xa, diem cat BMS; xin UN38.3/IEC 62133 truoc khi mua lo. Boost 5 V co dinh dong vao 5,56 A (dinh 6,52 A) tai 3,0 V - BMS phai chiu duoc truoc khi bao ve."

@@ -5,7 +5,6 @@ Chạy: python spec/tests/test_spec.py
 
 from __future__ import annotations
 
-import copy
 import importlib.util
 import json
 import sys

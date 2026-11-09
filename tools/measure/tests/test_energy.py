@@ -10,7 +10,7 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from tools.measure.energy import (  # noqa: E402
+from tools.measure.energy import (
     TARGET_MARGIN,
     EnergyError,
     Pack,
@@ -54,9 +54,8 @@ class PackEnergyTest(unittest.TestCase):
             (10, 0),
             (10, -3.2),
         ):
-            with self.subTest(args=args):
-                with self.assertRaises(EnergyError):
-                    pack_energy_wh(*args)
+            with self.subTest(args=args), self.assertRaises(EnergyError):
+                pack_energy_wh(*args)
         with self.assertRaises(EnergyError):
             pack_energy_wh(10, 3.2, usable_fraction=1.5)
         with self.assertRaises(EnergyError):
@@ -108,9 +107,8 @@ class PropagationTest(unittest.TestCase):
 
     def test_propagate_rejects_bad_percent(self) -> None:
         for pct in (-1.0, 101.0, float("nan")):
-            with self.subTest(pct=pct):
-                with self.assertRaises(EnergyError):
-                    propagate(1.0, pct)
+            with self.subTest(pct=pct), self.assertRaises(EnergyError):
+                propagate(1.0, pct)
 
 
 class ScenarioTest(unittest.TestCase):

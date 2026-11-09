@@ -222,10 +222,10 @@ def render() -> str:
         "# Sổ linh kiện và đối chiếu thiết kế (sinh tự động)",
         "",
         "- Nguồn: `spec/parts.toml`; kiểm tra: `python -m hardware.parts.check --check`.",
-        "- `verified`: **yes** đã đối chiếu datasheet, **partial** mới một phần, "
-        "**no** chưa mở datasheet.",
-        f"- Kết quả: **{len(blockers)} blocker**, {len(warns)} cảnh báo. "
-        "Blocker là việc phải đóng trước khi đặt hàng.",
+        ("- `verified`: **yes** đã đối chiếu datasheet, **partial** mới một phần, "
+        "**no** chưa mở datasheet."),
+        (f"- Kết quả: **{len(blockers)} blocker**, {len(warns)} cảnh báo. "
+        "Blocker là việc phải đóng trước khi đặt hàng."),
         "",
         "## 1. Linh kiện chính",
         "",
@@ -273,8 +273,8 @@ def render() -> str:
         "",
         "- `--strict` dùng làm cổng **trước khi đặt hàng**: còn blocker thì không đặt.",
         "- `--check` chỉ kiểm cấu trúc và file sinh; không chặn CI vì thiếu linh kiện chưa mua.",
-        "- Khi mở datasheet và xác nhận một thông số: sửa `verified` và `source` trong "
-        "`spec/parts.toml`, chạy `--write`.",
+        ("- Khi mở datasheet và xác nhận một thông số: sửa `verified` và `source` trong "
+        "`spec/parts.toml`, chạy `--write`."),
         "",
     ]
     return "\n".join(out) + "\n"

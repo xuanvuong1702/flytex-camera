@@ -7,13 +7,13 @@ import unittest
 from pathlib import Path
 
 try:
-    from _bootstrap import ROOT  # noqa: F401
+    from _bootstrap import ROOT
 except ImportError:  # pragma: no cover
     from app.tests._bootstrap import ROOT  # noqa: F401
 
-from flytex.recorder import SegmentRecorder
-from flytex.tsmux import PACKET_SIZE, TsError, TsMuxer, crc32_mpeg, encode_pts
 from flytex.clock import FakeClock
+from flytex.recorder import SegmentRecorder
+from flytex.tsmux import TsError, TsMuxer, crc32_mpeg, encode_pts
 
 PACKET = 188
 
@@ -47,7 +47,7 @@ def section_of(packet: bytes) -> bytes:
     payload = payload_of(packet)
     pointer = payload[0]
     body = payload[1 + pointer:]
-    table_id = body[0]
+    body[0]
     section_length = ((body[1] & 0x0F) << 8) | body[2]
     section = body[: 3 + section_length]
     crc = int.from_bytes(section[-4:], "big")

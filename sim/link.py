@@ -23,7 +23,7 @@ def _nack(message: str) -> Exception:
 class FfiMcuLink:
     """Hiện thực McuLink trên firmware C thật."""
 
-    def __init__(self, sim: McuSim, clock: "SimClock") -> None:
+    def __init__(self, sim: McuSim, clock: SimClock) -> None:
         self._sim = sim
         self._clock = clock
         self.closed = False

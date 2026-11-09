@@ -209,7 +209,7 @@ def parse_link_target(raw: str) -> str | None:
     target = target.strip().strip("\"'")
     if not target or target.startswith("#"):
         return None
-    if target.startswith("//") or target.startswith("/"):
+    if target.startswith(("//", "/")):
         return None
     if SCHEME_RE.match(target):
         return None

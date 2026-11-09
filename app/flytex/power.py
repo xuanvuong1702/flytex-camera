@@ -10,13 +10,13 @@ Mọi thời gian đi qua `Clock`; test dùng `FakeClock` nên không ngủ th�
 from __future__ import annotations
 
 import secrets
+from collections.abc import Callable
 from dataclasses import dataclass
 from enum import Enum
-from typing import Callable
 
 from .clock import Clock
-from .mcu import McuError
-from .recorder import ClipInfo, RecorderError
+from .mcu import McuClient, McuError
+from .recorder import ClipInfo, RecorderError, SegmentRecorder
 from .uplink import UplinkQueue
 
 
@@ -81,9 +81,9 @@ class PowerController:
 
     def __init__(
         self,
-        link: object,
+        link: McuClient,
         clock: Clock,
-        recorder: object,
+        recorder: SegmentRecorder,
         uplink: UplinkQueue,
         config: PowerConfig | None = None,
         *,
@@ -188,9 +188,7 @@ class PowerController:
         if duration <= 0:
             raise ValueError("duration_s phai > 0")
         now = self._clock.now()
-        if self._state in (PowerState.S0_ECO, PowerState.S1_WATCH):
-            self._begin_record(now=now, ir=False)
-        elif self._state is PowerState.S2_RECORD and not self._active:
+        if self._state in (PowerState.S0_ECO, PowerState.S1_WATCH) or self._state is PowerState.S2_RECORD and not self._active:
             self._begin_record(now=now, ir=False)
         self._live_until = now + duration
         self._settle_until = None
@@ -235,6 +233,7 @@ class PowerController:
         """Pin cạn: báo pin, đóng clip rồi tắt an toàn (idempotent)."""
         if self._shutdown_requested:
             return
+        batt: int | None
         try:
             batt = self._read_batt_mv()
         except McuError:
@@ -315,7 +314,10 @@ class PowerController:
 
     def _advance(self, now: float) -> None:
         if self._active:
-            elapsed = self._clock.monotonic() - self._clip_started_mono
+            started = self._clip_started_mono
+            if started is None:
+                started = now
+            elapsed = self._clock.monotonic() - started
             if self._state is PowerState.S3_LIVE:
                 limit = self.config.max_record_s
             else:
@@ -346,7 +348,7 @@ class PowerController:
         self._active = False
         self._clip_started_mono = None
         self._clip_id = None
-        duration = max(0, int(round(info.duration_s)))
+        duration = max(0, round(info.duration_s))
         self._uplink.enqueue(
             {
                 "type": "motion",

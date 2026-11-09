@@ -10,6 +10,7 @@ import ctypes
 import json
 import sys
 from pathlib import Path
+from typing import Self
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -158,7 +159,7 @@ class McuSim:
             self.lib.fsim_free(self.handle)
             self.handle = None
 
-    def __enter__(self) -> "McuSim":
+    def __enter__(self) -> Self:
         return self
 
     def __exit__(self, *_exc: object) -> None:

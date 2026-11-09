@@ -53,7 +53,7 @@ class RealClock:
         if setter is None:
             raise ClockError("nen tang khong ho tro dat gio he thong")
         try:
-            setter(getattr(time, "CLOCK_REALTIME"), float(ts))
+            setter(getattr(time, "CLOCK_REALTIME", 0), float(ts))
         except (OSError, OverflowError, ValueError) as exc:
             raise ClockError(f"khong dat duoc gio he thong: {exc}") from exc
 

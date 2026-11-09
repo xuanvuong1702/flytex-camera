@@ -76,7 +76,7 @@ class UplinkQueue:
         self._base_delay = float(base_delay_s)
         self._max_delay = float(max_delay_s)
         self._jitter = float(jitter)
-        self._rng = rng if rng is not None else random.Random()
+        self._rng = rng if rng is not None else random.Random()  # nosec B311 - jitter
         self._msgs: dict[str, dict] = {}
         self._priority: dict[str, str] = {}
         self._order: dict[str, int] = {}
@@ -339,10 +339,11 @@ class UplinkQueue:
             self._attempts[message_id] = 0
             self._bytes += self._encoded_size(msg)
             return
-        message_id = record.get("id")
-        if not isinstance(message_id, str):
+        raw_id = record.get("id")
+        if not isinstance(raw_id, str):
             self.corrupt_lines += 1
             return
+        message_id = raw_id
         if op == "ack":
             if message_id in self._msgs:
                 self._remove(message_id)

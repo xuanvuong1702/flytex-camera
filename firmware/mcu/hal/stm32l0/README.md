@@ -13,11 +13,11 @@ Khi không có macro, file chỉ còn một typedef rỗng.
 | Việc | Thanh ghi / API | Ghi chú |
 |---|---|---|
 | Vào STOP | `PWR->CR` (`LPSDSR`, `PDDS=0`, `CWUF`, `CSBF`), `SCB->SCR.SLEEPDEEP`, `WFI` | STOP 1, không phải Standby |
-| Hẹn giờ thức | `RTC->CR.WUTE`, `RTC->WUTR`, `RTC->ISR.WUTWF/WUTF`, `RTC->PRER`, `EXTI` line 20 | LSI ~37 kHz, một tick ~27 µs |
+| Hẹn giờ thức | `RCC->CSR.RTCSEL=LSI`, `RTC->CR.WUTE/WUCKSEL`, `RTC->WUTR`, `RTC->ISR.WUTWF/WUTF`, `RTC->PRER`, `EXTI` line 20 | LSI ~37 kHz; WUCKSEL=/16 cho ≤28 s (ms), ck_spre 1 Hz cho >28 s; PRER A=127/S=255 |
 | Thời gian ms | `RTC->TR/DR/SSR/PRER` (BCD) | SysTick dừng trong STOP nên **không** dùng SysTick làm gốc thời gian |
 | Chân | `GPIOx->MODER/IDR/BSRR/BRR` | Bảng chân là chỗ giữ chỗ, xem §4 |
 | ADC pin | `ADC1->CHSELR/CR/ISR/DR`, `ADC_CCR.VREFEN`, `VREFINT_CAL` ở `0x1FF80078` | `VDDA = 3000 mV × CAL / RAW`, rồi `mV = raw × VDDA / 4095`; lõi tự nhân hệ số chia |
-| IWDG | `IWDG->KR` (`0xCCCC` start, `0x5555` unlock, `0xAAAA` reload), `PR`, `RLR` | ~28 s với chia 256, reload 4095 |
+| IWDG | `IWDG->KR` (`0xCCCC` start, `0x5555` unlock, `0xAAAA` reload), `PR`, `RLR` | **Mặc định tắt** (`FLY_IWDG_ENABLE=0`); nếu bật, STOP phải < ~28 s |
 | I2C slave | `I2C1->CR1.PE`, `CR1.WUPEN`, `OAR1` = `0x30 << 1`, `TIMINGR`, `ISR/ICR/RXDR/TXDR` | WUPEN = đánh thức khỏi STOP bằng địa chỉ, **chưa xác minh** |
 | NVM | EEPROM dữ liệu `0x08080000`, mở khóa `FLASH->PEKEYR` | `nvm_write` đang trả `FLY_ENOSYS` |
 | Nguyên nhân reset | `RCC->CSR` (`IWDGRSTF`, `PORRSTF`, `LPWRRSTF`, `PINRSTF`, `SFTRSTF`, `OBLRSTF`) | ánh xạ sang `SYS_FLAGS` như bảng dưới |
@@ -31,28 +31,29 @@ Khi không có macro, file chỉ còn một typedef rỗng.
    địa chỉ, một số nói chỉ ngắt mới đánh thức được. Đây là câu hỏi mở của
    docs/04 §2.2. Nếu sai, phải quay lại phương án `MCU_IRQ` hai chiều hoặc
    thức theo chu kỳ khi SoC bật.
-3. **IWDG chạy trong STOP**: IWDG không dừng khi vào STOP, trong khi
-   `fly_next_timeout_ms()` **không** tạo wake cho watchdog (đúng theo yêu cầu
-   "không tick 1 ms", và cần cho kịch bản ngủ dài). Hệ quả: nếu ngủ lâu hơn
-   thời gian IWDG, chip sẽ reset. Ba hướng xử lý, chọn sau khi có board:
-   - chỉ bật IWDG khi SoC đang chạy;
-   - dùng cửa sổ IWDG ngắn và chấp nhận thức định kỳ ở chế độ Watch;
-   - coi reset do IWDG trong lúc ngủ dài là chấp nhận được vì NVM và trạng thái
-     nguồn đã bền (không khuyến nghị).
-   Đây là **quyết định thiết kế chưa chốt**, không phải chỗ mã giả vờ đã xong.
+3. **IWDG trong STOP**: đã chốt cho prototype là **không khởi động IWDG**
+   (`FLY_IWDG_ENABLE=0`). Nếu bật, IWDG vẫn đếm trong STOP và giới hạn thời gian
+   ngủ dưới ~28 s; khi đó phải giảm `max_ms` hoặc thức định kỳ để kick. Quyết
+   định này phải đo lại ở M-02; nếu cần watchdog khi ngủ, dùng kiến trúc thức
+   20 s/lần.
 4. **RI (MODEM_RI)**: `fly_step` chỉ lấy mẫu mức, nên xung RI rất ngắn có thể bị
    bỏ. Port thật phải cấu hình EXTI cho chân RI và **chốt cờ** trong ISR, để
    lần `fly_step` kế tiếp còn thấy cạnh lên.
 5. **ADC kênh 1** cho chân chia áp VBAT và **bảng chân** trong `pin_map()` là
    chỗ giữ chỗ; phải lấy từ schematic PWR.
-6. **Nhiệt độ**: `temp_c()` trả `FLY_ENOSYS`. Cần bảng tra NTC (10 kΩ B3950,
-   điện trở kéo 7,15 kΩ theo docs/02 §6.3) và driver 1-Wire cho DS18B20 trước
-   khi trả số đo. Lõi sẽ ghi `0x80` + `FAULT_CODE=SENSOR_STALE` cho tới lúc đó.
+6. **Nhiệt độ**: `temp_c()` trả `FLY_ENOSYS`. Mạng NTC BQ25070 đã chốt
+   **R1=20 kΩ (LDO→TS), R2=8,25 kΩ (TS→GND)**, NTC 10 kΩ B3950; cần driver
+   1-Wire cho DS18B20 trước khi trả số đo. Lõi ghi `0x80` +
+   `FAULT_CODE=SENSOR_STALE` cho tới lúc đó.
 7. **Ghi EEPROM**: `nvm_write()` trả `FLY_ENOSYS`; cần mở khóa `PEKEYR`, xóa
    trang, ghi, chờ `EOP`. Chưa làm vì chưa đối chiếu RM.
 8. **ISR I2C**: khung mới cấu hình, chưa có ISR gọi `fly_i2c_read/write`.
 9. **Giờ RTC**: `epoch_s()` đọc lịch BCD và đổi sang Unix; chưa có phần đặt giờ
    từ SoC và chưa xử lý `RTC_LOST` (bit 5 của `SYS_FLAGS`).
+10. **Nguồn clock RTC/WUCKSEL**: mã đã chọn LSI, đặt PRER và WUCKSEL; đây là
+    phần **chưa chạy trên target**. Phải scope chân WKUP hoặc đo thời gian ngủ
+    thực: nếu thức sớm ~16 lần, kiểm lại WUCKSEL/PRER. Giới hạn ngủ: 28 s ở
+    chế độ ms, 65535 s ở chế độ 1 Hz.
 
 ## 3. Cách build khi có SDK
 
@@ -80,7 +81,7 @@ Build host (`tests/build.py`) **không** dùng lệnh trên và không cần too
 | MODEM_PWR | PB1 | ra |
 | IRQ | PB2 | ra, open-drain, mức thấp là có sự kiện |
 | IR_LED | PB3 | ra |
-| CHG_INHIBIT | PB4 | ra |
+| CHG_CTRL | PB4 | ra; 11 xung lúc boot = 935 mA, giữ cao >2 ms để ngắt sạc |
 | MODEM_RESET | PB5 | ra, xung |
 | MODEM_PWRKEY | PB6 | ra, xung |
 

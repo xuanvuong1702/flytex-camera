@@ -20,8 +20,9 @@ from __future__ import annotations
 
 import re
 from collections import deque
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Callable, Protocol
+from typing import Protocol
 
 from .clock import Clock, RealClock
 
@@ -143,10 +144,7 @@ def _expected_prefix(command: str) -> str:
 
 def _is_final(line: str) -> bool:
     return (
-        line == "OK"
-        or line == "ERROR"
-        or line.startswith("+CME ERROR:")
-        or line.startswith("+CMS ERROR:")
+        line == "OK" or line == "ERROR" or line.startswith(("+CME ERROR:", "+CMS ERROR:"))
     )
 
 

@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import json
 import re
-from typing import Callable, Mapping
+from collections.abc import Callable, Mapping
 
 from . import mqtt_gen
 from .clock import Clock
@@ -195,17 +195,17 @@ class CommandRouter:
                 continue
             value = params[name]
             allowed = constraints.get("enum")
-            if allowed is not None and value not in allowed:
+            if isinstance(allowed, (list, tuple, set)) and value not in allowed:
                 raise CommandError(
                     "BAD_ARGS",
                     f"{name} khong hop le: {value!r}; cho phep: "
                     + ", ".join(str(item) for item in allowed),
                 )
             minimum = constraints.get("min")
-            if minimum is not None and isinstance(value, int) and value < minimum:
+            if isinstance(minimum, int) and isinstance(value, int) and value < minimum:
                 raise CommandError("BAD_ARGS", f"{name} nho hon {minimum}")
             maximum = constraints.get("max")
-            if maximum is not None and isinstance(value, int) and value > maximum:
+            if isinstance(maximum, int) and isinstance(value, int) and value > maximum:
                 raise CommandError("BAD_ARGS", f"{name} lon hon {maximum}")
         if cmd_type == "schedule.set" and "entries" in params:
             try:

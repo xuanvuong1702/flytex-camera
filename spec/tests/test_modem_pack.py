@@ -54,6 +54,8 @@ class PackTests(unittest.TestCase):
         self.assertGreaterEqual(self.data["bms"]["continuous_a"], 8.0)
         self.assertLessEqual(self.data["bms"]["quiescent_ua_max"], 100.0)
         self.assertIn("10 kOhm", self.data["bms"]["ntc"])
+        # Boost 5 V: 5,56 A trung binh, 6,52 A dinh o 3,0 V; BMS phai du.
+        self.assertGreaterEqual(self.data["bms"]["discharge_peak_a"], 6.52 * 1.2)
 
     def test_docs_still_blocked(self) -> None:
         self.assertFalse(self.data["pack"]["docs_ready"])

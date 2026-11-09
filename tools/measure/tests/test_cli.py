@@ -14,8 +14,8 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from tools.measure import cli, csvio  # noqa: E402
-from tools.measure.schema import Measurement  # noqa: E402
+from tools.measure import cli, csvio
+from tools.measure.schema import Measurement
 
 TEMPLATE = REPO_ROOT / "tools" / "measure" / "samples" / "g0-template.csv"
 EXAMPLE = REPO_ROOT / "tools" / "measure" / "samples" / "g0-example.csv"

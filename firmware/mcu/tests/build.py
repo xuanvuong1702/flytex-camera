@@ -4,6 +4,7 @@
 Cach dung:
     python firmware/mcu/tests/build.py test    # build + chay test host
     python firmware/mcu/tests/build.py lib     # build shared library cho sim
+    python firmware/mcu/tests/build.py port    # chi compile port STM32L0 (syntax)
     python firmware/mcu/tests/build.py clean   # xoa thu muc build
 
 Tat ca output la ASCII de console Windows khong loi encoding.
@@ -102,6 +103,19 @@ def build_lib(cc):
     return 0
 
 
+def build_port(cc):
+    port = MCU_DIR / "hal" / "stm32l0" / "port_stm32l0.c"
+    out = BUILD_DIR / "port_stm32l0.o"
+    BUILD_DIR.mkdir(parents=True, exist_ok=True)
+    cmd = list(cc) + CFLAGS
+    cmd += ["-DFLYTEX_TARGET_STM32L0", "-I" + str(INCLUDE_DIR), "-c", str(port), "-o", str(out)]
+    if run(cmd) != 0:
+        print("BUILD FAILED (port)")
+        return 1
+    print("PORT OK " + str(out))
+    return 0
+
+
 def clean():
     if BUILD_DIR.exists():
         shutil.rmtree(BUILD_DIR)
@@ -112,8 +126,8 @@ def clean():
 
 
 def main(argv):
-    if len(argv) != 2 or argv[1] not in ("test", "lib", "clean"):
-        print("usage: build.py {test|lib|clean}")
+    if len(argv) != 2 or argv[1] not in ("test", "lib", "port", "clean"):
+        print("usage: build.py {test|lib|port|clean}")
         return 1
 
     action = argv[1]
@@ -127,6 +141,8 @@ def main(argv):
     print("CC " + " ".join(cc))
 
     BUILD_DIR.mkdir(parents=True, exist_ok=True)
+    if action == "port":
+        return build_port(cc)
     if action == "test":
         return build_test(cc)
     return build_lib(cc)

@@ -42,7 +42,7 @@ class Identity:
         return (self.cert_path, self.key_path, self.ca_path)
 
     @classmethod
-    def load(cls, root: str | os.PathLike[str]) -> "Identity":
+    def load(cls, root: str | os.PathLike[str]) -> Identity:
         directory = Path(root)
         if not directory.is_dir():
             raise IdentityError(f"khong thay thu muc dinh danh: {directory}")
@@ -92,7 +92,7 @@ class Identity:
         }
 
     @classmethod
-    def generate_for_test(cls, root: str | os.PathLike[str]) -> "Identity":
+    def generate_for_test(cls, root: str | os.PathLike[str]) -> Identity:
         """Tạo bộ định danh giả cho test/sim (không dùng cho sản phẩm)."""
         return generate_identity_for_test(root)
 

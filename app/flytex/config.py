@@ -18,11 +18,11 @@ from pathlib import Path
 
 __all__ = [
     "ALLOWED_KEYS",
-    "Config",
-    "ConfigError",
     "LOG_LEVELS",
     "MODES",
     "WAKE_CHANNELS",
+    "Config",
+    "ConfigError",
     "validate_schedule",
 ]
 
@@ -199,6 +199,7 @@ _VALIDATORS = {
     "wake_chan": lambda value: _as_enum(value, "wake_chan", WAKE_CHANNELS),
     "wake_period_s": lambda value: _as_int(value, "wake_period_s", 0, 86400),
     "wake_token": lambda value: _as_text(value, "wake_token", max_len=64),
+    "wake_numbers": lambda value: _as_text(value, "wake_numbers", max_len=200),
     "wake_secret": lambda value: _as_text(value, "wake_secret", max_len=64),
     "allow_raw_muxer": lambda value: _as_bool(value, "allow_raw_muxer"),
     "log_level": lambda value: _as_enum(value, "log_level", LOG_LEVELS),
@@ -231,6 +232,7 @@ class Config:
     wake_chan: str = "off"
     wake_period_s: int = 0
     wake_token: str = ""
+    wake_numbers: str = ""
     wake_secret: str = ""
     allow_raw_muxer: bool = True
     log_level: str = "info"
@@ -256,6 +258,7 @@ class Config:
             "wake_chan": self.wake_chan,
             "wake_period_s": self.wake_period_s,
             "wake_token": self.wake_token,
+            "wake_numbers": self.wake_numbers,
             "wake_secret": self.wake_secret,
             "allow_raw_muxer": self.allow_raw_muxer,
             "log_level": self.log_level,
@@ -264,7 +267,7 @@ class Config:
         }
 
     @classmethod
-    def from_dict(cls, data: object) -> "Config":
+    def from_dict(cls, data: object) -> Config:
         if not isinstance(data, dict):
             raise ConfigError("config phai la object JSON")
         values: dict[str, object] = {}
@@ -275,7 +278,7 @@ class Config:
 
     # -- đọc/ghi -------------------------------------------------------
     @classmethod
-    def load(cls, path: str | os.PathLike[str]) -> "Config":
+    def load(cls, path: str | os.PathLike[str]) -> Config:
         file_path = Path(path)
         try:
             text = file_path.read_text(encoding="utf-8")

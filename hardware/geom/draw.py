@@ -21,16 +21,16 @@ def render_svg(board: Board, geometry: Geometry) -> str:
     w = board.width * SCALE
     h = board.height * SCALE
     out = [
-        f'<svg xmlns="http://www.w3.org/2000/svg" '
+        (f'<svg xmlns="http://www.w3.org/2000/svg" '
         f'width="{width_px:.0f}" height="{height_px:.0f}" '
-        f'viewBox="0 0 {width_px:.0f} {height_px:.0f}">',
+        f'viewBox="0 0 {width_px:.0f} {height_px:.0f}">'),
         '<rect width="100%" height="100%" fill="#fafafa"/>',
-        f'<text x="{x0:.0f}" y="{(MARGIN / 2) * SCALE:.0f}" '
+        (f'<text x="{x0:.0f}" y="{(MARGIN / 2) * SCALE:.0f}" '
         f'font-family="sans-serif" font-size="14">'
         f'{board.name} — {board.width:.0f}×{board.height:.0f} mm — '
-        f'top view, mm, origin bottom-left</text>',
-        f'<rect x="{x0:.1f}" y="{y0:.1f}" width="{w:.1f}" height="{h:.1f}" '
-        f'fill="#e8f0e8" stroke="#204020" stroke-width="1.5"/>',
+        f'top view, mm, origin bottom-left</text>'),
+        (f'<rect x="{x0:.1f}" y="{y0:.1f}" width="{w:.1f}" height="{h:.1f}" '
+        f'fill="#e8f0e8" stroke="#204020" stroke-width="1.5"/>'),
     ]
     for index, hole in enumerate(board.holes):
         cx, cy = _xy(hole.x, hole.y, board.height)
@@ -100,13 +100,13 @@ def render_markdown(geometry: Geometry) -> str:
         "",
         "## Kiểm tra tự động",
         "",
-        f"- Đường kính lỗ: {geometry.hole_diameter:.1f} mm, khe hở "
-        f"{geometry.clearance:.1f} mm.",
-        f"- Khoảng cách tối thiểu connector–lỗ: "
-        f"{geometry.min_connector_distance:.1f} mm.",
+        (f"- Đường kính lỗ: {geometry.hole_diameter:.1f} mm, khe hở "
+        f"{geometry.clearance:.1f} mm."),
+        (f"- Khoảng cách tối thiểu connector–lỗ: "
+        f"{geometry.min_connector_distance:.1f} mm."),
         "- Cả hai board phải có `J_B2B` và khớp 26 chân của `spec/b2b.toml`.",
         "",
-        "Đây là bản vẽ khái niệm để chốt vị trí; không phải bản vẽ chế tạo. "
-        "Gerber cần KiCad và footprint đã kiểm bằng linh kiện thật.",
+        ("Đây là bản vẽ khái niệm để chốt vị trí; không phải bản vẽ chế tạo. "
+        "Gerber cần KiCad và footprint đã kiểm bằng linh kiện thật."),
     ]
     return "\n".join(out) + "\n"

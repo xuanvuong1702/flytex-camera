@@ -11,13 +11,13 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from tools.measure.ppk2 import (  # noqa: E402
+from tools.measure.ppk2 import (
     Ppk2Error,
     load,
     parse_csv,
     to_measurements,
 )
-from tools.measure.schema import Measurement, validate  # noqa: E402
+from tools.measure.schema import Measurement, validate
 
 SAMPLE_SEMICOLON = """Time (s);Current (mA);Voltage (V)
 0;1,0;3,7

@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
+from typing import BinaryIO
 
 from .recorder import Muxer, RecorderError
 
@@ -98,7 +99,7 @@ class TsMuxer(Muxer):
         self.program_number = program_number
         self.psi_interval_s = float(psi_interval_s)
         self.pcr_interval_s = float(pcr_interval_s)
-        self._file = None  # type: ignore[assignment]
+        self._file: BinaryIO | None = None
         self._bytes = 0
         self._cc: dict[int, int] = {}
         self._last_psi_s = 0.0
@@ -123,7 +124,7 @@ class TsMuxer(Muxer):
         if not data:
             raise TsError("access unit rong")
         pts_s = float(pts)
-        pts90 = int(round(pts_s * 90_000)) & PTS_MASK
+        pts90 = round(pts_s * 90_000) & PTS_MASK
         if pts_s - self._last_psi_s >= self.psi_interval_s:
             self._write_psi(pts_s)
         pcr = None
@@ -147,14 +148,15 @@ class TsMuxer(Muxer):
     # -- nội bộ ---------------------------------------------------------
     @staticmethod
     def _with_aud(data: bytes) -> bytes:
-        if data.startswith(AUD_NAL[:4]) or data.startswith(b"\x00\x00\x00\x01\x09"):
+        if data.startswith((AUD_NAL[:4], b"\x00\x00\x00\x01\t")):
             return data
         return AUD_NAL + data
 
     def _emit(self, packet: bytes) -> None:
         if len(packet) != PACKET_SIZE:
             raise TsError(f"goi TS sai kich thuoc: {len(packet)}")
-        assert self._file is not None
+        if self._file is None:
+            raise TsError("chua begin()")
         self._file.write(packet)
         self._bytes += PACKET_SIZE
 

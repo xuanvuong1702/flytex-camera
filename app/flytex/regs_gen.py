@@ -91,7 +91,7 @@ WAKE_CHAN = {
 }
 WAKE_CHAN_NAME = {value: name for name, value in WAKE_CHAN.items()}
 
-STATUS_BITS = {
+STATUS_BITS: dict[str, int] = {
     "SOC_READY": 1 << 0,
     "SOC_POWER_ON": 1 << 1,
     "MODEM_POWER_ON": 1 << 2,
@@ -102,14 +102,14 @@ STATUS_BITS = {
     "SURVIVAL": 1 << 7,
 }
 
-CHG_BITS = {
+CHG_BITS: dict[str, int] = {
     "CHARGING": 1 << 0,
     "CHARGE_DONE": 1 << 1,
     "CHARGE_INHIBIT": 1 << 2,
     "CHARGE_TIMEOUT": 1 << 3,
 }
 
-EVENT_BITS = {
+EVENT_BITS: dict[str, int] = {
     "PIR": 1 << 0,
     "SCHEDULE": 1 << 1,
     "VBUS_CHANGE": 1 << 2,
@@ -120,10 +120,10 @@ EVENT_BITS = {
     "BUTTON": 1 << 7,
 }
 
-EVENT_MASK_BITS = {
+EVENT_MASK_BITS: dict[str, int] = {
 }
 
-SYS_FLAGS_BITS = {
+SYS_FLAGS_BITS: dict[str, int] = {
     "WDT_RESET": 1 << 0,
     "POR_BOR": 1 << 1,
     "PIN_RESET": 1 << 2,

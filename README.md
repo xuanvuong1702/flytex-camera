@@ -18,7 +18,7 @@ Repo này **làm lại từ đầu**. Nó kế thừa *bài học* từ dự án
 | Gói thiết kế phần cứng | Tính toán PWR, hình học board + SVG, BOM Rev A/B, sổ linh kiện, bring-up; **65 test** |
 | Sổ linh kiện | **15 linh kiện + 4 module**; 1 blocker phải đóng trước khi mua ([docs/18](docs/18-tai-lieu-linh-kien.md)) |
 | Công cụ đo và kiểm tài liệu | Có, **124 test**; nhập PPK2, lint include C, kiểm tài liệu, checklist readiness |
-| Kiểm thử toàn repo | **481 test + 5 kịch bản**, 40/40 bước đạt: `python run_tests.py` |
+| Kiểm thử toàn repo | **487 test + 5 kịch bản**, 41/41 bước đạt: `python run_tests.py` |
 | Sẵn sàng dựng prototype | **CHƯA ĐẠT** — vòng 7 phát hiện lỗi sạc/CI/BOM/pin ([docs/17](docs/17-san-sang-prototype.md)) |
 | Phần cứng | **Chưa có**: chưa có Gerber/PCB; gói thiết kế đã đủ để vẽ schematic |
 | Số đo thực | **Chưa có.** Mọi con số công suất, nhiệt, thời gian chạy đều là ước tính |
@@ -107,11 +107,11 @@ Không cần phần cứng, không cần cài thêm gói Python. Firmware C cầ
 |---|---|---|
 | Đặc tả và bộ sinh | `python -m unittest discover -s spec/tests` | 29 |
 | Thiết kế PWR/CMP (tính toán, hình học, BOM, sổ linh kiện) | `hardware/calc/`, `hardware/geom/`, `hardware/bom/`, `hardware/parts/` | 57 |
-| Firmware MCU (C, host) | `python firmware/mcu/tests/build.py test` | 59 |
-| Ứng dụng Linux (Python) | `python -m unittest discover -s app/tests -t .` | 172 |
-| Công cụ đo và kiểm tài liệu | `python -m unittest discover -s tools -t .` | 120 |
+| Firmware MCU (C, host) | `python firmware/mcu/tests/build.py test` | 64 |
+| Ứng dụng Linux (Python) | `python -m unittest discover -s app/tests -t .` | 188 |
+| Công cụ đo và kiểm tài liệu | `python -m unittest discover -s tools -t .` | 120 (+4 trong `tools/tests`) = 124 |
 | Mô phỏng end-to-end | `python sim/run.py --scenario all` | 5 kịch bản |
-| Tất cả | `python run_tests.py` | 40 bước |
+| Tất cả | `python run_tests.py` | 41 bước |
 
 Test không cần phần cứng. Test cần phần cứng nằm ở [docs/08](docs/08-kiem-chung.md) và vẫn là "Chưa làm".
 

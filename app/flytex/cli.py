@@ -31,10 +31,10 @@ from .mcu import I2cLink, McuClient, McuError, MemoryMcu, ProtocolMismatch
 from .media import FakeSource, RkMpiSource
 from .modem import AtClient, FakeModem
 from .recorder import SegmentRecorder
-from .tsmux import TsMuxer
 from .service import DeviceService
-from .upload import FakeUploader, UploadSpool
+from .tsmux import TsMuxer
 from .uplink import UplinkQueue
+from .upload import FakeUploader, UploadSpool
 
 
 def _ascii(text: object) -> str:
@@ -251,7 +251,7 @@ def _sim(seconds: int) -> int:
                 tmp / "queue.jsonl",
                 clock,
                 max_bytes=1 << 20,
-                rng=random.Random(7),
+                rng=random.Random(7),  # nosec B311 - RNG mo phong
             )
             media = FakeSource(clock, fps=5.0)
             diagnostics = Diagnostics(tmp / "diag", clock)

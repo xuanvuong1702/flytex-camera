@@ -7,11 +7,10 @@ khẳng định các bất biến. Không có kịch bản nào dùng thời gia
 from __future__ import annotations
 
 import traceback
-from pathlib import Path
-from typing import Callable
+from collections.abc import Callable
 
-from .harness import BUILD, ScenarioFailure, SimRig, check
 from .ffi import PIN_MODEM_PWR, PIN_MODEM_RI, PIN_SOC_PWR
+from .harness import BUILD, ScenarioFailure, SimRig, check
 
 RI_PIN = PIN_MODEM_RI
 
@@ -161,7 +160,7 @@ def run(name: str) -> tuple[bool, str]:
         detail = f"LỖI: {type(exc).__name__}: {exc}\n{traceback.format_exc(limit=4)}"
     finally:
         try:
-            report = rig.write_report(name, passed, detail)
+            rig.write_report(name, passed, detail)
             rig.close()
         except Exception as exc:  # noqa: BLE001 - không che lỗi gốc
             detail += f"\n(không ghi được báo cáo: {exc})"

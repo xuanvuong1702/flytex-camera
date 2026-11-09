@@ -5,8 +5,9 @@ from __future__ import annotations
 import json
 import random
 import shutil
+from collections.abc import Callable
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
 from flytex.mcu import McuClient
 from flytex.power import PowerConfig, PowerController
@@ -17,12 +18,8 @@ from flytex.uplink import UplinkQueue
 from .clock import SimClock, SocEmulator
 from .ffi import (
     ADC_VBAT,
-    PIN_IRQ,
-    PIN_MODEM_PWR,
-    PIN_MODEM_STATUS,
     PIN_PIR,
     PIN_SOC_PWR,
-    PIN_SOC_READY,
     PIN_VBUS,
     TEMP_AMB,
     TEMP_BATT,
@@ -111,7 +108,7 @@ class SimRig:
 
     # -- điều khiển -----------------------------------------------------
     def advance(self, seconds: float, frames: bool = True) -> None:
-        steps = max(1, int(round(seconds / 0.5)))
+        steps = max(1, round(seconds / 0.5))
         for _ in range(steps):
             self.clock.advance(0.5)
             if frames and self.recorder.recording:

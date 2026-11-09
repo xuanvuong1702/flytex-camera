@@ -28,9 +28,9 @@ from .media import MediaError, MediaSource
 from .modem import AtClient, AtError, AtTimeout
 from .ota import OtaError, OtaManager
 from .power import Busy, PowerConfig, PowerController, PowerState
-from .recorder import ClipInfo, RawMuxer, RecorderError, SegmentRecorder
-from .upload import UploadError, Uploader, UploadSpool
+from .recorder import RawMuxer, RecorderError, SegmentRecorder
 from .uplink import UplinkError, UplinkQueue
+from .upload import Uploader, UploadError, UploadItem, UploadResult, UploadSpool
 
 __all__ = ["DeviceService", "ServiceError"]
 
@@ -131,8 +131,8 @@ class DeviceService:
         self._spooled_clip_id: str | None = None
         self._upload_thread: threading.Thread | None = None
         self._upload_done: threading.Event | None = None
-        self._upload_item: object | None = None
-        self._upload_result: object | None = None
+        self._upload_item: UploadItem | None = None
+        self._upload_result: UploadResult | None = None
         self._upload_error: Exception | None = None
         self._register_default_handlers()
 
@@ -358,6 +358,7 @@ class DeviceService:
         except (UploadError, OSError) as exc:
             self._fail_upload(item_clip_id=item.clip_id, error=exc)
             return
+        uploader = self.uploader
         self._upload_item = item
         self._upload_result = None
         self._upload_error = None
@@ -366,7 +367,7 @@ class DeviceService:
 
         def work() -> None:
             try:
-                self._upload_result = self.uploader.upload(packed, item.clip_id)
+                self._upload_result = uploader.upload(packed, item.clip_id)
             except Exception as exc:  # noqa: BLE001 - chuyển lỗi về luồng chính
                 self._upload_error = exc
             finally:
@@ -379,6 +380,8 @@ class DeviceService:
         thread.start()
 
     def _collect_upload(self) -> None:
+        if self.spool is None or self.uploader is None:
+            return
         thread = self._upload_thread
         done = self._upload_done
         if thread is None or done is None or not done.is_set():
@@ -412,6 +415,8 @@ class DeviceService:
             self._fail_upload(item_clip_id=item.clip_id, error=error or "unknown")
 
     def _fail_upload(self, *, item_clip_id: str, error: object) -> None:
+        if self.spool is None:
+            return
         delay = self.spool.fail(item_clip_id, error)
         self.diagnostics.log(
             "warning",
@@ -420,10 +425,12 @@ class DeviceService:
         )
 
     def _consume_wake_sms(self) -> None:
-        """Đọc SMS đánh thức; yêu cầu HMAC, timestamp tươi và chống replay.
+        """Đọc SMS đánh thức; yêu cầu HMAC trên counter và chống replay.
 
-        Định dạng: ``W <unix_ts> <hmac16>``. HMAC-SHA256 trên chuỗi timestamp,
-        khóa là ``wake_secret`` (hex). Không có secret thì từ chối, không mở.
+        Định dạng: ``W <counter> <hmac16>``. HMAC-SHA256 trên chuỗi counter,
+        khóa là ``wake_secret`` (hex); counter phải lớn hơn mốc đã lưu.
+        Nếu ``wake_numbers`` khác rỗng, chỉ nhận số trong danh sách.
+        Không có secret thì từ chối, không mở.
         """
         if self.config.wake_chan != "sms":
             return
@@ -437,6 +444,11 @@ class DeviceService:
         except (AtError, AtTimeout) as exc:
             self.diagnostics.log("warning", f"doc SMS danh thuc loi: {exc}")
             return
+        allow = {
+            item.strip()
+            for item in self.config.wake_numbers.split(",")
+            if item.strip()
+        }
         try:
             key = bytes.fromhex(self.config.wake_secret)
         except ValueError:
@@ -452,6 +464,9 @@ class DeviceService:
         for message in messages:
             parts = message.text.strip().split()
             if len(parts) != 3 or parts[0] != "W":
+                continue
+            if allow and message.number.strip() not in allow:
+                self.diagnostics.log("warning", "SMS danh thuc tu so khong duoc phep")
                 continue
             try:
                 counter = int(parts[1])
@@ -469,7 +484,7 @@ class DeviceService:
             self._wake_last_ts = counter
             if self._wake_ts_path is not None:
                 try:
-                    self._wake_ts_path.write_text(str(counter), encoding="utf-8")
+                    self._write_wake_watermark(counter)
                 except OSError as exc:
                     self.diagnostics.log(
                         "warning", f"khong luu duoc moc SMS: {exc}"
@@ -479,6 +494,28 @@ class DeviceService:
             return
         if messages:
             self.diagnostics.log("info", f"doc {len(messages)} SMS, khong co token hop le")
+
+    def _write_wake_watermark(self, counter: int) -> None:
+        """Ghi mốc counter nguyên tử + fsync để không mất bảo vệ replay."""
+        path = self._wake_ts_path
+        if path is None:
+            return
+        temp = path.with_suffix(".tmp")
+        with temp.open("w", encoding="utf-8") as handle:
+            handle.write(str(counter))
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temp, path)
+        try:
+            dir_fd = os.open(path.parent, os.O_RDONLY)
+        except OSError:
+            return
+        try:
+            os.fsync(dir_fd)
+        except OSError:
+            pass
+        finally:
+            os.close(dir_fd)
 
     def _on_power_sleep(self) -> None:
         """SoC chuẩn bị ngủ: đồng bộ hàng đợi rồi bảo MCU cắt rail.
@@ -612,7 +649,7 @@ class DeviceService:
         self._enqueue(payload, "status")
 
     def _status_payload(self) -> dict[str, object]:
-        status = self.mcu.status()
+        self.mcu.status()
         batt = self.mcu.battery_mv()
         rssi: int | None = None
         try:

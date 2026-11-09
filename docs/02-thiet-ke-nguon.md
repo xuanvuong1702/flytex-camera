@@ -146,7 +146,7 @@ Hệ quả phải ghi trong thử nghiệm: cắm USB không bảo đảm pin đ
 |---|---|
 | Hóa học | LFP 1S, 3,2 V danh định |
 | Dung lượng | **15 Ah** (chốt), không nhỏ hơn 10 Ah |
-| Dòng xả liên tục của BMS | ≥ 8–10 A, đủ cho đỉnh 5,6 A cộng dư |
+| Dòng xả liên tục của BMS | ≥ 8–10 A; **đỉnh ≥ 7,8 A** vì boost lấy 6,52 A đỉnh ở 3,0 V |
 | Dòng sạc cho phép của BMS | ≥ 1,5 A, để dùng được bộ sạc xung |
 | Tự tiêu của BMS | **≤ 100 µA**, đo ở 25 °C |
 | Ngưỡng cắt sạc quá áp | Cao hơn 3,6 V; ghi lại giá trị nhà cung cấp |

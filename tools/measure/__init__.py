@@ -6,4 +6,4 @@ Standard library only. Run the command line interface with either::
     python tools/measure/cli.py --help
 """
 
-__all__ = ["schema", "csvio", "energy", "report", "cli"]
+__all__ = ["cli", "csvio", "energy", "report", "schema"]

@@ -11,7 +11,7 @@ from __future__ import annotations
 import json
 import os
 import tempfile
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from .clock import Clock
@@ -23,6 +23,19 @@ _LEVELS = ("debug", "info", "warning", "error")
 
 class DiagnosticsError(Exception):
     """Không đọc/ghi được dữ liệu chẩn đoán."""
+
+
+def _as_int(value: object) -> int:
+    if isinstance(value, bool):
+        return int(value)
+    if isinstance(value, int):
+        return value
+    if isinstance(value, str):
+        try:
+            return int(value)
+        except ValueError:
+            return 0
+    return 0
 
 
 class Diagnostics:
@@ -54,7 +67,7 @@ class Diagnostics:
     # -- trạng thái ----------------------------------------------------
     @property
     def boot_count(self) -> int:
-        return int(self._state.get("boot_count") or 0)
+        return _as_int(self._state.get("boot_count"))
 
     @property
     def last_shutdown_reason(self) -> str | None:
@@ -64,7 +77,7 @@ class Diagnostics:
     @property
     def last_battery_mv(self) -> int | None:
         value = self._state.get("last_battery_mv")
-        return int(value) if value is not None else None
+        return _as_int(value) if value is not None else None
 
     @property
     def last_boot_reason(self) -> str | None:
@@ -137,7 +150,7 @@ class Diagnostics:
         if len(text) > 2000:
             text = text[:1997] + "..."
         stamp = datetime.fromtimestamp(
-            self._clock.now(), tz=timezone.utc
+            self._clock.now(), tz=UTC
         ).strftime("%Y-%m-%dT%H:%M:%SZ")
         line = f"{stamp} {level_key.upper()} {text}\n"
         try:

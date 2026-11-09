@@ -10,7 +10,7 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from tools.measure.schema import (  # noqa: E402
+from tools.measure.schema import (
     FIELD_NAMES,
     Measurement,
     MeasurementError,
@@ -121,18 +121,16 @@ class MeasurementSchemaTest(unittest.TestCase):
 
     def test_bad_pass_fail_rejected(self) -> None:
         for bad in ("OK", "pass", "", "N/A"):
-            with self.subTest(bad=bad):
-                with self.assertRaises(MeasurementError):
-                    validate(make_row(pass_fail=bad))
+            with self.subTest(bad=bad), self.assertRaises(MeasurementError):
+                validate(make_row(pass_fail=bad))
 
     def test_uncertainty_range(self) -> None:
         for good in ("0", "0.0", "100", "12.5"):
             with self.subTest(good=good):
                 validate(make_row(uncertainty_pct=good))
         for bad in ("-0.1", "-1", "100.1", "1e3"):
-            with self.subTest(bad=bad):
-                with self.assertRaises(MeasurementError):
-                    validate(make_row(uncertainty_pct=bad))
+            with self.subTest(bad=bad), self.assertRaises(MeasurementError):
+                validate(make_row(uncertainty_pct=bad))
 
     def test_uncertainty_must_be_number(self) -> None:
         with self.assertRaises(MeasurementError):

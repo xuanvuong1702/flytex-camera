@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import json
 import os
-import time
+import contextlib
 import urllib.error
 import urllib.request
 from dataclasses import dataclass
@@ -44,15 +44,19 @@ class HttpUploader:
         timeout: float = 30.0,
         content_type: str = "video/mp2t",
         clock: Clock | None = None,
+        allow_insecure: bool = False,
     ) -> None:
         if "{clip_id}" not in url_template:
             raise ValueError("url_template phai chua {clip_id}")
         if timeout <= 0:
             raise ValueError("timeout phai > 0")
+        if not url_template.startswith("https://") and not allow_insecure:
+            raise ValueError("url_template phai la HTTPS")
         self.url_template = url_template
         self.timeout = float(timeout)
         self.content_type = content_type
         self._clock = clock
+        self.allow_insecure = bool(allow_insecure)
 
     def upload(self, path: str | os.PathLike[str], clip_id: str) -> UploadResult:
         source = Path(path)
@@ -72,15 +76,17 @@ class HttpUploader:
             },
         )
         try:
-            with urllib.request.urlopen(request, timeout=self.timeout) as response:
+            with urllib.request.urlopen(  # nosec B310
+                request, timeout=self.timeout
+            ) as response:
+                if not response.geturl().startswith("https://") and not self.allow_insecure:
+                    raise UploadError("redirect ra khoi HTTPS")
                 status = getattr(response, "status", 0)
                 if not 200 <= int(status) < 300:
                     raise UploadError(f"may chu tra {status}")
         except urllib.error.HTTPError as exc:
-            try:
+            with contextlib.suppress(OSError):
                 exc.close()
-            except Exception:  # noqa: BLE001 - đóng lỗi không được che lỗi gốc
-                pass
             raise UploadError(f"HTTP {exc.code}") from exc
         except (urllib.error.URLError, TimeoutError, OSError) as exc:
             raise UploadError(f"loi mang: {exc}") from exc

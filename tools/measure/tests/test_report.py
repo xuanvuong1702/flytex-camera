@@ -11,10 +11,10 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from tools.measure import csvio  # noqa: E402
-from tools.measure.energy import Pack, Scenario, default_g0_scenarios  # noqa: E402
-from tools.measure.report import render_markdown  # noqa: E402
-from tools.measure.schema import Measurement, MeasurementError  # noqa: E402
+from tools.measure import csvio
+from tools.measure.energy import Pack, Scenario, default_g0_scenarios
+from tools.measure.report import render_markdown
+from tools.measure.schema import Measurement, MeasurementError
 
 SAMPLES = REPO_ROOT / "tools" / "measure" / "samples"
 WARNING = (

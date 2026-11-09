@@ -19,7 +19,7 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from tools.docs_check import check  # noqa: E402
+from tools.docs_check import check
 
 CHECK_SCRIPT = REPO_ROOT / "tools" / "docs_check" / "check.py"
 

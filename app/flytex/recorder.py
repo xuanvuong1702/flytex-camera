@@ -508,9 +508,12 @@ class SegmentRecorder:
             if isinstance(name, str) and name not in state.segments:
                 state.segments.append(name)
             try:
-                state.size_b += int(record.get("size_b", 0))
-                state.duration_s += float(record.get("duration_s", 0.0))
-                state.started_ts = float(record.get("started_ts", state.started_ts))
+                size_b = record.get("size_b", 0)
+                duration_s = record.get("duration_s", 0.0)
+                started_ts = record.get("started_ts", state.started_ts)
+                state.size_b += int(str(size_b))
+                state.duration_s += float(str(duration_s))
+                state.started_ts = float(str(started_ts))
             except (TypeError, ValueError):
                 self.corrupt_index_lines += 1
             state.ir = bool(record.get("ir", state.ir))

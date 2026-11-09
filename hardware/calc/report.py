@@ -9,7 +9,6 @@ def render() -> str:
     BOOST = design.BOOST
     BUCK = design.BUCK
     CHARGER = design.CHARGER
-    NTC = design.NTC
     BATTERY_ADC = design.BATTERY_ADC
     THERMAL = design.THERMAL
     PACK = design.PACK

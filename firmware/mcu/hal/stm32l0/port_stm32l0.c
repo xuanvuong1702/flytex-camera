@@ -172,6 +172,12 @@ typedef struct {
 #define FLY_SCB_SCR_SLEEPDEEP (1uL << 2)
 
 /* PWR_CR [CHƯA XÁC MINH]. */
+#define FLY_PWR_CR_DBP (1uL << 8)
+#define FLY_RCC_APB1ENR_PWREN (1uL << 28)
+#define FLY_RCC_CSR_LSION (1uL << 0)
+#define FLY_RCC_CSR_LSIRDY (1uL << 1)
+#define FLY_RCC_CSR_RTCSEL_MASK (3uL << 8)
+#define FLY_RCC_CSR_RTCSEL_LSI (2uL << 8)
 #define FLY_PWR_CR_LPSDSR (1uL << 0)
 #define FLY_PWR_CR_PDDS (1uL << 1)
 #define FLY_PWR_CR_CWUF (1uL << 2)
@@ -179,6 +185,11 @@ typedef struct {
 
 /* RTC_CR / RTC_ISR. */
 #define FLY_RTC_CR_WUTE (1uL << 10)
+#define FLY_RTC_CR_WUCKSEL_MASK 0x7uL
+#define FLY_RTC_CR_WUCKSEL_DIV16 0x0uL
+#define FLY_RTC_CR_WUCKSEL_CK_SPRE 0x4uL
+#define FLY_RTC_PRER_A 127uL
+#define FLY_RTC_PRER_S 255uL
 #define FLY_RTC_ISR_WUTWF (1uL << 2)
 #define FLY_RTC_ISR_WUTF (1uL << 10)
 #define FLY_RTC_WPR_KEY1 0xCAu
@@ -189,6 +200,11 @@ typedef struct {
 
 /* LSI danh định 37 kHz trên STM32L0 [CHƯA XÁC MINH — đo lại]. */
 #define FLY_LSI_HZ 37000u
+
+/* 0: không khởi động IWDG (mặc định prototype). 1: bật, nhưng STOP phải < 28 s. */
+#ifndef FLY_IWDG_ENABLE
+#define FLY_IWDG_ENABLE 0
+#endif
 
 /* VREFINT_CAL: 16 bit trong system memory, đo ở VDDA = 3,0 V. */
 #define FLY_VREFINT_CAL_ADDR ((const volatile uint16_t *)0x1FF80078u)
@@ -374,15 +390,36 @@ static void rtc_lock(void)
     FLY_RTC->WPR = 0xFFu;
 }
 
-static void rtc_wakeup_arm(uint32_t ticks)
+static void rtc_wakeup_arm(uint32_t ms)
 {
     uint32_t guard = 0u;
+    uint32_t ticks;
+    uint32_t wucksel;
 
+    if (ms == 0u) {
+        return;
+    }
     rtc_unlock();
     FLY_RTC->CR &= ~FLY_RTC_CR_WUTE;
     while ((FLY_RTC->ISR & FLY_RTC_ISR_WUTWF) == 0u && guard < 100000u) {
         guard++;
     }
+    if (ms <= 28000u) {
+        /* WUCKSEL=000: RTCCLK/16 = 2312,5 Hz; tối đa ~28,3 s. */
+        ticks = (uint32_t)(((uint64_t)ms * FLY_LSI_HZ) / (16ull * 1000ull));
+        if (ticks == 0u) {
+            ticks = 1u;
+        }
+        wucksel = FLY_RTC_CR_WUCKSEL_DIV16;
+    } else {
+        /* WUCKSEL=100: ck_spre 1 Hz; tối đa 65535 s (~18 h). */
+        ticks = (ms + 999u) / 1000u;
+        if (ticks > 0xFFFFu) {
+            ticks = 0xFFFFu;
+        }
+        wucksel = FLY_RTC_CR_WUCKSEL_CK_SPRE;
+    }
+    FLY_RTC->CR = (FLY_RTC->CR & ~FLY_RTC_CR_WUCKSEL_MASK) | wucksel;
     FLY_RTC->WUTR = ticks & 0xFFFFu;
     FLY_RTC->ISR = ~FLY_RTC_ISR_WUTF; /* ghi 0 để xóa cờ */
     FLY_RTC->CR |= FLY_RTC_CR_WUTE;
@@ -404,11 +441,7 @@ static uint32_t port_enter_stop(void *ctx, uint32_t max_ms)
 
     (void)ctx;
     if (max_ms > 0u && max_ms != UINT32_MAX) {
-        uint32_t ticks = (uint32_t)(((uint64_t)max_ms * FLY_LSI_HZ) / 1000ull);
-        if (ticks > 0xFFFFu) {
-            ticks = 0xFFFFu;
-        }
-        rtc_wakeup_arm(ticks);
+        rtc_wakeup_arm(max_ms);
     } else {
         rtc_wakeup_disarm();
     }
@@ -591,7 +624,9 @@ static int port_nvm_write(void *ctx, uint32_t off, const void *buf, uint32_t len
 static void port_wdg_kick(void *ctx)
 {
     (void)ctx;
+#if FLY_IWDG_ENABLE
     FLY_IWDG->KR = 0xAAAAu; /* reload */
+#endif
 }
 
 static uint8_t port_reset_cause(void *ctx)
@@ -644,11 +679,25 @@ void fly_port_init(fly_hal_t *hal)
         return;
     }
 
-    /* RTC clock từ LSE nếu có, nguồn khác LSI [CHƯA XÁC MINH]. */
+    /* RTC: chọn LSI (RTCSEL=10), bật LSI, chờ sẵn sàng, rồi mới bật RTCEN.
+     * Cần PWR_CR.DBP để ghi miền backup [CHƯA XÁC MINH — đối chiếu RM]. */
+    FLY_RCC->APB1ENR |= FLY_RCC_APB1ENR_PWREN;
+    FLY_PWR->CR |= FLY_PWR_CR_DBP;
+    FLY_RCC->CSR |= FLY_RCC_CSR_LSION;
+    guard = 0u;
+    while ((FLY_RCC->CSR & FLY_RCC_CSR_LSIRDY) == 0u && guard < 1000000u) {
+        guard++;
+    }
+    FLY_RCC->CSR = (FLY_RCC->CSR & ~FLY_RCC_CSR_RTCSEL_MASK) | FLY_RCC_CSR_RTCSEL_LSI;
     FLY_RCC->CSR |= (1uL << 16); /* RTCEN */
+    guard = 0u;
     while ((FLY_RCC->CSR & (1uL << 17)) == 0u && guard < 1000000u) {
         guard++;
     }
+    rtc_unlock();
+    /* PREDIV_A=127, PREDIV_S=255: 37000/(128*256) ≈ 1,13 Hz cho ck_spre. */
+    FLY_RTC->PRER = (FLY_RTC_PRER_A << 16) | FLY_RTC_PRER_S;
+    rtc_lock();
 
     /* ADC: bật clock, bật ADC, hiệu chuẩn. */
     FLY_RCC->APB2ENR |= (1uL << 9); /* ADC1EN [CHƯA XÁC MINH] */
@@ -660,12 +709,15 @@ void fly_port_init(fly_hal_t *hal)
     }
     FLY_ADC_COMMON->CCR |= (1uL << 22); /* VREFEN [CHƯA XÁC MINH] */
 
-    /* IWDG: LSI ~37 kHz, chia 256, reload 4095 → khoảng 28 s. */
+    /* IWDG: mặc định TẮT cho prototype. Nếu bật, IWDG vẫn đếm trong STOP và
+     * giới hạn thời gian ngủ dưới ~28 s; xem README. */
+#if FLY_IWDG_ENABLE
     FLY_IWDG->KR = 0xCCCCu; /* start */
     FLY_IWDG->KR = 0x5555u; /* cho phép ghi PR/RLR */
     FLY_IWDG->PR = 0x06u;   /* /256 [CHƯA XÁC MINH] */
     FLY_IWDG->RLR = 0x0FFFu;
     FLY_IWDG->KR = 0xAAAAu;
+#endif
 
     fly_port_gpio_init();
     fly_port_i2c_slave_init();

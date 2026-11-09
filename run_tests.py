@@ -53,6 +53,7 @@ def build_steps(quick: bool) -> list[tuple[str, list[str]]]:
         ("hardware: schematic khối khớp spec", [PY, "-m", "hardware.schematic.render", "--check"]),
         ("firmware: build và unit test", [PY, "firmware/mcu/tests/build.py", "test"]),
         ("firmware: include C di động", [PY, "tools/check_c_includes.py"]),
+        ("firmware: compile port STM32L0", [PY, "firmware/mcu/tests/build.py", "port"]),
         ("firmware: thư viện mô phỏng", [PY, "firmware/mcu/tests/build.py", "lib"]),
     ]
     for path in discover("app/tests/test_*.py"):

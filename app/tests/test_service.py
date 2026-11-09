@@ -18,18 +18,16 @@ except ImportError:  # pragma: no cover
 from flytex import mqtt_gen
 from flytex.cloud import MemoryBus
 from flytex.commands import CommandRouter
-from flytex.config import Config
+from flytex.config import Config, ConfigError
 from flytex.diagnostics import Diagnostics
 from flytex.identity import Identity
 from flytex.media import FakeSource
-from flytex.mcu import McuClient
-from flytex.config import ConfigError
 from flytex.modem import AtClient, FakeModem, SmsMessage
 from flytex.recorder import SegmentRecorder
 from flytex.service import DeviceService
 from flytex.tsmux import TsMuxer
-from flytex.upload import FakeUploader, UploadResult, UploadSpool
 from flytex.uplink import UplinkQueue
+from flytex.upload import FakeUploader, UploadResult, UploadSpool
 
 
 class ServiceFixture(unittest.TestCase):
@@ -376,6 +374,28 @@ class SmsWakeTests(ServiceFixture):
         self.modem.sms_read = lambda index=None: [self._sms(1)]
         self.service._consume_wake_sms()
         self.assertTrue(self.service.wake_sms_ok)
+
+    def test_allowlist_rejects_other_number(self) -> None:
+        self._setup_sms()
+        self.service.config.wake_numbers = "+8491"
+        self.modem.sms_read = lambda index=None: [self._sms(1)]
+        self.service._consume_wake_sms()
+        self.assertFalse(self.service.wake_sms_ok)
+
+    def test_allowlist_accepts_configured_number(self) -> None:
+        self._setup_sms()
+        self.service.config.wake_numbers = "+8490"
+        self.modem.sms_read = lambda index=None: [self._sms(1)]
+        self.service._consume_wake_sms()
+        self.assertTrue(self.service.wake_sms_ok)
+
+    def test_watermark_is_persisted(self) -> None:
+        self._setup_sms()
+        self.modem.sms_read = lambda index=None: [self._sms(7)]
+        self.service._consume_wake_sms()
+        path = self.service._wake_ts_path
+        self.assertIsNotNone(path)
+        self.assertEqual(path.read_text(encoding="utf-8"), "7")
 
     def test_missing_secret_rejected(self) -> None:
         self.service.config.wake_chan = "sms"

@@ -24,7 +24,7 @@ from flytex.upload import (
 class _PutHandler(http.server.BaseHTTPRequestHandler):
     received: list[dict] = []
 
-    def do_PUT(self) -> None:  # noqa: N802 - tên do http.server quy định
+    def do_PUT(self) -> None:
         length = int(self.headers.get("Content-Length", "0"))
         body = self.rfile.read(length)
         if "/fail/" in self.path:
@@ -64,7 +64,7 @@ class UploadHttpTests(unittest.TestCase):
         self._tmp.cleanup()
 
     def test_put_upload_success(self) -> None:
-        uploader = HttpUploader(self.base, timeout=5.0)
+        uploader = HttpUploader(self.base, timeout=5.0, allow_insecure=True)
         result = uploader.upload(self.file, "0123456789abcdef")
         self.assertEqual(result.size_b, self.file.stat().st_size)
         self.assertTrue(result.url.endswith("/clips/0123456789abcdef.ts"))
@@ -76,19 +76,23 @@ class UploadHttpTests(unittest.TestCase):
 
     def test_http_error_raises(self) -> None:
         host, port = self.server.server_address
-        uploader = HttpUploader(f"http://{host}:{port}/fail/{{clip_id}}.ts", timeout=2.0)
+        uploader = HttpUploader(f"http://{host}:{port}/fail/{{clip_id}}.ts", timeout=2.0, allow_insecure=True)
         with self.assertRaises(UploadError):
             uploader.upload(self.file, "0123456789abcdef")
 
     def test_connection_refused_raises(self) -> None:
-        uploader = HttpUploader("http://127.0.0.1:1/c/{clip_id}", timeout=2.0)
+        uploader = HttpUploader("http://127.0.0.1:1/c/{clip_id}", timeout=2.0, allow_insecure=True)
         with self.assertRaises(UploadError):
             uploader.upload(self.file, "0123456789abcdef")
 
     def test_missing_file_raises(self) -> None:
-        uploader = HttpUploader(self.base)
+        uploader = HttpUploader(self.base, allow_insecure=True)
         with self.assertRaises(UploadError):
             uploader.upload(Path(self._tmp.name) / "khong-co.ts", "0123456789abcdef")
+
+    def test_http_template_rejected(self) -> None:
+        with self.assertRaises(ValueError):
+            HttpUploader("http://example.com/{clip_id}")
 
     def test_template_requires_placeholder(self) -> None:
         with self.assertRaises(ValueError):

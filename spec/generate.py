@@ -197,7 +197,7 @@ def gen_regs_h(spec: dict) -> str:
     for reg in regs:
         if reg["name"] not in enum_names:
             continue
-        w(f"typedef enum {{")
+        w("typedef enum {")
         for item in reg["values"]:
             w(f"    {prefix[reg['name']]}{item['name']} = {item['value']},")
         w(f"}} {enum_names[reg['name']]};")
@@ -335,7 +335,7 @@ def gen_regs_py(spec: dict) -> str:
         w("")
     for const in ("STATUS", "CHG", "EVENT", "EVENT_MASK", "SYS_FLAGS"):
         reg = _reg(regs, const)
-        w(f"{const}_BITS = {{")
+        w(f"{const}_BITS: dict[str, int] = {{")
         for bit in reg.get("bits", []):
             w(f'    "{bit["name"]}": 1 << {bit["bit"]},')
         w("}")
@@ -386,7 +386,7 @@ def gen_regmap_md(spec: dict) -> str:
     w = out.append
     w("# Regmap MCU ↔ SoC (sinh tự động)")
     w("")
-    w(f"- Nguồn: `spec/registers.toml`")
+    w("- Nguồn: `spec/registers.toml`")
     w(f"- Địa chỉ I2C 7 bit: `0x{bus['i2c_address']:02X}`")
     w(f"- Phiên bản giao thức: **{bus['proto_major']}.{bus['proto_minor']}**")
     w(f"- Số byte vùng thanh ghi: `0x{bus['reg_count']:02X}`")
@@ -446,7 +446,7 @@ def gen_b2b_md(spec: dict) -> str:
     w = out.append
     w("# J_B2B — pinout PWR ↔ CMP (sinh tự động)")
     w("")
-    w(f"- Nguồn: `spec/b2b.toml`")
+    w("- Nguồn: `spec/b2b.toml`")
     w(f"- Connector: **{conn['type']}**, {conn['pins_total']} chân")
     w(f"- Mức logic: {conn['logic_level_v']} V")
     w("")

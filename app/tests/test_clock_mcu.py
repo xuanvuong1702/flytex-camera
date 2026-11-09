@@ -111,11 +111,11 @@ class McuClientTests(unittest.TestCase):
 
     def test_write_read_only_nacked(self) -> None:
         with self.assertRaises(McuNack):
-            self.client._write("PROTO_VER", b"\x00")  # noqa: SLF001 - cố ý thử NACK
+            self.client._write("PROTO_VER", b"\x00")
 
     def test_out_of_range_nacked(self) -> None:
         with self.assertRaises(McuNack):
-            self.client._link.read(0x7F, 1)  # noqa: SLF001
+            self.client._link.read(0x7F, 1)
 
     def test_command_recorded(self) -> None:
         self.client.cmd("MODEM_ON")
