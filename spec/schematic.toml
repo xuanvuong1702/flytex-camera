@@ -1,0 +1,378 @@
+# Schematic mức khối (block-level), không phải pin-level.
+# Mỗi block là một chức năng; pin ghi tên tín hiệu và net. Các net nối các block
+# với nhau bằng nhãn net (không vẽ dây dài). Pin-level chỉ vẽ được sau khi chốt
+# VSET buck, RI modem, pinout camera và pack/BMS.
+schema = "flytex.blocksch/1"
+page = { width_mm = 420.0, height_mm = 297.0 }
+
+[[sheets]]
+id = "pwr"
+title = "PWR - nguon, sac, MCU, giao tiep J_B2B"
+rev = "Rev A (block-level)"
+
+[[sheets.blocks]]
+id = "J_USBC"
+name = "USB-C 5V"
+x = 8.0
+y = 18.0
+w = 52.0
+h = 62.0
+pins = [
+  { name = "VBUS", net = "VBUS" },
+  { name = "GND", net = "GND" },
+  { name = "CC1", net = "" },
+  { name = "CC2", net = "" },
+]
+
+[[sheets.blocks]]
+id = "CHG"
+name = "BQ25070 (LFP 1S)"
+x = 78.0
+y = 18.0
+w = 72.0
+h = 78.0
+pins = [
+  { name = "IN", net = "VBUS" },
+  { name = "BAT", net = "VBAT" },
+  { name = "TS", net = "NTC" },
+  { name = "CTRL", net = "CHG_CTRL" },
+  { name = "CHG", net = "CHG_STAT" },
+  { name = "LDO", net = "" },
+  { name = "GND", net = "GND" },
+]
+
+[[sheets.blocks]]
+id = "BUCK"
+name = "TPS62840 3V3"
+x = 168.0
+y = 18.0
+w = 64.0
+h = 68.0
+pins = [
+  { name = "VIN", net = "VBAT" },
+  { name = "VOUT", net = "+3V3" },
+  { name = "VSET", net = "TBD_VSET" },
+  { name = "MODE", net = "GND" },
+  { name = "EN", net = "VBAT" },
+  { name = "GND", net = "GND" },
+]
+
+[[sheets.blocks]]
+id = "SW_SOC"
+name = "Tai +5V_SOC"
+x = 250.0
+y = 18.0
+w = 62.0
+h = 48.0
+pins = [
+  { name = "VIN", net = "+5V_BOOST" },
+  { name = "VOUT", net = "+5V_SOC" },
+  { name = "EN", net = "SOC_PWR_EN" },
+]
+
+[[sheets.blocks]]
+id = "SW_MODEM"
+name = "Tai +5V_MODEM"
+x = 250.0
+y = 76.0
+w = 62.0
+h = 48.0
+pins = [
+  { name = "VIN", net = "+5V_BOOST" },
+  { name = "VOUT", net = "+5V_MODEM" },
+  { name = "EN", net = "MODEM_PWR_EN" },
+]
+
+[[sheets.blocks]]
+id = "NVM"
+name = "M24C32"
+x = 330.0
+y = 18.0
+w = 56.0
+h = 44.0
+pins = [
+  { name = "VCC", net = "+3V3" },
+  { name = "SDA", net = "SDA" },
+  { name = "SCL", net = "SCL" },
+  { name = "GND", net = "GND" },
+]
+
+[[sheets.blocks]]
+id = "PACK"
+name = "Pack LFP 15Ah + BMS"
+x = 8.0
+y = 100.0
+w = 52.0
+h = 52.0
+pins = [
+  { name = "BAT+", net = "VBAT" },
+  { name = "BAT-", net = "GND" },
+  { name = "NTC", net = "NTC" },
+]
+
+[[sheets.blocks]]
+id = "BOOST"
+name = "TPS61088 5V"
+x = 78.0
+y = 110.0
+w = 72.0
+h = 74.0
+pins = [
+  { name = "VIN", net = "VBAT" },
+  { name = "SW", net = "" },
+  { name = "VOUT", net = "+5V_BOOST" },
+  { name = "FB", net = "" },
+  { name = "EN", net = "EN_BOOST" },
+  { name = "GND", net = "GND" },
+]
+
+[[sheets.blocks]]
+id = "MCU"
+name = "STM32L031"
+x = 165.0
+y = 100.0
+w = 80.0
+h = 150.0
+pins = [
+  { name = "+3V3", net = "+3V3" },
+  { name = "GND", net = "GND" },
+  { name = "SDA", net = "SDA" },
+  { name = "SCL", net = "SCL" },
+  { name = "UART_TX", net = "UART_MCU_TX" },
+  { name = "UART_RX", net = "UART_SOC_TX" },
+  { name = "CHG_CTRL", net = "CHG_CTRL" },
+  { name = "CHG_STAT", net = "CHG_STAT" },
+  { name = "SOC_PWR_EN", net = "SOC_PWR_EN" },
+  { name = "MODEM_PWR_EN", net = "MODEM_PWR_EN" },
+  { name = "SOC_READY", net = "SOC_READY" },
+  { name = "IRQ", net = "IRQ" },
+  { name = "MODEM_RI", net = "RI" },
+  { name = "MODEM_RESET", net = "MODEM_RESET" },
+  { name = "MODEM_PWRKEY", net = "MODEM_PWRKEY" },
+  { name = "USB_SEL", net = "USB_SEL" },
+  { name = "SWDIO", net = "SWDIO" },
+  { name = "SWCLK", net = "SWCLK" },
+  { name = "NRST", net = "NRST" },
+  { name = "PIR", net = "PIR_OUT" },
+  { name = "DQ", net = "DQ" },
+  { name = "VBAT_ADC", net = "VBAT" },
+  { name = "EN_BOOST", net = "EN_BOOST" },
+  { name = "MODEM_STATUS", net = "MODEM_STATUS" },
+]
+
+[[sheets.blocks]]
+id = "SENS"
+name = "PIR + DS18B20"
+x = 8.0
+y = 168.0
+w = 100.0
+h = 50.0
+pins = [
+  { name = "+3V3", net = "+3V3" },
+  { name = "GND", net = "GND" },
+  { name = "PIR_OUT", net = "PIR_OUT" },
+  { name = "DQ", net = "DQ" },
+]
+
+[[sheets.blocks]]
+id = "SWD"
+name = "SWD"
+x = 8.0
+y = 232.0
+w = 60.0
+h = 34.0
+pins = [
+  { name = "SWDIO", net = "SWDIO" },
+  { name = "SWCLK", net = "SWCLK" },
+  { name = "NRST", net = "NRST" },
+  { name = "GND", net = "GND" },
+]
+
+[[sheets.blocks]]
+id = "B2B"
+name = "J_B2B 2x13"
+x = 330.0
+y = 76.0
+w = 74.0
+h = 190.0
+pins = [
+  { name = "+3V3", net = "+3V3" },
+  { name = "+5V_SOC", net = "+5V_SOC" },
+  { name = "+5V_MODEM", net = "+5V_MODEM" },
+  { name = "GND", net = "GND" },
+  { name = "SDA", net = "SDA" },
+  { name = "SCL", net = "SCL" },
+  { name = "UART_MCU_TX", net = "UART_MCU_TX" },
+  { name = "UART_SOC_TX", net = "UART_SOC_TX" },
+  { name = "SOC_READY", net = "SOC_READY" },
+  { name = "IRQ", net = "IRQ" },
+  { name = "RI", net = "RI" },
+  { name = "MODEM_RESET", net = "MODEM_RESET" },
+  { name = "MODEM_PWRKEY", net = "MODEM_PWRKEY" },
+  { name = "USB_SEL", net = "USB_SEL" },
+  { name = "MODEM_STATUS", net = "MODEM_STATUS" },
+]
+
+[[sheets]]
+id = "cmp"
+title = "CMP - SoC, camera, modem, USB, J_B2B"
+rev = "Rev B (block-level)"
+
+[[sheets.blocks]]
+id = "B2B"
+name = "J_B2B 2x13"
+x = 8.0
+y = 18.0
+w = 74.0
+h = 190.0
+pins = [
+  { name = "+3V3", net = "+3V3" },
+  { name = "+5V_SOC", net = "+5V_SOC" },
+  { name = "+5V_MODEM", net = "+5V_MODEM" },
+  { name = "GND", net = "GND" },
+  { name = "SDA", net = "SDA" },
+  { name = "SCL", net = "SCL" },
+  { name = "UART_MCU_TX", net = "UART_MCU_TX" },
+  { name = "UART_SOC_TX", net = "UART_SOC_TX" },
+  { name = "SOC_READY", net = "SOC_READY" },
+  { name = "IRQ", net = "IRQ" },
+  { name = "RI", net = "RI" },
+  { name = "MODEM_RESET", net = "MODEM_RESET" },
+  { name = "MODEM_PWRKEY", net = "MODEM_PWRKEY" },
+  { name = "USB_SEL", net = "USB_SEL" },
+  { name = "MODEM_STATUS", net = "MODEM_STATUS" },
+]
+
+[[sheets.blocks]]
+id = "SOC"
+name = "Core1106D"
+x = 96.0
+y = 18.0
+w = 110.0
+h = 150.0
+pins = [
+  { name = "+3V3", net = "+3V3" },
+  { name = "+5V_SOC", net = "+5V_SOC" },
+  { name = "GND", net = "GND" },
+  { name = "SDA", net = "SDA" },
+  { name = "SCL", net = "SCL" },
+  { name = "UART_MCU_TX", net = "UART_MCU_TX" },
+  { name = "UART_SOC_TX", net = "UART_SOC_TX" },
+  { name = "MIPI_CLK", net = "MIPI_CLK" },
+  { name = "MIPI_D0", net = "MIPI_D0" },
+  { name = "MIPI_D1", net = "MIPI_D1" },
+  { name = "CAM_SDA", net = "CAM_SDA" },
+  { name = "CAM_SCL", net = "CAM_SCL" },
+  { name = "CAM_RST", net = "CAM_RST" },
+  { name = "CAM_PWDN", net = "CAM_PWDN" },
+  { name = "CAM_MCLK", net = "CAM_MCLK" },
+  { name = "SD_CLK", net = "SD_CLK" },
+  { name = "SD_CMD", net = "SD_CMD" },
+  { name = "SD_D0", net = "SD_D0" },
+  { name = "USB_DP", net = "USB_DP" },
+  { name = "USB_DM", net = "USB_DM" },
+  { name = "SOC_READY", net = "SOC_READY" },
+  { name = "IRQ", net = "IRQ" },
+  { name = "RI", net = "RI" },
+  { name = "USB_SEL", net = "USB_SEL" },
+]
+
+[[sheets.blocks]]
+id = "CAM"
+name = "SC3336 3MP"
+x = 220.0
+y = 18.0
+w = 82.0
+h = 100.0
+pins = [
+  { name = "+3V3", net = "+3V3" },
+  { name = "GND", net = "GND" },
+  { name = "MIPI_CLK", net = "MIPI_CLK" },
+  { name = "MIPI_D0", net = "MIPI_D0" },
+  { name = "MIPI_D1", net = "MIPI_D1" },
+  { name = "SDA", net = "CAM_SDA" },
+  { name = "SCL", net = "CAM_SCL" },
+  { name = "RESET", net = "CAM_RST" },
+  { name = "PWDN", net = "CAM_PWDN" },
+  { name = "MCLK", net = "CAM_MCLK" },
+]
+
+[[sheets.blocks]]
+id = "MODEM"
+name = "EC200U-EU"
+x = 220.0
+y = 130.0
+w = 82.0
+h = 120.0
+pins = [
+  { name = "+5V", net = "+5V_MODEM" },
+  { name = "GND", net = "GND" },
+  { name = "USB_DP", net = "MODEM_USB_DP" },
+  { name = "USB_DM", net = "MODEM_USB_DM" },
+  { name = "UART_MCU_TX", net = "UART_MCU_TX" },
+  { name = "UART_SOC_TX", net = "UART_SOC_TX" },
+  { name = "RI", net = "RI" },
+  { name = "STATUS", net = "MODEM_STATUS" },
+  { name = "RESET", net = "MODEM_RESET" },
+  { name = "PWRKEY", net = "MODEM_PWRKEY" },
+]
+
+[[sheets.blocks]]
+id = "SD"
+name = "microSD"
+x = 96.0
+y = 180.0
+w = 72.0
+h = 50.0
+pins = [
+  { name = "+3V3", net = "+3V3" },
+  { name = "GND", net = "GND" },
+  { name = "CLK", net = "SD_CLK" },
+  { name = "CMD", net = "SD_CMD" },
+  { name = "D0", net = "SD_D0" },
+]
+
+[[sheets.blocks]]
+id = "MUX"
+name = "TS3USB221A"
+x = 318.0
+y = 18.0
+w = 74.0
+h = 74.0
+pins = [
+  { name = "VCC", net = "+3V3" },
+  { name = "GND", net = "GND" },
+  { name = "SEL", net = "USB_SEL" },
+  { name = "HOST_DP", net = "USB_DP" },
+  { name = "HOST_DM", net = "USB_DM" },
+  { name = "MODEM_DP", net = "MODEM_USB_DP" },
+  { name = "MODEM_DM", net = "MODEM_USB_DM" },
+  { name = "SVC_DP", net = "SVC_USB_DP" },
+  { name = "SVC_DM", net = "SVC_USB_DM" },
+]
+
+[[sheets.blocks]]
+id = "CONSOLE"
+name = "UART console"
+x = 318.0
+y = 104.0
+w = 62.0
+h = 38.0
+pins = [
+  { name = "TX", net = "" },
+  { name = "RX", net = "UART_SOC_TX" },
+  { name = "GND", net = "GND" },
+]
+
+[[sheets.blocks]]
+id = "SERVICE"
+name = "Pad nap dich vu"
+x = 318.0
+y = 154.0
+w = 62.0
+h = 38.0
+pins = [
+  { name = "DP", net = "SVC_USB_DP" },
+  { name = "DM", net = "SVC_USB_DM" },
+  { name = "GND", net = "GND" },
+]

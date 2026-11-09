@@ -10,7 +10,7 @@
 |---|---|---|---|
 | A1 | Sổ linh kiện + đối chiếu thiết kế | **Một phần** | [parts-register](../hardware/parts-register.md); còn 4 blocker, `--strict` cố ý fail |
 | A2 | BOM có MPN, gói, trạng thái xác minh | **Có** | [hardware/bom](../hardware/bom/) |
-| A3 | Schematic PWR/CMP | **Thiếu** | Vẽ trong KiCad từ block và net đã chốt ([03](03-giao-dien.md), [pwr-design](../hardware/pwr-design.md), [bom](../hardware/bom/)) |
+| A3 | Schematic PWR/CMP | **Một phần** | Đã có [schematic khối](../hardware/schematic/README.md); pin-level còn chờ 4 blocker |
 | A4 | Thư viện symbol/footprint đã kiểm | **Thiếu** | Mỗi footprint từ datasheet + bản in 1:1; checklist [footprint-test](../hardware/footprint-test/checklist.md) |
 | A5 | Netlist/ERC và đối chiếu schematic–BOM | **Thiếu** | Xuất netlist, ERC sạch, so từng net với BOM |
 | A6 | Stackup và quy tắc layout | **Thiếu** | Chọn stackup nhà máy; ghi rõ lớp, đồng, trở kháng MIPI/USB |

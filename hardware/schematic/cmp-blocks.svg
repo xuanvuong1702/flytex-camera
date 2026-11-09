@@ -1,0 +1,259 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1680" height="1188" viewBox="0 0 1680 1188">
+<rect width="100%" height="100%" fill="#fbfbf8"/>
+<text x="20" y="28" font-family="sans-serif" font-size="18" font-weight="bold">CMP - SoC, camera, modem, USB, J_B2B</text>
+<text x="20" y="46" font-family="sans-serif" font-size="10">Rev B (block-level) — block-level, không phải pin-level. Nhãn net thay cho dây; xem hardware/schematic/README.md</text>
+<rect x="32.0" y="72.0" width="296.0" height="760.0" rx="6" fill="#eef3fa" stroke="#26466f" stroke-width="1.5"/>
+<text x="40.0" y="88.0" font-family="sans-serif" font-size="12" font-weight="bold" fill="#123">B2B · J_B2B 2x13</text>
+<line x1="32.0" y1="147.4" x2="42.0" y2="147.4" stroke="#b02020" stroke-width="1"/>
+<circle cx="32.0" cy="147.4" r="2" fill="#b02020"/>
+<text x="44.0" y="150.4" text-anchor="start" font-family="sans-serif" font-size="7" fill="#b02020">+3V3 = +3V3</text>
+<line x1="32.0" y1="238.1" x2="42.0" y2="238.1" stroke="#b02020" stroke-width="1"/>
+<circle cx="32.0" cy="238.1" r="2" fill="#b02020"/>
+<text x="44.0" y="241.1" text-anchor="start" font-family="sans-serif" font-size="7" fill="#b02020">+5V_SOC = +5V_SOC</text>
+<line x1="32.0" y1="328.9" x2="42.0" y2="328.9" stroke="#b02020" stroke-width="1"/>
+<circle cx="32.0" cy="328.9" r="2" fill="#b02020"/>
+<text x="44.0" y="331.9" text-anchor="start" font-family="sans-serif" font-size="7" fill="#b02020">+5V_MODEM = +5V_MODEM</text>
+<line x1="32.0" y1="419.6" x2="42.0" y2="419.6" stroke="#222222" stroke-width="1"/>
+<circle cx="32.0" cy="419.6" r="2" fill="#222222"/>
+<text x="44.0" y="422.6" text-anchor="start" font-family="sans-serif" font-size="7" fill="#222222">GND = GND</text>
+<line x1="32.0" y1="510.4" x2="42.0" y2="510.4" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="32.0" cy="510.4" r="2" fill="#1a3d7c"/>
+<text x="44.0" y="513.4" text-anchor="start" font-family="sans-serif" font-size="7" fill="#1a3d7c">SDA = SDA</text>
+<line x1="32.0" y1="601.1" x2="42.0" y2="601.1" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="32.0" cy="601.1" r="2" fill="#1a3d7c"/>
+<text x="44.0" y="604.1" text-anchor="start" font-family="sans-serif" font-size="7" fill="#1a3d7c">SCL = SCL</text>
+<line x1="32.0" y1="691.9" x2="42.0" y2="691.9" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="32.0" cy="691.9" r="2" fill="#1a3d7c"/>
+<text x="44.0" y="694.9" text-anchor="start" font-family="sans-serif" font-size="7" fill="#1a3d7c">UART_MCU_TX = UART_MCU_TX</text>
+<line x1="32.0" y1="782.6" x2="42.0" y2="782.6" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="32.0" cy="782.6" r="2" fill="#1a3d7c"/>
+<text x="44.0" y="785.6" text-anchor="start" font-family="sans-serif" font-size="7" fill="#1a3d7c">UART_SOC_TX = UART_SOC_TX</text>
+<line x1="328.0" y1="153.9" x2="318.0" y2="153.9" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="328.0" cy="153.9" r="2" fill="#1a3d7c"/>
+<text x="316.0" y="156.9" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1a3d7c">SOC_READY = SOC_READY</text>
+<line x1="328.0" y1="257.6" x2="318.0" y2="257.6" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="328.0" cy="257.6" r="2" fill="#1a3d7c"/>
+<text x="316.0" y="260.6" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1a3d7c">IRQ = IRQ</text>
+<line x1="328.0" y1="361.3" x2="318.0" y2="361.3" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="328.0" cy="361.3" r="2" fill="#1a3d7c"/>
+<text x="316.0" y="364.3" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1a3d7c">RI = RI</text>
+<line x1="328.0" y1="465.0" x2="318.0" y2="465.0" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="328.0" cy="465.0" r="2" fill="#1a3d7c"/>
+<text x="316.0" y="468.0" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1a3d7c">MODEM_RESET = MODEM_RESET</text>
+<line x1="328.0" y1="568.7" x2="318.0" y2="568.7" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="328.0" cy="568.7" r="2" fill="#1a3d7c"/>
+<text x="316.0" y="571.7" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1a3d7c">MODEM_PWRKEY = MODEM_PWRKEY</text>
+<line x1="328.0" y1="672.4" x2="318.0" y2="672.4" stroke="#1f7a1f" stroke-width="1"/>
+<circle cx="328.0" cy="672.4" r="2" fill="#1f7a1f"/>
+<text x="316.0" y="675.4" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1f7a1f">USB_SEL = USB_SEL</text>
+<line x1="328.0" y1="776.1" x2="318.0" y2="776.1" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="328.0" cy="776.1" r="2" fill="#1a3d7c"/>
+<text x="316.0" y="779.1" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1a3d7c">MODEM_STATUS = MODEM_STATUS</text>
+<rect x="384.0" y="72.0" width="440.0" height="600.0" rx="6" fill="#eef3fa" stroke="#26466f" stroke-width="1.5"/>
+<text x="392.0" y="88.0" font-family="sans-serif" font-size="12" font-weight="bold" fill="#123">SOC · Core1106D</text>
+<line x1="384.0" y1="125.6" x2="394.0" y2="125.6" stroke="#b02020" stroke-width="1"/>
+<circle cx="384.0" cy="125.6" r="2" fill="#b02020"/>
+<text x="396.0" y="128.6" text-anchor="start" font-family="sans-serif" font-size="7" fill="#b02020">+3V3 = +3V3</text>
+<line x1="384.0" y1="172.8" x2="394.0" y2="172.8" stroke="#b02020" stroke-width="1"/>
+<circle cx="384.0" cy="172.8" r="2" fill="#b02020"/>
+<text x="396.0" y="175.8" text-anchor="start" font-family="sans-serif" font-size="7" fill="#b02020">+5V_SOC = +5V_SOC</text>
+<line x1="384.0" y1="219.9" x2="394.0" y2="219.9" stroke="#222222" stroke-width="1"/>
+<circle cx="384.0" cy="219.9" r="2" fill="#222222"/>
+<text x="396.0" y="222.9" text-anchor="start" font-family="sans-serif" font-size="7" fill="#222222">GND = GND</text>
+<line x1="384.0" y1="267.1" x2="394.0" y2="267.1" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="384.0" cy="267.1" r="2" fill="#1a3d7c"/>
+<text x="396.0" y="270.1" text-anchor="start" font-family="sans-serif" font-size="7" fill="#1a3d7c">SDA = SDA</text>
+<line x1="384.0" y1="314.2" x2="394.0" y2="314.2" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="384.0" cy="314.2" r="2" fill="#1a3d7c"/>
+<text x="396.0" y="317.2" text-anchor="start" font-family="sans-serif" font-size="7" fill="#1a3d7c">SCL = SCL</text>
+<line x1="384.0" y1="361.4" x2="394.0" y2="361.4" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="384.0" cy="361.4" r="2" fill="#1a3d7c"/>
+<text x="396.0" y="364.4" text-anchor="start" font-family="sans-serif" font-size="7" fill="#1a3d7c">UART_MCU_TX = UART_MCU_TX</text>
+<line x1="384.0" y1="408.6" x2="394.0" y2="408.6" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="384.0" cy="408.6" r="2" fill="#1a3d7c"/>
+<text x="396.0" y="411.6" text-anchor="start" font-family="sans-serif" font-size="7" fill="#1a3d7c">UART_SOC_TX = UART_SOC_TX</text>
+<line x1="384.0" y1="455.8" x2="394.0" y2="455.8" stroke="#6a1b9a" stroke-width="1"/>
+<circle cx="384.0" cy="455.8" r="2" fill="#6a1b9a"/>
+<text x="396.0" y="458.8" text-anchor="start" font-family="sans-serif" font-size="7" fill="#6a1b9a">MIPI_CLK = MIPI_CLK</text>
+<line x1="384.0" y1="502.9" x2="394.0" y2="502.9" stroke="#6a1b9a" stroke-width="1"/>
+<circle cx="384.0" cy="502.9" r="2" fill="#6a1b9a"/>
+<text x="396.0" y="505.9" text-anchor="start" font-family="sans-serif" font-size="7" fill="#6a1b9a">MIPI_D0 = MIPI_D0</text>
+<line x1="384.0" y1="550.1" x2="394.0" y2="550.1" stroke="#6a1b9a" stroke-width="1"/>
+<circle cx="384.0" cy="550.1" r="2" fill="#6a1b9a"/>
+<text x="396.0" y="553.1" text-anchor="start" font-family="sans-serif" font-size="7" fill="#6a1b9a">MIPI_D1 = MIPI_D1</text>
+<line x1="384.0" y1="597.2" x2="394.0" y2="597.2" stroke="#6a1b9a" stroke-width="1"/>
+<circle cx="384.0" cy="597.2" r="2" fill="#6a1b9a"/>
+<text x="396.0" y="600.2" text-anchor="start" font-family="sans-serif" font-size="7" fill="#6a1b9a">CAM_SDA = CAM_SDA</text>
+<line x1="384.0" y1="644.4" x2="394.0" y2="644.4" stroke="#6a1b9a" stroke-width="1"/>
+<circle cx="384.0" cy="644.4" r="2" fill="#6a1b9a"/>
+<text x="396.0" y="647.4" text-anchor="start" font-family="sans-serif" font-size="7" fill="#6a1b9a">CAM_SCL = CAM_SCL</text>
+<line x1="824.0" y1="125.6" x2="814.0" y2="125.6" stroke="#6a1b9a" stroke-width="1"/>
+<circle cx="824.0" cy="125.6" r="2" fill="#6a1b9a"/>
+<text x="812.0" y="128.6" text-anchor="end" font-family="sans-serif" font-size="7" fill="#6a1b9a">CAM_RST = CAM_RST</text>
+<line x1="824.0" y1="172.8" x2="814.0" y2="172.8" stroke="#6a1b9a" stroke-width="1"/>
+<circle cx="824.0" cy="172.8" r="2" fill="#6a1b9a"/>
+<text x="812.0" y="175.8" text-anchor="end" font-family="sans-serif" font-size="7" fill="#6a1b9a">CAM_PWDN = CAM_PWDN</text>
+<line x1="824.0" y1="219.9" x2="814.0" y2="219.9" stroke="#6a1b9a" stroke-width="1"/>
+<circle cx="824.0" cy="219.9" r="2" fill="#6a1b9a"/>
+<text x="812.0" y="222.9" text-anchor="end" font-family="sans-serif" font-size="7" fill="#6a1b9a">CAM_MCLK = CAM_MCLK</text>
+<line x1="824.0" y1="267.1" x2="814.0" y2="267.1" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="824.0" cy="267.1" r="2" fill="#1a3d7c"/>
+<text x="812.0" y="270.1" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1a3d7c">SD_CLK = SD_CLK</text>
+<line x1="824.0" y1="314.2" x2="814.0" y2="314.2" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="824.0" cy="314.2" r="2" fill="#1a3d7c"/>
+<text x="812.0" y="317.2" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1a3d7c">SD_CMD = SD_CMD</text>
+<line x1="824.0" y1="361.4" x2="814.0" y2="361.4" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="824.0" cy="361.4" r="2" fill="#1a3d7c"/>
+<text x="812.0" y="364.4" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1a3d7c">SD_D0 = SD_D0</text>
+<line x1="824.0" y1="408.6" x2="814.0" y2="408.6" stroke="#1f7a1f" stroke-width="1"/>
+<circle cx="824.0" cy="408.6" r="2" fill="#1f7a1f"/>
+<text x="812.0" y="411.6" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1f7a1f">USB_DP = USB_DP</text>
+<line x1="824.0" y1="455.8" x2="814.0" y2="455.8" stroke="#1f7a1f" stroke-width="1"/>
+<circle cx="824.0" cy="455.8" r="2" fill="#1f7a1f"/>
+<text x="812.0" y="458.8" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1f7a1f">USB_DM = USB_DM</text>
+<line x1="824.0" y1="502.9" x2="814.0" y2="502.9" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="824.0" cy="502.9" r="2" fill="#1a3d7c"/>
+<text x="812.0" y="505.9" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1a3d7c">SOC_READY = SOC_READY</text>
+<line x1="824.0" y1="550.1" x2="814.0" y2="550.1" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="824.0" cy="550.1" r="2" fill="#1a3d7c"/>
+<text x="812.0" y="553.1" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1a3d7c">IRQ = IRQ</text>
+<line x1="824.0" y1="597.2" x2="814.0" y2="597.2" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="824.0" cy="597.2" r="2" fill="#1a3d7c"/>
+<text x="812.0" y="600.2" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1a3d7c">RI = RI</text>
+<line x1="824.0" y1="644.4" x2="814.0" y2="644.4" stroke="#1f7a1f" stroke-width="1"/>
+<circle cx="824.0" cy="644.4" r="2" fill="#1f7a1f"/>
+<text x="812.0" y="647.4" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1f7a1f">USB_SEL = USB_SEL</text>
+<rect x="880.0" y="72.0" width="328.0" height="400.0" rx="6" fill="#eef3fa" stroke="#26466f" stroke-width="1.5"/>
+<text x="888.0" y="88.0" font-family="sans-serif" font-size="12" font-weight="bold" fill="#123">CAM · SC3336 3MP</text>
+<line x1="880.0" y1="138.6" x2="890.0" y2="138.6" stroke="#b02020" stroke-width="1"/>
+<circle cx="880.0" cy="138.6" r="2" fill="#b02020"/>
+<text x="892.0" y="141.6" text-anchor="start" font-family="sans-serif" font-size="7" fill="#b02020">+3V3 = +3V3</text>
+<line x1="880.0" y1="211.8" x2="890.0" y2="211.8" stroke="#222222" stroke-width="1"/>
+<circle cx="880.0" cy="211.8" r="2" fill="#222222"/>
+<text x="892.0" y="214.8" text-anchor="start" font-family="sans-serif" font-size="7" fill="#222222">GND = GND</text>
+<line x1="880.0" y1="285.0" x2="890.0" y2="285.0" stroke="#6a1b9a" stroke-width="1"/>
+<circle cx="880.0" cy="285.0" r="2" fill="#6a1b9a"/>
+<text x="892.0" y="288.0" text-anchor="start" font-family="sans-serif" font-size="7" fill="#6a1b9a">MIPI_CLK = MIPI_CLK</text>
+<line x1="880.0" y1="358.2" x2="890.0" y2="358.2" stroke="#6a1b9a" stroke-width="1"/>
+<circle cx="880.0" cy="358.2" r="2" fill="#6a1b9a"/>
+<text x="892.0" y="361.2" text-anchor="start" font-family="sans-serif" font-size="7" fill="#6a1b9a">MIPI_D0 = MIPI_D0</text>
+<line x1="880.0" y1="431.4" x2="890.0" y2="431.4" stroke="#6a1b9a" stroke-width="1"/>
+<circle cx="880.0" cy="431.4" r="2" fill="#6a1b9a"/>
+<text x="892.0" y="434.4" text-anchor="start" font-family="sans-serif" font-size="7" fill="#6a1b9a">MIPI_D1 = MIPI_D1</text>
+<line x1="1208.0" y1="138.6" x2="1198.0" y2="138.6" stroke="#6a1b9a" stroke-width="1"/>
+<circle cx="1208.0" cy="138.6" r="2" fill="#6a1b9a"/>
+<text x="1196.0" y="141.6" text-anchor="end" font-family="sans-serif" font-size="7" fill="#6a1b9a">SDA = CAM_SDA</text>
+<line x1="1208.0" y1="211.8" x2="1198.0" y2="211.8" stroke="#6a1b9a" stroke-width="1"/>
+<circle cx="1208.0" cy="211.8" r="2" fill="#6a1b9a"/>
+<text x="1196.0" y="214.8" text-anchor="end" font-family="sans-serif" font-size="7" fill="#6a1b9a">SCL = CAM_SCL</text>
+<line x1="1208.0" y1="285.0" x2="1198.0" y2="285.0" stroke="#6a1b9a" stroke-width="1"/>
+<circle cx="1208.0" cy="285.0" r="2" fill="#6a1b9a"/>
+<text x="1196.0" y="288.0" text-anchor="end" font-family="sans-serif" font-size="7" fill="#6a1b9a">RESET = CAM_RST</text>
+<line x1="1208.0" y1="358.2" x2="1198.0" y2="358.2" stroke="#6a1b9a" stroke-width="1"/>
+<circle cx="1208.0" cy="358.2" r="2" fill="#6a1b9a"/>
+<text x="1196.0" y="361.2" text-anchor="end" font-family="sans-serif" font-size="7" fill="#6a1b9a">PWDN = CAM_PWDN</text>
+<line x1="1208.0" y1="431.4" x2="1198.0" y2="431.4" stroke="#6a1b9a" stroke-width="1"/>
+<circle cx="1208.0" cy="431.4" r="2" fill="#6a1b9a"/>
+<text x="1196.0" y="434.4" text-anchor="end" font-family="sans-serif" font-size="7" fill="#6a1b9a">MCLK = CAM_MCLK</text>
+<rect x="880.0" y="520.0" width="328.0" height="480.0" rx="6" fill="#eef3fa" stroke="#26466f" stroke-width="1.5"/>
+<text x="888.0" y="536.0" font-family="sans-serif" font-size="12" font-weight="bold" fill="#123">MODEM · EC200U-EU</text>
+<line x1="880.0" y1="594.6" x2="890.0" y2="594.6" stroke="#b02020" stroke-width="1"/>
+<circle cx="880.0" cy="594.6" r="2" fill="#b02020"/>
+<text x="892.0" y="597.6" text-anchor="start" font-family="sans-serif" font-size="7" fill="#b02020">+5V = +5V_MODEM</text>
+<line x1="880.0" y1="683.8" x2="890.0" y2="683.8" stroke="#222222" stroke-width="1"/>
+<circle cx="880.0" cy="683.8" r="2" fill="#222222"/>
+<text x="892.0" y="686.8" text-anchor="start" font-family="sans-serif" font-size="7" fill="#222222">GND = GND</text>
+<line x1="880.0" y1="773.0" x2="890.0" y2="773.0" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="880.0" cy="773.0" r="2" fill="#1a3d7c"/>
+<text x="892.0" y="776.0" text-anchor="start" font-family="sans-serif" font-size="7" fill="#1a3d7c">USB_DP = MODEM_USB_DP</text>
+<line x1="880.0" y1="862.2" x2="890.0" y2="862.2" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="880.0" cy="862.2" r="2" fill="#1a3d7c"/>
+<text x="892.0" y="865.2" text-anchor="start" font-family="sans-serif" font-size="7" fill="#1a3d7c">USB_DM = MODEM_USB_DM</text>
+<line x1="880.0" y1="951.4" x2="890.0" y2="951.4" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="880.0" cy="951.4" r="2" fill="#1a3d7c"/>
+<text x="892.0" y="954.4" text-anchor="start" font-family="sans-serif" font-size="7" fill="#1a3d7c">UART_MCU_TX = UART_MCU_TX</text>
+<line x1="1208.0" y1="594.6" x2="1198.0" y2="594.6" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="1208.0" cy="594.6" r="2" fill="#1a3d7c"/>
+<text x="1196.0" y="597.6" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1a3d7c">UART_SOC_TX = UART_SOC_TX</text>
+<line x1="1208.0" y1="683.8" x2="1198.0" y2="683.8" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="1208.0" cy="683.8" r="2" fill="#1a3d7c"/>
+<text x="1196.0" y="686.8" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1a3d7c">RI = RI</text>
+<line x1="1208.0" y1="773.0" x2="1198.0" y2="773.0" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="1208.0" cy="773.0" r="2" fill="#1a3d7c"/>
+<text x="1196.0" y="776.0" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1a3d7c">STATUS = MODEM_STATUS</text>
+<line x1="1208.0" y1="862.2" x2="1198.0" y2="862.2" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="1208.0" cy="862.2" r="2" fill="#1a3d7c"/>
+<text x="1196.0" y="865.2" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1a3d7c">RESET = MODEM_RESET</text>
+<line x1="1208.0" y1="951.4" x2="1198.0" y2="951.4" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="1208.0" cy="951.4" r="2" fill="#1a3d7c"/>
+<text x="1196.0" y="954.4" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1a3d7c">PWRKEY = MODEM_PWRKEY</text>
+<rect x="384.0" y="720.0" width="288.0" height="200.0" rx="6" fill="#eef3fa" stroke="#26466f" stroke-width="1.5"/>
+<text x="392.0" y="736.0" font-family="sans-serif" font-size="12" font-weight="bold" fill="#123">SD · microSD</text>
+<line x1="384.0" y1="777.7" x2="394.0" y2="777.7" stroke="#b02020" stroke-width="1"/>
+<circle cx="384.0" cy="777.7" r="2" fill="#b02020"/>
+<text x="396.0" y="780.7" text-anchor="start" font-family="sans-serif" font-size="7" fill="#b02020">+3V3 = +3V3</text>
+<line x1="384.0" y1="833.0" x2="394.0" y2="833.0" stroke="#222222" stroke-width="1"/>
+<circle cx="384.0" cy="833.0" r="2" fill="#222222"/>
+<text x="396.0" y="836.0" text-anchor="start" font-family="sans-serif" font-size="7" fill="#222222">GND = GND</text>
+<line x1="384.0" y1="888.3" x2="394.0" y2="888.3" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="384.0" cy="888.3" r="2" fill="#1a3d7c"/>
+<text x="396.0" y="891.3" text-anchor="start" font-family="sans-serif" font-size="7" fill="#1a3d7c">CLK = SD_CLK</text>
+<line x1="672.0" y1="791.5" x2="662.0" y2="791.5" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="672.0" cy="791.5" r="2" fill="#1a3d7c"/>
+<text x="660.0" y="794.5" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1a3d7c">CMD = SD_CMD</text>
+<line x1="672.0" y1="874.5" x2="662.0" y2="874.5" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="672.0" cy="874.5" r="2" fill="#1a3d7c"/>
+<text x="660.0" y="877.5" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1a3d7c">D0 = SD_D0</text>
+<rect x="1272.0" y="72.0" width="296.0" height="296.0" rx="6" fill="#eef3fa" stroke="#26466f" stroke-width="1.5"/>
+<text x="1280.0" y="88.0" font-family="sans-serif" font-size="12" font-weight="bold" fill="#123">MUX · TS3USB221A</text>
+<line x1="1272.0" y1="128.2" x2="1282.0" y2="128.2" stroke="#b02020" stroke-width="1"/>
+<circle cx="1272.0" cy="128.2" r="2" fill="#b02020"/>
+<text x="1284.0" y="131.2" text-anchor="start" font-family="sans-serif" font-size="7" fill="#b02020">VCC = +3V3</text>
+<line x1="1272.0" y1="180.6" x2="1282.0" y2="180.6" stroke="#222222" stroke-width="1"/>
+<circle cx="1272.0" cy="180.6" r="2" fill="#222222"/>
+<text x="1284.0" y="183.6" text-anchor="start" font-family="sans-serif" font-size="7" fill="#222222">GND = GND</text>
+<line x1="1272.0" y1="233.0" x2="1282.0" y2="233.0" stroke="#1f7a1f" stroke-width="1"/>
+<circle cx="1272.0" cy="233.0" r="2" fill="#1f7a1f"/>
+<text x="1284.0" y="236.0" text-anchor="start" font-family="sans-serif" font-size="7" fill="#1f7a1f">SEL = USB_SEL</text>
+<line x1="1272.0" y1="285.4" x2="1282.0" y2="285.4" stroke="#1f7a1f" stroke-width="1"/>
+<circle cx="1272.0" cy="285.4" r="2" fill="#1f7a1f"/>
+<text x="1284.0" y="288.4" text-anchor="start" font-family="sans-serif" font-size="7" fill="#1f7a1f">HOST_DP = USB_DP</text>
+<line x1="1272.0" y1="337.8" x2="1282.0" y2="337.8" stroke="#1f7a1f" stroke-width="1"/>
+<circle cx="1272.0" cy="337.8" r="2" fill="#1f7a1f"/>
+<text x="1284.0" y="340.8" text-anchor="start" font-family="sans-serif" font-size="7" fill="#1f7a1f">HOST_DM = USB_DM</text>
+<line x1="1568.0" y1="134.8" x2="1558.0" y2="134.8" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="1568.0" cy="134.8" r="2" fill="#1a3d7c"/>
+<text x="1556.0" y="137.8" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1a3d7c">MODEM_DP = MODEM_USB_DP</text>
+<line x1="1568.0" y1="200.2" x2="1558.0" y2="200.2" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="1568.0" cy="200.2" r="2" fill="#1a3d7c"/>
+<text x="1556.0" y="203.2" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1a3d7c">MODEM_DM = MODEM_USB_DM</text>
+<line x1="1568.0" y1="265.8" x2="1558.0" y2="265.8" stroke="#1f7a1f" stroke-width="1"/>
+<circle cx="1568.0" cy="265.8" r="2" fill="#1f7a1f"/>
+<text x="1556.0" y="268.8" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1f7a1f">SVC_DP = SVC_USB_DP</text>
+<line x1="1568.0" y1="331.2" x2="1558.0" y2="331.2" stroke="#1f7a1f" stroke-width="1"/>
+<circle cx="1568.0" cy="331.2" r="2" fill="#1f7a1f"/>
+<text x="1556.0" y="334.2" text-anchor="end" font-family="sans-serif" font-size="7" fill="#1f7a1f">SVC_DM = SVC_USB_DM</text>
+<rect x="1272.0" y="416.0" width="248.0" height="152.0" rx="6" fill="#eef3fa" stroke="#26466f" stroke-width="1.5"/>
+<text x="1280.0" y="432.0" font-family="sans-serif" font-size="12" font-weight="bold" fill="#123">CONSOLE · UART console</text>
+<line x1="1272.0" y1="475.5" x2="1282.0" y2="475.5" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="1272.0" cy="475.5" r="2" fill="#1a3d7c"/>
+<text x="1284.0" y="478.5" text-anchor="start" font-family="sans-serif" font-size="7" fill="#1a3d7c">TX (NC)</text>
+<line x1="1272.0" y1="534.5" x2="1282.0" y2="534.5" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="1272.0" cy="534.5" r="2" fill="#1a3d7c"/>
+<text x="1284.0" y="537.5" text-anchor="start" font-family="sans-serif" font-size="7" fill="#1a3d7c">RX = UART_SOC_TX</text>
+<line x1="1520.0" y1="505.0" x2="1510.0" y2="505.0" stroke="#222222" stroke-width="1"/>
+<circle cx="1520.0" cy="505.0" r="2" fill="#222222"/>
+<text x="1508.0" y="508.0" text-anchor="end" font-family="sans-serif" font-size="7" fill="#222222">GND = GND</text>
+<rect x="1272.0" y="616.0" width="248.0" height="152.0" rx="6" fill="#eef3fa" stroke="#26466f" stroke-width="1.5"/>
+<text x="1280.0" y="632.0" font-family="sans-serif" font-size="12" font-weight="bold" fill="#123">SERVICE · Pad nap dich vu</text>
+<line x1="1272.0" y1="675.5" x2="1282.0" y2="675.5" stroke="#1f7a1f" stroke-width="1"/>
+<circle cx="1272.0" cy="675.5" r="2" fill="#1f7a1f"/>
+<text x="1284.0" y="678.5" text-anchor="start" font-family="sans-serif" font-size="7" fill="#1f7a1f">DP = SVC_USB_DP</text>
+<line x1="1272.0" y1="734.5" x2="1282.0" y2="734.5" stroke="#1f7a1f" stroke-width="1"/>
+<circle cx="1272.0" cy="734.5" r="2" fill="#1f7a1f"/>
+<text x="1284.0" y="737.5" text-anchor="start" font-family="sans-serif" font-size="7" fill="#1f7a1f">DM = SVC_USB_DM</text>
+<line x1="1520.0" y1="705.0" x2="1510.0" y2="705.0" stroke="#222222" stroke-width="1"/>
+<circle cx="1520.0" cy="705.0" r="2" fill="#222222"/>
+<text x="1508.0" y="708.0" text-anchor="end" font-family="sans-serif" font-size="7" fill="#222222">GND = GND</text>
+<text x="20" y="1172" font-family="sans-serif" font-size="8" fill="#555">Sinh từ spec/schematic.toml — kiểm tra: python -m hardware.schematic.render --check</text>
+</svg>

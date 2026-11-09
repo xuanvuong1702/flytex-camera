@@ -19,7 +19,7 @@ Tài liệu này định nghĩa **điều kiện hoàn thành** và là biên b�
 | C-06 | Clip tải lên kho qua HTTPS, có thử lại và không chặn luồng chính | Test uploader + service |
 | C-07 | OTA an toàn: chỉ nhận image đúng chữ ký, có A/B và quay lui | Test OTA; không có chữ ký thì từ chối rõ ràng |
 | C-08 | Nhận lệnh khi ngủ bằng SMS/RI, có mô phỏng | Kịch bản `watch-wake`, `watch-ri-off`; 60 test firmware; HMAC/timestamp/replay phía SoC |
-| C-09 | Báo cáo năng lượng và nhập số đo G0 | 124 test tools; nhập PPK2; 57 test hardware |
+| C-09 | Báo cáo năng lượng và nhập số đo G0 | 124 test tools; nhập PPK2; 65 test hardware |
 | C-10 | Gói thiết kế PWR/CMP đủ để vẽ schematic: block, net, giá trị, hình học, BOM, sổ linh kiện | `hardware/`; `python -m hardware.geom.cli --check`; `python -m hardware.parts.check --check` |
 | C-11 | Quy trình bring-up và G0 có checklist thực thi được | `docs/16`, `hardware/bringup.md` |
 | C-12 | Toàn bộ chạy một lệnh; **GitHub Actions xác nhận `success`** ở commit mới nhất; kết thúc phiên có commit và push | `python run_tests.py`; API `repos/.../actions/runs` (không chỉ tin máy Windows) |
