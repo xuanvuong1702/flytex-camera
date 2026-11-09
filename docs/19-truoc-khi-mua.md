@@ -8,7 +8,7 @@
 
 | # | Tài liệu / phân tích | Trạng thái | Bằng chứng hoặc việc phải làm |
 |---|---|---|---|
-| A1 | Sổ linh kiện + đối chiếu thiết kế | **Một phần** | [parts-register](../hardware/parts-register.md); còn 1 blocker, `--strict` cố ý fail |
+| A1 | Sổ linh kiện + đối chiếu thiết kế | **Một phần** | [parts-register](../hardware/parts-register.md); 0 blocker cứng, 1 giả định PACK; `--production` fail |
 | A2 | BOM có MPN, gói, trạng thái xác minh | **Có** | [hardware/bom](../hardware/bom/) |
 | A3 | Schematic PWR/CMP | **Một phần** | Đã có [schematic khối](../hardware/schematic/README.md); pin-level còn chờ 4 blocker |
 | A4 | Thư viện symbol/footprint đã kiểm | **Thiếu** | Mỗi footprint từ datasheet + bản in 1:1; checklist [footprint-test](../hardware/footprint-test/checklist.md) |

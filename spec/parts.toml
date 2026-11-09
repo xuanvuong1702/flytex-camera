@@ -235,7 +235,9 @@ params = [
   { name = "capacity_ah", value = 15.0, unit = "Ah", source = "D-18" },
   { name = "bms_quiescent_ua", value = 100.0, unit = "uA", source = "yeu cau, chua co hang" },
   { name = "charge_a", value = 1.5, unit = "A", source = "yeu cau, chua co hang" },
-  { name = "docs_ready", value = false, unit = "", source = "CHUA CO" },
+  { name = "docs_ready", value = false, unit = "", source = "CHO NHA CUNG CAP" },
+  { name = "prototype_allowed", value = true, unit = "", source = "gia dinh co ghi chu" },
+  { name = "assumed_bms_quiescent_ua", value = 50.0, unit = "uA", source = "gia dinh thiet ke" },
 ]
 
 [[parts]]

@@ -57,8 +57,10 @@ class PackTests(unittest.TestCase):
         # Boost 5 V: 5,56 A trung binh, 6,52 A dinh o 3,0 V; BMS phai du.
         self.assertGreaterEqual(self.data["bms"]["discharge_peak_a"], 6.52 * 1.2)
 
-    def test_docs_still_blocked(self) -> None:
+    def test_docs_still_pending_but_prototype_allowed(self) -> None:
         self.assertFalse(self.data["pack"]["docs_ready"])
+        self.assertTrue(self.data["pack"]["prototype_allowed"])
+        self.assertGreater(self.data["pack"]["assumed_bms_quiescent_ua"], 0)
 
 
 if __name__ == "__main__":

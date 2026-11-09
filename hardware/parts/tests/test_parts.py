@@ -48,10 +48,13 @@ class RegisterTests(unittest.TestCase):
                 continue
             self.assertIn(row["mpn"], mpns, f"{row['ref']} thieu trong so linh kien")
 
-    def test_known_blockers_are_reported(self) -> None:
+    def test_no_blockers_for_prototype(self) -> None:
         blockers = {issue.item for issue in self.issues if issue.level == "blocker"}
-        for item in ("PACK",):
-            self.assertIn(item, blockers, f"phai bao blocker cho {item}")
+        self.assertEqual(blockers, set())
+
+    def test_pack_is_only_an_assumption(self) -> None:
+        warnings = {issue.message for issue in self.issues if issue.level == "warn"}
+        self.assertTrue(any("gia dinh" in message.lower() for message in warnings))
 
     def test_known_warnings_are_reported(self) -> None:
         warnings = {issue.item for issue in self.issues if issue.level == "warn"}
@@ -70,14 +73,18 @@ class RegisterTests(unittest.TestCase):
         text = check.render()
         self.assertIn("## 1. Linh kiện chính", text)
         self.assertIn("## 3. Vấn đề phát hiện", text)
-        self.assertIn("| blocker |", text)
+        self.assertIn("| warn |", text)
+        self.assertIn("gia dinh", text.lower())
         self.assertIn("TPS61088RHLR", text)
 
     def test_check_mode_passes(self) -> None:
         self.assertEqual(check.main(["--check"]), 0)
 
-    def test_strict_mode_fails_with_open_blockers(self) -> None:
-        self.assertEqual(check.main(["--strict"]), 1)
+    def test_strict_mode_passes_with_assumptions(self) -> None:
+        self.assertEqual(check.main(["--strict"]), 0)
+
+    def test_production_mode_fails_until_docs(self) -> None:
+        self.assertEqual(check.main(["--production"]), 1)
 
     def test_non_strict_mode_passes(self) -> None:
         self.assertEqual(check.main([]), 0)

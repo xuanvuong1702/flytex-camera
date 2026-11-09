@@ -201,10 +201,16 @@ def design_issues(parts: dict[str, dict], external: dict[str, dict],
     if param(external.get("CAMERA", {}), "pinout_known") is not True:
         issues.append(Issue("blocker", "CAMERA", "chua chon camera va pinout FPC"))
     if param(external.get("PACK", {}), "docs_ready") is not True:
-        issues.append(Issue(
-            "blocker", "PACK",
-            "thieu ho so UN38.3/IEC 62133 va so do tu tieu cua pack EVE/Daly",
-        ))
+        if param(external.get("PACK", {}), "prototype_allowed") is True:
+            issues.append(Issue(
+                "warn", "PACK",
+                "gia dinh BMS ~50 uA va ho so UN38.3/IEC dang cho; chi dung cho prototype, phai do M-02",
+            ))
+        else:
+            issues.append(Issue(
+                "blocker", "PACK",
+                "thieu ho so UN38.3/IEC 62133 va so do tu tieu cua pack EVE/Daly",
+            ))
     if param(parts.get("J1", {}), "waterproof") is not True:
         issues.append(Issue("warn", "J1", "USB-C chua phai loai chong nuoc (O-06)"))
     if param(parts.get("L1", {}), "isat_a") == 9.0:
@@ -285,6 +291,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--write", action="store_true")
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--strict", action="store_true")
+    parser.add_argument("--production", action="store_true", help="cong san xuat: pack phai co ho so")
     args = parser.parse_args(argv)
     try:
         parts, external = load_parts()
@@ -317,6 +324,11 @@ def main(argv: list[str] | None = None) -> int:
     for issue in issues:
         print(f"{issue.level.upper()} {issue.item}: {issue.message}")
     print(f"TONG: {len(blockers)} blocker, {len(warns)} canh bao")
+    if args.production:
+        pack = external.get("PACK", {})
+        if param(pack, "docs_ready") is not True:
+            print("PRODUCTION: PACK thieu UN38.3/IEC hoac so do tu tieu", file=sys.stderr)
+            return 1
     if args.strict and blockers:
         return 1
     return 0

@@ -2,7 +2,7 @@
 
 - Nguồn: `spec/parts.toml`; kiểm tra: `python -m hardware.parts.check --check`.
 - `verified`: **yes** đã đối chiếu datasheet, **partial** mới một phần, **no** chưa mở datasheet.
-- Kết quả: **1 blocker**, 3 cảnh báo. Blocker là việc phải đóng trước khi đặt hàng.
+- Kết quả: **0 blocker**, 4 cảnh báo. Blocker là việc phải đóng trước khi đặt hàng.
 
 ## 1. Linh kiện chính
 
@@ -171,8 +171,8 @@
 
 | Mức | Mục | Mô tả |
 |---|---|---|
-| blocker | PACK | thieu ho so UN38.3/IEC 62133 va so do tu tieu cua pack EVE/Daly |
 | warn | MODEM | dinh dong 2 A la gia dinh chua do; xac nhan bang M-36 |
+| warn | PACK | gia dinh BMS ~50 uA va ho so UN38.3/IEC dang cho; chi dung cho prototype, phai do M-02 |
 | warn | J1 | USB-C chua phai loai chong nuoc (O-06) |
 | warn | L1 | Isat 9 A chua xac minh o 125 do C |
 

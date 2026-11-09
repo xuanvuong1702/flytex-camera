@@ -1,6 +1,6 @@
 schema = "flytex.pack/1"
 name = "Pack LFP 1S 15 Ah"
-status = "candidate"
+status = "assumed"
 
 [cell]
 mpn = "EVE IFR33140-C33"
@@ -28,4 +28,8 @@ connector = "XT30PW-M"
 fuse = "PTC hoac fuse 10 A"
 nct_on_cell = true
 docs_ready = false
+prototype_allowed = true
+assumed_bms_quiescent_ua = 50.0
+validation = "M-02: do tu tieu 24 h; do dong sac/xa; do diem cat BMS; doi chieu UN38.3/IEC khi co"
+production_gate = "Khong duoc giao/van chuyen pack khi chua co UN38.3/IEC"
 notes = "Phai do tu tieu <=100 uA, dong sac/xa, diem cat BMS; xin UN38.3/IEC 62133 truoc khi mua lo. Boost 5 V co dinh dong vao 5,56 A (dinh 6,52 A) tai 3,0 V - BMS phai chiu duoc truoc khi bao ve."

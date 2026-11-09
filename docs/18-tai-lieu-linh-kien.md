@@ -13,15 +13,15 @@
 
 ## 2. Kết quả hiện tại
 
-**15 linh kiện + 4 module ngoài BOM; 1 blocker, 3 cảnh báo** (sau khi chọn BQ25070 và nhập pinout).
+**15 linh kiện + 4 module ngoài BOM; 0 blocker cứng, 1 giả định PACK, 4 cảnh báo** (sau khi chọn BQ25070 và nhập pinout).
 
-### 2.1 Blocker phải đóng trước khi đặt
+### 2.1 Giả định phải đo trước G0
 
 | Mục | Vấn đề | Cách đóng | Nơi ghi |
 |---|---|---|---|
 | U3 sạc | **BQ25070**: float 3,5 V, power-path (1,2 A), NTC, standalone; **935 mA bằng 11 xung CTRL**; R1/R2 = 20 kΩ/8,25 kΩ | Còn đo M-05, kiểm tồn kho và đo đỉnh tải | O-05 |
 | SOC | Đã nạp **112 chân** Core1106D vào `spec/core1106d/pins.csv` | Đối chiếu với bản vẽ cơ khí và bảng ánh xạ CMP trước khi vẽ | O-11 |
-| PACK | Đã chọn **EVE C33 15 Ah + Daly 1S 15 A**; còn **UN38.3, IEC 62133, đo tự tiêu ≤100 µA** | Lấy hồ sơ nhà cung cấp, đo mẫu bằng PPK2 | O-03 |
+| PACK | Giả định BMS tự tiêu **50 µA**; UN38.3/IEC đang chờ | Chỉ prototype trên bàn; đo M-02; `--production` sẽ fail tới khi có hồ sơ | O-03 |
 
 ### 2.2 Cảnh báo (không chặn đặt, phải đo ở G0)
 
