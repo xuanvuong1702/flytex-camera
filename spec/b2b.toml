@@ -160,9 +160,10 @@ desc = "Từ modem về MCU"
 
 [[pins]]
 num = 20
-name = "SPARE_SOC1"
-net = "SPARE_SOC1"
-dir = "CMP->PWR"
+name = "USB_SEL"
+net = "USB_SEL"
+dir = "PWR->CMP"
+desc = "MCU chọn modem hoặc pad nạp dịch vụ (D-20/O-13)"
 
 [[pins]]
 num = 21

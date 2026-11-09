@@ -42,9 +42,9 @@ Tóm tắt tín hiệu bắt buộc:
 | Bus | I2C_SCL, I2C_SDA | 2 |
 | Điều khiển | MCU_IRQ, SOC_READY, **MODEM_RI** | 3 |
 | Modem | MODEM_PWRKEY, MODEM_RESET, MODEM_STATUS | 3 |
-| Dự phòng | SPARE_SOC1, SPARE_SOC2 | 2 |
+| Dự phòng | SPARE_SOC2 | 1 |
 
-**Thay đổi so với v0.1:** thêm `MODEM_RI` (chân 21) để kênh đánh thức SMS hoạt động khi SoC tắt ([15](15-giao-thuc-va-cloud.md) §4.2); đổi một chân dự phòng MCU lấy chân này. Số chân dự phòng còn 2.
+**Thay đổi so với v0.1:** thêm `MODEM_RI` (chân 21) để kênh đánh thức SMS hoạt động khi SoC tắt ([15](15-giao-thuc-va-cloud.md) §4.2); đổi một chân dự phòng MCU lấy chân này. Số chân dự phòng còn 2; sau đó D-22 dùng chân 20 cho `USB_SEL`, còn 1.
 
 ## 4. Connector trên CMP
 
@@ -66,7 +66,7 @@ Core1106 chỉ có **một** cổng USB 2.0 Host/Device `[ĐÃ XÁC MINH]`. Bả
 | B. Nạp qua thẻ SD | Không thêm linh kiện | Phải mở vỏ; phụ thuộc bootloader | Dự phòng |
 | C. Chỉ nạp trên bàn, tháo modem | Đơn giản cho prototype | Không cứu được thiết bị ở hiện trường | Chỉ prototype |
 
-Phương án A cần thêm tín hiệu `USB_SEL` từ MCU hoặc SoC. Nếu chọn A, bổ sung vào J_B2B ở phiên bản sau; hiện tại hai chân `SPARE_SOC` đủ dùng cho prototype.
+Phương án A cần `USB_SEL`. **Đã bổ sung ở chân 20** (D-22, 2026-11-09), do MCU điều khiển; mux cụ thể vẫn mở ở O-13. Chân dự phòng còn lại là `SPARE_SOC2`.
 
 ## 5. Giao thức MCU ↔ SoC
 

@@ -16,6 +16,7 @@ Ba nhóm: đã chốt, đề xuất (chờ xác nhận), và câu hỏi mở. Kh
 | D-18 | Pack LFP 1S **15 Ah** (48 Wh danh định) | 2026-11-09 | Chủ dự án chốt. 10 Ah không còn dư cho kịch bản đêm (F-05). Kéo theo: BMS sạc ≥1,5 A, tự tiêu ≤100 µA |
 | D-19 | Module **eMMC 8 GB** (Core1106D1408 hoặc D1808), không dùng bản 256 MB SPI NAND | 2026-11-09 | Chủ dự án chốt. NAND không đủ OTA A/B + runtime Python (F-08) |
 | D-21 | Đổi một chân dự phòng trên J_B2B lấy `MODEM_RI` (chân 21) | 2026-11-09 | Chủ dự án chốt. RI là đường đánh thức SMS; số chân dự phòng còn 2 |
+| D-22 | Dùng chân 20 (trước là `SPARE_SOC1`) làm `USB_SEL` do MCU điều khiển | 2026-11-09 | Chốt sau rà soát: mux USB cần chân điều khiển mà J_B2B chưa có; giữ chân 20 là spare sẽ không bao giờ chọn được mux. Số chân dự phòng còn 1 (`SPARE_SOC2`). Mux cụ thể vẫn ở O-13 |
 
 ## 2. Đề xuất
 
