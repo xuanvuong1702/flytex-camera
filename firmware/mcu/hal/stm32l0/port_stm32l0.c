@@ -400,7 +400,7 @@ static void rtc_wakeup_arm(uint32_t ms)
         return;
     }
     rtc_unlock();
-    FLY_RTC->CR &= ~FLY_RTC_CR_WUTE;
+    FLY_RTC->CR &= (uint32_t)~FLY_RTC_CR_WUTE;
     while ((FLY_RTC->ISR & FLY_RTC_ISR_WUTWF) == 0u && guard < 100000u) {
         guard++;
     }
@@ -419,9 +419,9 @@ static void rtc_wakeup_arm(uint32_t ms)
         }
         wucksel = FLY_RTC_CR_WUCKSEL_CK_SPRE;
     }
-    FLY_RTC->CR = (FLY_RTC->CR & ~FLY_RTC_CR_WUCKSEL_MASK) | wucksel;
+    FLY_RTC->CR = (FLY_RTC->CR & (uint32_t)~FLY_RTC_CR_WUCKSEL_MASK) | wucksel;
     FLY_RTC->WUTR = ticks & 0xFFFFu;
-    FLY_RTC->ISR = ~FLY_RTC_ISR_WUTF; /* ghi 0 để xóa cờ */
+    FLY_RTC->ISR = (uint32_t)~FLY_RTC_ISR_WUTF; /* ghi 0 để xóa cờ */
     FLY_RTC->CR |= FLY_RTC_CR_WUTE;
     rtc_lock();
     FLY_EXTI->IMR |= FLY_EXTI_LINE_RTC_WUT;
@@ -430,7 +430,7 @@ static void rtc_wakeup_arm(uint32_t ms)
 static void rtc_wakeup_disarm(void)
 {
     rtc_unlock();
-    FLY_RTC->CR &= ~FLY_RTC_CR_WUTE;
+    FLY_RTC->CR &= (uint32_t)~FLY_RTC_CR_WUTE;
     rtc_lock();
 }
 
@@ -448,13 +448,13 @@ static uint32_t port_enter_stop(void *ctx, uint32_t max_ms)
 
     /* Xóa cờ thức cũ, chọn STOP (không phải Standby). */
     FLY_PWR->CR |= FLY_PWR_CR_CWUF | FLY_PWR_CR_CSBF;
-    FLY_PWR->CR &= ~FLY_PWR_CR_PDDS;
+    FLY_PWR->CR &= (uint32_t)~FLY_PWR_CR_PDDS;
     FLY_PWR->CR |= FLY_PWR_CR_LPSDSR;
 
     FLY_DSB();
     FLY_SCB_SCR |= FLY_SCB_SCR_SLEEPDEEP;
     FLY_WFI();
-    FLY_SCB_SCR &= ~FLY_SCB_SCR_SLEEPDEEP;
+    FLY_SCB_SCR &= (uint32_t)~FLY_SCB_SCR_SLEEPDEEP;
 
     /*
      * Đọc nguồn đánh thức. WUF1..WUF6 là các chân WKUP của PWR, không phải
@@ -688,7 +688,7 @@ void fly_port_init(fly_hal_t *hal)
     while ((FLY_RCC->CSR & FLY_RCC_CSR_LSIRDY) == 0u && guard < 1000000u) {
         guard++;
     }
-    FLY_RCC->CSR = (FLY_RCC->CSR & ~FLY_RCC_CSR_RTCSEL_MASK) | FLY_RCC_CSR_RTCSEL_LSI;
+    FLY_RCC->CSR = (FLY_RCC->CSR & (uint32_t)~FLY_RCC_CSR_RTCSEL_MASK) | FLY_RCC_CSR_RTCSEL_LSI;
     FLY_RCC->CSR |= (1uL << 16); /* RTCEN */
     guard = 0u;
     while ((FLY_RCC->CSR & (1uL << 17)) == 0u && guard < 1000000u) {
