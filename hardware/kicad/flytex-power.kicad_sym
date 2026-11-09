@@ -1,0 +1,1083 @@
+(kicad_symbol_lib
+	(version 20251024)
+	(generator "flytex-symbols")
+	(generator_version "10.0")
+	(symbol "BQ25070"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 0 11.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "BQ25070"
+			(at 0 -10.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_SON:TI_DQC0010A"
+			(at 0 0 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/bq25070.pdf"
+			(at 0 0 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "BQ25070_0_1"
+			(rectangle
+				(start -7.62 8.89)
+				(end 7.62 -8.89)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "BQ25070_1_1"
+		(pin power_in line
+			(at -12.700 6.350 0)
+			(length 5.08)
+			(name "IN"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_in line
+			(at -12.700 3.810 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "3"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin input line
+			(at -12.700 1.270 0)
+			(length 5.08)
+			(name "TS"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "5"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin input line
+			(at -12.700 -1.270 0)
+			(length 5.08)
+			(name "CTRL"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "7"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_in line
+			(at -12.700 -3.810 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "9"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_in line
+			(at -12.700 -6.350 0)
+			(length 5.08)
+			(name "PAD"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "11"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin output line
+			(at 12.700 6.350 180)
+			(length 5.08)
+			(name "IMON"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "2"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_out line
+			(at 12.700 3.810 180)
+			(length 5.08)
+			(name "LDO"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "4"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_out line
+			(at 12.700 1.270 180)
+			(length 5.08)
+			(name "BAT"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "6"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin open_collector line
+			(at 12.700 -1.270 180)
+			(length 5.08)
+			(name "CHG"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "8"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_out line
+			(at 12.700 -3.810 180)
+			(length 5.08)
+			(name "OUT"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "10"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		)
+	)
+	(symbol "TPS61088"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 0 17.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TPS61088"
+			(at 0 -16.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_DFN_QFN:VQFN-20-1EP_3.5x3.5mm_P0.5mm_EP2.1x2.1mm"
+			(at 0 0 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps61088.pdf"
+			(at 0 0 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "TPS61088_0_1"
+			(rectangle
+				(start -7.62 15.24)
+				(end 7.62 -15.24)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "TPS61088_1_1"
+		(pin input line
+			(at -12.700 12.700 0)
+			(length 5.08)
+			(name "EN"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "2"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin input line
+			(at -12.700 10.160 0)
+			(length 5.08)
+			(name "FSW"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "3"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_in line
+			(at -12.700 7.620 0)
+			(length 5.08)
+			(name "VIN"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "9"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -12.700 5.080 0)
+			(length 5.08)
+			(name "SS"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "10"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin no_connect line
+			(at -12.700 2.540 0)
+			(length 5.08)
+			(name "NC"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "11"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin no_connect line
+			(at -12.700 0.000 0)
+			(length 5.08)
+			(name "NC"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "12"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin input line
+			(at -12.700 -2.540 0)
+			(length 5.08)
+			(name "MODE"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "13"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin input line
+			(at -12.700 -5.080 0)
+			(length 5.08)
+			(name "FB"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "17"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_in line
+			(at -12.700 -7.620 0)
+			(length 5.08)
+			(name "AGND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "20"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_in line
+			(at -12.700 -10.160 0)
+			(length 5.08)
+			(name "PGND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "21"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_out line
+			(at 12.700 12.700 180)
+			(length 5.08)
+			(name "VCC"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 12.700 10.160 180)
+			(length 5.08)
+			(name "SW"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "4"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 12.700 7.620 180)
+			(length 5.08)
+			(name "SW"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "5"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 12.700 5.080 180)
+			(length 5.08)
+			(name "SW"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "6"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 12.700 2.540 180)
+			(length 5.08)
+			(name "SW"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "7"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 12.700 0.000 180)
+			(length 5.08)
+			(name "BOOT"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "8"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_out line
+			(at 12.700 -2.540 180)
+			(length 5.08)
+			(name "VOUT"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "14"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_out line
+			(at 12.700 -5.080 180)
+			(length 5.08)
+			(name "VOUT"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "15"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_out line
+			(at 12.700 -7.620 180)
+			(length 5.08)
+			(name "VOUT"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "16"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 12.700 -10.160 180)
+			(length 5.08)
+			(name "COMP"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "18"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 12.700 -12.700 180)
+			(length 5.08)
+			(name "ILIM"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "19"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		)
+	)
+	(symbol "TPS62840"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 0 11.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TPS62840"
+			(at 0 -10.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_SON:TI_DLC0008A"
+			(at 0 0 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps62840.pdf"
+			(at 0 0 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "TPS62840_0_1"
+			(rectangle
+				(start -7.62 8.89)
+				(end 7.62 -8.89)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "TPS62840_1_1"
+		(pin power_in line
+			(at -12.700 6.350 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_in line
+			(at -12.700 3.810 0)
+			(length 5.08)
+			(name "VIN"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "2"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin input line
+			(at -12.700 1.270 0)
+			(length 5.08)
+			(name "MODE"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "3"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin input line
+			(at -12.700 -1.270 0)
+			(length 5.08)
+			(name "EN"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "4"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin input line
+			(at -12.700 -3.810 0)
+			(length 5.08)
+			(name "STOP"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "6"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_in line
+			(at -12.700 -6.350 0)
+			(length 5.08)
+			(name "PAD"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "9"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin input line
+			(at 12.700 6.350 180)
+			(length 5.08)
+			(name "VSET"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "5"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 12.700 3.810 180)
+			(length 5.08)
+			(name "SW"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "7"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin input line
+			(at 12.700 1.270 180)
+			(length 5.08)
+			(name "VOS"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "8"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		)
+	)
+	(symbol "TPS22918"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "Q"
+			(at 0 7.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TPS22918"
+			(at 0 -6.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-6"
+			(at 0 0 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps22918.pdf"
+			(at 0 0 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "TPS22918_0_1"
+			(rectangle
+				(start -7.62 5.08)
+				(end 7.62 -5.08)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "TPS22918_1_1"
+		(pin power_in line
+			(at -12.700 2.540 0)
+			(length 5.08)
+			(name "VIN"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_in line
+			(at -12.700 0.000 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "2"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin input line
+			(at -12.700 -2.540 0)
+			(length 5.08)
+			(name "ON"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "3"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 12.700 2.540 180)
+			(length 5.08)
+			(name "CT"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "4"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 12.700 0.000 180)
+			(length 5.08)
+			(name "QOD"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "5"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_out line
+			(at 12.700 -2.540 180)
+			(length 5.08)
+			(name "VOUT"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "6"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		)
+	)
+)
