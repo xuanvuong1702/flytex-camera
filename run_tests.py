@@ -59,6 +59,8 @@ def build_steps(quick: bool) -> list[tuple[str, list[str]]]:
         ("hardware: netlist CMP khớp nguồn", [PY, "-m", "hardware.netlist.cmp", "--check"]),
         ("hardware: test schematic PWR", [PY, "hardware/kicad/tests/test_sch_pwr.py"]),
         ("hardware: schematic PWR khớp nguồn", [PY, "-m", "hardware.kicad.sch_pwr", "--check"]),
+        ("hardware: test schematic đầy đủ", [PY, "hardware/kicad/tests/test_sch_full.py"]),
+        ("hardware: schematic đầy đủ khớp nguồn", [PY, "-m", "hardware.kicad.sch_full", "--check"]),
         ("firmware: build và unit test", [PY, "firmware/mcu/tests/build.py", "test"]),
         ("firmware: include C di động", [PY, "tools/check_c_includes.py"]),
         ("firmware: compile port STM32L0", [PY, "firmware/mcu/tests/build.py", "port"]),

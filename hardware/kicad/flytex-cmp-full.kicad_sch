@@ -1,0 +1,5826 @@
+(kicad_sch
+	(version 20250610)
+	(generator "flytex-sch-full")
+	(generator_version "10.0")
+	(uuid "b2d10761-fcfc-5ac5-9a21-a50339d61eb8")
+	(paper "A0")
+	(title_block
+		(title "CMP full")
+		(rev "A")
+		(company "Flytex")
+	)
+	(lib_symbols
+	(symbol "flytex-gen:PART_J1"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 0 25.40 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)		)
+		(property "Value" "PART_J1"
+			(at 0 -24.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)		)
+		(symbol "PART_J1_0_1"
+			(rectangle
+				(start -15.24 22.86)
+				(end 15.24 -22.86)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "PART_J1_1_1"
+		(pin passive line
+			(at -20.320 17.780 0)
+			(length 5.08)
+			(name "+3V3"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 12.700 0)
+			(length 5.08)
+			(name "+5V_MODEM"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "3"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 7.620 0)
+			(length 5.08)
+			(name "SDA"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "5"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 2.540 0)
+			(length 5.08)
+			(name "UART_MCU_TX"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "7"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -2.540 0)
+			(length 5.08)
+			(name "SOC_READY"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "9"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -7.620 0)
+			(length 5.08)
+			(name "RI"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "11"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -12.700 0)
+			(length 5.08)
+			(name "MODEM_PWRKEY"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "13"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -17.780 0)
+			(length 5.08)
+			(name "MODEM_STATUS"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "15"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 17.780 180)
+			(length 5.08)
+			(name "+5V_SOC"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "2"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 12.700 180)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "4"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 7.620 180)
+			(length 5.08)
+			(name "SCL"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "6"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 2.540 180)
+			(length 5.08)
+			(name "UART_SOC_TX"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "8"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -2.540 180)
+			(length 5.08)
+			(name "IRQ"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "10"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -7.620 180)
+			(length 5.08)
+			(name "MODEM_RESET"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "12"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -12.700 180)
+			(length 5.08)
+			(name "USB_SEL"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "14"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		)
+	)
+	(symbol "flytex-gen:PART_U1"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 0 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)		)
+		(property "Value" "PART_U1"
+			(at 0 -59.69 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)		)
+		(symbol "PART_U1_0_1"
+			(rectangle
+				(start -15.24 58.42)
+				(end 15.24 -58.42)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "PART_U1_1_1"
+		(pin passive line
+			(at -20.320 53.340 0)
+			(length 5.08)
+			(name "USB_N"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "22"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 48.260 0)
+			(length 5.08)
+			(name "USB_VBUSDET"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "24"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 43.180 0)
+			(length 5.08)
+			(name "MIPI_D1P"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "8"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 38.100 0)
+			(length 5.08)
+			(name "MIPI_CK0P"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "10"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 33.020 0)
+			(length 5.08)
+			(name "MIPI_D0P"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "12"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 27.940 0)
+			(length 5.08)
+			(name "SD_D0"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "49"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 22.860 0)
+			(length 5.08)
+			(name "SD_D2"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "51"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 17.780 0)
+			(length 5.08)
+			(name "SD_CMD"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "53"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 12.700 0)
+			(length 5.08)
+			(name "CAM_MCLK"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "58"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 7.620 0)
+			(length 5.08)
+			(name "I2C1_SCL"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "63"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 2.540 0)
+			(length 5.08)
+			(name "UART3_TX"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "65"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -2.540 0)
+			(length 5.08)
+			(name "I2C0_SCL"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "68"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -7.620 0)
+			(length 5.08)
+			(name "UART4_RX"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "70"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -12.700 0)
+			(length 5.08)
+			(name "VCC3V3_RTC"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "76"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -17.780 0)
+			(length 5.08)
+			(name "VCC5V0_SYS"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "79"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -22.860 0)
+			(length 5.08)
+			(name "VCC5V0_SYS"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "81"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -27.940 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "25"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -33.020 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "29"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -38.100 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "47"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -43.180 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "82"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -48.260 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "84"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -53.340 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "112"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 53.340 180)
+			(length 5.08)
+			(name "USB_P"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "23"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 48.260 180)
+			(length 5.08)
+			(name "MIPI_D1N"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "7"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 43.180 180)
+			(length 5.08)
+			(name "MIPI_CK0N"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "9"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 38.100 180)
+			(length 5.08)
+			(name "MIPI_D0N"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "11"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 33.020 180)
+			(length 5.08)
+			(name "SD_DET"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "48"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 27.940 180)
+			(length 5.08)
+			(name "SD_D1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "50"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 22.860 180)
+			(length 5.08)
+			(name "SD_D3"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "52"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 17.780 180)
+			(length 5.08)
+			(name "SD_CLK"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "54"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 12.700 180)
+			(length 5.08)
+			(name "CAM_RST"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "60"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 7.620 180)
+			(length 5.08)
+			(name "I2C1_SDA"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "64"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 2.540 180)
+			(length 5.08)
+			(name "UART3_RX"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "66"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -2.540 180)
+			(length 5.08)
+			(name "I2C0_SDA"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "69"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -7.620 180)
+			(length 5.08)
+			(name "UART4_TX"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "71"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -12.700 180)
+			(length 5.08)
+			(name "VCC_3V3"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "78"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -17.780 180)
+			(length 5.08)
+			(name "VCC5V0_SYS"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "80"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -22.860 180)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "21"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -27.940 180)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "28"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -33.020 180)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "36"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -38.100 180)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "55"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -43.180 180)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "83"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -48.260 180)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "89"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		)
+	)
+	(symbol "flytex-gen:PART_J2"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 0 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)		)
+		(property "Value" "PART_J2"
+			(at 0 -29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)		)
+		(symbol "PART_J2_0_1"
+			(rectangle
+				(start -15.24 27.94)
+				(end 15.24 -27.94)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "PART_J2_1_1"
+		(pin passive line
+			(at -20.320 22.860 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 17.780 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "3"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 12.700 0)
+			(length 5.08)
+			(name "MDN0"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "5"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 7.620 0)
+			(length 5.08)
+			(name "MCP"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "7"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 2.540 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "9"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -2.540 0)
+			(length 5.08)
+			(name "MDN1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "11"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -7.620 0)
+			(length 5.08)
+			(name "SIO-C"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "13"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -12.700 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "15"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -17.780 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "17"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -22.860 0)
+			(length 5.08)
+			(name "+3.3V"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "19"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 22.860 180)
+			(length 5.08)
+			(name "XCLK"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "2"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 17.780 180)
+			(length 5.08)
+			(name "MDP0"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "4"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 12.700 180)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "6"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 7.620 180)
+			(length 5.08)
+			(name "MCN"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "8"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 2.540 180)
+			(length 5.08)
+			(name "MDP1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "10"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -2.540 180)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "12"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -7.620 180)
+			(length 5.08)
+			(name "SIO-D"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "14"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -12.700 180)
+			(length 5.08)
+			(name "RESET"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "16"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -17.780 180)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "18"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -22.860 180)
+			(length 5.08)
+			(name "+3.3V"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "20"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		)
+	)
+	(symbol "flytex-gen:PART_J3"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 0 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)		)
+		(property "Value" "PART_J3"
+			(at 0 -26.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)		)
+		(symbol "PART_J3_0_1"
+			(rectangle
+				(start -15.24 25.40)
+				(end 15.24 -25.40)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "PART_J3_1_1"
+		(pin passive line
+			(at -20.320 20.320 0)
+			(length 5.08)
+			(name "+5V_MODEM"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 15.240 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "3"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 10.160 0)
+			(length 5.08)
+			(name "USB_DP"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "5"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 5.080 0)
+			(length 5.08)
+			(name "UART_RX"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "7"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 0.000 0)
+			(length 5.08)
+			(name "RI"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "9"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -5.080 0)
+			(length 5.08)
+			(name "RESET"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "11"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -10.160 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "13"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -15.240 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "15"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -20.320 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "17"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 20.320 180)
+			(length 5.08)
+			(name "+5V_MODEM"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "2"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 15.240 180)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "4"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 10.160 180)
+			(length 5.08)
+			(name "USB_DM"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "6"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 5.080 180)
+			(length 5.08)
+			(name "UART_TX"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "8"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 0.000 180)
+			(length 5.08)
+			(name "STATUS"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "10"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -5.080 180)
+			(length 5.08)
+			(name "PWRKEY"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "12"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -10.160 180)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "14"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -15.240 180)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "16"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -20.320 180)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "18"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		)
+	)
+	(symbol "flytex-gen:PART_J4"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 0 17.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)		)
+		(property "Value" "PART_J4"
+			(at 0 -16.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)		)
+		(symbol "PART_J4_0_1"
+			(rectangle
+				(start -15.24 15.24)
+				(end 15.24 -15.24)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "PART_J4_1_1"
+		(pin passive line
+			(at -20.320 10.160 0)
+			(length 5.08)
+			(name "DAT2"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 5.080 0)
+			(length 5.08)
+			(name "CMD"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "3"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 0.000 0)
+			(length 5.08)
+			(name "CLK"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "5"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -5.080 0)
+			(length 5.08)
+			(name "DAT0"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "7"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -10.160 0)
+			(length 5.08)
+			(name "CD"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "9"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 10.160 180)
+			(length 5.08)
+			(name "CD/DAT3"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "2"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 5.080 180)
+			(length 5.08)
+			(name "VDD"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "4"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 0.000 180)
+			(length 5.08)
+			(name "VSS"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "6"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -5.080 180)
+			(length 5.08)
+			(name "DAT1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "8"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		)
+	)
+	(symbol "flytex-gen:PART_U2"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 0 17.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)		)
+		(property "Value" "PART_U2"
+			(at 0 -16.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)		)
+		(symbol "PART_U2_0_1"
+			(rectangle
+				(start -15.24 15.24)
+				(end 15.24 -15.24)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "PART_U2_1_1"
+		(pin passive line
+			(at -20.320 10.160 0)
+			(length 5.08)
+			(name "1D+"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 5.080 0)
+			(length 5.08)
+			(name "2D+"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "3"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 0.000 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "5"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -5.080 0)
+			(length 5.08)
+			(name "D-"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "7"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -10.160 0)
+			(length 5.08)
+			(name "S"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "9"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 10.160 180)
+			(length 5.08)
+			(name "1D-"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "2"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 5.080 180)
+			(length 5.08)
+			(name "2D-"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "4"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 0.000 180)
+			(length 5.08)
+			(name "OE"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "6"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -5.080 180)
+			(length 5.08)
+			(name "D+"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "8"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -10.160 180)
+			(length 5.08)
+			(name "VCC"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "10"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		)
+	)
+	(symbol "flytex-gen:PART_J5"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 0 10.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)		)
+		(property "Value" "PART_J5"
+			(at 0 -8.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)		)
+		(symbol "PART_J5_0_1"
+			(rectangle
+				(start -15.24 7.62)
+				(end 15.24 -7.62)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "PART_J5_1_1"
+		(pin passive line
+			(at -20.320 2.540 0)
+			(length 5.08)
+			(name "3V3"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -2.540 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "3"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 2.540 180)
+			(length 5.08)
+			(name "RX"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "2"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		)
+	)
+	(symbol "flytex-gen:PART_J6"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 0 10.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)		)
+		(property "Value" "PART_J6"
+			(at 0 -8.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)		)
+		(symbol "PART_J6_0_1"
+			(rectangle
+				(start -15.24 7.62)
+				(end 15.24 -7.62)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "PART_J6_1_1"
+		(pin passive line
+			(at -20.320 2.540 0)
+			(length 5.08)
+			(name "DP"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -2.540 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "3"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 2.540 180)
+			(length 5.08)
+			(name "DM"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "2"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -2.540 180)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "4"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		)
+	)
+	(symbol "flytex-gen:PART_TP1"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 0 10.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)		)
+		(property "Value" "PART_TP1"
+			(at 0 -8.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)		)
+		(symbol "PART_TP1_0_1"
+			(rectangle
+				(start -15.24 7.62)
+				(end 15.24 -7.62)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "PART_TP1_1_1"
+		(pin passive line
+			(at -20.320 2.540 0)
+			(length 5.08)
+			(name "SOC_READY"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -20.320 -2.540 0)
+			(length 5.08)
+			(name "USB_SEL"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "3"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 2.540 180)
+			(length 5.08)
+			(name "IRQ"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "2"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 -2.540 180)
+			(length 5.08)
+			(name "RI"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "4"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		)
+	)
+	(symbol "flytex-gen:PART_R1"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 0 10.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)		)
+		(property "Value" "PART_R1"
+			(at 0 -8.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)		)
+		(symbol "PART_R1_0_1"
+			(rectangle
+				(start -15.24 7.62)
+				(end 15.24 -7.62)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "PART_R1_1_1"
+		(pin passive line
+			(at -20.320 2.540 0)
+			(length 5.08)
+			(name "TOP"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 2.540 180)
+			(length 5.08)
+			(name "BOT"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "2"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		)
+	)
+	(symbol "flytex-gen:PART_C1"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 0 10.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)		)
+		(property "Value" "PART_C1"
+			(at 0 -8.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)		)
+		(symbol "PART_C1_0_1"
+			(rectangle
+				(start -15.24 7.62)
+				(end 15.24 -7.62)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "PART_C1_1_1"
+		(pin passive line
+			(at -20.320 2.540 0)
+			(length 5.08)
+			(name "P"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 2.540 180)
+			(length 5.08)
+			(name "N"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "2"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		)
+	)
+	(symbol "flytex-gen:PART_C2"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 0 10.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)		)
+		(property "Value" "PART_C2"
+			(at 0 -8.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)		)
+		(symbol "PART_C2_0_1"
+			(rectangle
+				(start -15.24 7.62)
+				(end 15.24 -7.62)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "PART_C2_1_1"
+		(pin passive line
+			(at -20.320 2.540 0)
+			(length 5.08)
+			(name "P"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 2.540 180)
+			(length 5.08)
+			(name "N"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "2"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		)
+	)
+	(symbol "flytex-gen:PART_R14"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 0 10.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)		)
+		(property "Value" "PART_R14"
+			(at 0 -8.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)		)
+		(symbol "PART_R14_0_1"
+			(rectangle
+				(start -15.24 7.62)
+				(end 15.24 -7.62)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "PART_R14_1_1"
+		(pin passive line
+			(at -20.320 2.540 0)
+			(length 5.08)
+			(name "TOP"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 2.540 180)
+			(length 5.08)
+			(name "BOT"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "2"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		)
+	)
+	(symbol "flytex-gen:PART_R15"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 0 10.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)		)
+		(property "Value" "PART_R15"
+			(at 0 -8.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)		)
+		(symbol "PART_R15_0_1"
+			(rectangle
+				(start -15.24 7.62)
+				(end 15.24 -7.62)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "PART_R15_1_1"
+		(pin passive line
+			(at -20.320 2.540 0)
+			(length 5.08)
+			(name "TOP"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 20.320 2.540 180)
+			(length 5.08)
+			(name "BOT"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "2"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		)
+	)
+	(symbol "power:PWR_FLAG"
+		(power)
+		(pin_numbers
+			(hide yes)
+		)
+		(pin_names
+			(offset 0)
+			(hide yes)
+		)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(property "Reference" "#FLG"
+			(at 0 1.905 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 0 3.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "PWR_FLAG_0_0"
+			(pin power_out line
+				(at 0 0 90)
+				(length 0)
+				(name "~"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+	)
+	)
+	(symbol
+		(lib_id "flytex-gen:PART_J1")
+		(at 70.00 70.00 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "9737b4b9-75d4-50e5-bce8-0f32f34f9219")
+		(property "Reference" "J1"
+			(at 70.00 50.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "J_B2B 2x13"
+			(at 70.00 90.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_Generic:Conn_02x13_Odd_Even"
+			(at 70.00 70.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 70.00 70.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "e8c4891e-3088-54c3-aa5d-6d43ca86bbc5")
+		)
+		(pin "2"
+			(uuid "e7a3be0e-155c-5df7-83ed-d018f37d2289")
+		)
+		(pin "3"
+			(uuid "5f445db6-54ee-5752-adc9-fe502e96e712")
+		)
+		(pin "4"
+			(uuid "c9a419fa-36eb-5ee7-a71a-2569debb8a0c")
+		)
+		(pin "5"
+			(uuid "9571dc85-86db-5675-ba2f-b1a0bdd1eb68")
+		)
+		(pin "6"
+			(uuid "a3639fe0-f12d-525e-89e5-5db707a1b61d")
+		)
+		(pin "7"
+			(uuid "56c6f8eb-e072-52d9-b3c8-feb2b7c318d3")
+		)
+		(pin "8"
+			(uuid "ca1e1242-92e7-527d-b35e-75637dd1d2ed")
+		)
+		(pin "9"
+			(uuid "0c90758c-815f-598d-88eb-5b9f2d44dcc4")
+		)
+		(pin "10"
+			(uuid "64573351-6323-5b97-883a-ad8c3d2f938f")
+		)
+		(pin "11"
+			(uuid "33815087-dd2f-512b-8f9b-7bb78e0d2eca")
+		)
+		(pin "12"
+			(uuid "22adf5be-cf4e-5edb-ad8d-4db198ab78a5")
+		)
+		(pin "13"
+			(uuid "87d13cd8-227e-510e-ad43-ce34e6ae3dce")
+		)
+		(pin "14"
+			(uuid "91dd7851-d1a5-51e2-a001-1d40d450714d")
+		)
+		(pin "15"
+			(uuid "5c541ddd-e2de-558f-a24a-b58500f2fcbb")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/b2d10761-fcfc-5ac5-9a21-a50339d61eb8"
+					(reference "J1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "+3V3"
+		(shape input)
+		(at 49.68 52.22 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "37ef0eab-2487-5a3c-bd98-b2e5f4ec6554")
+	)
+	(global_label "+5V_SOC"
+		(shape input)
+		(at 90.32 52.22 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "85067c68-de91-5093-a020-f1b7e700c798")
+	)
+	(global_label "+5V_MODEM"
+		(shape input)
+		(at 49.68 57.30 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "52500dfc-14ca-5274-bc9f-f95b824acdcb")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 90.32 57.30 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "b0a4839c-6fa9-5391-b067-69dac280f4b0")
+	)
+	(global_label "SDA"
+		(shape input)
+		(at 49.68 62.38 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "f175a063-b4a1-5bd5-97a4-15c2085f28af")
+	)
+	(global_label "SCL"
+		(shape input)
+		(at 90.32 62.38 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "f3719957-88a5-5d4c-aa97-2c9e26e1503d")
+	)
+	(global_label "UART_MCU_TX"
+		(shape input)
+		(at 49.68 67.46 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "af230bb2-58d8-5f16-b423-e5e4c5496319")
+	)
+	(global_label "UART_SOC_TX"
+		(shape input)
+		(at 90.32 67.46 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "fb4180dc-1b71-5c54-a22c-4b89163083e0")
+	)
+	(global_label "SOC_READY"
+		(shape input)
+		(at 49.68 72.54 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "78ef6b21-8249-5869-a4f2-3fd7ba7665c3")
+	)
+	(global_label "IRQ"
+		(shape input)
+		(at 90.32 72.54 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "9216bf6b-577e-5932-977c-fbdc4ba56389")
+	)
+	(global_label "RI"
+		(shape input)
+		(at 49.68 77.62 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "e2de39c3-ccc6-545f-a790-e0a3013c8e26")
+	)
+	(global_label "MODEM_RESET"
+		(shape input)
+		(at 90.32 77.62 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "8cd43093-eaaf-50c1-ab69-59aff9a1fd3e")
+	)
+	(global_label "MODEM_PWRKEY"
+		(shape input)
+		(at 49.68 82.70 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "eb7c2850-6c87-5d37-9c1a-0b3fa385dae7")
+	)
+	(global_label "USB_SEL"
+		(shape input)
+		(at 90.32 82.70 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "31ff8cdd-3596-5ec0-9d1f-df30d092e8c1")
+	)
+	(global_label "MODEM_STATUS"
+		(shape input)
+		(at 49.68 87.78 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "1190bf0e-33b6-57f2-86fc-1ca9a902b1a9")
+	)
+	(symbol
+		(lib_id "flytex-gen:PART_U1")
+		(at 250.00 70.00 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "cd7f62bc-8aa3-58f4-a23a-fef91a57fefd")
+		(property "Reference" "U1"
+			(at 250.00 50.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Core1106D1408"
+			(at 250.00 90.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "flytex:Core1106D"
+			(at 250.00 70.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 250.00 70.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "22"
+			(uuid "3cda63d3-2837-54df-8f1a-a4ee7c71183d")
+		)
+		(pin "23"
+			(uuid "daf2c313-8f40-57cf-9496-567dd762743f")
+		)
+		(pin "24"
+			(uuid "42aec202-a605-576d-9992-6610e31329a3")
+		)
+		(pin "7"
+			(uuid "2e8d7600-d0e9-59d4-a761-4fd9c314e453")
+		)
+		(pin "8"
+			(uuid "c5c16575-d160-5191-9091-8ec30d058d2b")
+		)
+		(pin "9"
+			(uuid "d9627859-de92-51b9-869c-8f0f426419e4")
+		)
+		(pin "10"
+			(uuid "1056bac3-2c7e-5cab-8212-bf7831270695")
+		)
+		(pin "11"
+			(uuid "78e56983-b528-5eaa-904b-4a1d485fc63a")
+		)
+		(pin "12"
+			(uuid "b4b99ec1-5613-51e9-a219-97a2623652ad")
+		)
+		(pin "48"
+			(uuid "d547c1aa-450c-5908-ad61-80966231e16e")
+		)
+		(pin "49"
+			(uuid "f0817d1d-395e-59e9-8048-142bbb1ce086")
+		)
+		(pin "50"
+			(uuid "f0abb8e4-38a4-5615-b6f6-3e2b96a1571a")
+		)
+		(pin "51"
+			(uuid "991442a0-8664-5c3e-bee9-e4d59fa7f83b")
+		)
+		(pin "52"
+			(uuid "1354f8c7-ad84-5a9f-988e-9b342e24e405")
+		)
+		(pin "53"
+			(uuid "bf61efb2-c851-585c-9f58-ce2f963ed154")
+		)
+		(pin "54"
+			(uuid "f53fbb22-7bf6-543a-8072-4f13530ca11d")
+		)
+		(pin "58"
+			(uuid "908efeb6-43d4-5433-bc8f-afbc7c83b228")
+		)
+		(pin "60"
+			(uuid "5b8f876b-cee0-5076-8992-5ce21c671c85")
+		)
+		(pin "63"
+			(uuid "1c4d4171-b3a3-5da4-ab78-c405ed5e3a1c")
+		)
+		(pin "64"
+			(uuid "27d0674a-8ed2-5965-b9dc-232444e3b70e")
+		)
+		(pin "65"
+			(uuid "b11298e5-c8ab-5285-abb5-945b2404dd16")
+		)
+		(pin "66"
+			(uuid "87f1e1b3-f39e-5673-9058-a4c131fd1e95")
+		)
+		(pin "68"
+			(uuid "cf24326a-ca29-5dc6-ab17-2d60833e8ac2")
+		)
+		(pin "69"
+			(uuid "8e62801d-7de2-5ebb-a107-2e9c15216d10")
+		)
+		(pin "70"
+			(uuid "d1ad4c16-c40f-58d2-ad1b-db9100e5d037")
+		)
+		(pin "71"
+			(uuid "e9fcd30b-34e6-57a1-bb97-169c18acb088")
+		)
+		(pin "76"
+			(uuid "207338e4-a646-55b0-87ad-d2962e2e61c5")
+		)
+		(pin "78"
+			(uuid "48a26601-e025-5eb4-9b49-4c6445bcc2c3")
+		)
+		(pin "79"
+			(uuid "cc9ce089-9f64-5787-81db-85bd261bf0a1")
+		)
+		(pin "80"
+			(uuid "409c4062-cd37-53e3-a938-a255b8f8aa79")
+		)
+		(pin "81"
+			(uuid "386cc20c-e7b6-5698-b0b8-7574d4f9473f")
+		)
+		(pin "21"
+			(uuid "2f68ac4f-7f04-511a-a509-fcac62b64459")
+		)
+		(pin "25"
+			(uuid "9119867d-b917-597a-a51c-98b29b2d327f")
+		)
+		(pin "28"
+			(uuid "8fbf3053-d9d9-551e-bf2d-53de99305fbc")
+		)
+		(pin "29"
+			(uuid "65e4c2a3-688a-51a5-8a40-dee832f31f93")
+		)
+		(pin "36"
+			(uuid "02d14861-cf7a-58d1-afe2-8cc72703e98a")
+		)
+		(pin "47"
+			(uuid "841a2b2d-cc00-5095-b1e7-de2d0d31a346")
+		)
+		(pin "55"
+			(uuid "deeff431-0102-5172-8e05-7be05ba0d027")
+		)
+		(pin "82"
+			(uuid "047e57b6-95f9-5559-86a1-e73b1fd6acc8")
+		)
+		(pin "83"
+			(uuid "d9613c4a-c896-55f0-8ea5-3d23dc72466f")
+		)
+		(pin "84"
+			(uuid "10ed1eec-efe9-5c8a-afb0-b8fa88b2ec72")
+		)
+		(pin "89"
+			(uuid "7288e9ae-3303-5e01-aaff-5db900f2c44e")
+		)
+		(pin "112"
+			(uuid "736d30ec-b599-538f-ba61-60c83d746cbe")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/b2d10761-fcfc-5ac5-9a21-a50339d61eb8"
+					(reference "U1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "USB_DM"
+		(shape input)
+		(at 229.68 16.66 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "2eb974de-be28-5ea7-adfd-2d278c22a10e")
+	)
+	(global_label "USB_DP"
+		(shape input)
+		(at 270.32 16.66 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "e099f9a6-c87b-54d2-92b7-bfcdf1d0b97c")
+	)
+	(global_label "USB_VBUSDET"
+		(shape input)
+		(at 229.68 21.74 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "7ca0b0f2-ddc7-5211-921f-6fb562554d8b")
+	)
+	(global_label "MIPI_D1N"
+		(shape input)
+		(at 270.32 21.74 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c1d17064-0fa8-5f4a-940d-365345ed0a9b")
+	)
+	(global_label "MIPI_D1P"
+		(shape input)
+		(at 229.68 26.82 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "fb32b041-73f6-580a-8cb0-53ed8c8e6c59")
+	)
+	(global_label "MIPI_CLKN"
+		(shape input)
+		(at 270.32 26.82 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "1b3fd7ce-8913-5085-a649-74af9558d83b")
+	)
+	(global_label "MIPI_CLKP"
+		(shape input)
+		(at 229.68 31.90 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "64f3c747-a03f-578c-b250-ed635926b641")
+	)
+	(global_label "MIPI_D0N"
+		(shape input)
+		(at 270.32 31.90 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "10d6a12c-9cd6-51de-a6f3-360256d44920")
+	)
+	(global_label "MIPI_D0P"
+		(shape input)
+		(at 229.68 36.98 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "4214ac9e-206f-5c84-813b-f693388be174")
+	)
+	(global_label "SD_DET"
+		(shape input)
+		(at 270.32 36.98 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "d7dbdced-de57-5fd4-bc30-18ade7c80c9a")
+	)
+	(global_label "SD_D0"
+		(shape input)
+		(at 229.68 42.06 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "b58d542f-bb78-59a0-bae4-204b96792ebb")
+	)
+	(global_label "SD_D1"
+		(shape input)
+		(at 270.32 42.06 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "85749b15-9a2b-5f89-92df-6b090e08b8e8")
+	)
+	(global_label "SD_D2"
+		(shape input)
+		(at 229.68 47.14 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "2a78dc31-d7c7-5756-ae91-7723f80a690f")
+	)
+	(global_label "SD_D3"
+		(shape input)
+		(at 270.32 47.14 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "176028f1-9de4-56b2-b389-627418cd953d")
+	)
+	(global_label "SD_CMD"
+		(shape input)
+		(at 229.68 52.22 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "c33c5b13-3289-52cc-9a40-6872b5270a29")
+	)
+	(global_label "SD_CLK"
+		(shape input)
+		(at 270.32 52.22 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "9781e166-fe86-5de5-b2d6-21be773a0866")
+	)
+	(global_label "CAM_MCLK"
+		(shape input)
+		(at 229.68 57.30 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "db309a22-1b00-5c8a-90d4-3b73267ba674")
+	)
+	(global_label "CAM_RST"
+		(shape input)
+		(at 270.32 57.30 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "d918beaf-f878-5122-844a-feb8edf69053")
+	)
+	(global_label "SCL"
+		(shape input)
+		(at 229.68 62.38 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "c0a536b0-c198-53db-90ad-c8a6547eda18")
+	)
+	(global_label "SDA"
+		(shape input)
+		(at 270.32 62.38 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "566db44a-1f69-5da5-9786-5abaccf42fa2")
+	)
+	(global_label "MODEM_UART_RX"
+		(shape input)
+		(at 229.68 67.46 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "919484b6-453e-5249-9d00-4bd40851b24c")
+	)
+	(global_label "MODEM_UART_TX"
+		(shape input)
+		(at 270.32 67.46 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "dd36fbee-1e46-50a1-90ce-fbaff951f498")
+	)
+	(global_label "CAM_SCL"
+		(shape input)
+		(at 229.68 72.54 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "1e0e3b0e-6e42-512e-9084-7ebe7b24e94a")
+	)
+	(global_label "CAM_SDA"
+		(shape input)
+		(at 270.32 72.54 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "5068585b-a510-555b-968b-ae0b191cf621")
+	)
+	(global_label "UART_MCU_TX"
+		(shape input)
+		(at 229.68 77.62 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "dbfcd688-e6be-58d9-82ff-de0c61a97fca")
+	)
+	(global_label "UART_SOC_TX"
+		(shape input)
+		(at 270.32 77.62 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3ec48051-1d43-5066-bafe-5babb123924c")
+	)
+	(global_label "+3V3"
+		(shape input)
+		(at 229.68 82.70 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "a1285538-5393-54b7-bc40-e1d676979549")
+	)
+	(global_label "+3V3"
+		(shape input)
+		(at 270.32 82.70 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "a1893888-fcc7-5db7-a04b-759baaa505f2")
+	)
+	(global_label "+5V_SOC"
+		(shape input)
+		(at 229.68 87.78 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "089078a8-6a57-5314-a611-64314a9ba21a")
+	)
+	(global_label "+5V_SOC"
+		(shape input)
+		(at 270.32 87.78 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "375e8d0a-c259-5270-8423-125af24d854d")
+	)
+	(global_label "+5V_SOC"
+		(shape input)
+		(at 229.68 92.86 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "c8328746-c1cf-5f6e-a338-04a942d0d216")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 270.32 92.86 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "bde95003-5c0a-517c-94d3-63ef688534f5")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 229.68 97.94 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "c1db3e96-68c8-5568-8b12-6cfc78c4c4da")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 270.32 97.94 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "b564b96a-08dc-53b6-874d-044024c61071")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 229.68 103.02 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "b8f67bc4-e143-5b1f-b2ed-5fd6da99ee67")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 270.32 103.02 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "4eb0c0ef-6f50-555b-b5bd-e033f25a52dd")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 229.68 108.10 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "70e38bac-6756-5343-a348-6d158cacbe9f")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 270.32 108.10 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "d246b632-8fe5-561c-b6b5-98985fad582f")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 229.68 113.18 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "66465844-9905-5091-a0a1-78bca81f25d6")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 270.32 113.18 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "6ca97eff-8824-5852-b1ba-7db7dc5f0b6c")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 229.68 118.26 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "014908fe-891d-59fb-8fe5-281d577fdf87")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 270.32 118.26 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "284e700c-1697-5225-ba2b-1b4845bd14fe")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 229.68 123.34 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "368144e8-f3cc-56b0-bdcd-b4c7d0971439")
+	)
+	(symbol
+		(lib_id "flytex-gen:PART_J2")
+		(at 430.00 70.00 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "249c1bf4-0044-5a00-aae7-feb07fb4d568")
+		(property "Reference" "J2"
+			(at 430.00 50.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SC3336 3MP (B)"
+			(at 430.00 90.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_FPC:FH12-20S-0.5SH"
+			(at 430.00 70.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 430.00 70.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "f30c5ab0-b5e3-5c42-84d5-23aeb54ba958")
+		)
+		(pin "2"
+			(uuid "65c624a1-1da1-529a-9ceb-d316f7d6123e")
+		)
+		(pin "3"
+			(uuid "61602299-2d2d-5eaa-bb2b-d4a495bce829")
+		)
+		(pin "4"
+			(uuid "1f83e0c0-1c33-5e04-a6cf-ef63ed2807ab")
+		)
+		(pin "5"
+			(uuid "d3b90c03-bec9-5dbc-a693-63b6e2db4f59")
+		)
+		(pin "6"
+			(uuid "6095802c-5562-57af-872c-35af8b0d6534")
+		)
+		(pin "7"
+			(uuid "cac1d116-1729-5d0a-ad66-0175be37c976")
+		)
+		(pin "8"
+			(uuid "f6355ebc-4fa1-5853-b1c8-ad2cb0db414c")
+		)
+		(pin "9"
+			(uuid "0e8a7c0d-40da-5df8-93af-124218c61384")
+		)
+		(pin "10"
+			(uuid "0a5f2f78-10f5-56a3-9afa-ad5c2bfa17ee")
+		)
+		(pin "11"
+			(uuid "4b3c774b-8721-5b8c-8cad-bb20fa86497c")
+		)
+		(pin "12"
+			(uuid "8eb0c967-03b4-59ab-a9e6-70c8956494fd")
+		)
+		(pin "13"
+			(uuid "6a044be3-25f6-5e8c-9ee1-bd4367941666")
+		)
+		(pin "14"
+			(uuid "8586452c-2009-57d3-8879-2beb358eb9ed")
+		)
+		(pin "15"
+			(uuid "501f9680-a3a7-5f8b-9d06-d6b71b43017c")
+		)
+		(pin "16"
+			(uuid "38d46556-8668-5905-8ba8-cb2c1c554254")
+		)
+		(pin "17"
+			(uuid "7a5ee6dc-fc7c-541d-99c3-75f6f1b8c444")
+		)
+		(pin "18"
+			(uuid "5d8a96b0-a088-5bfa-9db4-72c4ee4b1067")
+		)
+		(pin "19"
+			(uuid "641296e1-1cbf-5048-8a0f-d8cb4d849352")
+		)
+		(pin "20"
+			(uuid "1f8cac65-e7a8-59f7-889b-d365fbf78e81")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/b2d10761-fcfc-5ac5-9a21-a50339d61eb8"
+					(reference "J2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape input)
+		(at 409.68 47.14 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "cccbb499-bafd-59f0-bf66-8673e65c3db3")
+	)
+	(global_label "CAM_MCLK"
+		(shape input)
+		(at 450.32 47.14 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3b76460b-bde8-5d58-995a-a0d88ce0ed53")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 409.68 52.22 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "899bbc1c-f40b-5288-acab-d51ff329a2eb")
+	)
+	(global_label "MIPI_D0P"
+		(shape input)
+		(at 450.32 52.22 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "b101bafe-8f28-5b44-8515-68262fb640f6")
+	)
+	(global_label "MIPI_D0N"
+		(shape input)
+		(at 409.68 57.30 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "3bfbedb6-4ca0-5710-8b1e-53cca997ede2")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 450.32 57.30 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "48a65763-4b83-549e-a354-62f756854fbe")
+	)
+	(global_label "MIPI_CLKP"
+		(shape input)
+		(at 409.68 62.38 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "7a03e842-8dea-5169-a565-113013ae6ec3")
+	)
+	(global_label "MIPI_CLKN"
+		(shape input)
+		(at 450.32 62.38 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "6cf5edb3-25a3-537c-9979-ad766483d995")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 409.68 67.46 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "2c702e62-21a7-5147-9aca-d7bb643897e0")
+	)
+	(global_label "MIPI_D1P"
+		(shape input)
+		(at 450.32 67.46 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "16fa7f0a-de98-5029-8244-a7808ab10f00")
+	)
+	(global_label "MIPI_D1N"
+		(shape input)
+		(at 409.68 72.54 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "a7e2d5a1-7d21-5dda-b255-5fc9bfc8a763")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 450.32 72.54 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "9b629c36-fe4c-577a-b332-70d6d5a325af")
+	)
+	(global_label "CAM_SCL"
+		(shape input)
+		(at 409.68 77.62 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "15293382-48d2-5a56-b33e-2166c82f686f")
+	)
+	(global_label "CAM_SDA"
+		(shape input)
+		(at 450.32 77.62 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "78c5b282-b22b-568a-874d-c5ee9cedac87")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 409.68 82.70 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "708b9b58-ac9c-5bd4-b39c-b168435ee68d")
+	)
+	(global_label "CAM_RST"
+		(shape input)
+		(at 450.32 82.70 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "fa44b3a2-acb1-5150-bc86-eb14f0a736c2")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 409.68 87.78 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "a448eb2e-d56f-526d-8d74-1d72060f1497")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 450.32 87.78 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "e6c98119-b4c1-520d-99f8-a9e70a9ec1e8")
+	)
+	(global_label "+3V3"
+		(shape input)
+		(at 409.68 92.86 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "47d9836f-be0c-54ac-957b-0a542071e927")
+	)
+	(global_label "+3V3"
+		(shape input)
+		(at 450.32 92.86 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "6649139f-9670-5b67-9980-a1c6c0b67a15")
+	)
+	(symbol
+		(lib_id "flytex-gen:PART_J3")
+		(at 610.00 70.00 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "520c8755-8c1d-5307-bcdb-fe066479c35b")
+		(property "Reference" "J3"
+			(at 610.00 50.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "EC200U carrier"
+			(at 610.00 90.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_Generic:Conn_02x09_Odd_Even"
+			(at 610.00 70.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 610.00 70.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "ec88f266-5cfc-58b5-ad81-2643fd169e54")
+		)
+		(pin "2"
+			(uuid "dd6832e1-a4a1-5c0e-8ea1-95de24781722")
+		)
+		(pin "3"
+			(uuid "ffdbd68e-db2e-5d9d-abdf-3228d644d8b9")
+		)
+		(pin "4"
+			(uuid "8db8554d-a716-5ea1-85b6-4f05c06d244d")
+		)
+		(pin "5"
+			(uuid "11ff7f64-d9a1-52f4-beed-4aa4eeabaac1")
+		)
+		(pin "6"
+			(uuid "ae636c81-4245-5757-9d0c-b790f90af61e")
+		)
+		(pin "7"
+			(uuid "c4af7337-e4a5-549c-9c62-075d2353fc82")
+		)
+		(pin "8"
+			(uuid "366fc83c-c0ce-5007-9adb-20326a3ac2e7")
+		)
+		(pin "9"
+			(uuid "bdfb1c20-e6c8-58c7-b83a-73db56253d52")
+		)
+		(pin "10"
+			(uuid "8de1f60d-91e3-58cd-a754-660f9435eb3e")
+		)
+		(pin "11"
+			(uuid "1e101dbd-46f2-58c5-b8cc-55ff023878a8")
+		)
+		(pin "12"
+			(uuid "285219b3-5564-5a5b-b367-e2837df29f6e")
+		)
+		(pin "13"
+			(uuid "430dce2c-2ba7-50c9-8fec-c85c2a46e848")
+		)
+		(pin "14"
+			(uuid "53041bcf-756e-5692-a43f-554e9a80013f")
+		)
+		(pin "15"
+			(uuid "aef76cb6-34c2-5530-9d52-4368a32a80cc")
+		)
+		(pin "16"
+			(uuid "505e0878-2522-5cf7-baf5-2fe1e536d9a5")
+		)
+		(pin "17"
+			(uuid "b181be1f-71cc-5c0d-b684-d76f8f1705ab")
+		)
+		(pin "18"
+			(uuid "7619b712-10d3-55f0-becf-8ece74ea923b")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/b2d10761-fcfc-5ac5-9a21-a50339d61eb8"
+					(reference "J3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "+5V_MODEM"
+		(shape input)
+		(at 589.68 49.68 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "4cef88cb-90a2-5cbe-8a74-e7040a7a3d2f")
+	)
+	(global_label "+5V_MODEM"
+		(shape input)
+		(at 630.32 49.68 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "d328cd1f-2eab-5e25-bcc5-4953d6b6ab3a")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 589.68 54.76 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "6c8196a3-a8d3-59df-9433-5f5efe69a2d1")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 630.32 54.76 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "79dc21b8-f6a0-500e-b825-20d0cd974d6e")
+	)
+	(global_label "MODEM_USB_DP"
+		(shape input)
+		(at 589.68 59.84 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "52df6afa-f620-5ed6-87ca-8f48d12f9947")
+	)
+	(global_label "MODEM_USB_DM"
+		(shape input)
+		(at 630.32 59.84 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "6b258973-e327-5961-81a5-fc8ca52c6d38")
+	)
+	(global_label "MODEM_UART_RX"
+		(shape input)
+		(at 589.68 64.92 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "4121b781-b55b-5a5b-93ad-902c46249d6e")
+	)
+	(global_label "MODEM_UART_TX"
+		(shape input)
+		(at 630.32 64.92 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "0ec349a7-0a03-5e22-b471-332eac411654")
+	)
+	(global_label "RI"
+		(shape input)
+		(at 589.68 70.00 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "511212e6-af1e-5244-be4e-b8ceae30e4fe")
+	)
+	(global_label "MODEM_STATUS"
+		(shape input)
+		(at 630.32 70.00 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "1be45211-082e-5dad-825f-41a0de65ad37")
+	)
+	(global_label "MODEM_RESET"
+		(shape input)
+		(at 589.68 75.08 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "b00ebbfd-7a26-5145-8c2f-04203d54fbe1")
+	)
+	(global_label "MODEM_PWRKEY"
+		(shape input)
+		(at 630.32 75.08 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "8111f3c4-6c16-53ab-9e8f-5a206cce54cf")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 589.68 80.16 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "b18f8b91-fce7-5655-af61-9f55547ae7b7")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 630.32 80.16 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3821cbd5-30c3-5966-b3ed-bf68b905a778")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 589.68 85.24 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "c14a2388-9f10-5298-9779-2d7d3a1a7171")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 630.32 85.24 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "345ef977-9d81-511d-8ed4-c37489823864")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 589.68 90.32 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "45dc89ee-ab20-518e-ad77-7e80e2d87858")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 630.32 90.32 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "6d830a61-fe60-5020-a1d9-795c0dfc724e")
+	)
+	(symbol
+		(lib_id "flytex-gen:PART_J4")
+		(at 790.00 70.00 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "362a86fe-4dc7-5376-a1d9-9c2159d97ff0")
+		(property "Reference" "J4"
+			(at 790.00 50.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "microSD"
+			(at 790.00 90.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_Card:microSD_HC_Hirose_DM3AT"
+			(at 790.00 70.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 790.00 70.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "a4047f0d-df96-56a4-bb83-6e18bd1f12ce")
+		)
+		(pin "2"
+			(uuid "9865ffa9-8574-5c42-b9fd-28217a4a4a34")
+		)
+		(pin "3"
+			(uuid "753e5d00-a9cc-5344-9f80-99535f907c9a")
+		)
+		(pin "4"
+			(uuid "9c28aaf2-55f1-500b-8a94-ff6d1295f004")
+		)
+		(pin "5"
+			(uuid "79482648-de19-5854-9995-442ac7fe27d6")
+		)
+		(pin "6"
+			(uuid "ac9eb2ec-9e69-5a91-829b-ff8c0ef69506")
+		)
+		(pin "7"
+			(uuid "2a073af5-1bec-5d76-a956-e1601a2fa20f")
+		)
+		(pin "8"
+			(uuid "97c5376d-2970-53a9-89ff-674190d144e9")
+		)
+		(pin "9"
+			(uuid "8167a875-8d86-5446-ac60-7618f54b0e9d")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/b2d10761-fcfc-5ac5-9a21-a50339d61eb8"
+					(reference "J4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "SD_D2"
+		(shape input)
+		(at 769.68 59.84 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "f180603e-9598-5664-a84b-d2e317884f12")
+	)
+	(global_label "SD_D3"
+		(shape input)
+		(at 810.32 59.84 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "86d8dd2e-5864-571d-b6aa-453748617e79")
+	)
+	(global_label "SD_CMD"
+		(shape input)
+		(at 769.68 64.92 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "46a21767-c088-5908-bf55-74551ee32547")
+	)
+	(global_label "+3V3"
+		(shape input)
+		(at 810.32 64.92 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "a9d3f971-8df6-5355-bb08-b3efd0bbe1d4")
+	)
+	(global_label "SD_CLK"
+		(shape input)
+		(at 769.68 70.00 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "c5fe22af-f064-5c61-96e3-25ba4e197a74")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 810.32 70.00 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "51de8158-a98d-5a60-9f2f-d4f7799a41f8")
+	)
+	(global_label "SD_D0"
+		(shape input)
+		(at 769.68 75.08 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "a604c041-eda6-5f0e-b936-4ee4a1f14775")
+	)
+	(global_label "SD_D1"
+		(shape input)
+		(at 810.32 75.08 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c5def7e0-e9f3-5026-bdf2-2fd51562dbe7")
+	)
+	(global_label "SD_DET"
+		(shape input)
+		(at 769.68 80.16 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "7c66f16f-0572-5282-b684-95024ab19607")
+	)
+	(symbol
+		(lib_id "flytex-gen:PART_U2")
+		(at 70.00 165.00 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "5f105dda-0590-5fa8-a8bd-52d993715279")
+		(property "Reference" "U2"
+			(at 70.00 145.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TS3USB221A"
+			(at 70.00 185.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_DFN_QFN:UQFN-10_1.4x1.8mm_P0.4mm"
+			(at 70.00 165.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 70.00 165.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "76ce2625-59e0-5219-8ba7-e5d6599292f9")
+		)
+		(pin "2"
+			(uuid "6e5cfc1e-3bc9-57c5-858d-70e06e4a9cfb")
+		)
+		(pin "3"
+			(uuid "feb534cf-074e-552e-b375-d14b20dba0a5")
+		)
+		(pin "4"
+			(uuid "8fc29255-88e3-5eee-ab6d-41a2af900e5b")
+		)
+		(pin "5"
+			(uuid "71e31222-a667-52d6-b1f2-b278b32f3fbd")
+		)
+		(pin "6"
+			(uuid "dd13a489-f814-5c25-a58c-ac639a7dde21")
+		)
+		(pin "7"
+			(uuid "e75efc5f-e53f-5db1-99dc-14c406c76097")
+		)
+		(pin "8"
+			(uuid "e40cf6b7-6106-5100-a9b9-3836eb7bef62")
+		)
+		(pin "9"
+			(uuid "44d083cb-3d60-5a7b-8e9f-9edd33b8c45e")
+		)
+		(pin "10"
+			(uuid "00b7e387-cdb2-5b42-820c-231acf3a05cd")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/b2d10761-fcfc-5ac5-9a21-a50339d61eb8"
+					(reference "U2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "MODEM_USB_DP"
+		(shape input)
+		(at 49.68 154.84 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "55357018-1529-5e23-9566-58299cd21241")
+	)
+	(global_label "MODEM_USB_DM"
+		(shape input)
+		(at 90.32 154.84 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "08d9aaf4-cc13-5bc6-bd25-21170926dfec")
+	)
+	(global_label "SVC_USB_DP"
+		(shape input)
+		(at 49.68 159.92 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "a2123886-2f38-5b60-916d-f05fc5172d76")
+	)
+	(global_label "SVC_USB_DM"
+		(shape input)
+		(at 90.32 159.92 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "4bf65891-08f8-5fb9-9e37-1d090ba0c325")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 49.68 165.00 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "a02b2506-d0bd-5afc-8406-95984c84f77a")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 90.32 165.00 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "d23f7b6b-4735-58aa-a88d-1757ced6f5cc")
+	)
+	(global_label "USB_DM"
+		(shape input)
+		(at 49.68 170.08 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "bf3fa6ac-391e-5c85-9294-1e2509670e55")
+	)
+	(global_label "USB_DP"
+		(shape input)
+		(at 90.32 170.08 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3734e8b5-8914-55a3-a940-bc5fa04c47ee")
+	)
+	(global_label "USB_SEL"
+		(shape input)
+		(at 49.68 175.16 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "9c134b1a-82c2-53fc-9401-c70cb5e7060d")
+	)
+	(global_label "+3V3"
+		(shape input)
+		(at 90.32 175.16 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "58e952a5-5175-54c3-9af9-20b706bec864")
+	)
+	(symbol
+		(lib_id "flytex-gen:PART_J5")
+		(at 250.00 165.00 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "b7fb648b-43e9-5b14-a5e5-56fedee30bb6")
+		(property "Reference" "J5"
+			(at 250.00 145.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "UART console"
+			(at 250.00 185.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_Generic:Conn_01x03"
+			(at 250.00 165.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 250.00 165.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "106f2bbd-2fc4-57ef-a06c-81724e709818")
+		)
+		(pin "2"
+			(uuid "53050e1c-82d7-516f-a902-ab830623c996")
+		)
+		(pin "3"
+			(uuid "f09f5017-c284-5886-b656-c7f37c98e2e7")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/b2d10761-fcfc-5ac5-9a21-a50339d61eb8"
+					(reference "J5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "+3V3"
+		(shape input)
+		(at 229.68 162.46 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "c10ffc9e-13f8-5ac8-acb2-009dcd6e5459")
+	)
+	(global_label "UART_SOC_TX"
+		(shape input)
+		(at 270.32 162.46 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "754324a7-3e9e-5bbe-805d-7c030230cb27")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 229.68 167.54 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "5a15005a-de6f-5e85-b16e-381be0035b63")
+	)
+	(symbol
+		(lib_id "flytex-gen:PART_J6")
+		(at 430.00 165.00 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "2103b800-bb97-551b-8797-6df459ef4d96")
+		(property "Reference" "J6"
+			(at 430.00 145.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Service pads"
+			(at 430.00 185.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_Generic:Conn_01x04"
+			(at 430.00 165.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 430.00 165.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "87eb5687-7809-573d-ae95-27ca50c7605a")
+		)
+		(pin "2"
+			(uuid "7924a037-639b-5c9b-81ca-6435041f7e44")
+		)
+		(pin "3"
+			(uuid "cdc533f7-8ce9-5699-8c08-91efdb40972e")
+		)
+		(pin "4"
+			(uuid "9c74013e-ddb6-5220-a962-359a32e537c3")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/b2d10761-fcfc-5ac5-9a21-a50339d61eb8"
+					(reference "J6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "SVC_USB_DP"
+		(shape input)
+		(at 409.68 162.46 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "af697936-921e-51da-8747-bad500cd4b0d")
+	)
+	(global_label "SVC_USB_DM"
+		(shape input)
+		(at 450.32 162.46 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "9e21d9fd-3915-5431-956d-d3302a7c47b4")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 409.68 167.54 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "afc75a29-64c9-58be-91d6-164f635c45c9")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 450.32 167.54 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "5928d9fa-377d-543a-8e37-19ce4140044c")
+	)
+	(symbol
+		(lib_id "flytex-gen:PART_TP1")
+		(at 610.00 165.00 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f16100e6-a4e1-5de6-91f7-fcb404f15327")
+		(property "Reference" "TP1"
+			(at 610.00 145.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Test points"
+			(at 610.00 185.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_Generic:Conn_01x04"
+			(at 610.00 165.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 610.00 165.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "6079cca9-ba0e-5c8e-a3ef-7cbaf8388daa")
+		)
+		(pin "2"
+			(uuid "f20e1216-0f43-5e2a-867a-8431576d6711")
+		)
+		(pin "3"
+			(uuid "f5f37f90-70cb-50b7-a54f-dea897212252")
+		)
+		(pin "4"
+			(uuid "7ede126a-0306-5841-81f7-d30df04ea77a")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/b2d10761-fcfc-5ac5-9a21-a50339d61eb8"
+					(reference "TP1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "SOC_READY"
+		(shape input)
+		(at 589.68 162.46 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "e561d90f-e67a-5ebe-9c5e-c513d33c0988")
+	)
+	(global_label "IRQ"
+		(shape input)
+		(at 630.32 162.46 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "bfa79bbe-0f86-5b6c-ad1d-a5554518cd5c")
+	)
+	(global_label "USB_SEL"
+		(shape input)
+		(at 589.68 167.54 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "11f50ae7-99c7-5fc3-8669-91182cde2e6c")
+	)
+	(global_label "RI"
+		(shape input)
+		(at 630.32 167.54 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "774298fc-f733-5a36-9185-c876dffbdb2c")
+	)
+	(symbol
+		(lib_id "flytex-gen:PART_R1")
+		(at 790.00 165.00 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "4f20af3f-5507-5709-a97d-34a587a4d585")
+		(property "Reference" "R1"
+			(at 790.00 145.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10k 1%"
+			(at 790.00 185.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 790.00 165.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 790.00 165.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "417cfc67-8324-5d06-bde8-20124fa0a258")
+		)
+		(pin "2"
+			(uuid "e8da9621-23f7-54a7-9a5f-1a71e92e1bfe")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/b2d10761-fcfc-5ac5-9a21-a50339d61eb8"
+					(reference "R1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "USB_SEL"
+		(shape input)
+		(at 769.68 162.46 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "d216f47c-db63-5a42-885f-71405241dc4c")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 810.32 162.46 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "46860a07-0d45-5a27-9e3b-91d5d346fba8")
+	)
+	(symbol
+		(lib_id "flytex-gen:PART_C1")
+		(at 70.00 260.00 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f018f13f-6375-58b5-90f8-514b5222a6b9")
+		(property "Reference" "C1"
+			(at 70.00 240.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "470uF 10V"
+			(at 70.00 280.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:CP_Elec_8x10"
+			(at 70.00 260.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 70.00 260.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "7bfc1f5f-061e-5636-8ef4-5cd426922485")
+		)
+		(pin "2"
+			(uuid "399ac849-8a75-5194-b955-96c3c02c7e84")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/b2d10761-fcfc-5ac5-9a21-a50339d61eb8"
+					(reference "C1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "+5V_SOC"
+		(shape input)
+		(at 49.68 257.46 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "55f4506d-0063-5de4-8b3f-aa425625329a")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 90.32 257.46 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "06ed1580-744c-52c5-9df1-aa0344dce3c6")
+	)
+	(symbol
+		(lib_id "flytex-gen:PART_C2")
+		(at 250.00 260.00 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "bdc39e13-4b76-5dc6-b650-478b0902dbd1")
+		(property "Reference" "C2"
+			(at 250.00 240.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100nF"
+			(at 250.00 280.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 250.00 260.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 250.00 260.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "28d830cf-55ee-5840-8349-4d3deb177485")
+		)
+		(pin "2"
+			(uuid "faa58dd5-a28f-52bc-a655-43aa799d781f")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/b2d10761-fcfc-5ac5-9a21-a50339d61eb8"
+					(reference "C2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "+3V3"
+		(shape input)
+		(at 229.68 257.46 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "13bfe110-28ab-5935-a13a-c02e60eea7f5")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 270.32 257.46 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "4093608b-075b-5f46-80c3-279bc2e623ac")
+	)
+	(symbol
+		(lib_id "flytex-gen:PART_R14")
+		(at 430.00 260.00 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "739eedc1-a847-599d-b8c0-d8891da37d27")
+		(property "Reference" "R14"
+			(at 430.00 240.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100k 1%"
+			(at 430.00 280.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 430.00 260.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 430.00 260.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "bb125d93-a7a7-5cae-87ff-ed0c584b7aa5")
+		)
+		(pin "2"
+			(uuid "784ad90b-75d8-58aa-8ed8-e98db0683511")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/b2d10761-fcfc-5ac5-9a21-a50339d61eb8"
+					(reference "R14")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "+5V_SOC"
+		(shape input)
+		(at 409.68 257.46 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "0e1636e6-6a9f-5d1a-b6aa-51b985b43b9d")
+	)
+	(global_label "USB_VBUSDET"
+		(shape input)
+		(at 450.32 257.46 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "a1b5014a-9865-5b19-addc-894a283952f8")
+	)
+	(symbol
+		(lib_id "flytex-gen:PART_R15")
+		(at 610.00 260.00 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "13685054-8140-58dc-9683-04888930be0b")
+		(property "Reference" "R15"
+			(at 610.00 240.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100k 1%"
+			(at 610.00 280.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 610.00 260.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 610.00 260.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "c6828e41-36b2-5386-aedb-6358a4c1b70f")
+		)
+		(pin "2"
+			(uuid "df64e74a-e990-5412-a3bb-7c2be60d37bd")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/b2d10761-fcfc-5ac5-9a21-a50339d61eb8"
+					(reference "R15")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "USB_VBUSDET"
+		(shape input)
+		(at 589.68 257.46 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "dc6404ba-6614-5856-88bf-c49374fa4e87")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 630.32 257.46 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "d01543f4-9e82-5f19-a565-ed5432ce5806")
+	)
+	(text "Full sheet: CMP full. Moi chan co global label theo netlist; linh kien passive dung symbol chung."
+		(exclude_from_sim no)
+		(at 20 380 0)
+		(effects
+			(font
+				(size 2 2)
+			)
+			(justify left)
+		)
+		(uuid "a0d23706-f502-564c-bfe1-d5470fe7a290")
+	)
+	(sheet_instances
+		(path "/" (page "1"))
+	)
+)
