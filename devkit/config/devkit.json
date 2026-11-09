@@ -1,0 +1,19 @@
+{
+  "allow_raw_muxer": true,
+  "apn": "internet",
+  "clip_s": 10,
+  "live_s": 30,
+  "log_level": "info",
+  "mode": "eco",
+  "mqtt_host": "192.168.1.10",
+  "mqtt_port": 1883,
+  "relay_url": "https://relay.example/live",
+  "schedule": [],
+  "settle_s": 2,
+  "timezone": "Asia/Ho_Chi_Minh",
+  "wake_chan": "off",
+  "wake_numbers": "",
+  "wake_period_s": 0,
+  "wake_secret": "",
+  "wake_token": ""
+}

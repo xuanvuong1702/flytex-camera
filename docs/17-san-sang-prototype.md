@@ -163,7 +163,7 @@ Bằng chứng ngoài artifact nội bộ:
 3. **Đo/kiểm khi có board**: M-05 (NTC), M-36 (đỉnh modem/TPS22918), ILIM TPS61088, port STM32L0 trên target, TLS MQTT thật, carrier/RF modem.
 4. **Ruff** còn 22 cảnh báo style/strict; không chặn prototype nhưng phải dọn trước release.
 
-Các số 31/430 trong vòng 1–6 là số tại thời điểm đó; hiện tại **51/520**.
+Các số 31/430 trong vòng 1–6 là số tại thời điểm đó; hiện tại **53/525**.
 
 ## 5. Quy tắc kết luận
 

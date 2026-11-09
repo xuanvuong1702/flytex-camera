@@ -262,7 +262,7 @@ Phần cứng không thể kiểm chứng khi chưa mua linh kiện, nhưng ph�
 | Ghi MPEG-TS, tải clip HTTPS, OTA A/B có xác minh | Xong phần mềm, test đầy đủ | `app/flytex/tsmux.py`, `upload.py`, `ota.py` |
 | Mô phỏng end-to-end firmware C + app | Xong, **5 kịch bản** | `python sim/run.py --scenario all` |
 | Công cụ đo G0, nhập PPK2, kiểm tài liệu | Xong, **120 test** | `tools/measure`, `tools/docs_check`, `tools/readiness.py` |
-| Toàn bộ chạy một lệnh | **51/51 bước đạt** | `python run_tests.py` |
+| Toàn bộ chạy một lệnh | **53/53 bước đạt** | `python run_tests.py` |
 | Mã chạy camera thật (RK MPI) | **Chưa** | Cần SDK và dev board |
 | Port STM32L0 thật | **Khung** | Cần SDK và board |
 | Backend xác minh chữ ký + Installer thật | **Chưa** | Chốt thuật toán/khóa và SDK ở G0 |

@@ -61,6 +61,8 @@ def build_steps(quick: bool) -> list[tuple[str, list[str]]]:
         ("hardware: schematic PWR khớp nguồn", [PY, "-m", "hardware.kicad.sch_pwr", "--check"]),
         ("hardware: test schematic đầy đủ", [PY, "hardware/kicad/tests/test_sch_full.py"]),
         ("hardware: schematic đầy đủ khớp nguồn", [PY, "-m", "hardware.kicad.sch_full", "--check"]),
+        ("devkit: test gói trước khi mua", [PY, "devkit/tests/test_devkit.py"]),
+        ("devkit: kiểm tra dry-run", [PY, "devkit/scripts/devkit_check.py", "--dry-run"]),
         ("firmware: build và unit test", [PY, "firmware/mcu/tests/build.py", "test"]),
         ("firmware: include C di động", [PY, "tools/check_c_includes.py"]),
         ("firmware: compile port STM32L0", [PY, "firmware/mcu/tests/build.py", "port"]),

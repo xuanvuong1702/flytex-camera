@@ -18,7 +18,7 @@ Repo này **làm lại từ đầu**. Nó kế thừa *bài học* từ dự án
 | Gói thiết kế phần cứng | Tính toán PWR, hình học board + SVG, BOM Rev A/B, sổ linh kiện, bring-up; **97 test** |
 | Sổ linh kiện | **15 linh kiện + 4 module**; 0 blocker cứng, 1 giả định PACK ([docs/18](docs/18-tai-lieu-linh-kien.md)) |
 | Công cụ đo và kiểm tài liệu | Có, **124 test**; nhập PPK2, lint include C, kiểm tài liệu, checklist readiness |
-| Kiểm thử toàn repo | **520 test + 5 kịch bản**, 51/51 bước đạt: `python run_tests.py` |
+| Kiểm thử toàn repo | **525 test + 5 kịch bản**, 53/53 bước đạt: `python run_tests.py` |
 | Sẵn sàng dựng prototype | **CHƯA ĐẠT** — vòng 7 phát hiện lỗi sạc/CI/BOM/pin ([docs/17](docs/17-san-sang-prototype.md)) |
 | Phần cứng | **Chưa có**: chưa có Gerber/PCB; gói thiết kế đã đủ để vẽ schematic |
 | Số đo thực | **Chưa có.** Mọi con số công suất, nhiệt, thời gian chạy đều là ước tính |
@@ -110,8 +110,9 @@ Không cần phần cứng, không cần cài thêm gói Python. Firmware C cầ
 | Firmware MCU (C, host) | `python firmware/mcu/tests/build.py test` | 64 |
 | Ứng dụng Linux (Python) | `python -m unittest discover -s app/tests -t .` | 188 |
 | Công cụ đo và kiểm tài liệu | `python -m unittest discover -s tools -t .` | 120 (+4 trong `tools/tests`) = 124 |
+| Devkit trước khi mua | `python devkit/tests/test_devkit.py` | 5 |
 | Mô phỏng end-to-end | `python sim/run.py --scenario all` | 5 kịch bản |
-| Tất cả | `python run_tests.py` | 51 bước |
+| Tất cả | `python run_tests.py` | 53 bước |
 
 Test không cần phần cứng. Test cần phần cứng nằm ở [docs/08](docs/08-kiem-chung.md) và vẫn là "Chưa làm".
 
@@ -138,6 +139,7 @@ Test không cần phần cứng. Test cần phần cứng nằm ở [docs/08](do
 | [16-van-hanh.md](docs/16-van-hanh.md) | Cấp phát thiết bị, systemd, gỡ lỗi hiện trường, quy trình đo |
 | [17-san-sang-prototype.md](docs/17-san-sang-prototype.md) | Điều kiện hoàn thành và biên bản tự kiểm tra 3 vòng |
 | [18-tai-lieu-linh-kien.md](docs/18-tai-lieu-linh-kien.md) | Sổ linh kiện, đối chiếu datasheet với thiết kế, 1 giả định PACK |
+| [21-ke-hoach-2-muc-tieu.md](docs/21-ke-hoach-2-muc-tieu.md) | Kế hoạch devkit và PCBA, điều kiện trước khi mua |
 | [20-khoang-cach-va-lo-trinh.md](docs/20-khoang-cach-va-lo-trinh.md) | Khoảng cách tới PCBA/devkit, ước lượng công việc còn lại |
 | [19-truoc-khi-mua.md](docs/19-truoc-khi-mua.md) | Tài liệu và phân tích còn thiếu theo từng cổng trước khi mua/thử |
 

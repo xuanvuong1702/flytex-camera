@@ -1,0 +1,17 @@
+[Unit]
+Description=Flytex camera devkit
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/flytex
+Environment=PYTHONPATH=/opt/flytex/app
+ExecStart=/usr/bin/python3 -m flytex.cli run --config /data/config.json --data-root /data
+Restart=on-failure
+RestartSec=5
+# Chua bat cho devkit vi run can MCU I2C + RK MPI.
+# Dung sim/feature_test truoc; chi enable khi board PWR da co.
+
+[Install]
+WantedBy=multi-user.target
