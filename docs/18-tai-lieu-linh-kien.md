@@ -13,17 +13,15 @@
 
 ## 2. Kết quả hiện tại
 
-**15 linh kiện + 4 module ngoài BOM; 4 blocker, 3 cảnh báo** (sau khi chọn BQ25070 và nhập pinout).
+**15 linh kiện + 4 module ngoài BOM; 2 blocker, 3 cảnh báo** (sau khi chọn BQ25070 và nhập pinout).
 
 ### 2.1 Blocker phải đóng trước khi đặt
 
 | Mục | Vấn đề | Cách đóng | Nơi ghi |
 |---|---|---|---|
-| U2 buck | **Chưa chốt điện trở VSET** cho 3,3 V; BOM đã có vị trí R13 nhưng giá trị `not-chosen` | Đọc bảng VSET của TPS62840, chọn E96, ghi vào BOM; gói là **SON-8 1,5×2 (DLC)** | O-15 |
 | U3 sạc | **BQ25070**: float 3,5 V, power-path (1,2 A), NTC, standalone; **935 mA bằng 11 xung CTRL**; R1/R2 = 20 kΩ/8,25 kΩ | Còn đo M-05, kiểm tồn kho và đo đỉnh tải | O-05 |
 | MODEM | Chưa xác nhận **breakout đưa RI ra header** | Kiểm bản vẽ breakout hoặc chọn loại khác; nếu không, kênh Watch SMS không chạy | O-04 |
 | SOC | Đã nạp **112 chân** Core1106D vào `spec/core1106d/pins.csv` | Đối chiếu với bản vẽ cơ khí và bảng ánh xạ CMP trước khi vẽ | O-11 |
-| CAMERA | Chưa chọn module camera và **pinout FPC 20 chân** | Chọn module có IR-CUT + LED IR, lấy datasheet, ghi pinout vào spec | O-02 |
 | PACK | Chưa có pack/BMS kèm **UN38.3, IEC 62133, tự tiêu ≤100 µA** | Chọn nhà cung cấp, lấy datasheet và báo cáo; đo tự tiêu bằng PPK2 | O-03 |
 
 ### 2.2 Cảnh báo (không chặn đặt, phải đo ở G0)
@@ -39,7 +37,7 @@
 | Linh kiện | Đã xác nhận | Ghi chú |
 |---|---|---|
 | TPS61088 | Gói VQFN-20; Vin 2,7–12 V; Vref 1,204 V; Vout tới 12,6 V | Phù hợp boost 5 V/3 A; ILIM/fsw vẫn cần đối chiếu công thức datasheet |
-| TPS62840 | Vin 1,8–6,5 V; Iout 0,75 A; Iq 60 nA; **DLC = SON-8 1,5×2** | Bản CAM4G đúng; lần sửa sang SOT-563 là sai, đã khôi phục |
+| TPS62840 | Vin 1,8–6,5 V; Iout 0,75 A; Iq 60 nA; **DLC = SON-8 1,5×2**; VSET=267 kΩ cho 3,3 V | Bản CAM4G đúng; đã đọc Table 1 datasheet |
 | STM32L031G6U6 | **UFQFPN-28**; STOP 0,4 µA; 24 GPIO; −40…85 °C | Đủ chân; thiết kế không phụ thuộc I2C wakeup vì MCU thức khi SoC bật |
 | M24C32-FMN6TP | **SO-8 150 mil**; 1,7–5,5 V; I2C | Bản CAM4G đúng; lần sửa sang TSSOP-8 là sai, đã khôi phục |
 | TPS22918 | 5,5 V; 2 A; Rds(on) ~55 mΩ | Đủ cho +5V_MODEM 1,8 A và +5V_SOC 1,5 A |
@@ -66,7 +64,7 @@
 | TPS62840 datasheet bản gói DLC | Vref, divider, footprint | Chưa đối chiếu |
 | TPS61088 datasheet (ILIM, fsw, COMP) | Chốt giá trị bù | Chưa đối chiếu đầy đủ |
 | STM32L031 datasheet + reference manual | STOP, I2C, ADC, chân | Một phần |
-| Module camera (SC3336 + IR-CUT) datasheet + pinout | CMP, firmware camera | **Chưa có** |
+| SC3336 3MP Camera (B) pinout 20 chân | CMP, firmware camera | **Đã có** trong `spec/camera/` |
 | Pack/BMS datasheet, UN38.3, IEC 62133, tự tiêu | Mua pack, an toàn | **Chưa có** |
 | Antenna datasheet (VSWR, gain, keepout) | Vỏ, RF | **Chưa có** |
 | USB-C receptacle IP67 datasheet | Vỏ | **Chưa có** |

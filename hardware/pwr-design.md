@@ -82,7 +82,7 @@ Tất cả kiểm tra đạt.
 ## 9. Điểm chưa xác minh
 
 1. Vref, tần số chuyển mạch và giới hạn dòng của TPS61088 phải đối chiếu datasheet.
-2. Vref của TPS62840 chưa chọn; không tính được mạch hồi tiếp 3,3 V.
+2. Buck TPS62840: đã chọn R13 = 267 kΩ cho 3,3 V theo Table 1 datasheet; cần đo VOUT.
 3. Dòng sạc 935 mA và mạng NTC đã tính; vẫn phải đo M-05 và kiểm tồn kho BQ25070.
 4. Hệ số tản nhiệt 8 W/m²·K là giả định; nắng chiếu trực tiếp chưa tính.
 5. Không có số đo dòng, nhiệt hay thời gian chạy thật.

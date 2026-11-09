@@ -137,12 +137,10 @@ Kết luận vòng 7: **không đạt**. Kết luận "đủ điều kiện dự
 
 ## 4. Kết luận cuối
 
-**CHƯA đủ điều kiện dựng prototype.** Bốn blocker còn lại đều cần tài liệu hoặc linh kiện bên ngoài, không thể đóng bằng sửa mã:
+**CHƯA đủ điều kiện dựng prototype.** Hai blocker còn lại đều cần tài liệu hoặc linh kiện bên ngoài, không thể đóng bằng sửa mã:
 
-1. **VSET buck**: chưa chốt giá trị R13 cho 3,3 V. Cần bảng VSET trong datasheet TPS62840; đây là blocker duy nhất của khối nguồn.
-2. **RI của breakout modem**: chưa xác nhận breakout đưa RI ra header. Nếu không có, kênh Watch SMS không hoạt động.
-3. **Camera**: đã có module ứng viên SC3336 3MP (B), nhưng chưa chốt thứ tự 20 chân FPC từ bản vẽ cơ khí.
-4. **Pack/BMS**: chưa chọn nhà cung cấp 15 Ah kèm UN38.3/IEC 62133 và số đo tự tiêu.
+1. **RI của modem**: EVB/breakout hiện không đưa RI ra header. Phải chọn module-on-board hoặc breakout có bản vẽ xác nhận RI.
+2. **Pack/BMS**: chưa chọn nhà cung cấp 15 Ah kèm UN38.3/IEC 62133 và số đo tự tiêu.
 
 Ngoài ra còn các việc đo/kiểm không chặn mua: M-05 (NTC), M-36 (đỉnh modem/TPS22918), ILIM của TPS61088, và port STM32L0 vẫn là khung chưa chạy trên phần cứng. SMS đã có HMAC counter + rate limit; whitelist số cần UART phụ (O-12).
 

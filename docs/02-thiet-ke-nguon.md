@@ -82,7 +82,7 @@ Quy tắc layout cho board mới:
 
 Ứng viên: TPS62840. **Đính chính lần 2, 2026-11-09:** lần sửa trước ghi "DLC = SOT-563 6 chân" là **SAI**. Gói DLC của TPS62840 là **SON-8 1,5×2 mm**; gói 6 chân là bản YBG (WCSP). Bản CAM4G ghi SON-8 là đúng. Bài học: không được "sửa" gói dựa trên suy đoán từ mã đặt hàng khi chưa mở bản vẽ gói trong datasheet. Trước khi vẽ vẫn phải mở datasheet TI, đối chiếu bản vẽ gói DLC, và đưa vào board thử footprint ([07](07-ke-hoach-phat-trien.md) giai đoạn 1) `[CHƯA XÁC MINH]`. Dòng ra tối đa 0,75 A `[KẾ THỪA]`.
 
-**Cách đặt 3,3 V:** TPS62840 dùng **một điện trở VSET nối xuống GND**, không phải cầu phân áp hai điện trở. Bảng VSET trong datasheet cho giá trị theo VOUT; BOM đã có vị trí `R13` nhưng **giá trị chưa chốt** (blocker U2). Trước khi đặt board phải đọc đúng bảng, chọn E96, và kiểm dung sai VOUT. Xem [18](18-tai-lieu-linh-kien.md) §2.1 và O-15.
+**Cách đặt 3,3 V:** TPS62840 dùng **một điện trở VSET nối xuống GND**. Theo Table 1 datasheet (trang 13), VOUT 3,3 V ứng với **R13 = 267 kΩ E96**; đã ghi vào BOM. Đo VOUT thực tế ở M-41. Xem [18](18-tai-lieu-linh-kien.md) §2.1 và O-15.
 
 **Rail +3V3 không cố định 3,3 V.** Buck chỉ hạ áp; khi pin LFP còn 3,0–3,3 V, đầu ra bám theo pin (chế độ 100 % duty), nên rail thực tế là **3,0–3,3 V**. Hệ quả:
 

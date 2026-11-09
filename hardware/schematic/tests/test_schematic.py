@@ -22,16 +22,15 @@ class SchematicTests(unittest.TestCase):
 
     def test_two_sheets(self) -> None:
         self.assertEqual([sheet["id"] for sheet in self.data["sheets"]], ["pwr", "cmp"])
-        self.assertEqual(sum(len(sheet["blocks"]) for sheet in self.data["sheets"]), 20)
+        self.assertEqual(sum(len(sheet["blocks"]) for sheet in self.data["sheets"]), 21)
 
     def test_erc_has_no_errors(self) -> None:
         errors = [message for level, message in self.issues if level == "error"]
         self.assertEqual(errors, [])
 
-    def test_only_vset_is_tbd(self) -> None:
+    def test_no_open_tbd_net(self) -> None:
         warnings = [message for level, message in self.issues if level == "warn"]
-        self.assertEqual(len(warnings), 1)
-        self.assertIn("TBD_VSET", warnings[0])
+        self.assertEqual(warnings, [])
 
     def test_b2b_on_both_sheets(self) -> None:
         for sheet in self.data["sheets"]:

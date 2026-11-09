@@ -34,15 +34,16 @@ mpn = "TPS62840DLCR"
 manufacturer = "Texas Instruments"
 datasheet = "https://www.ti.com/product/TPS62840"
 package = "SON-8 1.5x2 mm (DLC)"
-verified = "partial"
-notes = "Goi DLC = SON-8 1,5x2 (CAM4G dung). Dat VOUT bang mot dien tro VSET (khong phai divider 2R); gia tri phai lay tu bang VSET cua datasheet."
+verified = "yes"
+notes = "Goi DLC = SON-8 1,5x2 (CAM4G dung). VSET=267 kΩ cho 3,3 V theo Table 1 datasheet TPS62840 trang 13; khong phai divider 2R."
 params = [
   { name = "vin_min_v", value = 1.8, unit = "V", source = "datasheet" },
   { name = "vin_max_v", value = 6.5, unit = "V", source = "datasheet" },
   { name = "iout_a", value = 0.75, unit = "A", source = "datasheet" },
   { name = "iq_ua", value = 0.06, unit = "uA", source = "datasheet (60 nA)" },
   { name = "vref_v", value = 0.6, unit = "V", source = "CHUA XAC MINH" },
-  { name = "adjustable", value = true, unit = "", source = "can kiem" },
+  { name = "adjustable", value = true, unit = "", source = "VSET resistor" },
+  { name = "vset_ohm", value = 267000, unit = "ohm", source = "datasheet Table 1" },
 ]
 
 [[parts]]
@@ -217,10 +218,10 @@ id = "CAMERA"
 name = "Module camera FPC 20 chan co IR-CUT"
 datasheet = ""
 verified = "no"
-notes = "CHUA CHON module. Pinout, dien ap, so lane MIPI va thu tu chan deu chua biet. Day la chan cua CMP."
+notes = "Da chon SC3336 3MP Camera (B); pinout 20 chan da nap vao spec/camera/."
 params = [
-  { name = "pinout_known", value = false, unit = "", source = "CHUA CO" },
-  { name = "ir_cut", value = false, unit = "", source = "CHUA CHON" },
+  { name = "pinout_known", value = true, unit = "", source = "spec/camera/sc3336-b.toml" },
+  { name = "ir_cut", value = false, unit = "", source = "module B khong co IR-CUT; can chon ban IR" },
 ]
 
 [[external]]

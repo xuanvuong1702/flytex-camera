@@ -2,14 +2,14 @@
 
 - Nguồn: `spec/parts.toml`; kiểm tra: `python -m hardware.parts.check --check`.
 - `verified`: **yes** đã đối chiếu datasheet, **partial** mới một phần, **no** chưa mở datasheet.
-- Kết quả: **4 blocker**, 3 cảnh báo. Blocker là việc phải đóng trước khi đặt hàng.
+- Kết quả: **2 blocker**, 3 cảnh báo. Blocker là việc phải đóng trước khi đặt hàng.
 
 ## 1. Linh kiện chính
 
 | ID | MPN | Gói | Xác minh | Datasheet | Ghi chú |
 |---|---|---|---|---|---|
 | U1 | TPS61088RHLR | VQFN-20 | partial | https://www.ti.com/product/TPS61088 | Dung cho boost 5 V. Phai doi chieu Vref, fsw, ILIM va dieu kien nhiet. |
-| U2 | TPS62840DLCR | SON-8 1.5x2 mm (DLC) | partial | https://www.ti.com/product/TPS62840 | Goi DLC = SON-8 1,5x2 (CAM4G dung). Dat VOUT bang mot dien tro VSET (khong phai divider 2R); gia tri phai lay tu bang VSET cua datasheet. |
+| U2 | TPS62840DLCR | SON-8 1.5x2 mm (DLC) | yes | https://www.ti.com/product/TPS62840 | Goi DLC = SON-8 1,5x2 (CAM4G dung). VSET=267 kΩ cho 3,3 V theo Table 1 datasheet TPS62840 trang 13; khong phai divider 2R. |
 | U3 | BQ25070DQCR | WSON-10 (DQC) 3x2 mm | partial | https://www.ti.com/product/BQ25070 | Sac tuyen tinh LFP 1S 1 A, float 3,5 V co dinh, power-path, NTC, standalone. Doi tu BQ25798 vi mac dinh 4,2 V + watchdog. Can doc datasheet de tinh CTRL va mang NTC. |
 | U4 | STM32L031G6U6 | UFQFPN-28 | partial | https://www.st.com/en/microcontrollers-microprocessors/stm32l031g6.html | Da sua goi tu LQFP-32 sang UFQFPN-28. Can kiem so chan GPIO va kha nang I2C slave. |
 | U5 | M24C32-FMN6TP | SO-8 150 mil | yes | https://www.st.com/en/memories/m24c32-f.html | EEPROM cau hinh. MN = SO8 150 mil; dinh chinh lan 2: lan sua truoc sang TSSOP-8 la SAI. |
@@ -48,7 +48,8 @@
 | iout_a | 0.75 | A | datasheet |
 | iq_ua | 0.06 | uA | datasheet (60 nA) |
 | vref_v | 0.6 | V | CHUA XAC MINH |
-| adjustable | True |  | can kiem |
+| adjustable | True |  | VSET resistor |
+| vset_ohm | 267000 | ohm | datasheet Table 1 |
 
 **U3 — BQ25070DQCR**
 
@@ -163,16 +164,14 @@
 |---|---|---|---|---|
 | MODEM | EC200U-EU breakout | partial | https://www.quectel.com/product/lte-ec200u-series | Can xac nhan RI ra header, dinh dong burst, va ho tro eDRX/PSM tren mang VN. |
 | SOC | Core1106D1408 | partial | https://wiki.luckfox.com/Core1106D/Introduction/ | Da xac minh 1 cong USB, H.264, bien the eMMC; da nap 112 chan tu Core1106D-PinOut.xls vao spec/core1106d/pins.csv. |
-| CAMERA | Module camera FPC 20 chan co IR-CUT | no | — | CHUA CHON module. Pinout, dien ap, so lane MIPI va thu tu chan deu chua biet. Day la chan cua CMP. |
+| CAMERA | Module camera FPC 20 chan co IR-CUT | no | — | Da chon SC3336 3MP Camera (B); pinout 20 chan da nap vao spec/camera/. |
 | PACK | Pack LFP 1S 15 Ah co BMS | no | — | CHUA CHON nha cung cap. Can UN38.3, IEC 62133, BMS <=100 uA, sac >=1,5 A, NTC. |
 
 ## 3. Vấn đề phát hiện
 
 | Mức | Mục | Mô tả |
 |---|---|---|
-| blocker | U2 | chua chot gia tri dien tro VSET (R_SET) cho TPS62840 |
 | blocker | MODEM | chua xac nhan breakout dua RI ra header - kenh Watch khong chay |
-| blocker | CAMERA | chua chon camera va pinout FPC |
 | blocker | PACK | chua co pack/BMS kem UN38.3, IEC 62133, tu tieu <=100 uA |
 | warn | MODEM | dinh dong 2 A la gia dinh chua do; xac nhan bang M-36 |
 | warn | J1 | USB-C chua phai loai chong nuoc (O-06) |

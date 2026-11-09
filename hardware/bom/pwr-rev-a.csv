@@ -42,5 +42,5 @@ C12,charger_sys,10uF 10V X7R,CL31B106KPHNNNE,Samsung,1206,2,no,candidate,Tu SYS/
 R11,charger_ctrl,KHONG DUNG (CTRL xung),,,chua chon,1,yes,dnp,BQ25070 CTRL la giao dien xung 1 day - khong co dien tro; can GPIO MCU
 R14,charger_ts_top,20.0k 1%,RC0603FR-0720KL,Yageo,0603,1,no,candidate,R1 LDO->TS theo datasheet BQ25070; cat nong 44.9 C
 R15,charger_ts_bottom,8.25k 1%,RC0603FR-078K25L,Yageo,0603,1,no,candidate,R2 TS->GND; cat lanh -0.6 C
-R13,buck_vset,chua chon,,,chua chon,1,no,not-chosen,Gia tri theo bang VSET cua datasheet TPS62840; chua chot
+R13,buck_vset,267k 1%,RC0603FR-07267KL,Yageo,0603,1,no,candidate,VSET=267k theo Table 1 datasheet TPS62840 (trang 13) cho VOUT 3.3 V
 R16,buck_mode,0R 1%,RC0603FR-070RL,Yageo,0603,1,no,candidate,Keo MODE xuong GND: PFM cho dong nghi thap

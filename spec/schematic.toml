@@ -51,9 +51,21 @@ h = 68.0
 pins = [
   { name = "VIN", net = "VBAT" },
   { name = "VOUT", net = "+3V3" },
-  { name = "VSET", net = "TBD_VSET" },
+  { name = "VSET", net = "VSET" },
   { name = "MODE", net = "GND" },
   { name = "EN", net = "VBAT" },
+  { name = "GND", net = "GND" },
+]
+
+[[sheets.blocks]]
+id = "R_VSET"
+name = "R13 267k"
+x = 150.0
+y = 87.0
+w = 34.0
+h = 12.0
+pins = [
+  { name = "VSET", net = "VSET" },
   { name = "GND", net = "GND" },
 ]
 

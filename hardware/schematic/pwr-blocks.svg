@@ -47,9 +47,9 @@
 <line x1="672.0" y1="221.0" x2="682.0" y2="221.0" stroke="#b02020" stroke-width="1"/>
 <circle cx="672.0" cy="221.0" r="2" fill="#b02020"/>
 <text x="684.0" y="224.0" text-anchor="start" font-family="sans-serif" font-size="7" fill="#b02020">VOUT = +3V3</text>
-<line x1="672.0" y1="300.3" x2="682.0" y2="300.3" stroke="#888888" stroke-width="1"/>
-<circle cx="672.0" cy="300.3" r="2" fill="#888888"/>
-<text x="684.0" y="303.3" text-anchor="start" font-family="sans-serif" font-size="7" fill="#888888">VSET = TBD_VSET</text>
+<line x1="672.0" y1="300.3" x2="682.0" y2="300.3" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="672.0" cy="300.3" r="2" fill="#1a3d7c"/>
+<text x="684.0" y="303.3" text-anchor="start" font-family="sans-serif" font-size="7" fill="#1a3d7c">VSET = VSET</text>
 <line x1="928.0" y1="141.7" x2="918.0" y2="141.7" stroke="#222222" stroke-width="1"/>
 <circle cx="928.0" cy="141.7" r="2" fill="#222222"/>
 <text x="916.0" y="144.7" text-anchor="end" font-family="sans-serif" font-size="7" fill="#222222">MODE = GND</text>
@@ -59,6 +59,14 @@
 <line x1="928.0" y1="300.3" x2="918.0" y2="300.3" stroke="#222222" stroke-width="1"/>
 <circle cx="928.0" cy="300.3" r="2" fill="#222222"/>
 <text x="916.0" y="303.3" text-anchor="end" font-family="sans-serif" font-size="7" fill="#222222">GND = GND</text>
+<rect x="600.0" y="348.0" width="136.0" height="48.0" rx="6" fill="#eef3fa" stroke="#26466f" stroke-width="1.5"/>
+<text x="608.0" y="364.0" font-family="sans-serif" font-size="12" font-weight="bold" fill="#123">R_VSET · R13 267k</text>
+<line x1="600.0" y1="385.0" x2="610.0" y2="385.0" stroke="#1a3d7c" stroke-width="1"/>
+<circle cx="600.0" cy="385.0" r="2" fill="#1a3d7c"/>
+<text x="612.0" y="388.0" text-anchor="start" font-family="sans-serif" font-size="7" fill="#1a3d7c">VSET = VSET</text>
+<line x1="736.0" y1="385.0" x2="726.0" y2="385.0" stroke="#222222" stroke-width="1"/>
+<circle cx="736.0" cy="385.0" r="2" fill="#222222"/>
+<text x="724.0" y="388.0" text-anchor="end" font-family="sans-serif" font-size="7" fill="#222222">GND = GND</text>
 <rect x="1000.0" y="72.0" width="248.0" height="192.0" rx="6" fill="#eef3fa" stroke="#26466f" stroke-width="1.5"/>
 <text x="1008.0" y="88.0" font-family="sans-serif" font-size="12" font-weight="bold" fill="#123">SW_SOC · Tai +5V_SOC</text>
 <line x1="1000.0" y1="141.5" x2="1010.0" y2="141.5" stroke="#b02020" stroke-width="1"/>

@@ -1,0 +1,105 @@
+schema = "flytex.camera/1"
+module = "SC3336 3MP Camera (B)"
+connector = "FPC 20 pin"
+source = "https://wiki.luckfox.com/zh/SC3336-3MP-Camera/"
+note = "Thứ tự chân lấy từ bản vẽ PDF của Luckfox (CONNECTOR 20PIN DESCRIPTION), không suy đoán."
+
+[[pins]]
+num = 1
+name = "GND"
+net = "GND"
+
+[[pins]]
+num = 2
+name = "XCLK"
+net = "CAM_MCLK"
+
+[[pins]]
+num = 3
+name = "GND"
+net = "GND"
+
+[[pins]]
+num = 4
+name = "MDP0"
+net = "MIPI_D0P"
+
+[[pins]]
+num = 5
+name = "MDN0"
+net = "MIPI_D0N"
+
+[[pins]]
+num = 6
+name = "GND"
+net = "GND"
+
+[[pins]]
+num = 7
+name = "MCP"
+net = "MIPI_CLKP"
+
+[[pins]]
+num = 8
+name = "MCN"
+net = "MIPI_CLKN"
+
+[[pins]]
+num = 9
+name = "GND"
+net = "GND"
+
+[[pins]]
+num = 10
+name = "MDP1"
+net = "MIPI_D1P"
+
+[[pins]]
+num = 11
+name = "MDN1"
+net = "MIPI_D1N"
+
+[[pins]]
+num = 12
+name = "GND"
+net = "GND"
+
+[[pins]]
+num = 13
+name = "SIO-C"
+net = "CAM_SCL"
+
+[[pins]]
+num = 14
+name = "SIO-D"
+net = "CAM_SDA"
+
+[[pins]]
+num = 15
+name = "GND"
+net = "GND"
+
+[[pins]]
+num = 16
+name = "RESET"
+net = "CAM_RST"
+
+[[pins]]
+num = 17
+name = "GND"
+net = "GND"
+
+[[pins]]
+num = 18
+name = "GND"
+net = "GND"
+
+[[pins]]
+num = 19
+name = "+3.3V"
+net = "+3V3"
+
+[[pins]]
+num = 20
+name = "+3.3V"
+net = "+3V3"
