@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="624" height="444" viewBox="0 0 624 444">
+<rect width="100%" height="100%" fill="#fafafa"/>
+<text x="72" y="36" font-family="sans-serif" font-size="14">CMP — 80×50 mm — top view, mm, origin bottom-left</text>
+<rect x="72.0" y="72.0" width="480.0" height="300.0" fill="#e8f0e8" stroke="#204020" stroke-width="1.5"/>
+<circle cx="102.0" cy="342.0" r="9.6" fill="none" stroke="#803030" stroke-width="1"/>
+<text x="114" y="344" font-family="sans-serif" font-size="8" fill="#803030">H1</text>
+<circle cx="522.0" cy="342.0" r="9.6" fill="none" stroke="#803030" stroke-width="1"/>
+<text x="534" y="344" font-family="sans-serif" font-size="8" fill="#803030">H2</text>
+<circle cx="102.0" cy="102.0" r="9.6" fill="none" stroke="#803030" stroke-width="1"/>
+<text x="114" y="104" font-family="sans-serif" font-size="8" fill="#803030">H3</text>
+<circle cx="522.0" cy="102.0" r="9.6" fill="none" stroke="#803030" stroke-width="1"/>
+<text x="534" y="104" font-family="sans-serif" font-size="8" fill="#803030">H4</text>
+<rect x="396.0" y="218.0" width="12" height="8" fill="#a04000" opacity="0.85"/>
+<text x="410" y="216" text-anchor="start" font-family="sans-serif" font-size="8" fill="#a04000">J_B2B</text>
+<rect x="126.0" y="68.0" width="12" height="8" fill="#204080" opacity="0.85"/>
+<text x="140" y="66" text-anchor="start" font-family="sans-serif" font-size="8" fill="#204080">J_CAM</text>
+<rect x="456.0" y="68.0" width="12" height="8" fill="#204080" opacity="0.85"/>
+<text x="454" y="66" text-anchor="end" font-family="sans-serif" font-size="8" fill="#204080">J_SD</text>
+<rect x="306.0" y="368.0" width="12" height="8" fill="#204080" opacity="0.85"/>
+<text x="320" y="366" text-anchor="start" font-family="sans-serif" font-size="8" fill="#204080">J_MODEM</text>
+<rect x="108.0" y="218.0" width="12" height="8" fill="#204080" opacity="0.85"/>
+<text x="122" y="216" text-anchor="start" font-family="sans-serif" font-size="8" fill="#204080">J_CON</text>
+<rect x="216.0" y="368.0" width="12" height="8" fill="#204080" opacity="0.85"/>
+<text x="230" y="366" text-anchor="start" font-family="sans-serif" font-size="8" fill="#204080">J_SVC</text>
+<text x="72" y="438" font-family="sans-serif" font-size="9" fill="#404040">4 lỗ M3, 6 connector; J_B2B là hợp đồng với board còn lại</text>
+</svg>

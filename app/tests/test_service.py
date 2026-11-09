@@ -5,6 +5,8 @@ from __future__ import annotations
 import json
 import random
 import tempfile
+import threading
+import time
 import unittest
 from pathlib import Path
 
@@ -21,11 +23,11 @@ from flytex.diagnostics import Diagnostics
 from flytex.identity import Identity
 from flytex.media import FakeSource
 from flytex.mcu import McuClient
-from flytex.modem import AtClient, FakeModem
+from flytex.modem import AtClient, FakeModem, SmsMessage
 from flytex.recorder import SegmentRecorder
 from flytex.service import DeviceService
 from flytex.tsmux import TsMuxer
-from flytex.upload import FakeUploader, UploadSpool
+from flytex.upload import FakeUploader, UploadResult, UploadSpool
 from flytex.uplink import UplinkQueue
 
 
@@ -91,6 +93,18 @@ class ServiceFixture(unittest.TestCase):
             self.clock.advance(step)
             self.service.step(self.clock.now())
             elapsed += step
+
+    def _wait_upload_idle(self, timeout: float = 2.0) -> None:
+        """Chờ luồng tải kết thúc và được thu gom (test có thread thật)."""
+        deadline = time.monotonic() + timeout
+        while time.monotonic() < deadline:
+            thread = self.service._upload_thread
+            if thread is None:
+                return
+            thread.join(0.05)
+            self.service.step(self.clock.now())
+            time.sleep(0.005)
+        self.fail("luồng tải không kết thúc trong thời gian cho phép")
 
     def _publish_command(self, cmd: str, **params: object) -> str:
         message_id = f"{random.Random(len(cmd)).getrandbits(64):016x}"
@@ -254,7 +268,8 @@ class UploadTests(ServiceFixture):
     def test_clip_is_uploaded_and_reported(self) -> None:
         self.service.boot()
         self.memory.raise_event("PIR")
-        self._run(10.0)
+        self._run(6.0)
+        self._wait_upload_idle()
         self.assertEqual(len(self.uploader.calls), 1)
         types = [
             json.loads(item)["type"]
@@ -267,13 +282,73 @@ class UploadTests(ServiceFixture):
         self.service.boot()
         self.uploader.fail_times = 1
         self.memory.raise_event("PIR")
-        self._run(10.0)
+        self._run(6.0)
+        self._wait_upload_idle()
         self.assertEqual(len(self.uploader.calls), 0)
         self.assertEqual(len(self.spool), 1)
         self.clock.advance(31.0)
-        self._run(2.0)
+        self._run(0.5)
+        self._wait_upload_idle()
         self.assertEqual(len(self.uploader.calls), 1)
         self.assertEqual(len(self.spool), 0)
+
+
+class _SlowUploader:
+    def __init__(self) -> None:
+        self.started = threading.Event()
+        self.release = threading.Event()
+        self.calls = 0
+
+    def upload(self, path, clip_id: str) -> UploadResult:
+        self.started.set()
+        self.release.wait(5.0)
+        self.calls += 1
+        return UploadResult(clip_id=clip_id, url="https://slow/x", size_b=1)
+
+
+class AsyncUploadTests(ServiceFixture):
+    def test_upload_runs_off_the_main_loop(self) -> None:
+        self.service.boot()
+        slow = _SlowUploader()
+        self.service.uploader = slow
+        self.memory.raise_event("PIR")
+        self._run(5.5)
+        self.assertTrue(slow.started.wait(2.0), "upload phải bắt đầu")
+        start = time.monotonic()
+        self.service.step(self.clock.now())
+        self.assertLess(time.monotonic() - start, 0.5, "step không được chặn")
+        slow.release.set()
+        self._wait_upload_idle()
+        self.assertEqual(slow.calls, 1)
+        self.assertEqual(len(self.spool), 0)
+
+
+class SmsWakeTests(ServiceFixture):
+    def test_valid_token_accepted(self) -> None:
+        self.service.config.wake_chan = "sms"
+        self.service.config.wake_token = "tok"
+        self.modem.sms_read = lambda index=None: [
+            SmsMessage(index=1, number="+8490", text="W tok")
+        ]
+        self.service._consume_wake_sms()
+        self.assertTrue(self.service.wake_sms_ok)
+
+    def test_wrong_token_rejected(self) -> None:
+        self.service.config.wake_chan = "sms"
+        self.service.config.wake_token = "tok"
+        self.modem.sms_read = lambda index=None: [
+            SmsMessage(index=1, number="+8490", text="W other")
+        ]
+        self.service._consume_wake_sms()
+        self.assertFalse(self.service.wake_sms_ok)
+
+    def test_ignored_when_channel_is_not_sms(self) -> None:
+        self.service.config.wake_chan = "off"
+        self.modem.sms_read = lambda index=None: [
+            SmsMessage(index=1, number="+8490", text="W tok")
+        ]
+        self.service._consume_wake_sms()
+        self.assertFalse(self.service.wake_sms_ok)
 
 
 if __name__ == "__main__":

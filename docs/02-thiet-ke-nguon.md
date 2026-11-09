@@ -80,7 +80,7 @@ Quy tắc layout cho board mới:
 
 ## 5. Buck 3,3 V
 
-Ứng viên: TPS62840, vì dòng nghỉ cực thấp (xác nhận trong datasheet). Gói SON 1,5×2 mm, 8 pad, **không có pad nhiệt ở giữa** (kết luận của CAM4G v5; tài liệu nguồn của CAM4G còn một chỗ ghi pad EP, nên xác minh lại bằng datasheet `[CHƯA XÁC MINH]`); dùng đúng footprint theo bản vẽ gói DLC của datasheet và đưa vào board thử footprint ([07](07-ke-hoach-phat-trien.md) giai đoạn 1). Dòng ra tối đa 0,75 A `[KẾ THỪA]`. Điện trở đặt áp ra phải kiểm lại trong datasheet cho đúng gói `[CHƯA XÁC MINH]`.
+Ứng viên: TPS62840, vì dòng nghỉ cực thấp (xác nhận trong datasheet). **Đính chính 2026-11-09 (vòng kiểm tra 1):** bản nháp ghi "SON 1,5×2 mm, 8 pad" theo CAM4G; mã đặt hàng `TPS62840DLCR` dùng gói **DLC = SOT-563 6 chân** theo tài liệu TI. Bản nháp đã nhầm lẫn giữa hai gói — đúng loại lỗi footprint mà dự án này muốn tránh. Vì vậy: chưa chốt gói; phải mở datasheet TI, chọn đúng mã gói (SOT-563 hoặc loại khác), vẽ footprint theo đúng bản vẽ gói, và đưa vào board thử footprint ([07](07-ke-hoach-phat-trien.md) giai đoạn 1) `[CHƯA XÁC MINH]`. Dòng ra tối đa 0,75 A `[KẾ THỪA]`. Điện trở đặt áp ra phải lấy từ datasheet đúng gói `[CHƯA XÁC MINH]`.
 
 ## 6. Sạc USB-C
 

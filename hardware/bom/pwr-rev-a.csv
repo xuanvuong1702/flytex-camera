@@ -1,0 +1,26 @@
+ref,block,value,mpn,manufacturer,package,qty,dnp,verify,notes
+U1,boost,5V 3A boost,TPS61088RHLR,Texas Instruments,VQFN-20,1,no,candidate,Vref va fsw va ilim phai doi chieu datasheet
+U2,buck,3V3 0.75A buck,TPS62840DLCR,Texas Instruments,SOT-563 6 pin,1,no,candidate,Goi DLC la SOT-563; CAM4G ghi SON 1.5x2 la sai - phai doi chieu datasheet
+U3,charger,1S LFP switching charger power-path,BQ25798RQMR,Texas Instruments,VQFN-29,1,no,candidate,Phai xac minh dat duoc 3.6 V cho LFP va co power-path
+U4,mcu,STM32L031G6U6,STM32L031G6U6,STMicroelectronics,UFQFPN-28,1,no,candidate,Goi G6 = UFQFPN-28; kiem chan I2C wakeup va STOP
+U5,nvm,32Kbit I2C EEPROM,M24C32-FMN6TP,STMicroelectronics,TSSOP-8,1,no,candidate,Luu mode/lich/boot count
+Q1,soc_switch,load switch TPS22918,TPS22918DBVR,Texas Instruments,SOT-23-6,1,no,candidate,Rail +5V_SOC
+Q2,modem_switch,load switch TPS22918,TPS22918DBVR,Texas Instruments,SOT-23-6,1,no,candidate,Rail +5V_MODEM >=1.8 A
+L1,boost,1.2uH Isat 9A,IHLP2525CZER1R2M01,Vishay,2525,1,no,candidate,Kiem Isat o 125 do C
+D1,usb_esd,ESD array USBLC6-2SC6,USBLC6-2SC6,STMicroelectronics,SOT-23-6,1,no,candidate,USB-C VBUS va D-/D+ khong dung
+F1,usb_ptc,PTC 0.75A 30V,MF-MSMF075,BOURNS,1812,1,no,candidate,Bao ve cong USB-C
+J1,usb_c,USB-C receptacle 16P,USB4085-GF-A,GCT,USB-C,1,no,candidate,Phien ban chong nuoc la O-06
+J2,b2b,header 2x13 2.54 keyed,TSM-113-01-L-DV,Samtec,2x13,1,no,candidate,Phai khop spec/b2b.toml 26 chan
+J3,pack,BAT+ BAT- >=10A,XT30PW-M,Amass,2 pin,1,no,candidate,Co khoa chong nguoc
+J4,swd,header 1x6 2.54,TSW-106-07-G-S,Samtec,1x6,1,no,candidate,SWDIO SWCLK NRST GND 3V3
+J5,sensors,header 1x6 2.54,TSW-106-07-G-S,Samtec,1x6,1,no,candidate,3V3 PIR GND 3V3 DQ GND
+R1,boost_fb,169k 1%,RC0603FR-07169KL,Yageo,0603,1,no,candidate,Cap hoi tiep tren
+R2,boost_fb,53.6k 1%,RC0603FR-0753K6L,Yageo,0603,1,no,candidate,Cap hoi tiep duoi
+R3,batt_div,100k 1%,RC0603FR-07100KL,Yageo,0603,1,no,candidate,Chia ap pin
+R4,batt_div,100k 1%,RC0603FR-07100KL,Yageo,0603,1,no,candidate,Chia ap pin
+C1,boost_in,10uF 25V X7R,CL31B106KBHNNNE,Samsung,1206,2,no,candidate,Sat IC boost
+C2,boost_out,22uF 10V X7R,CL31B226KPHNNNE,Samsung,1206,2,no,candidate
+C3,modem_bulk,470uF 10V low ESR,EEU-FR1A471,Panasonic,radial 8x11,1,no,candidate,Dat sat breakout modem
+C4,decouple,100nF 50V X7R,CL10B104KB8NNNC,Samsung,0603,12,no,candidate,Theo tung IC
+R5,ntc_pull,7.15k 1%,RC0603FR-077K15L,Yageo,0603,1,no,candidate,Theo tinh toan pwr-design
+TP1,testpoint,test point 1.0mm,TP-107-01-T,Samtec,1 pin,12,no,candidate,Moi rail mot diem

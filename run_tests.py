@@ -41,6 +41,9 @@ def build_steps(quick: bool) -> list[tuple[str, list[str]]]:
         ("spec: test spec và bộ sinh", [PY, "spec/tests/test_spec.py"]),
         ("hardware: test tính toán thiết kế", [PY, "hardware/calc/tests/test_pwr.py"]),
         ("hardware: báo cáo khớp tính toán", [PY, "-m", "hardware.calc.cli", "--check"]),
+        ("hardware: test hình học board", [PY, "hardware/geom/tests/test_geom.py"]),
+        ("hardware: bản vẽ khớp spec", [PY, "-m", "hardware.geom.cli", "--check"]),
+        ("hardware: BOM thiết kế", [PY, "hardware/bom/tests/test_bom.py"]),
         ("firmware: build và unit test", [PY, "firmware/mcu/tests/build.py", "test"]),
         ("firmware: thư viện mô phỏng", [PY, "firmware/mcu/tests/build.py", "lib"]),
     ]
@@ -49,6 +52,7 @@ def build_steps(quick: bool) -> list[tuple[str, list[str]]]:
     for path in discover("tools/**/test_*.py"):
         steps.append((f"tools: {path.relative_to(ROOT).as_posix()}", [PY, str(path.relative_to(ROOT))]))
     steps.append(("tools: kiểm tra tài liệu", [PY, "tools/docs_check/check.py"]))
+    steps.append(("readiness: checklist sẵn sàng", [PY, "tools/readiness.py", "--full"]))
     steps.append(("app: cli selftest", [PY, "-m", "flytex.cli", "selftest"]))
     steps.append(("app: cli sim 20s", [PY, "-m", "flytex.cli", "sim", "--seconds", "20"]))
     if not quick:
@@ -60,10 +64,14 @@ REQUIRED = {
     "spec/tests/test_spec.py": 1,
     "hardware/calc/tests/test_pwr.py": 1,
     "hardware/pwr-design.md": 1,
+    "hardware/geom/tests/test_geom.py": 1,
+    "hardware/boards.md": 1,
+    "hardware/bom/pwr-rev-a.csv": 1,
     "firmware/mcu/tests/build.py": 1,
     "app/tests/test_*.py": 1,
     "tools/**/test_*.py": 1,
     "tools/docs_check/check.py": 1,
+    "tools/readiness.py": 1,
     "sim/run.py": 1,
 }
 

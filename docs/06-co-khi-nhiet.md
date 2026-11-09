@@ -62,4 +62,6 @@ ESD ở cổng: TVS và đường nối đất về vỏ; thử ESD cơ bản �
 - Vị trí camera, PIR, ăng-ten, cổng USB-C.
 - Khoang pin và đường dây pack.
 
+Hình học đã có nguồn sự thật máy đọc được: [hardware/spec/boards.toml](../hardware/spec/boards.toml) sinh ra [bảng kích thước, lỗ và connector](../hardware/boards.md) cùng [bản vẽ SVG](../hardware/drawings/pwr.svg). Đổi vị trí thì sửa spec, chạy `python -m hardware.geom.cli --write`, và cập nhật cả vỏ.
+
 Chốt các điểm này giữa vỏ prototype và vỏ production để board không phải thiết kế lại khi đổi vỏ.

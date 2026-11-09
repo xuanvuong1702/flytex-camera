@@ -1,0 +1,105 @@
+# Hình học board cho prototype. Đơn vị mm, gốc toạ độ ở góc dưới-trái board.
+# Đây là nguồn sự thật cho bản vẽ sinh ra trong hardware/drawings/.
+schema = "flytex.boards/1"
+
+# Đường kính lỗ bắt vít M3 (lỗ trơn) và vùng cấm quanh lỗ.
+[mounting]
+hole_diameter_mm = 3.2
+clearance_mm = 0.5
+min_connector_distance_mm = 3.0
+
+[pwr]
+name = "PWR"
+width_mm = 100.0
+height_mm = 60.0
+thickness_mm = 1.6
+mount_holes = [
+  { x = 5.0, y = 5.0 },
+  { x = 95.0, y = 5.0 },
+  { x = 5.0, y = 55.0 },
+  { x = 95.0, y = 55.0 },
+]
+[[pwr.connectors]]
+name = "J_USBC"
+x = 20.0
+y = 0.0
+edge = "bottom"
+note = "USB-C chỉ cấp nguồn, chống nước"
+[[pwr.connectors]]
+name = "J_PACK"
+x = 50.0
+y = 60.0
+edge = "top"
+note = "BAT+ / BAT-, >= 10 A"
+[[pwr.connectors]]
+name = "J_B2B"
+x = 70.0
+y = 30.0
+edge = "inside"
+note = "2x13 header, xem spec/b2b.toml"
+[[pwr.connectors]]
+name = "J_SWD"
+x = 93.0
+y = 15.0
+edge = "inside"
+note = "SWDIO, SWCLK, NRST, GND"
+[[pwr.connectors]]
+name = "J_SENS"
+x = 7.0
+y = 35.0
+edge = "inside"
+note = "PIR + 1-Wire"
+[[pwr.connectors]]
+name = "J_MEAS"
+x = 40.0
+y = 60.0
+edge = "top"
+note = "Header do dong, jumper mac dinh"
+
+[cmp]
+name = "CMP"
+width_mm = 80.0
+height_mm = 50.0
+thickness_mm = 1.6
+mount_holes = [
+  { x = 5.0, y = 5.0 },
+  { x = 75.0, y = 5.0 },
+  { x = 5.0, y = 45.0 },
+  { x = 75.0, y = 45.0 },
+]
+[[cmp.connectors]]
+name = "J_B2B"
+x = 55.0
+y = 25.0
+edge = "inside"
+note = "2x13 header, xem spec/b2b.toml"
+[[cmp.connectors]]
+name = "J_CAM"
+x = 10.0
+y = 50.0
+edge = "top"
+note = "FPC 20 chan"
+[[cmp.connectors]]
+name = "J_SD"
+x = 65.0
+y = 50.0
+edge = "top"
+note = "microSD, tiep can khi mo vo"
+[[cmp.connectors]]
+name = "J_MODEM"
+x = 40.0
+y = 0.0
+edge = "bottom"
+note = "Header modem, co RI"
+[[cmp.connectors]]
+name = "J_CON"
+x = 7.0
+y = 25.0
+edge = "inside"
+note = "UART console"
+[[cmp.connectors]]
+name = "J_SVC"
+x = 25.0
+y = 0.0
+edge = "bottom"
+note = "Pad nap dich vu / mux USB"

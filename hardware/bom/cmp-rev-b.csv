@@ -1,0 +1,14 @@
+ref,block,value,mpn,manufacturer,package,qty,dnp,verify,notes
+U1,soc,Core1106D1408 eMMC 8GB,Core1106D1408,Luckfox,112 pin 30x30mm,1,no,candidate,Chot bien the eMMC D-19; xac nhan chan khi co ban ve
+J1,b2b,header 2x13 2.54 keyed,TSM-113-01-L-DV,Samtec,2x13,1,no,candidate,Phai khop spec/b2b.toml 26 chan
+J2,camera,FPC 20 pin 0.5mm,FH12-20S-0.5SH(55),Hirose,20 pin,1,no,candidate,Pinout theo module camera O-02
+J3,modem,header 2x9 2.54,TSW-109-07-G-D,Samtec,2x9,1,no,candidate,Khop breakout O-04 co RI
+J4,sd,microSD push-push,DM3AT-SF-PEJM5,Hirose,microSD,1,no,candidate,Tiep can khi mo vo
+J5,console,header 1x3 2.54,TSW-103-07-G-S,Samtec,1x3,1,no,candidate,UART console chi khi mo vo
+J6,service,pad nap USB D+ D-,TEST-PAD-2,generic,pad 1.5mm,4,no,candidate,Duong nap dich vu D-20
+U2,usb_mux,USB 2.0 2:1 mux,TS3USB221ARSER,Texas Instruments,UQFN-10,1,no,candidate,Cho phep chon modem hoac pad nap
+D1,esd,ESD array 4 kenh,TPD4E05U06DQAR,Texas Instruments,USON-10,2,no,candidate,USB va FPC
+C1,soc_bulk,470uF 10V low ESR,EEU-FR1A471,Panasonic,radial 8x11,1,no,candidate,Rail 5V SoC
+C2,decouple,100nF 50V X7R,CL10B104KB8NNNC,Samsung,0603,10,no,candidate,Theo tung chan module
+R1,usb_sel,10k 1%,RC0603FR-0710KL,Yageo,0603,1,no,candidate,Dieu khien mux USB_SEL
+TP1,testpoint,test point 1.0mm,TP-107-01-T,Samtec,1 pin,8,no,candidate,Moi rail va I2C

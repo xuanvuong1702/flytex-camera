@@ -10,7 +10,8 @@ from typing import Any, Callable
 
 from flytex.mcu import McuClient
 from flytex.power import PowerConfig, PowerController
-from flytex.recorder import RawMuxer, SegmentRecorder
+from flytex.recorder import SegmentRecorder
+from flytex.tsmux import TsMuxer
 from flytex.uplink import UplinkQueue
 
 from .clock import SimClock, SocEmulator
@@ -83,7 +84,7 @@ class SimRig:
         self.recorder = SegmentRecorder(
             workdir / "clips",
             self.clock,
-            RawMuxer(),
+            TsMuxer(),
             segment_s=4.0,
             max_bytes=8 * 1024 * 1024,
             pin_budget_bytes=4 * 1024 * 1024,

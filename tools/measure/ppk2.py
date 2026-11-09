@@ -1,4 +1,4 @@
-﻿"""Nhập file CSV xuất từ Nordic Power Profiler Kit II (PPK2).
+"""Nhập file CSV xuất từ Nordic Power Profiler Kit II (PPK2).
 
 PPK2 xuất nhiều biến thể cột tuỳ phiên bản và ngôn ngữ. Module này chỉ dựa vào
 tên cột có chứa "time", "current", "voltage" và đơn vị trong ngoặc, nên chấp

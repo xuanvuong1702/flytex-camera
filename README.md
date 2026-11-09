@@ -1,4 +1,4 @@
-﻿# Flytex Camera
+# Flytex Camera
 
 Camera 4G chạy pin cho ngoài trời: phát hiện chuyển động, ghi hình cục bộ, xem trực tiếp qua 4G, ngủ sâu và nhận lệnh từ xa.
 
@@ -16,7 +16,7 @@ Repo này **làm lại từ đầu**. Nó kế thừa *bài học* từ dự án
 | Ứng dụng Linux | Có module + **172 test** host; chưa chạy camera thật |
 | Mô phỏng end-to-end | Có: firmware C thật + ứng dụng thật, **5 kịch bản** |
 | Công cụ đo và kiểm tài liệu | Có, **108 test** |
-| Kiểm thử toàn repo | **408 test + 5 kịch bản**, 27/27 bước đạt: `python run_tests.py` |
+| Kiểm thử toàn repo | **430 test + 5 kịch bản**, 31/31 bước đạt: `python run_tests.py` |
 | Phần cứng | **Chưa có**, chưa vẽ schematic |
 | Số đo thực | **Chưa có.** Mọi con số công suất, nhiệt, thời gian chạy đều là ước tính |
 
@@ -97,12 +97,12 @@ Không cần phần cứng, không cần cài thêm gói Python. Firmware C cầ
 | Tầng | Lệnh | Số lượng |
 |---|---|---|
 | Đặc tả và bộ sinh | `python -m unittest discover -s spec/tests` | 29 |
-| Tính toán thiết kế PWR | `python hardware/calc/tests/test_pwr.py` | 28 |
+| Thiết kế PWR/CMP (tính toán, hình học, BOM) | `python hardware/calc/tests/test_pwr.py`, `hardware/geom/tests/test_geom.py`, `hardware/bom/tests/test_bom.py` | 46 |
 | Firmware MCU (C, host) | `python firmware/mcu/tests/build.py test` | 59 |
 | Ứng dụng Linux (Python) | `python -m unittest discover -s app/tests -t .` | 172 |
 | Công cụ đo và kiểm tài liệu | `python -m unittest discover -s tools -t .` | 120 |
 | Mô phỏng end-to-end | `python sim/run.py --scenario all` | 5 kịch bản |
-| Tất cả | `python run_tests.py` | 27 bước |
+| Tất cả | `python run_tests.py` | 31 bước |
 
 Test không cần phần cứng. Test cần phần cứng nằm ở [docs/08](docs/08-kiem-chung.md) và vẫn là "Chưa làm".
 

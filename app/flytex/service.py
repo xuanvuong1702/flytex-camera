@@ -9,8 +9,10 @@ hàng đợi và xử lý lệnh MQTT.
 
 from __future__ import annotations
 
+import hmac
 import json
 import os
+import threading
 from pathlib import Path
 
 from . import APP_VERSION, mqtt_gen
@@ -87,6 +89,7 @@ class DeviceService:
         if (uploader is None) != (spool is None):
             raise ServiceError("uploader va spool phai duoc cau hinh cung nhau")
         self.sleep_requested = False
+        self.wake_sms_ok = False
         self.power = PowerController(
             mcu,
             clock,
@@ -112,6 +115,11 @@ class DeviceService:
         self._last_state: PowerState | None = None
         self._last_mode: str | None = None
         self._spooled_clip_id: str | None = None
+        self._upload_thread: threading.Thread | None = None
+        self._upload_done: threading.Event | None = None
+        self._upload_item: object | None = None
+        self._upload_result: object | None = None
+        self._upload_error: Exception | None = None
         self._register_default_handlers()
 
     # -- trạng thái công khai -----------------------------------------
@@ -171,6 +179,7 @@ class DeviceService:
                 )
         self._start_mono = self.clock.monotonic()
         connected = self._connect()
+        self._consume_wake_sms()
         self._enqueue_boot(reason, boot_count)
         self._enqueue_status()
         self._last_state = self.power.state
@@ -324,31 +333,104 @@ class DeviceService:
     def _try_upload(self, now: float) -> None:
         if self.spool is None or self.uploader is None:
             return
+        self._collect_upload()
+        if self._upload_thread is not None or self.power.recording:
+            return
         item = self.spool.pending(now)
         if item is None:
             return
         try:
             packed = self._pack_clip(item.clip_id, item.path)
-            result = self.uploader.upload(packed, item.clip_id)
         except (UploadError, OSError) as exc:
-            delay = self.spool.fail(item.clip_id, exc)
-            self.diagnostics.log(
-                "warning",
-                f"tai clip {item.clip_id} loi: {exc}"
-                + (f", thu lai sau {delay:.0f}s" if delay is not None else ", bo"),
-            )
+            self._fail_upload(item_clip_id=item.clip_id, error=exc)
             return
-        self.spool.done(item.clip_id)
-        self._enqueue(
-            {
-                "type": "clip_ready",
-                "clip_id": item.clip_id,
-                "url": result.url,
-                "size_b": result.size_b,
-            },
-            "motion",
+        self._upload_item = item
+        self._upload_result = None
+        self._upload_error = None
+        done = threading.Event()
+        self._upload_done = done
+
+        def work() -> None:
+            try:
+                self._upload_result = self.uploader.upload(packed, item.clip_id)
+            except Exception as exc:  # noqa: BLE001 - chuyển lỗi về luồng chính
+                self._upload_error = exc
+            finally:
+                done.set()
+
+        thread = threading.Thread(
+            target=work, name=f"upload-{item.clip_id}", daemon=True
         )
-        self.diagnostics.log("info", f"da tai clip {item.clip_id} ({result.size_b} B)")
+        self._upload_thread = thread
+        thread.start()
+
+    def _collect_upload(self) -> None:
+        thread = self._upload_thread
+        done = self._upload_done
+        if thread is None or done is None or not done.is_set():
+            return
+        thread.join(timeout=1.0)
+        item = self._upload_item
+        result = self._upload_result
+        error = self._upload_error
+        self._upload_thread = None
+        self._upload_done = None
+        self._upload_item = None
+        self._upload_result = None
+        self._upload_error = None
+        if item is None:
+            return
+        if result is not None and error is None:
+            self.spool.done(item.clip_id)
+            self._enqueue(
+                {
+                    "type": "clip_ready",
+                    "clip_id": item.clip_id,
+                    "url": result.url,
+                    "size_b": result.size_b,
+                },
+                "motion",
+            )
+            self.diagnostics.log(
+                "info", f"da tai clip {item.clip_id} ({result.size_b} B)"
+            )
+        else:
+            self._fail_upload(item_clip_id=item.clip_id, error=error or "unknown")
+
+    def _fail_upload(self, *, item_clip_id: str, error: object) -> None:
+        delay = self.spool.fail(item_clip_id, error)
+        self.diagnostics.log(
+            "warning",
+            f"tai clip {item_clip_id} loi: {error}"
+            + (f", thu lai sau {delay:.0f}s" if delay is not None else ", bo"),
+        )
+
+    def _consume_wake_sms(self) -> None:
+        """Đọc SMS đánh thức sau khi SoC thức; chỉ token đúng mới được tính.
+
+        SMS sai/không có token bị bỏ qua và ghi log, không đánh thức gì thêm.
+        """
+        if self.config.wake_chan != "sms":
+            return
+        try:
+            messages = self.modem.sms_read()
+        except (AtError, AtTimeout) as exc:
+            self.diagnostics.log("warning", f"doc SMS danh thuc loi: {exc}")
+            return
+        for message in messages:
+            text = message.text.strip()
+            if not text.startswith("W "):
+                continue
+            token = text[2:].strip()
+            if self.config.wake_token and hmac.compare_digest(
+                token, self.config.wake_token
+            ):
+                self.wake_sms_ok = True
+                self.diagnostics.log("info", "SMS danh thuc hop le")
+                return
+            self.diagnostics.log("warning", "SMS danh thuc sai token, bo qua")
+        if messages:
+            self.diagnostics.log("info", f"doc {len(messages)} SMS, khong co token hop le")
 
     def _on_power_sleep(self) -> None:
         """SoC chuẩn bị ngủ: đồng bộ hàng đợi rồi bảo MCU cắt rail.
@@ -360,6 +442,13 @@ class DeviceService:
         """
         if self.sleep_requested:
             return
+        thread = self._upload_thread
+        if thread is not None and thread.is_alive():
+            self.diagnostics.log(
+                "warning", "dang tai clip; cho toi da 5 s truoc khi ngu"
+            )
+            thread.join(timeout=5.0)
+            self._collect_upload()
         self.diagnostics.log("info", "vao che do ngu: bao MCU cat rail")
         self._flush_queue(self.clock.now())
         try:

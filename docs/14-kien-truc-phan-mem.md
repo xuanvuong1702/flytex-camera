@@ -174,14 +174,14 @@ Thẻ nhớ là điểm hỏng dữ liệu khi mất điện; mọi lần ghi đ
 | Tầng | Cách chạy | Phạm vi |
 |---|---|---|
 | Spec | `python -m unittest discover -s spec/tests` | Sinh mã khớp spec, không chồng địa chỉ, pinout đủ dòng |
-| Hardware | `python hardware/calc/tests/test_pwr.py` | Dòng boost, hồi tiếp, NTC, ADC, nhiệt, kiểm tra đạt/không |
+| Hardware | `hardware/calc/tests/test_pwr.py`, `hardware/geom/tests/test_geom.py` | Dòng boost, hồi tiếp, NTC, ADC, nhiệt, hình học board |
 | Firmware | `python firmware/mcu/tests/build.py test` | Regmap, state machine, pin, nhiệt, bắt tay, STOP |
 | Ứng dụng | `python -m unittest discover -s app/tests -t .` | Máy trạng thái, AT timeout, hàng đợi, ghi, lệnh |
 | Mô phỏng | `python sim/run.py --scenario all` | Firmware C thật + app thật + modem/cloud giả |
 | Tài liệu | `python tools/docs_check/check.py` | Tham chiếu ID, mục lục, file sinh lệch |
-| Tất cả | `python run_tests.py` | 27 bước: spec, hardware, firmware, app, tools, CLI, sim |
+| Tất cả | `python run_tests.py` | 31 bước: spec, hardware, firmware, app, tools, readiness, CLI, sim |
 
-Số test hiện tại: spec 29, hardware 28, firmware 59, ứng dụng 172, công cụ 120. Tổng 408 test cộng 5 kịch bản mô phỏng. Không test nào cần phần cứng.
+Số test hiện tại: spec 29, hardware 46, firmware 59, ứng dụng 176, công cụ 120. Tổng 430 test cộng 5 kịch bản mô phỏng. Không test nào cần phần cứng.
 
 Test cần phần cứng nằm ở [08](08-kiem-chung.md) và vẫn là "Chưa làm".
 
