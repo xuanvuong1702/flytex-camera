@@ -986,7 +986,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_DFN_QFN:VQFN-20-1EP_3.5x3.5mm_P0.5mm_EP2.1x2.1mm"
+		(property "Footprint" "Package_DFN_QFN:Texas_VQFN-RHL-20"
 			(at 0 0 0)
 			(hide yes)
 			(effects
@@ -1422,7 +1422,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_SON:TI_DLC0008A"
+		(property "Footprint" "Package_SON:VSON-8_1.5x2mm_P0.5mm"
 			(at 0 0 0)
 			(hide yes)
 			(effects
@@ -4314,7 +4314,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_XT30PW-M"
+		(property "Footprint" "Connector_AMASS:AMASS_XT30PW-M_1x02_P2.50mm_Horizontal"
 			(at 250.00 70.00 0)
 			(hide yes)
 			(effects
@@ -5091,7 +5091,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_DFN_QFN:VQFN-20-1EP_3.5x3.5mm_P0.5mm_EP2.1x2.1mm"
+		(property "Footprint" "Package_DFN_QFN:Texas_VQFN-RHL-20"
 			(at 430.00 165.00 0)
 			(hide yes)
 			(effects
@@ -5447,7 +5447,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_SON:TI_DLC0008A"
+		(property "Footprint" "Package_SON:VSON-8_1.5x2mm_P0.5mm"
 			(at 610.00 165.00 0)
 			(hide yes)
 			(effects

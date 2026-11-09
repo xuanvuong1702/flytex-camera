@@ -8,7 +8,7 @@
 | Ref | Giá trị | Footprint | Số chân |
 |---|---|---|---|
 | J1 | USB-C 16P | Connector_USB:USB_C_Receptacle_USB2.0_16P | 6 |
-| J3 | Pack LFP 15Ah | Connector_JST:JST_XT30PW-M | 3 |
+| J3 | Pack LFP 15Ah | Connector_AMASS:AMASS_XT30PW-M_1x02_P2.50mm_Horizontal | 3 |
 | J2 | J_B2B 2x13 | Connector_Generic:Conn_02x13_Odd_Even | 4 |
 | J6 | MCU interface | Connector_PinHeader_2.54mm:PinHeader_1x09_P2.54mm_Vertical | 9 |
 | U3 | BQ25070 | Package_SON:TI_DQC0010A | 11 |

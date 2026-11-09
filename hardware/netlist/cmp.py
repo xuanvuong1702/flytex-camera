@@ -49,7 +49,7 @@ def comp(ref, value, footprint, pins):
 
 
 COMPONENTS = (
-    comp("J1", "J_B2B 2x13", "Connector_Generic:Conn_02x13_Odd_Even", [
+    comp("J1", "J_B2B 2x13", "Connector_PinSocket_2.54mm:PinSocket_2x13_P2.54mm_Vertical", [
         ("1", "+3V3", "+3V3"), ("2", "+5V_SOC", "+5V_SOC"),
         ("3", "+5V_MODEM", "+5V_MODEM"), ("4", "GND", "GND"),
         ("5", "SDA", "SDA"), ("6", "SCL", "SCL"),
@@ -83,7 +83,7 @@ COMPONENTS = (
         ("55", "GND", "GND"), ("82", "GND", "GND"), ("83", "GND", "GND"),
         ("84", "GND", "GND"), ("89", "GND", "GND"), ("112", "GND", "GND"),
     ]),
-    comp("J2", "SC3336 3MP (B)", "Connector_FPC:FH12-20S-0.5SH", [
+    comp("J2", "SC3336 3MP (B)", "Connector_FFC-FPC:Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal", [
         ("1", "GND", "GND"), ("2", "XCLK", "CAM_MCLK"), ("3", "GND", "GND"),
         ("4", "MDP0", "MIPI_D0P"), ("5", "MDN0", "MIPI_D0N"), ("6", "GND", "GND"),
         ("7", "MCP", "MIPI_CLKP"), ("8", "MCN", "MIPI_CLKN"), ("9", "GND", "GND"),

@@ -91,7 +91,7 @@ PARTS = (
             Pin("20", "AGND", "power_in", "left"),
             Pin("21", "PGND", "power_in", "left"),
         ),
-        "Package_DFN_QFN:VQFN-20-1EP_3.5x3.5mm_P0.5mm_EP2.1x2.1mm",
+        "Package_DFN_QFN:Texas_VQFN-RHL-20",
     ),
     Part(
         "TPS62840",
@@ -109,7 +109,7 @@ PARTS = (
             Pin("8", "VOS", "input", "right"),
             Pin("9", "PAD", "power_in", "left"),
         ),
-        "Package_SON:TI_DLC0008A",
+        "Package_SON:VSON-8_1.5x2mm_P0.5mm",
     ),
     Part(
         "TPS22918",

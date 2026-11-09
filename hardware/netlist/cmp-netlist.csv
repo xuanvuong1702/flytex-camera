@@ -1,19 +1,19 @@
 ref,value,footprint,pin,pin_name,net
-J1,J_B2B 2x13,Connector_Generic:Conn_02x13_Odd_Even,1,+3V3,+3V3
-J1,J_B2B 2x13,Connector_Generic:Conn_02x13_Odd_Even,2,+5V_SOC,+5V_SOC
-J1,J_B2B 2x13,Connector_Generic:Conn_02x13_Odd_Even,3,+5V_MODEM,+5V_MODEM
-J1,J_B2B 2x13,Connector_Generic:Conn_02x13_Odd_Even,4,GND,GND
-J1,J_B2B 2x13,Connector_Generic:Conn_02x13_Odd_Even,5,SDA,SDA
-J1,J_B2B 2x13,Connector_Generic:Conn_02x13_Odd_Even,6,SCL,SCL
-J1,J_B2B 2x13,Connector_Generic:Conn_02x13_Odd_Even,7,UART_MCU_TX,UART_MCU_TX
-J1,J_B2B 2x13,Connector_Generic:Conn_02x13_Odd_Even,8,UART_SOC_TX,UART_SOC_TX
-J1,J_B2B 2x13,Connector_Generic:Conn_02x13_Odd_Even,9,SOC_READY,SOC_READY
-J1,J_B2B 2x13,Connector_Generic:Conn_02x13_Odd_Even,10,IRQ,IRQ
-J1,J_B2B 2x13,Connector_Generic:Conn_02x13_Odd_Even,11,RI,RI
-J1,J_B2B 2x13,Connector_Generic:Conn_02x13_Odd_Even,12,MODEM_RESET,MODEM_RESET
-J1,J_B2B 2x13,Connector_Generic:Conn_02x13_Odd_Even,13,MODEM_PWRKEY,MODEM_PWRKEY
-J1,J_B2B 2x13,Connector_Generic:Conn_02x13_Odd_Even,14,USB_SEL,USB_SEL
-J1,J_B2B 2x13,Connector_Generic:Conn_02x13_Odd_Even,15,MODEM_STATUS,MODEM_STATUS
+J1,J_B2B 2x13,Connector_PinSocket_2.54mm:PinSocket_2x13_P2.54mm_Vertical,1,+3V3,+3V3
+J1,J_B2B 2x13,Connector_PinSocket_2.54mm:PinSocket_2x13_P2.54mm_Vertical,2,+5V_SOC,+5V_SOC
+J1,J_B2B 2x13,Connector_PinSocket_2.54mm:PinSocket_2x13_P2.54mm_Vertical,3,+5V_MODEM,+5V_MODEM
+J1,J_B2B 2x13,Connector_PinSocket_2.54mm:PinSocket_2x13_P2.54mm_Vertical,4,GND,GND
+J1,J_B2B 2x13,Connector_PinSocket_2.54mm:PinSocket_2x13_P2.54mm_Vertical,5,SDA,SDA
+J1,J_B2B 2x13,Connector_PinSocket_2.54mm:PinSocket_2x13_P2.54mm_Vertical,6,SCL,SCL
+J1,J_B2B 2x13,Connector_PinSocket_2.54mm:PinSocket_2x13_P2.54mm_Vertical,7,UART_MCU_TX,UART_MCU_TX
+J1,J_B2B 2x13,Connector_PinSocket_2.54mm:PinSocket_2x13_P2.54mm_Vertical,8,UART_SOC_TX,UART_SOC_TX
+J1,J_B2B 2x13,Connector_PinSocket_2.54mm:PinSocket_2x13_P2.54mm_Vertical,9,SOC_READY,SOC_READY
+J1,J_B2B 2x13,Connector_PinSocket_2.54mm:PinSocket_2x13_P2.54mm_Vertical,10,IRQ,IRQ
+J1,J_B2B 2x13,Connector_PinSocket_2.54mm:PinSocket_2x13_P2.54mm_Vertical,11,RI,RI
+J1,J_B2B 2x13,Connector_PinSocket_2.54mm:PinSocket_2x13_P2.54mm_Vertical,12,MODEM_RESET,MODEM_RESET
+J1,J_B2B 2x13,Connector_PinSocket_2.54mm:PinSocket_2x13_P2.54mm_Vertical,13,MODEM_PWRKEY,MODEM_PWRKEY
+J1,J_B2B 2x13,Connector_PinSocket_2.54mm:PinSocket_2x13_P2.54mm_Vertical,14,USB_SEL,USB_SEL
+J1,J_B2B 2x13,Connector_PinSocket_2.54mm:PinSocket_2x13_P2.54mm_Vertical,15,MODEM_STATUS,MODEM_STATUS
 U1,Core1106D1408,flytex:Core1106D,22,USB_N,USB_DM
 U1,Core1106D1408,flytex:Core1106D,23,USB_P,USB_DP
 U1,Core1106D1408,flytex:Core1106D,24,USB_VBUSDET,USB_VBUSDET
@@ -57,26 +57,26 @@ U1,Core1106D1408,flytex:Core1106D,83,GND,GND
 U1,Core1106D1408,flytex:Core1106D,84,GND,GND
 U1,Core1106D1408,flytex:Core1106D,89,GND,GND
 U1,Core1106D1408,flytex:Core1106D,112,GND,GND
-J2,SC3336 3MP (B),Connector_FPC:FH12-20S-0.5SH,1,GND,GND
-J2,SC3336 3MP (B),Connector_FPC:FH12-20S-0.5SH,2,XCLK,CAM_MCLK
-J2,SC3336 3MP (B),Connector_FPC:FH12-20S-0.5SH,3,GND,GND
-J2,SC3336 3MP (B),Connector_FPC:FH12-20S-0.5SH,4,MDP0,MIPI_D0P
-J2,SC3336 3MP (B),Connector_FPC:FH12-20S-0.5SH,5,MDN0,MIPI_D0N
-J2,SC3336 3MP (B),Connector_FPC:FH12-20S-0.5SH,6,GND,GND
-J2,SC3336 3MP (B),Connector_FPC:FH12-20S-0.5SH,7,MCP,MIPI_CLKP
-J2,SC3336 3MP (B),Connector_FPC:FH12-20S-0.5SH,8,MCN,MIPI_CLKN
-J2,SC3336 3MP (B),Connector_FPC:FH12-20S-0.5SH,9,GND,GND
-J2,SC3336 3MP (B),Connector_FPC:FH12-20S-0.5SH,10,MDP1,MIPI_D1P
-J2,SC3336 3MP (B),Connector_FPC:FH12-20S-0.5SH,11,MDN1,MIPI_D1N
-J2,SC3336 3MP (B),Connector_FPC:FH12-20S-0.5SH,12,GND,GND
-J2,SC3336 3MP (B),Connector_FPC:FH12-20S-0.5SH,13,SIO-C,CAM_SCL
-J2,SC3336 3MP (B),Connector_FPC:FH12-20S-0.5SH,14,SIO-D,CAM_SDA
-J2,SC3336 3MP (B),Connector_FPC:FH12-20S-0.5SH,15,GND,GND
-J2,SC3336 3MP (B),Connector_FPC:FH12-20S-0.5SH,16,RESET,CAM_RST
-J2,SC3336 3MP (B),Connector_FPC:FH12-20S-0.5SH,17,GND,GND
-J2,SC3336 3MP (B),Connector_FPC:FH12-20S-0.5SH,18,GND,GND
-J2,SC3336 3MP (B),Connector_FPC:FH12-20S-0.5SH,19,+3.3V,+3V3
-J2,SC3336 3MP (B),Connector_FPC:FH12-20S-0.5SH,20,+3.3V,+3V3
+J2,SC3336 3MP (B),Connector_FFC-FPC:Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal,1,GND,GND
+J2,SC3336 3MP (B),Connector_FFC-FPC:Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal,2,XCLK,CAM_MCLK
+J2,SC3336 3MP (B),Connector_FFC-FPC:Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal,3,GND,GND
+J2,SC3336 3MP (B),Connector_FFC-FPC:Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal,4,MDP0,MIPI_D0P
+J2,SC3336 3MP (B),Connector_FFC-FPC:Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal,5,MDN0,MIPI_D0N
+J2,SC3336 3MP (B),Connector_FFC-FPC:Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal,6,GND,GND
+J2,SC3336 3MP (B),Connector_FFC-FPC:Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal,7,MCP,MIPI_CLKP
+J2,SC3336 3MP (B),Connector_FFC-FPC:Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal,8,MCN,MIPI_CLKN
+J2,SC3336 3MP (B),Connector_FFC-FPC:Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal,9,GND,GND
+J2,SC3336 3MP (B),Connector_FFC-FPC:Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal,10,MDP1,MIPI_D1P
+J2,SC3336 3MP (B),Connector_FFC-FPC:Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal,11,MDN1,MIPI_D1N
+J2,SC3336 3MP (B),Connector_FFC-FPC:Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal,12,GND,GND
+J2,SC3336 3MP (B),Connector_FFC-FPC:Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal,13,SIO-C,CAM_SCL
+J2,SC3336 3MP (B),Connector_FFC-FPC:Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal,14,SIO-D,CAM_SDA
+J2,SC3336 3MP (B),Connector_FFC-FPC:Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal,15,GND,GND
+J2,SC3336 3MP (B),Connector_FFC-FPC:Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal,16,RESET,CAM_RST
+J2,SC3336 3MP (B),Connector_FFC-FPC:Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal,17,GND,GND
+J2,SC3336 3MP (B),Connector_FFC-FPC:Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal,18,GND,GND
+J2,SC3336 3MP (B),Connector_FFC-FPC:Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal,19,+3.3V,+3V3
+J2,SC3336 3MP (B),Connector_FFC-FPC:Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal,20,+3.3V,+3V3
 J3,EC200U carrier,Connector_PinHeader_2.54mm:PinHeader_2x09_P2.54mm_Vertical,1,+5V_MODEM,+5V_MODEM
 J3,EC200U carrier,Connector_PinHeader_2.54mm:PinHeader_2x09_P2.54mm_Vertical,2,+5V_MODEM,+5V_MODEM
 J3,EC200U carrier,Connector_PinHeader_2.54mm:PinHeader_2x09_P2.54mm_Vertical,3,GND,GND

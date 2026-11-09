@@ -7,9 +7,9 @@
 
 | Ref | Giá trị | Footprint | Số chân |
 |---|---|---|---|
-| J1 | J_B2B 2x13 | Connector_Generic:Conn_02x13_Odd_Even | 15 |
+| J1 | J_B2B 2x13 | Connector_PinSocket_2.54mm:PinSocket_2x13_P2.54mm_Vertical | 15 |
 | U1 | Core1106D1408 | flytex:Core1106D | 43 |
-| J2 | SC3336 3MP (B) | Connector_FPC:FH12-20S-0.5SH | 20 |
+| J2 | SC3336 3MP (B) | Connector_FFC-FPC:Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal | 20 |
 | J3 | EC200U carrier | Connector_PinHeader_2.54mm:PinHeader_2x09_P2.54mm_Vertical | 18 |
 | J4 | microSD | Connector_Card:microSD_HC_Hirose_DM3AT | 9 |
 | U2 | TS3USB221A | Package_DFN_QFN:UQFN-10_1.4x1.8mm_P0.4mm | 10 |

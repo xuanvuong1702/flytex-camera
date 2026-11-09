@@ -54,7 +54,7 @@ COMPONENTS = (
         ("A1", "GND", "GND"), ("B12", "GND", "GND"),
         ("A5", "CC1", "CC1"), ("B5", "CC2", "CC2"),
     ]),
-    comp("J3", "Pack LFP 15Ah", "Connector_JST:JST_XT30PW-M", [
+    comp("J3", "Pack LFP 15Ah", "Connector_AMASS:AMASS_XT30PW-M_1x02_P2.50mm_Horizontal", [
         ("1", "BAT+", "VBAT"), ("2", "BAT-", "GND"), ("3", "NTC", "TS"),
     ]),
     comp("J2", "J_B2B 2x13", "Connector_Generic:Conn_02x13_Odd_Even", [

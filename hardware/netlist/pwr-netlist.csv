@@ -5,9 +5,9 @@ J1,USB-C 16P,Connector_USB:USB_C_Receptacle_USB2.0_16P,A1,GND,GND
 J1,USB-C 16P,Connector_USB:USB_C_Receptacle_USB2.0_16P,B12,GND,GND
 J1,USB-C 16P,Connector_USB:USB_C_Receptacle_USB2.0_16P,A5,CC1,CC1
 J1,USB-C 16P,Connector_USB:USB_C_Receptacle_USB2.0_16P,B5,CC2,CC2
-J3,Pack LFP 15Ah,Connector_JST:JST_XT30PW-M,1,BAT+,VBAT
-J3,Pack LFP 15Ah,Connector_JST:JST_XT30PW-M,2,BAT-,GND
-J3,Pack LFP 15Ah,Connector_JST:JST_XT30PW-M,3,NTC,TS
+J3,Pack LFP 15Ah,Connector_AMASS:AMASS_XT30PW-M_1x02_P2.50mm_Horizontal,1,BAT+,VBAT
+J3,Pack LFP 15Ah,Connector_AMASS:AMASS_XT30PW-M_1x02_P2.50mm_Horizontal,2,BAT-,GND
+J3,Pack LFP 15Ah,Connector_AMASS:AMASS_XT30PW-M_1x02_P2.50mm_Horizontal,3,NTC,TS
 J2,J_B2B 2x13,Connector_Generic:Conn_02x13_Odd_Even,1,+3V3,+3V3
 J2,J_B2B 2x13,Connector_Generic:Conn_02x13_Odd_Even,2,+5V_SOC,+5V_SOC
 J2,J_B2B 2x13,Connector_Generic:Conn_02x13_Odd_Even,3,+5V_MODEM,+5V_MODEM

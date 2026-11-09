@@ -22,7 +22,7 @@
 ## TPS61088
 
 - Datasheet: https://www.ti.com/lit/ds/symlink/tps61088.pdf
-- Footprint: `Package_DFN_QFN:VQFN-20-1EP_3.5x3.5mm_P0.5mm_EP2.1x2.1mm`
+- Footprint: `Package_DFN_QFN:Texas_VQFN-RHL-20`
 
 | Pin | Tên | Kiểu |
 |---|---|---|
@@ -51,7 +51,7 @@
 ## TPS62840
 
 - Datasheet: https://www.ti.com/lit/ds/symlink/tps62840.pdf
-- Footprint: `Package_SON:TI_DLC0008A`
+- Footprint: `Package_SON:VSON-8_1.5x2mm_P0.5mm`
 
 | Pin | Tên | Kiểu |
 |---|---|---|

@@ -3066,7 +3066,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Generic:Conn_02x13_Odd_Even"
+		(property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_2x13_P2.54mm_Vertical"
 			(at 70.00 70.00 0)
 			(hide yes)
 			(effects
@@ -4040,7 +4040,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_FPC:FH12-20S-0.5SH"
+		(property "Footprint" "Connector_FFC-FPC:Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal"
 			(at 430.00 70.00 0)
 			(hide yes)
 			(effects
