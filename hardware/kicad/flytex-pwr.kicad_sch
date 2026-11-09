@@ -1,0 +1,2629 @@
+(kicad_sch
+	(version 20250610)
+	(generator "flytex-sch-pwr")
+	(generator_version "10.0")
+	(uuid "97503068-2b8f-5519-8ec1-73d52fbda366")
+	(paper "A3")
+	(title_block
+		(title "Flytex Camera - PWR pin-level")
+		(rev "A")
+		(company "Flytex")
+	)
+	(lib_symbols
+	(symbol "flytex-power:BQ25070"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 0 11.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "BQ25070"
+			(at 0 -10.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_SON:TI_DQC0010A"
+			(at 0 0 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/bq25070.pdf"
+			(at 0 0 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "BQ25070_0_1"
+			(rectangle
+				(start -7.62 8.89)
+				(end 7.62 -8.89)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "BQ25070_1_1"
+		(pin power_in line
+			(at -12.700 6.350 0)
+			(length 5.08)
+			(name "IN"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_in line
+			(at -12.700 3.810 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "3"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin input line
+			(at -12.700 1.270 0)
+			(length 5.08)
+			(name "TS"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "5"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin input line
+			(at -12.700 -1.270 0)
+			(length 5.08)
+			(name "CTRL"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "7"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_in line
+			(at -12.700 -3.810 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "9"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_in line
+			(at -12.700 -6.350 0)
+			(length 5.08)
+			(name "PAD"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "11"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin output line
+			(at 12.700 6.350 180)
+			(length 5.08)
+			(name "IMON"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "2"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_out line
+			(at 12.700 3.810 180)
+			(length 5.08)
+			(name "LDO"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "4"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 12.700 1.270 180)
+			(length 5.08)
+			(name "BAT"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "6"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin open_collector line
+			(at 12.700 -1.270 180)
+			(length 5.08)
+			(name "CHG"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "8"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_out line
+			(at 12.700 -3.810 180)
+			(length 5.08)
+			(name "OUT"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "10"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		)
+	)
+	(symbol "flytex-power:TPS61088"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 0 17.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TPS61088"
+			(at 0 -16.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_DFN_QFN:VQFN-20-1EP_3.5x3.5mm_P0.5mm_EP2.1x2.1mm"
+			(at 0 0 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps61088.pdf"
+			(at 0 0 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "TPS61088_0_1"
+			(rectangle
+				(start -7.62 15.24)
+				(end 7.62 -15.24)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "TPS61088_1_1"
+		(pin input line
+			(at -12.700 12.700 0)
+			(length 5.08)
+			(name "EN"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "2"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin input line
+			(at -12.700 10.160 0)
+			(length 5.08)
+			(name "FSW"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "3"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_in line
+			(at -12.700 7.620 0)
+			(length 5.08)
+			(name "VIN"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "9"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at -12.700 5.080 0)
+			(length 5.08)
+			(name "SS"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "10"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin no_connect line
+			(at -12.700 2.540 0)
+			(length 5.08)
+			(name "NC"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "11"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin no_connect line
+			(at -12.700 0.000 0)
+			(length 5.08)
+			(name "NC"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "12"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin input line
+			(at -12.700 -2.540 0)
+			(length 5.08)
+			(name "MODE"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "13"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin input line
+			(at -12.700 -5.080 0)
+			(length 5.08)
+			(name "FB"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "17"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_in line
+			(at -12.700 -7.620 0)
+			(length 5.08)
+			(name "AGND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "20"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_in line
+			(at -12.700 -10.160 0)
+			(length 5.08)
+			(name "PGND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "21"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_out line
+			(at 12.700 12.700 180)
+			(length 5.08)
+			(name "VCC"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 12.700 10.160 180)
+			(length 5.08)
+			(name "SW"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "4"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 12.700 7.620 180)
+			(length 5.08)
+			(name "SW"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "5"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 12.700 5.080 180)
+			(length 5.08)
+			(name "SW"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "6"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 12.700 2.540 180)
+			(length 5.08)
+			(name "SW"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "7"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 12.700 0.000 180)
+			(length 5.08)
+			(name "BOOT"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "8"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_out line
+			(at 12.700 -2.540 180)
+			(length 5.08)
+			(name "VOUT"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "14"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 12.700 -5.080 180)
+			(length 5.08)
+			(name "VOUT"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "15"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 12.700 -7.620 180)
+			(length 5.08)
+			(name "VOUT"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "16"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 12.700 -10.160 180)
+			(length 5.08)
+			(name "COMP"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "18"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 12.700 -12.700 180)
+			(length 5.08)
+			(name "ILIM"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "19"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		)
+	)
+	(symbol "flytex-power:TPS62840"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 0 11.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TPS62840"
+			(at 0 -10.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_SON:TI_DLC0008A"
+			(at 0 0 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps62840.pdf"
+			(at 0 0 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "TPS62840_0_1"
+			(rectangle
+				(start -7.62 8.89)
+				(end 7.62 -8.89)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "TPS62840_1_1"
+		(pin power_in line
+			(at -12.700 6.350 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_in line
+			(at -12.700 3.810 0)
+			(length 5.08)
+			(name "VIN"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "2"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin input line
+			(at -12.700 1.270 0)
+			(length 5.08)
+			(name "MODE"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "3"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin input line
+			(at -12.700 -1.270 0)
+			(length 5.08)
+			(name "EN"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "4"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin input line
+			(at -12.700 -3.810 0)
+			(length 5.08)
+			(name "STOP"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "6"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_in line
+			(at -12.700 -6.350 0)
+			(length 5.08)
+			(name "PAD"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "9"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin input line
+			(at 12.700 6.350 180)
+			(length 5.08)
+			(name "VSET"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "5"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 12.700 3.810 180)
+			(length 5.08)
+			(name "SW"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "7"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin input line
+			(at 12.700 1.270 180)
+			(length 5.08)
+			(name "VOS"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "8"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		)
+	)
+	(symbol "flytex-power:TPS22918"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "Q"
+			(at 0 7.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TPS22918"
+			(at 0 -6.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-6"
+			(at 0 0 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps22918.pdf"
+			(at 0 0 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "TPS22918_0_1"
+			(rectangle
+				(start -7.62 5.08)
+				(end 7.62 -5.08)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "TPS22918_1_1"
+		(pin power_in line
+			(at -12.700 2.540 0)
+			(length 5.08)
+			(name "VIN"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "1"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_in line
+			(at -12.700 0.000 0)
+			(length 5.08)
+			(name "GND"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "2"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin input line
+			(at -12.700 -2.540 0)
+			(length 5.08)
+			(name "ON"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "3"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 12.700 2.540 180)
+			(length 5.08)
+			(name "CT"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "4"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin passive line
+			(at 12.700 0.000 180)
+			(length 5.08)
+			(name "QOD"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "5"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		(pin power_out line
+			(at 12.700 -2.540 180)
+			(length 5.08)
+			(name "VOUT"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+			(number "6"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+			)
+		)
+		)
+	)
+	(symbol "power:PWR_FLAG"
+		(power)
+		(pin_numbers
+			(hide yes)
+		)
+		(pin_names
+			(offset 0)
+			(hide yes)
+		)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(property "Reference" "#FLG"
+			(at 0 1.905 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 0 3.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "PWR_FLAG_0_0"
+			(pin power_out line
+				(at 0 0 90)
+				(length 0)
+				(name "~"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+	)
+	)
+	(symbol
+		(lib_id "flytex-power:TPS61088")
+		(at 80.00 70.00 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "b4c635d3-0116-5f81-bd84-de4ffdcd0da6")
+		(property "Reference" "U1"
+			(at 80.00 89.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TPS61088"
+			(at 80.00 52.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_DFN_QFN:VQFN-20-1EP_3.5x3.5mm_P0.5mm_EP2.1x2.1mm"
+			(at 80.00 70.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 80.00 70.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "58066e87-bc0c-56df-86be-7038dadd2182")
+		)
+		(pin "2"
+			(uuid "bd1cd5d1-1841-51fc-9d82-6522a17f74a5")
+		)
+		(pin "3"
+			(uuid "96d48311-17da-56a5-bc41-ccdbe3c95b05")
+		)
+		(pin "4"
+			(uuid "62154d3d-c384-5b85-9bc7-377381dd4079")
+		)
+		(pin "5"
+			(uuid "bcc980ea-103f-5c7c-8351-124be86172c5")
+		)
+		(pin "6"
+			(uuid "2ba209c2-8aba-573c-8536-3ec1c2a76ac1")
+		)
+		(pin "7"
+			(uuid "b5798af6-b034-51f3-85f5-009440650ac9")
+		)
+		(pin "8"
+			(uuid "7320ee1c-b70b-5343-a3e3-8c561af122a1")
+		)
+		(pin "9"
+			(uuid "114d4677-72ff-53e4-816e-c540d29a9028")
+		)
+		(pin "10"
+			(uuid "efb96ca8-2868-5ee5-a9ac-8a88d0299194")
+		)
+		(pin "11"
+			(uuid "e418ef03-7584-5a30-8644-76f420a8df1d")
+		)
+		(pin "12"
+			(uuid "589bb745-3163-5ea3-bebe-35b03c63e48f")
+		)
+		(pin "13"
+			(uuid "d8969724-a721-586b-bda0-624a91697ee2")
+		)
+		(pin "14"
+			(uuid "0b297f1b-c884-5e3e-8070-1f02fff0de80")
+		)
+		(pin "15"
+			(uuid "3c3eb4c0-a449-53e2-9cda-199173c8a7f8")
+		)
+		(pin "16"
+			(uuid "5325b93c-aef9-5600-b997-411682f98be4")
+		)
+		(pin "17"
+			(uuid "ab62c8f4-8a7f-5c6d-8969-23f088b703f2")
+		)
+		(pin "18"
+			(uuid "8dedd1c7-d02e-5990-b56b-14e0505ff695")
+		)
+		(pin "19"
+			(uuid "2339771d-cb3f-5d10-8fbd-de074f449b6d")
+		)
+		(pin "20"
+			(uuid "e12a66e4-94da-5912-8370-8cf4b42b4ba4")
+		)
+		(pin "21"
+			(uuid "ab78b865-d4a4-5413-8ca6-5bca90632103")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/97503068-2b8f-5519-8ec1-73d52fbda366"
+					(reference "U1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "VCC_BOOST"
+		(shape input)
+		(at 92.70 57.30 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "2b2d9dfd-2753-5f72-b124-47afa2afc824")
+	)
+	(global_label "EN_BOOST"
+		(shape input)
+		(at 67.30 57.30 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "2431a557-f46a-5cf9-864e-ef3454cf3bab")
+	)
+	(global_label "FSW_BOOST"
+		(shape input)
+		(at 67.30 59.84 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "fab8cb33-b5cb-5335-94b4-652f8d24c9d6")
+	)
+	(global_label "SW_BOOST"
+		(shape input)
+		(at 92.70 59.84 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "e376c3d7-34ba-5805-b8c3-d05668c6870e")
+	)
+	(global_label "SW_BOOST"
+		(shape input)
+		(at 92.70 62.38 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "0db3030b-a4f2-59f5-b7be-68d6ad13b3d0")
+	)
+	(global_label "SW_BOOST"
+		(shape input)
+		(at 92.70 64.92 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "9a5e38e1-657a-5cdb-8f0e-90600edec2c4")
+	)
+	(global_label "SW_BOOST"
+		(shape input)
+		(at 92.70 67.46 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "8eeb5465-d8fd-57df-89a2-a64b1df461ef")
+	)
+	(global_label "BOOT_BOOST"
+		(shape input)
+		(at 92.70 70.00 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "9c714708-39a0-5952-9db2-767abb82fcef")
+	)
+	(global_label "VBAT"
+		(shape input)
+		(at 67.30 62.38 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "f5b88bf5-ba20-5f3d-b7bc-ab4ca9d51522")
+	)
+	(global_label "SS_BOOST"
+		(shape input)
+		(at 67.30 64.92 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "134061e8-a440-5f9b-97f9-40aed6839596")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 67.30 67.46 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "8ede00a3-f395-5aa9-aedb-ddeb8a4be579")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 67.30 70.00 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "c7a38b34-4e52-5110-b2c6-948f47abf746")
+	)
+	(no_connect (at 67.30 72.54) (uuid "c7efe104-5194-548e-80bc-7025d06c9722"))
+	(global_label "+5V_BOOST"
+		(shape input)
+		(at 92.70 72.54 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "6e87631e-37cb-596a-b68d-edfb6b7a48b2")
+	)
+	(global_label "+5V_BOOST"
+		(shape input)
+		(at 92.70 75.08 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3923c9af-e043-5f6a-b330-763dae6ec36c")
+	)
+	(global_label "+5V_BOOST"
+		(shape input)
+		(at 92.70 77.62 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "5a281c98-1d85-57db-bff0-f870caac2e2c")
+	)
+	(global_label "FB_BOOST"
+		(shape input)
+		(at 67.30 75.08 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "dbe2c937-27bb-5620-a64e-05433b6510be")
+	)
+	(global_label "COMP_BOOST"
+		(shape input)
+		(at 92.70 80.16 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c0892690-ace0-5750-8e20-b82818d973fc")
+	)
+	(global_label "ILIM_BOOST"
+		(shape input)
+		(at 92.70 82.70 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "e63abb83-a3f4-5dc8-bce7-5fc212e20ce8")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 67.30 77.62 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "96c63866-12f9-5225-bdf5-0c5bc3336a70")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 67.30 80.16 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "5bd80d75-ed5a-5de5-9eab-a438deba748d")
+	)
+	(symbol
+		(lib_id "flytex-power:TPS62840")
+		(at 190.00 70.00 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "18a1584d-a787-522f-bb4b-f03fd7d76767")
+		(property "Reference" "U2"
+			(at 190.00 82.70 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TPS62840"
+			(at 190.00 58.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_SON:TI_DLC0008A"
+			(at 190.00 70.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 190.00 70.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "a112ab1b-caad-5bd7-80a4-1298b2308c1e")
+		)
+		(pin "2"
+			(uuid "c83e0cf9-7526-5829-b166-a31b335d0766")
+		)
+		(pin "3"
+			(uuid "0b97760e-7b96-5b8e-908a-86eedf6566b8")
+		)
+		(pin "4"
+			(uuid "c4e3949e-0463-5c97-b39a-d4a3da2c3ff9")
+		)
+		(pin "5"
+			(uuid "151c48bb-8ee9-57fc-90f7-ab91cbff1708")
+		)
+		(pin "6"
+			(uuid "28f4c2ba-b837-500e-b94b-5af671190faa")
+		)
+		(pin "7"
+			(uuid "78c9bb81-8716-521b-b7d1-9037633bae43")
+		)
+		(pin "8"
+			(uuid "42df8193-e898-5118-b15e-3a9858a5e193")
+		)
+		(pin "9"
+			(uuid "0c45e31e-b1a8-5c7a-942c-33c8e5194e30")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/97503068-2b8f-5519-8ec1-73d52fbda366"
+					(reference "U2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape input)
+		(at 177.30 63.65 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "1c8cede5-7a99-55e0-a4ac-e54a1829f818")
+	)
+	(global_label "VBAT"
+		(shape input)
+		(at 177.30 66.19 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "76256388-79ce-5a40-8c85-5eb3ada594fe")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 177.30 68.73 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "10978c10-d383-525c-b3d4-365f477402f3")
+	)
+	(global_label "VBAT"
+		(shape input)
+		(at 177.30 71.27 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "71119571-5865-5ad6-b02d-b64d33d33eff")
+	)
+	(global_label "VSET"
+		(shape input)
+		(at 202.70 63.65 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "7cec441d-4106-5809-8b13-122df9e8acb5")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 177.30 73.81 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "74589a54-1fd3-5f95-90a4-aec4ae1f4640")
+	)
+	(global_label "SW_BUCK"
+		(shape input)
+		(at 202.70 66.19 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "f13ee8be-08cd-57fb-b34a-cc4f3977b722")
+	)
+	(global_label "+3V3"
+		(shape input)
+		(at 202.70 68.73 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "2d7ba90c-df75-5e9c-94bb-19b5b73788b9")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 177.30 76.35 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "82da3093-338f-5972-896b-6a82569f8df1")
+	)
+	(symbol
+		(lib_id "flytex-power:BQ25070")
+		(at 300.00 70.00 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "7044bd2b-8279-5c01-aee1-5678f17e72e3")
+		(property "Reference" "U3"
+			(at 300.00 82.70 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "BQ25070"
+			(at 300.00 58.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_SON:TI_DQC0010A"
+			(at 300.00 70.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 300.00 70.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "3de01b99-0899-5f27-8743-c8976729f9ad")
+		)
+		(pin "2"
+			(uuid "cd4ea45e-971d-5f03-aff3-5731f2bbe209")
+		)
+		(pin "3"
+			(uuid "26705067-c2e4-5246-ab52-2fb35ddb7c40")
+		)
+		(pin "4"
+			(uuid "6a0e994d-d872-5e01-bbe2-cfa2ec4cd83f")
+		)
+		(pin "5"
+			(uuid "b8dd85a0-8c69-59dc-b6e6-e3a92b2ab753")
+		)
+		(pin "6"
+			(uuid "d307b925-a983-5858-b176-7a1d8855b1e4")
+		)
+		(pin "7"
+			(uuid "55b9d965-69da-5cfe-834d-70acdb0675ad")
+		)
+		(pin "8"
+			(uuid "5e3a3a8f-d7e6-5d33-9bcc-76e203ac412b")
+		)
+		(pin "9"
+			(uuid "1f3dfd1b-0508-57d6-aad2-cabc301b391d")
+		)
+		(pin "10"
+			(uuid "5e90e203-b75a-5a64-808f-a5b62f9aeb7f")
+		)
+		(pin "11"
+			(uuid "69fe510a-3185-557d-a15e-3837729131e6")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/97503068-2b8f-5519-8ec1-73d52fbda366"
+					(reference "U3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "VBUS"
+		(shape input)
+		(at 287.30 63.65 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "94c73f2a-abe3-51f5-bd76-722aec1b1b05")
+	)
+	(global_label "IMON"
+		(shape input)
+		(at 312.70 63.65 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "daa9e8e6-6e98-5b1b-a07d-3967c3326915")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 287.30 66.19 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "c33df0bc-b425-5621-924a-6fab4e6b23db")
+	)
+	(global_label "LDO"
+		(shape input)
+		(at 312.70 66.19 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "8643ce6e-c2b0-5660-9aed-56f6a83cd996")
+	)
+	(global_label "TS"
+		(shape input)
+		(at 287.30 68.73 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "0c7c0179-d62e-5cff-a798-b3930123f662")
+	)
+	(global_label "VBAT"
+		(shape input)
+		(at 312.70 68.73 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3fa86a82-4fd1-5b12-a2a6-17f560fafa5b")
+	)
+	(global_label "CHG_CTRL"
+		(shape input)
+		(at 287.30 71.27 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "c33a619b-ff8c-5e16-b9a9-154136e1a41f")
+	)
+	(global_label "CHG_STAT"
+		(shape input)
+		(at 312.70 71.27 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "58ca4500-37fd-5f02-89a7-b8663c64f7c3")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 287.30 73.81 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "19c9a85b-cbed-5cf8-9fb0-dcc441ad8dce")
+	)
+	(global_label "VBAT"
+		(shape input)
+		(at 312.70 73.81 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "57add3b2-2a15-514f-8710-22e17cda8776")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 287.30 76.35 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "da023bb9-28a6-50ea-ac3a-229b026014f8")
+	)
+	(symbol
+		(lib_id "flytex-power:TPS22918")
+		(at 80.00 190.00 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "d1a9f2cf-94a8-537b-8139-3b1338a7894f")
+		(property "Reference" "Q1"
+			(at 80.00 198.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TPS22918"
+			(at 80.00 182.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-6"
+			(at 80.00 190.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 80.00 190.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "2e25ac63-4d92-58eb-96d2-36c333126ebe")
+		)
+		(pin "2"
+			(uuid "272051b7-b258-5eb2-9a49-5d2bf3d22358")
+		)
+		(pin "3"
+			(uuid "f4d3831f-bbc9-5657-af17-fc75ad221717")
+		)
+		(pin "4"
+			(uuid "47d94dbb-3f0d-5edb-9922-e75dade9a04e")
+		)
+		(pin "5"
+			(uuid "986b71e7-f7d7-5654-b858-f0b6842b4257")
+		)
+		(pin "6"
+			(uuid "6b03fa10-d5c7-549f-b670-152b3ad88669")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/97503068-2b8f-5519-8ec1-73d52fbda366"
+					(reference "Q1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "+5V_BOOST"
+		(shape input)
+		(at 67.30 187.46 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "0de93952-70a3-51f3-9516-d85a3ad0c4a1")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 67.30 190.00 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "7ef5d173-f448-5bed-8507-6b8ac3d2cdce")
+	)
+	(global_label "SOC_PWR_EN"
+		(shape input)
+		(at 67.30 192.54 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "2ae6c327-53ce-5612-82b9-7ffed187b1b0")
+	)
+	(global_label "CT_SOC"
+		(shape input)
+		(at 92.70 187.46 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "b8427aac-c5b2-59f1-9e6e-5f8127094a8f")
+	)
+	(global_label "+5V_SOC"
+		(shape input)
+		(at 92.70 190.00 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "09f0ae43-f465-500a-aad4-0c9b16a1684d")
+	)
+	(global_label "+5V_SOC"
+		(shape input)
+		(at 92.70 192.54 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "87656b6c-5d37-5c8a-8e74-3c18a2c9ece9")
+	)
+	(symbol
+		(lib_id "flytex-power:TPS22918")
+		(at 190.00 190.00 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f6c2e26d-5f3b-54ec-9830-2f55ac6eb994")
+		(property "Reference" "Q2"
+			(at 190.00 198.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TPS22918"
+			(at 190.00 182.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-6"
+			(at 190.00 190.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 190.00 190.00 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "63f1c71b-7e47-5e19-9a46-ffdce15df45c")
+		)
+		(pin "2"
+			(uuid "ee460d90-e5c9-5d63-96c8-7ff88c335d56")
+		)
+		(pin "3"
+			(uuid "1ba3fbe6-055b-5ff8-868f-aa4211ca46f0")
+		)
+		(pin "4"
+			(uuid "dfdb5811-dc6a-5b05-869b-580370b52fbd")
+		)
+		(pin "5"
+			(uuid "fc037885-2712-5852-b41e-29ef61a4eb37")
+		)
+		(pin "6"
+			(uuid "dd5604ef-3b7e-5f9c-83d3-72cf06ff3a17")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/97503068-2b8f-5519-8ec1-73d52fbda366"
+					(reference "Q2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "+5V_BOOST"
+		(shape input)
+		(at 177.30 187.46 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "9296e6c8-5cff-5722-88a3-ca8f6fd42d2a")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 177.30 190.00 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "8ad5b3db-8dde-56a8-9e49-97d9d6a5bfb8")
+	)
+	(global_label "MODEM_PWR_EN"
+		(shape input)
+		(at 177.30 192.54 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "92aa08b1-736a-5fd9-9a38-486f660f24c1")
+	)
+	(global_label "CT_MODEM"
+		(shape input)
+		(at 202.70 187.46 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "39245b9e-bbb1-58b0-85cf-0edcd8df665f")
+	)
+	(global_label "+5V_MODEM"
+		(shape input)
+		(at 202.70 190.00 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "5d59d7ec-b88c-5f71-82a0-ee1fd5ac6d29")
+	)
+	(global_label "+5V_MODEM"
+		(shape input)
+		(at 202.70 192.54 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "02805550-ba38-5d1a-bda8-8cf80952bf54")
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 202.70 68.73 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "914cf836-3146-5628-b4f1-5309102d234e")
+		(property "Reference" "#FLG1"
+			(at 202.70 68.73 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 202.70 68.73 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "8e517ed6-9d82-5917-818b-7a9b0d653a71")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/97503068-2b8f-5519-8ec1-73d52fbda366"
+					(reference "#FLG1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 287.30 71.27 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "f2504408-9b34-53cd-81a9-d4c8508cf15e")
+		(property "Reference" "#FLG2"
+			(at 287.30 71.27 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 287.30 71.27 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "b79c8c16-00fb-5999-9a75-438d233df217")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/97503068-2b8f-5519-8ec1-73d52fbda366"
+					(reference "#FLG2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 67.30 57.30 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "267a6581-0d2e-53ce-868d-70fde2ebd6db")
+		(property "Reference" "#FLG3"
+			(at 67.30 57.30 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 67.30 57.30 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "bcc4e1d9-35e7-565a-9257-c8a9a173e83b")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/97503068-2b8f-5519-8ec1-73d52fbda366"
+					(reference "#FLG3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 67.30 75.08 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "6654f6ae-5251-5b35-b098-856e38a81f70")
+		(property "Reference" "#FLG4"
+			(at 67.30 75.08 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 67.30 75.08 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "390cdcba-16a0-549e-b047-a96085ebe624")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/97503068-2b8f-5519-8ec1-73d52fbda366"
+					(reference "#FLG4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 67.30 59.84 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "7c59a9b6-d491-5d09-ab92-1955417a7e00")
+		(property "Reference" "#FLG5"
+			(at 67.30 59.84 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 67.30 59.84 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "34969530-7116-524b-9d47-051778396e37")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/97503068-2b8f-5519-8ec1-73d52fbda366"
+					(reference "#FLG5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 67.30 77.62 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "eb436c46-69f1-555f-90f0-70d2f67658f4")
+		(property "Reference" "#FLG6"
+			(at 67.30 77.62 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 67.30 77.62 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "af18fb00-a278-5676-80a1-8075e17af1de")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/97503068-2b8f-5519-8ec1-73d52fbda366"
+					(reference "#FLG6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 177.30 192.54 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "b7f316fa-aa11-58fe-b2d2-f59ca271150f")
+		(property "Reference" "#FLG7"
+			(at 177.30 192.54 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 177.30 192.54 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "ef1709aa-55a2-5020-a3d3-46b04cd5b28f")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/97503068-2b8f-5519-8ec1-73d52fbda366"
+					(reference "#FLG7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 67.30 192.54 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "3c81e9d9-c169-5fd4-ab0c-48885f831aa7")
+		(property "Reference" "#FLG8"
+			(at 67.30 192.54 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 67.30 192.54 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "cc9bc528-6080-5baa-9e92-a59e2f6f626c")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/97503068-2b8f-5519-8ec1-73d52fbda366"
+					(reference "#FLG8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 287.30 68.73 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "9d9d3ac1-46b8-58f5-8fd5-9ddce79d33cd")
+		(property "Reference" "#FLG9"
+			(at 287.30 68.73 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 287.30 68.73 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "2d050361-72fc-5130-a909-a963e6a67b44")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/97503068-2b8f-5519-8ec1-73d52fbda366"
+					(reference "#FLG9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 287.30 63.65 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "28be51fe-7079-59ec-be4e-174fdf47f090")
+		(property "Reference" "#FLG10"
+			(at 287.30 63.65 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 287.30 63.65 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "eae12ca8-54be-5684-a738-caa958886352")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/97503068-2b8f-5519-8ec1-73d52fbda366"
+					(reference "#FLG10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 202.70 63.65 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "0723a184-534a-5685-ab1e-a43a2966e04a")
+		(property "Reference" "#FLG11"
+			(at 202.70 63.65 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 202.70 63.65 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "c9387b7b-4704-51cf-a570-4fd46202db96")
+		)
+		(instances
+			(project "flytex-camera"
+				(path "/97503068-2b8f-5519-8ec1-73d52fbda366"
+					(reference "#FLG11")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(text "Sheet PWR pin-level: IC + global label theo net. Linh kien thu dong theo pwr-netlist.md."
+		(exclude_from_sim no)
+		(at 20 250 0)
+		(effects
+			(font
+				(size 2 2)
+			)
+			(justify left)
+		)
+		(uuid "4b2b665d-2e22-5831-a3a5-7df953b25b6f")
+	)
+	(sheet_instances
+		(path "/" (page "1"))
+	)
+)

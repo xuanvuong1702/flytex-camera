@@ -12,7 +12,7 @@
 | 3 | GND | power_in |
 | 4 | LDO | power_out |
 | 5 | TS | input |
-| 6 | BAT | power_out |
+| 6 | BAT | passive |
 | 7 | CTRL | input |
 | 8 | CHG | open_collector |
 | 9 | GND | power_in |
@@ -40,8 +40,8 @@
 | 12 | NC | no_connect |
 | 13 | MODE | input |
 | 14 | VOUT | power_out |
-| 15 | VOUT | power_out |
-| 16 | VOUT | power_out |
+| 15 | VOUT | passive |
+| 16 | VOUT | passive |
 | 17 | FB | input |
 | 18 | COMP | passive |
 | 19 | ILIM | passive |

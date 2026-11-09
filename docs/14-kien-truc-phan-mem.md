@@ -179,9 +179,9 @@ Thẻ nhớ là điểm hỏng dữ liệu khi mất điện; mọi lần ghi đ
 | Ứng dụng | `python -m unittest discover -s app/tests -t .` | Máy trạng thái, AT timeout, hàng đợi, ghi, lệnh |
 | Mô phỏng | `python sim/run.py --scenario all` | Firmware C thật + app thật + modem/cloud giả |
 | Tài liệu | `python tools/docs_check/check.py` | Tham chiếu ID, mục lục, file sinh lệch |
-| Tất cả | `python run_tests.py` | 47 bước: spec, hardware, firmware, app, tools, readiness, CLI, sim |
+| Tất cả | `python run_tests.py` | 48 bước: spec, hardware, firmware, app, tools, readiness, CLI, sim |
 
-Số test hiện tại: spec 47, hardware 89, firmware 64, ứng dụng 188, công cụ 124. Tổng 512 test cộng 5 kịch bản mô phỏng. Không test nào cần phần cứng.
+Số test hiện tại: spec 47, hardware 93, firmware 64, ứng dụng 188, công cụ 124. Tổng 516 test cộng 5 kịch bản mô phỏng. Không test nào cần phần cứng.
 
 Test cần phần cứng nằm ở [08](08-kiem-chung.md) và vẫn là "Chưa làm".
 
