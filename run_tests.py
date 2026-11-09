@@ -171,6 +171,8 @@ def main(argv: list[str] | None = None) -> int:
         print(f"THAT BAI: {len(failures)}/{len(steps)} buoc, {elapsed_total:.1f}s")
         for name, code, _ in failures:
             print(f"  - {name} (ma {code})")
+        for name, code, _ in failures:
+            print(f"::error title=test-step::BUOC THAT BAI: {name} (ma {code})")
         return 1
     print(f"DAT: {len(steps)}/{len(steps)} buoc, {elapsed_total:.1f}s")
     return 0
