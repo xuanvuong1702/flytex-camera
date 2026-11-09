@@ -61,7 +61,7 @@ COMPONENTS = (
         ("1", "+3V3", "+3V3"), ("2", "+5V_SOC", "+5V_SOC"),
         ("3", "+5V_MODEM", "+5V_MODEM"), ("4", "GND", "GND"),
     ]),
-    comp("J6", "MCU interface", "Connector_Generic:Conn_01x09", [
+    comp("J6", "MCU interface", "Connector_PinHeader_2.54mm:PinHeader_1x09_P2.54mm_Vertical", [
         ("1", "CHG_CTRL", "CHG_CTRL"), ("2", "CHG_STAT", "CHG_STAT"),
         ("3", "EN_BOOST", "EN_BOOST"), ("4", "SOC_PWR_EN", "SOC_PWR_EN"),
         ("5", "MODEM_PWR_EN", "MODEM_PWR_EN"), ("6", "+3V3", "+3V3"),

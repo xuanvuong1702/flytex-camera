@@ -92,7 +92,7 @@ COMPONENTS = (
         ("16", "RESET", "CAM_RST"), ("17", "GND", "GND"), ("18", "GND", "GND"),
         ("19", "+3.3V", "+3V3"), ("20", "+3.3V", "+3V3"),
     ]),
-    comp("J3", "EC200U carrier", "Connector_Generic:Conn_02x09_Odd_Even", [
+    comp("J3", "EC200U carrier", "Connector_PinHeader_2.54mm:PinHeader_2x09_P2.54mm_Vertical", [
         ("1", "+5V_MODEM", "+5V_MODEM"), ("2", "+5V_MODEM", "+5V_MODEM"),
         ("3", "GND", "GND"), ("4", "GND", "GND"),
         ("5", "USB_DP", "MODEM_USB_DP"), ("6", "USB_DM", "MODEM_USB_DM"),
@@ -114,7 +114,7 @@ COMPONENTS = (
         ("5", "GND", "GND"), ("6", "OE", "GND"), ("7", "D-", "USB_DM"),
         ("8", "D+", "USB_DP"), ("9", "S", "USB_SEL"), ("10", "VCC", "+3V3"),
     ]),
-    comp("J5", "UART console", "Connector_Generic:Conn_01x03", [
+    comp("J5", "UART console", "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical", [
         ("1", "3V3", "+3V3"), ("2", "RX", "UART_SOC_TX"), ("3", "GND", "GND"),
     ]),
     comp("J6", "Service pads", "Connector_Generic:Conn_01x04", [

@@ -12,15 +12,15 @@ J2,J_B2B 2x13,Connector_Generic:Conn_02x13_Odd_Even,1,+3V3,+3V3
 J2,J_B2B 2x13,Connector_Generic:Conn_02x13_Odd_Even,2,+5V_SOC,+5V_SOC
 J2,J_B2B 2x13,Connector_Generic:Conn_02x13_Odd_Even,3,+5V_MODEM,+5V_MODEM
 J2,J_B2B 2x13,Connector_Generic:Conn_02x13_Odd_Even,4,GND,GND
-J6,MCU interface,Connector_Generic:Conn_01x09,1,CHG_CTRL,CHG_CTRL
-J6,MCU interface,Connector_Generic:Conn_01x09,2,CHG_STAT,CHG_STAT
-J6,MCU interface,Connector_Generic:Conn_01x09,3,EN_BOOST,EN_BOOST
-J6,MCU interface,Connector_Generic:Conn_01x09,4,SOC_PWR_EN,SOC_PWR_EN
-J6,MCU interface,Connector_Generic:Conn_01x09,5,MODEM_PWR_EN,MODEM_PWR_EN
-J6,MCU interface,Connector_Generic:Conn_01x09,6,+3V3,+3V3
-J6,MCU interface,Connector_Generic:Conn_01x09,7,GND,GND
-J6,MCU interface,Connector_Generic:Conn_01x09,8,VBAT,VBAT
-J6,MCU interface,Connector_Generic:Conn_01x09,9,VBAT_ADC,VBAT_ADC
+J6,MCU interface,Connector_PinHeader_2.54mm:PinHeader_1x09_P2.54mm_Vertical,1,CHG_CTRL,CHG_CTRL
+J6,MCU interface,Connector_PinHeader_2.54mm:PinHeader_1x09_P2.54mm_Vertical,2,CHG_STAT,CHG_STAT
+J6,MCU interface,Connector_PinHeader_2.54mm:PinHeader_1x09_P2.54mm_Vertical,3,EN_BOOST,EN_BOOST
+J6,MCU interface,Connector_PinHeader_2.54mm:PinHeader_1x09_P2.54mm_Vertical,4,SOC_PWR_EN,SOC_PWR_EN
+J6,MCU interface,Connector_PinHeader_2.54mm:PinHeader_1x09_P2.54mm_Vertical,5,MODEM_PWR_EN,MODEM_PWR_EN
+J6,MCU interface,Connector_PinHeader_2.54mm:PinHeader_1x09_P2.54mm_Vertical,6,+3V3,+3V3
+J6,MCU interface,Connector_PinHeader_2.54mm:PinHeader_1x09_P2.54mm_Vertical,7,GND,GND
+J6,MCU interface,Connector_PinHeader_2.54mm:PinHeader_1x09_P2.54mm_Vertical,8,VBAT,VBAT
+J6,MCU interface,Connector_PinHeader_2.54mm:PinHeader_1x09_P2.54mm_Vertical,9,VBAT_ADC,VBAT_ADC
 U3,BQ25070,Package_SON:TI_DQC0010A,1,IN,VBUS
 U3,BQ25070,Package_SON:TI_DQC0010A,2,IMON,IMON
 U3,BQ25070,Package_SON:TI_DQC0010A,3,GND,GND
