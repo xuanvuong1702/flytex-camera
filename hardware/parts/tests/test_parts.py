@@ -50,7 +50,7 @@ class RegisterTests(unittest.TestCase):
 
     def test_known_blockers_are_reported(self) -> None:
         blockers = {issue.item for issue in self.issues if issue.level == "blocker"}
-        for item in ("MODEM", "PACK"):
+        for item in ("PACK",):
             self.assertIn(item, blockers, f"phai bao blocker cho {item}")
 
     def test_known_warnings_are_reported(self) -> None:

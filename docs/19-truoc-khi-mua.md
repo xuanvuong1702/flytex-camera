@@ -8,7 +8,7 @@
 
 | # | Tài liệu / phân tích | Trạng thái | Bằng chứng hoặc việc phải làm |
 |---|---|---|---|
-| A1 | Sổ linh kiện + đối chiếu thiết kế | **Một phần** | [parts-register](../hardware/parts-register.md); còn 2 blocker, `--strict` cố ý fail |
+| A1 | Sổ linh kiện + đối chiếu thiết kế | **Một phần** | [parts-register](../hardware/parts-register.md); còn 1 blocker, `--strict` cố ý fail |
 | A2 | BOM có MPN, gói, trạng thái xác minh | **Có** | [hardware/bom](../hardware/bom/) |
 | A3 | Schematic PWR/CMP | **Một phần** | Đã có [schematic khối](../hardware/schematic/README.md); pin-level còn chờ 4 blocker |
 | A4 | Thư viện symbol/footprint đã kiểm | **Thiếu** | Mỗi footprint từ datasheet + bản in 1:1; checklist [footprint-test](../hardware/footprint-test/checklist.md) |
@@ -91,7 +91,7 @@
 
 ## 7. Thứ tự làm đề xuất (2 tuần tới)
 
-1. Đóng 2 blocker trong [18](18-tai-lieu-linh-kien.md) §2.1 — RI modem và pack.
+1. Đóng blocker còn lại trong [18](18-tai-lieu-linh-kien.md) §2.1 — hồ sơ UN38.3/IEC và đo tự tiêu của pack.
 2. Vẽ schematic PWR trước (đã có đủ giá trị), rồi CMP sau khi có pinout camera và chân module.
 3. Làm thư viện footprint + board thử footprint (G1) trước khi đặt board thật.
 4. Chốt vỏ/ăng-ten/USB-C song song, vì ba thứ này khoá lẫn nhau.

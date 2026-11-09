@@ -13,16 +13,15 @@
 
 ## 2. Kết quả hiện tại
 
-**15 linh kiện + 4 module ngoài BOM; 2 blocker, 3 cảnh báo** (sau khi chọn BQ25070 và nhập pinout).
+**15 linh kiện + 4 module ngoài BOM; 1 blocker, 3 cảnh báo** (sau khi chọn BQ25070 và nhập pinout).
 
 ### 2.1 Blocker phải đóng trước khi đặt
 
 | Mục | Vấn đề | Cách đóng | Nơi ghi |
 |---|---|---|---|
 | U3 sạc | **BQ25070**: float 3,5 V, power-path (1,2 A), NTC, standalone; **935 mA bằng 11 xung CTRL**; R1/R2 = 20 kΩ/8,25 kΩ | Còn đo M-05, kiểm tồn kho và đo đỉnh tải | O-05 |
-| MODEM | Chưa xác nhận **breakout đưa RI ra header** | Kiểm bản vẽ breakout hoặc chọn loại khác; nếu không, kênh Watch SMS không chạy | O-04 |
 | SOC | Đã nạp **112 chân** Core1106D vào `spec/core1106d/pins.csv` | Đối chiếu với bản vẽ cơ khí và bảng ánh xạ CMP trước khi vẽ | O-11 |
-| PACK | Chưa có pack/BMS kèm **UN38.3, IEC 62133, tự tiêu ≤100 µA** | Chọn nhà cung cấp, lấy datasheet và báo cáo; đo tự tiêu bằng PPK2 | O-03 |
+| PACK | Đã chọn **EVE C33 15 Ah + Daly 1S 15 A**; còn **UN38.3, IEC 62133, đo tự tiêu ≤100 µA** | Lấy hồ sơ nhà cung cấp, đo mẫu bằng PPK2 | O-03 |
 
 ### 2.2 Cảnh báo (không chặn đặt, phải đo ở G0)
 
@@ -43,7 +42,7 @@
 | TPS22918 | 5,5 V; 2 A; Rds(on) ~55 mΩ | Đủ cho +5V_MODEM 1,8 A và +5V_SOC 1,5 A |
 | TS3USB221A | USB 2.0 HS; 2 kênh | Dùng cho mux modem/pad nạp (nếu chốt D-20) |
 | Core1106D1408 | 1 cổng USB; eMMC 8 GB; 112 chân | Khớp D-19/D-20; thiếu bản vẽ chân |
-| EC200U-EU | VBAT 3,3–4,3 V; USB HS | Chưa xác minh đỉnh dòng, RI và eDRX/PSM thực tế |
+| EC200U-EU | VBAT 3,3–4,3 V; USB HS; **MAIN_RI chân 62** | Đã có hardware design; còn đo đỉnh dòng/eDRX |
 
 ## 4. Tối ưu và điều chỉnh đề xuất
 

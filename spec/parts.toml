@@ -187,16 +187,17 @@ params = [
 [[external]]
 id = "MODEM"
 mpn = "EC200U-EU"
-name = "EC200U-EU breakout"
-datasheet = "https://www.quectel.com/product/lte-ec200u-series"
+name = "EC200U-EU module/carrier"
+datasheet = "https://evelta.com/content/datasheets/027-EC200UCNAA.pdf"
 verified = "partial"
-notes = "Can xac nhan RI ra header, dinh dong burst, va ho tro eDRX/PSM tren mang VN."
+notes = "Dung module EC200U-EU tren carrier/board rieng; MAIN_RI la chan 62 (xung thap 120 ms), khong phu thuoc breakout."
 params = [
   { name = "vbat_min_v", value = 3.3, unit = "V", source = "tai lieu Quectel" },
   { name = "vbat_max_v", value = 4.3, unit = "V", source = "tai lieu Quectel" },
   { name = "usb_hs", value = true, unit = "", source = "tai lieu Quectel" },
   { name = "peak_current_a", value = 2.0, unit = "A", source = "CHUA XAC MINH" },
-  { name = "ri_pin", value = false, unit = "", source = "CHUA XAC MINH tren breakout" },
+  { name = "ri_pin", value = true, unit = "", source = "MAIN_RI chan 62, hardware design" },
+  { name = "ri_pin_num", value = 62, unit = "chan", source = "hardware design" },
 ]
 
 [[external]]
@@ -216,7 +217,7 @@ params = [
 [[external]]
 id = "CAMERA"
 name = "Module camera FPC 20 chan co IR-CUT"
-datasheet = ""
+datasheet = "spec/pack/lfp-15ah.toml"
 verified = "no"
 notes = "Da chon SC3336 3MP Camera (B); pinout 20 chan da nap vao spec/camera/."
 params = [
@@ -226,10 +227,10 @@ params = [
 
 [[external]]
 id = "PACK"
-name = "Pack LFP 1S 15 Ah co BMS"
+name = "EVE IFR33140-C33 15 Ah + Daly 1S BMS"
 datasheet = ""
 verified = "no"
-notes = "CHUA CHON nha cung cap. Can UN38.3, IEC 62133, BMS <=100 uA, sac >=1,5 A, NTC."
+notes = "Da chon cell EVE C33 15 Ah va BMS Daly 1S 15 A; con thieu UN38.3/IEC 62133 va do tu tieu."
 params = [
   { name = "capacity_ah", value = 15.0, unit = "Ah", source = "D-18" },
   { name = "bms_quiescent_ua", value = 100.0, unit = "uA", source = "yeu cau, chua co hang" },

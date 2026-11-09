@@ -137,12 +137,11 @@ Kết luận vòng 7: **không đạt**. Kết luận "đủ điều kiện dự
 
 ## 4. Kết luận cuối
 
-**CHƯA đủ điều kiện dựng prototype.** Hai blocker còn lại đều cần tài liệu hoặc linh kiện bên ngoài, không thể đóng bằng sửa mã:
+**CHƯA đủ điều kiện dựng prototype.** Một blocker còn lại cần hồ sơ nhà cung cấp:
 
-1. **RI của modem**: EVB/breakout hiện không đưa RI ra header. Phải chọn module-on-board hoặc breakout có bản vẽ xác nhận RI.
-2. **Pack/BMS**: chưa chọn nhà cung cấp 15 Ah kèm UN38.3/IEC 62133 và số đo tự tiêu.
+1. **Pack/BMS**: đã chọn cell EVE C33 15 Ah + BMS Daly 1S 15 A; còn UN38.3/IEC 62133 và số đo tự tiêu. Đây là blocker duy nhất.
 
-Ngoài ra còn các việc đo/kiểm không chặn mua: M-05 (NTC), M-36 (đỉnh modem/TPS22918), ILIM của TPS61088, và port STM32L0 vẫn là khung chưa chạy trên phần cứng. SMS đã có HMAC counter + rate limit; whitelist số cần UART phụ (O-12).
+RI modem đã đóng bằng **module EC200U-EU** (MAIN_RI chân 62) thay vì breakout không rõ chân. Còn việc thiết kế carrier/RF, đo/kiểm không chặn mua: M-05 (NTC), M-36 (đỉnh modem/TPS22918), ILIM của TPS61088, và port STM32L0 vẫn là khung chưa chạy trên phần cứng. SMS đã có HMAC counter + rate limit; whitelist số cần UART phụ (O-12).
 
 CI GitHub Actions đã xanh ở commit `01931c3` (run `42619397175`).
 

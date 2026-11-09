@@ -1,0 +1,30 @@
+schema = "flytex.pack/1"
+name = "Pack LFP 1S 15 Ah"
+status = "candidate"
+
+[cell]
+mpn = "EVE IFR33140-C33"
+capacity_ah = 15.0
+nominal_v = 3.2
+format = "cylindrical 33140"
+charge_max_v = 3.65
+discharge_min_v = 2.5
+source = "https://www.evlithium.com/LiFePO4-Battery/33140-15ah-lifepo4-battey-cell.html"
+docs = ["UN38.3 (nha cung cap)", "IEC 62133 (nha cung cap)", "datasheet cell"]
+
+[bms]
+type = "1S LFP, 15 A, co NTC"
+candidate = "Daly 1S 15A hardware BMS"
+continuous_a = 15.0
+charge_a = 8.0
+quiescent_ua_max = 100.0
+ntc = "10 kOhm B3950"
+source = "https://www.noon.com/uae-en/daly-hardware-bms-15a-20a-protection-board-with-temperature-sensor-ntc-for-lithium-battery-pack-lifepo4-li-ion/Z9CAD03F57B87F1DE7D6FZ/p/"
+docs = ["datasheet BMS", "so do dau noi", "dòng tự tiêu"]
+
+[pack]
+connector = "XT30PW-M"
+fuse = "PTC hoac fuse 10 A"
+nct_on_cell = true
+docs_ready = false
+notes = "Phai do tu tieu <=100 uA, dong sac/xa, diem cat BMS; xin UN38.3/IEC 62133 truoc khi mua lo."

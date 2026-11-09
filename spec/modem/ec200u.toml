@@ -1,0 +1,88 @@
+schema = "flytex.modem/1"
+module = "EC200U-EU"
+package = "144-pin LCC+LGA (80 LCC + 64 LGA)"
+source = "https://evelta.com/content/datasheets/027-EC200UCNAA.pdf"
+source_note = "EC200U Series Hardware Design; bảng pin 17-22. MAIN_RI là chân 62."
+ri_pin = 62
+ri_behaviour = "URC: xung thấp 120 ms; idle mức cao; miền 1.8 V"
+
+[[pins]]
+num = 57
+name = "VBAT_RF"
+note = "3,3-4,3 V, đỉnh 2 A"
+
+[[pins]]
+num = 58
+name = "VBAT_RF"
+note = "3,3-4,3 V, đỉnh 2 A"
+
+[[pins]]
+num = 59
+name = "VBAT_BB"
+note = "3,3-4,3 V"
+
+[[pins]]
+num = 60
+name = "VBAT_BB"
+note = "3,3-4,3 V"
+
+[[pins]]
+num = 20
+name = "RESET_N"
+note = "1.8 V domain, active low"
+
+[[pins]]
+num = 21
+name = "PWRKEY"
+note = "VBAT domain"
+
+[[pins]]
+num = 61
+name = "STATUS"
+note = "1.8 V domain"
+
+[[pins]]
+num = 62
+name = "MAIN_RI"
+note = "1.8 V domain, xung thấp 120 ms"
+
+[[pins]]
+num = 67
+name = "MAIN_TXD"
+note = "1.8 V domain"
+
+[[pins]]
+num = 68
+name = "MAIN_RXD"
+note = "1.8 V domain"
+
+[[pins]]
+num = 69
+name = "USB_DP"
+note = "USB 2.0 HS, 90 ohm differential"
+
+[[pins]]
+num = 70
+name = "USB_DM"
+note = "USB 2.0 HS, 90 ohm differential"
+
+[[pins]]
+num = 14
+name = "USIM_VDD"
+note = "1,8/3,0 V theo SIM"
+
+[[pins]]
+num = 15
+name = "USIM_DATA"
+
+[[pins]]
+num = 16
+name = "USIM_CLK"
+
+[[pins]]
+num = 17
+name = "USIM_RST"
+
+[[pins]]
+num = 13
+name = "USIM_DET"

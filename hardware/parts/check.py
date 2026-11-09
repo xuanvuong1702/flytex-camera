@@ -203,7 +203,7 @@ def design_issues(parts: dict[str, dict], external: dict[str, dict],
     if param(external.get("PACK", {}), "docs_ready") is not True:
         issues.append(Issue(
             "blocker", "PACK",
-            "chua co pack/BMS kem UN38.3, IEC 62133, tu tieu <=100 uA",
+            "thieu ho so UN38.3/IEC 62133 va so do tu tieu cua pack EVE/Daly",
         ))
     if param(parts.get("J1", {}), "waterproof") is not True:
         issues.append(Issue("warn", "J1", "USB-C chua phai loai chong nuoc (O-06)"))

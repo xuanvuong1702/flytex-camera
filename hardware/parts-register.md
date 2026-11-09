@@ -2,7 +2,7 @@
 
 - Nguồn: `spec/parts.toml`; kiểm tra: `python -m hardware.parts.check --check`.
 - `verified`: **yes** đã đối chiếu datasheet, **partial** mới một phần, **no** chưa mở datasheet.
-- Kết quả: **2 blocker**, 3 cảnh báo. Blocker là việc phải đóng trước khi đặt hàng.
+- Kết quả: **1 blocker**, 3 cảnh báo. Blocker là việc phải đóng trước khi đặt hàng.
 
 ## 1. Linh kiện chính
 
@@ -162,17 +162,16 @@
 
 | ID | Tên | Xác minh | Tài liệu | Ghi chú |
 |---|---|---|---|---|
-| MODEM | EC200U-EU breakout | partial | https://www.quectel.com/product/lte-ec200u-series | Can xac nhan RI ra header, dinh dong burst, va ho tro eDRX/PSM tren mang VN. |
+| MODEM | EC200U-EU module/carrier | partial | https://evelta.com/content/datasheets/027-EC200UCNAA.pdf | Dung module EC200U-EU tren carrier/board rieng; MAIN_RI la chan 62 (xung thap 120 ms), khong phu thuoc breakout. |
 | SOC | Core1106D1408 | partial | https://wiki.luckfox.com/Core1106D/Introduction/ | Da xac minh 1 cong USB, H.264, bien the eMMC; da nap 112 chan tu Core1106D-PinOut.xls vao spec/core1106d/pins.csv. |
-| CAMERA | Module camera FPC 20 chan co IR-CUT | no | — | Da chon SC3336 3MP Camera (B); pinout 20 chan da nap vao spec/camera/. |
-| PACK | Pack LFP 1S 15 Ah co BMS | no | — | CHUA CHON nha cung cap. Can UN38.3, IEC 62133, BMS <=100 uA, sac >=1,5 A, NTC. |
+| CAMERA | Module camera FPC 20 chan co IR-CUT | no | spec/pack/lfp-15ah.toml | Da chon SC3336 3MP Camera (B); pinout 20 chan da nap vao spec/camera/. |
+| PACK | EVE IFR33140-C33 15 Ah + Daly 1S BMS | no | — | Da chon cell EVE C33 15 Ah va BMS Daly 1S 15 A; con thieu UN38.3/IEC 62133 va do tu tieu. |
 
 ## 3. Vấn đề phát hiện
 
 | Mức | Mục | Mô tả |
 |---|---|---|
-| blocker | MODEM | chua xac nhan breakout dua RI ra header - kenh Watch khong chay |
-| blocker | PACK | chua co pack/BMS kem UN38.3, IEC 62133, tu tieu <=100 uA |
+| blocker | PACK | thieu ho so UN38.3/IEC 62133 va so do tu tieu cua pack EVE/Daly |
 | warn | MODEM | dinh dong 2 A la gia dinh chua do; xac nhan bang M-36 |
 | warn | J1 | USB-C chua phai loai chong nuoc (O-06) |
 | warn | L1 | Isat 9 A chua xac minh o 125 do C |
