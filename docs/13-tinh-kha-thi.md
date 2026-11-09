@@ -258,13 +258,14 @@ Phần cứng không thể kiểm chứng khi chưa mua linh kiện, nhưng ph�
 | Hợp đồng MQTT sinh tự động | Xong | `spec/mqtt.toml` → JSON schema + module Python |
 | Tính toán thiết kế PWR Rev A | Xong, **28 test** | `hardware/calc/` → [hardware/pwr-design.md](../hardware/pwr-design.md) |
 | Firmware MCU: regmap, nguồn, pin, nhiệt, lịch, NVM, STOP | Xong, **59 test host** | `python firmware/mcu/tests/build.py test` |
-| Ứng dụng Linux: máy trạng thái, AT, ghi, hàng đợi, lệnh | Xong, **125 test host** | `app/tests` |
+| Ứng dụng Linux: máy trạng thái, AT, ghi, hàng đợi, lệnh | Xong, **172 test host** | `app/tests` |
+| Ghi MPEG-TS, tải clip HTTPS, OTA A/B có xác minh | Xong phần mềm, test đầy đủ | `app/flytex/tsmux.py`, `upload.py`, `ota.py` |
 | Mô phỏng end-to-end firmware C + app | Xong, **5 kịch bản** | `python sim/run.py --scenario all` |
-| Công cụ đo G0 và kiểm tài liệu | Xong, **108 test** | `tools/measure`, `tools/docs_check` |
-| Toàn bộ chạy một lệnh | **23/23 bước đạt** | `python run_tests.py` |
+| Công cụ đo G0, nhập PPK2, kiểm tài liệu | Xong, **120 test** | `tools/measure`, `tools/docs_check` |
+| Toàn bộ chạy một lệnh | **27/27 bước đạt** | `python run_tests.py` |
 | Mã chạy camera thật (RK MPI) | **Chưa** | Cần SDK và dev board |
 | Port STM32L0 thật | **Khung** | Cần SDK và board |
-| OTA có chữ ký | **Chưa** | Cần chốt A/B ở G0 |
+| Backend xác minh chữ ký + Installer thật | **Chưa** | Chốt thuật toán/khóa và SDK ở G0 |
 
 Điều này không thay thế phép đo phần cứng. Nó chỉ có nghĩa: khi có board, phần mềm không phải viết lại, và các hợp đồng đã có test.
 

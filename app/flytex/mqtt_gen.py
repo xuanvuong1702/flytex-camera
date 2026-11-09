@@ -72,7 +72,7 @@ COMMANDS = {
     "config.set": {"key": {"required": True, "type": "string"}, "value": {"required": True, "type": "string"}},
     "clip.request": {"clip_id": {"required": True, "type": "string"}},
     "reboot": {},
-    "ota.start": {"url": {"required": True, "type": "string"}, "sha256": {"required": True, "type": "string"}, "version": {"required": True, "type": "string"}},
+    "ota.start": {"url": {"required": True, "type": "string"}, "sha256": {"required": True, "type": "string"}, "version": {"required": True, "type": "string"}, "size": {"required": False, "type": "int"}, "signature": {"required": False, "type": "string"}},
 }
 
 ACK_ERRORS = (

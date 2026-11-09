@@ -1,4 +1,4 @@
-# Flytex Camera
+﻿# Flytex Camera
 
 Camera 4G chạy pin cho ngoài trời: phát hiện chuyển động, ghi hình cục bộ, xem trực tiếp qua 4G, ngủ sâu và nhận lệnh từ xa.
 
@@ -13,10 +13,10 @@ Repo này **làm lại từ đầu**. Nó kế thừa *bài học* từ dự án
 | Tài liệu thiết kế | v1.1, đã qua rà soát khả thi |
 | Đặc tả giao diện máy đọc được | Có: regmap, J_B2B, MQTT sinh tự động từ `spec/` |
 | Firmware MCU | Có lõi + HAL giả + **59 test** host; port STM32L0 còn là khung |
-| Ứng dụng Linux | Có module + **125 test** host; chưa chạy camera thật |
+| Ứng dụng Linux | Có module + **172 test** host; chưa chạy camera thật |
 | Mô phỏng end-to-end | Có: firmware C thật + ứng dụng thật, **5 kịch bản** |
 | Công cụ đo và kiểm tài liệu | Có, **108 test** |
-| Kiểm thử toàn repo | **349 test + 5 kịch bản**, 23/23 bước đạt: `python run_tests.py` |
+| Kiểm thử toàn repo | **408 test + 5 kịch bản**, 27/27 bước đạt: `python run_tests.py` |
 | Phần cứng | **Chưa có**, chưa vẽ schematic |
 | Số đo thực | **Chưa có.** Mọi con số công suất, nhiệt, thời gian chạy đều là ước tính |
 
@@ -99,10 +99,10 @@ Không cần phần cứng, không cần cài thêm gói Python. Firmware C cầ
 | Đặc tả và bộ sinh | `python -m unittest discover -s spec/tests` | 29 |
 | Tính toán thiết kế PWR | `python hardware/calc/tests/test_pwr.py` | 28 |
 | Firmware MCU (C, host) | `python firmware/mcu/tests/build.py test` | 59 |
-| Ứng dụng Linux (Python) | `python -m unittest discover -s app/tests -t .` | 125 |
-| Công cụ đo và kiểm tài liệu | `python -m unittest discover -s tools -t .` | 108 |
+| Ứng dụng Linux (Python) | `python -m unittest discover -s app/tests -t .` | 172 |
+| Công cụ đo và kiểm tài liệu | `python -m unittest discover -s tools -t .` | 120 |
 | Mô phỏng end-to-end | `python sim/run.py --scenario all` | 5 kịch bản |
-| Tất cả | `python run_tests.py` | 23 bước |
+| Tất cả | `python run_tests.py` | 27 bước |
 
 Test không cần phần cứng. Test cần phần cứng nằm ở [docs/08](docs/08-kiem-chung.md) và vẫn là "Chưa làm".
 
@@ -127,6 +127,7 @@ Test không cần phần cứng. Test cần phần cứng nằm ở [docs/08](do
 | [14-kien-truc-phan-mem.md](docs/14-kien-truc-phan-mem.md) | Kiến trúc phần mềm, hợp đồng module, phân vùng lưu trữ |
 | [15-giao-thuc-va-cloud.md](docs/15-giao-thuc-va-cloud.md) | Giao thức I2C, kênh đánh thức, MQTT, WebRTC, OTA, bảo mật |
 | [16-van-hanh.md](docs/16-van-hanh.md) | Cấp phát thiết bị, systemd, gỡ lỗi hiện trường, quy trình đo |
+| [17-san-sang-prototype.md](docs/17-san-sang-prototype.md) | Điều kiện hoàn thành và biên bản tự kiểm tra 3 vòng |
 
 Bảng sinh tự động: [regmap](spec/generated/regmap.md) · [pinout J_B2B](spec/generated/b2b.md) · [MQTT](spec/generated/mqtt.md) · [JSON schema](spec/generated/mqtt.schema.json).
 

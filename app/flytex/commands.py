@@ -115,7 +115,7 @@ class CommandRouter:
             return self._error(cmd_id, ack_dev, "BAD_ARGS", envelope_error)
         if cmd_type not in mqtt_gen.COMMANDS:
             return self._error(cmd_id, ack_dev, "BAD_ARGS", f"lenh la: {cmd_type}")
-        if cmd_type == "ota.start":
+        if cmd_type == "ota.start" and cmd_type not in self._handlers:
             self._log_line("warning", f"lenh {cmd_type} bi tu choi: NOT_IMPLEMENTED")
             return self._error(
                 cmd_id,

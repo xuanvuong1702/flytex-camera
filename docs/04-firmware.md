@@ -76,7 +76,7 @@ Một tiến trình `flytex-device` gồm các module, tách ranh giới để c
 | `uplink` (uplinkd) | Hàng đợi sự kiện bền, MQTT, tải clip |
 | `cloud`, `commands` | MQTT, xử lý lệnh và ack |
 | `identity`, `config`, `diagnostics` | Định danh, cấu hình, log |
-| OTA (`otad`) | **Chưa hiện thực**: `ota.start` trả `NOT_IMPLEMENTED` |
+| OTA (`otad`) | `OtaManager`: tải, xác minh sha256 + chữ ký, cài A/B, quay lui; thiếu bộ xác minh thì từ chối (`NOT_IMPLEMENTED`) |
 
 ### 3.2 Máy trạng thái nguồn
 
@@ -98,7 +98,8 @@ Giá trị mặc định: clip 30 s, nghỉ trước khi ngủ 10 s, giữ live 
 - Mỗi clip chia thành đoạn có giới hạn thời gian và kích thước.
 - Ghi `.part`, `fsync`, đóng, rồi `rename` — mất điện tối đa một đoạn. Chỉ mục JSONL append + fsync; khởi động lại thì `recover()` dọn `.part` mồ côi.
 - Vòng ghi: xóa clip cũ khi đầy; clip gắn sự kiện được `pin`, có trần riêng để thẻ không đầy.
-- **Container chưa hiện thực.** `RawMuxer` chỉ để bring-up và bị từ chối khi `allow_raw_muxer=False`; MP4 phân mảnh/MPEG-TS phải làm khi có dữ liệu camera thật `[CHƯA XÁC MINH]`.
+- **Container: MPEG-TS H.264** (`app/flytex/tsmux.py`), có PAT/PMT, PCR, PTS 90 kHz, lặp PSI; test kiểm bằng parser độc lập. `RawMuxer` chỉ để bring-up và bị từ chối khi `allow_raw_muxer=False`. Chưa thử với dữ liệu camera thật `[CHƯA XÁC MINH]`.
+- Clip được đưa vào `UploadSpool` và tải lên kho bằng HTTPS PUT; nhiều đoạn TS được nối thành một file trước khi tải.
 - Nguồn hình thật dùng RK MPI của SDK; trong repo chỉ có nguồn giả và lớp `RkMpiSource` trả `NotImplementedError` kèm hướng dẫn.
 
 ### 3.4 Modem
@@ -120,7 +121,9 @@ Giá trị mặc định: clip 30 s, nghỉ trước khi ngủ 10 s, giữ live 
 
 ### 3.7 OTA
 
-Mục tiêu: phân vùng A/B cho rootfs, có quay lui, chữ ký. Khả năng của SDK Core1106 `[CHƯA XÁC MINH]` (O-08); đánh giá ở giai đoạn 0. Hiện chưa hiện thực.
+Phần mềm: `app/flytex/ota.py` hiện thực máy trạng thái `stage → activate → check_boot → healthy/rollback`, có lưu trạng thái xuống đĩa và test. Image phải khớp `sha256`, đúng kích thước, và qua `Verifier` chữ ký; chưa cấu hình verifier thì từ chối cập nhật, không "tạm chấp nhận".
+
+Phần thiết bị: phân vùng A/B thật, ghi eMMC, đổi cờ boot và reboot do `Installer` lo — **chưa có** vì phụ thuộc SDK Core1106 `[CHƯA XÁC MINH]` (O-08). Đánh giá ở giai đoạn 0.
 
 ### 3.8 Chẩn đoán
 

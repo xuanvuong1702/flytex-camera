@@ -27,7 +27,7 @@ DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 #: underscore literals before they can reach the energy calculation.
 NUMBER_RE = re.compile(r"^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$")
 
-PASS_FAIL_VALUES = ("PASS", "FAIL", "NA")
+PASS_FAIL_VALUES = ("PASS", "FAIL", "NA", "INFO")
 
 #: Allowed units per quantity.  Add a quantity here only when a measurement
 #: in docs/08 needs it; an empty unit is never valid for a measured row.
@@ -104,7 +104,8 @@ def validate(m: Measurement) -> None:
         value must be a finite decimal number, never ``nan`` / ``inf``;
       * ``uncertainty_pct`` is empty or a finite number in ``[0, 100]``;
       * ``date`` is empty or a real ISO date (``YYYY-MM-DD``);
-      * ``pass_fail`` is one of PASS, FAIL, NA.
+      * ``pass_fail`` is one of PASS, FAIL, NA, INFO. ``INFO`` là đã đo nhưng
+        chưa có tiêu chí đạt/không; ``NA`` chỉ dùng cho dòng chưa đo.
     """
     if m is None:
         raise MeasurementError("measurement is None")

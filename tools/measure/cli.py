@@ -22,9 +22,9 @@ from pathlib import Path
 if __package__ in (None, ""):
     # Allow ``python tools/measure/cli.py`` as well as ``python -m ...``.
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-    from tools.measure import csvio, energy, report, schema
+    from tools.measure import csvio, energy, ppk2, report, schema
 else:
-    from . import csvio, energy, report, schema
+    from . import csvio, energy, ppk2, report, schema
 
 
 _TEMPLATE_ROWS: tuple[tuple[str, str, str, str], ...] = (
@@ -170,6 +170,36 @@ def _cmd_report(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_ppk2(args: argparse.Namespace) -> int:
+    try:
+        trace = ppk2.load(args.csv)
+    except (ppk2.Ppk2Error, OSError) as exc:
+        _print_error(exc)
+        return 1
+    rows = ppk2.to_measurements(
+        trace, args.id, condition=args.condition,
+        notes="PPK2 import", board_rev=args.board_rev,
+    )
+    measurements = [schema.Measurement(**row) for row in rows]
+    try:
+        for measurement in measurements:
+            schema.validate(measurement)
+    except schema.MeasurementError as exc:
+        _print_error(exc)
+        return 1
+    energy_mwh = trace.energy_mwh
+    print(
+        f"PPK2: samples={len(trace.samples)} duration={trace.duration_s:.2f}s "
+        f"mean={trace.mean_ma:.3f}mA charge={trace.charge_mah:.3f}mAh "
+        + (f"energy={energy_mwh:.3f}mWh" if energy_mwh is not None else "energy=n/a")
+        + (" units-assumed" if trace.assumed_units else "")
+    )
+    if args.out:
+        csvio.save(args.out, measurements)
+        print(f"WROTE: {_ascii_fold(str(args.out))} ({len(measurements)} rows)")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="tools.measure.cli",
@@ -186,6 +216,16 @@ def build_parser() -> argparse.ArgumentParser:
     check = sub.add_parser("check", help="validate a measurement CSV")
     check.add_argument("--csv", required=True, help="input CSV path")
     check.set_defaults(func=_cmd_check)
+
+    ppk = sub.add_parser(
+        "ppk2", help="import a PPK2 CSV export and print integrated charge/energy"
+    )
+    ppk.add_argument("--csv", required=True, help="PPK2 CSV export path")
+    ppk.add_argument("--id", default="M-01", help="measurement ID to write (default M-01)")
+    ppk.add_argument("--condition", default="", help="measurement condition text")
+    ppk.add_argument("--board-rev", default="", help="board revision")
+    ppk.add_argument("--out", help="write a tools.measure CSV with the integrated rows")
+    ppk.set_defaults(func=_cmd_ppk2)
 
     rep = sub.add_parser(
         "report", help="read measurements and render the markdown report"

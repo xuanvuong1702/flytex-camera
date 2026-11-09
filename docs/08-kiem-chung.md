@@ -72,6 +72,7 @@ Khi nhập:
 - Một phép đo có nhiều đại lượng thì ghi nhiều dòng cùng ID: M-03 cần cả dòng (mA) và độ trễ (s); M-02 ghi dòng trung bình (mA).
 - M-32 là boolean: giá trị 1 (mạng chấp nhận) hoặc 0 (không), đơn vị để trống.
 - "Chưa đo" là giá trị rỗng + `Đạt/Không = NA`; **không điền 0**.
+- `INFO` là đã đo nhưng chưa có tiêu chí đạt/không (ví dụ dòng nhập từ PPK2); vẫn phải có số và đơn vị.
 - Kết quả do công cụ sinh báo cáo, không chép tay sang nhiều file.
 
 ## 5. Xử lý khi không đạt
@@ -85,6 +86,7 @@ Ghi vào [10-rui-ro.md](10-rui-ro.md) hoặc nhật ký quyết định, nêu th
 | Tạo CSV mẫu | `python -m tools.measure.cli sample --out tools/measure/samples/g0-template.csv` |
 | Kiểm tra một file đo | `python -m tools.measure.cli check --csv <file>` |
 | Ghi kết quả đo | `tools/measure` (CSV 11 cột, có kiểm tra lược đồ) |
+| Nhập file PPK2 | `python -m tools.measure.cli ppk2 --csv <trace.csv> --id M-02 --out <file>` |
 | Sinh báo cáo năng lượng | `python -m tools.measure.cli report --csv <file>` |
 | Kiểm tra tham chiếu M-xx còn hợp lệ | `python tools/docs_check/check.py` |
 | Chạy test phần mềm trước khi lên thiết bị | `python run_tests.py` |

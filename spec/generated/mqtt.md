@@ -193,13 +193,15 @@ Không có tham số.
 
 ### `ota.start`
 
-Bắt đầu cập nhật firmware. Chưa hiện thực: phải trả lỗi NOT_IMPLEMENTED, không được giả vờ thành công.
+Bắt đầu cập nhật firmware. Bản staged phải có size và chữ ký; thiếu bộ xác minh chữ ký thì thiết bị trả NOT_IMPLEMENTED.
 
 | Tham số | Kiểu | Bắt buộc | Mặc định | Mô tả |
 |---|---|---|---|---|
 | url | string | có |  |  |
 | sha256 | string | có |  |  |
 | version | string | có |  |  |
+| size | int | không |  | Số byte của image; nếu thiếu, thiết bị từ chối staging |
+| signature | string | không |  | Chữ ký trên image; thiếu thì bị từ chối |
 
 ## 5. Xác nhận
 

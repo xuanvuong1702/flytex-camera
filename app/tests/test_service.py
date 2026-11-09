@@ -22,8 +22,10 @@ from flytex.identity import Identity
 from flytex.media import FakeSource
 from flytex.mcu import McuClient
 from flytex.modem import AtClient, FakeModem
-from flytex.recorder import RawMuxer, SegmentRecorder
+from flytex.recorder import SegmentRecorder
 from flytex.service import DeviceService
+from flytex.tsmux import TsMuxer
+from flytex.upload import FakeUploader, UploadSpool
 from flytex.uplink import UplinkQueue
 
 
@@ -49,13 +51,15 @@ class ServiceFixture(unittest.TestCase):
         self.modem = AtClient(fake_modem, self.clock, pwrkey=fake_modem)
         self.media = FakeSource(self.clock, fps=5.0)
         self.recorder = SegmentRecorder(
-            self.root / "clips", self.clock, RawMuxer(),
+            self.root / "clips", self.clock, TsMuxer(),
             segment_s=2.0, max_bytes=1 << 20, pin_budget_bytes=1 << 19,
         )
         self.queue = UplinkQueue(
             self.root / "queue.jsonl", self.clock,
             max_bytes=1 << 20, rng=random.Random(7),
         )
+        self.uploader = FakeUploader()
+        self.spool = UploadSpool(self.root / "upload.jsonl", self.clock)
         self.bus = MemoryBus()
         self.publisher = self.bus.publisher()
         self.router = CommandRouter({}, dev=self.identity.device_id, clock=self.clock)
@@ -73,6 +77,8 @@ class ServiceFixture(unittest.TestCase):
             self.router,
             self.diagnostics,
             config_path=self.root / "config.json",
+            uploader=self.uploader,
+            spool=self.spool,
         )
 
     def tearDown(self) -> None:
@@ -201,6 +207,73 @@ class CommandTests(ServiceFixture):
         self.assertTrue(acks)
         self.assertFalse(acks[0]["ok"])
         self.assertEqual(acks[0]["error"], "BAD_ARGS")
+
+
+class _FakeOta:
+    def __init__(self) -> None:
+        self.manifests: list[dict] = []
+
+    def stage(self, manifest: dict):
+        self.manifests.append(manifest)
+
+        class _Status:
+            state = "staged"
+            version = manifest["version"]
+
+        return _Status()
+
+    def check_boot(self, running_version: str):
+        class _Status:
+            state = "idle"
+
+        return _Status()
+
+
+class OtaCommandTests(ServiceFixture):
+    def test_ota_stage_calls_manager(self) -> None:
+        self.service.boot()
+        fake = _FakeOta()
+        self.service.ota = fake
+        message_id = self._publish_command(
+            "ota.start",
+            url="https://example.com/1.2.0.img",
+            sha256="a" * 64,
+            version="1.2.0",
+            size=1024,
+            signature="sig",
+        )
+        self.service.step(self.clock.now())
+        acks = [ack for ack in self._acks() if ack["id"] == message_id]
+        self.assertTrue(acks)
+        self.assertTrue(acks[0]["ok"])
+        self.assertEqual(acks[0]["result"]["state"], "staged")
+        self.assertEqual(fake.manifests[0]["version"], "1.2.0")
+
+
+class UploadTests(ServiceFixture):
+    def test_clip_is_uploaded_and_reported(self) -> None:
+        self.service.boot()
+        self.memory.raise_event("PIR")
+        self._run(10.0)
+        self.assertEqual(len(self.uploader.calls), 1)
+        types = [
+            json.loads(item)["type"]
+            for item in self.bus.messages_of(mqtt_gen.event_topic(self.identity.device_id))
+        ]
+        self.assertIn("clip_ready", types)
+        self.assertEqual(len(self.spool), 0)
+
+    def test_failed_upload_retries_later(self) -> None:
+        self.service.boot()
+        self.uploader.fail_times = 1
+        self.memory.raise_event("PIR")
+        self._run(10.0)
+        self.assertEqual(len(self.uploader.calls), 0)
+        self.assertEqual(len(self.spool), 1)
+        self.clock.advance(31.0)
+        self._run(2.0)
+        self.assertEqual(len(self.uploader.calls), 1)
+        self.assertEqual(len(self.spool), 0)
 
 
 if __name__ == "__main__":

@@ -23,8 +23,10 @@ from .identity import Identity
 from .mcu import McuClient, McuError, ProtocolMismatch
 from .media import MediaError, MediaSource
 from .modem import AtClient, AtError, AtTimeout
+from .ota import OtaError, OtaManager
 from .power import Busy, PowerConfig, PowerController, PowerState
-from .recorder import RawMuxer, RecorderError, SegmentRecorder
+from .recorder import ClipInfo, RawMuxer, RecorderError, SegmentRecorder
+from .upload import UploadError, Uploader, UploadSpool
 from .uplink import UplinkError, UplinkQueue
 
 __all__ = ["DeviceService", "ServiceError"]
@@ -58,6 +60,9 @@ class DeviceService:
         diagnostics: Diagnostics,
         *,
         config_path: str | os.PathLike[str] | None = None,
+        uploader: Uploader | None = None,
+        spool: UploadSpool | None = None,
+        ota: OtaManager | None = None,
     ) -> None:
         if isinstance(recorder.muxer, RawMuxer) and not config.allow_raw_muxer:
             raise ServiceError(
@@ -76,6 +81,11 @@ class DeviceService:
         self.router = router
         self.diagnostics = diagnostics
         self.config_path = Path(config_path) if config_path is not None else None
+        self.uploader = uploader
+        self.spool = spool
+        self.ota = ota
+        if (uploader is None) != (spool is None):
+            raise ServiceError("uploader va spool phai duoc cau hinh cung nhau")
         self.sleep_requested = False
         self.power = PowerController(
             mcu,
@@ -101,6 +111,7 @@ class DeviceService:
         self._shutdown_handled = False
         self._last_state: PowerState | None = None
         self._last_mode: str | None = None
+        self._spooled_clip_id: str | None = None
         self._register_default_handlers()
 
     # -- trạng thái công khai -----------------------------------------
@@ -138,6 +149,13 @@ class DeviceService:
                 self.diagnostics.log("warning", f"MCU chua san sang: {exc}")
                 self.clock.sleep(0.2)
         boot_count = self.diagnostics.record_boot(reason)
+        if self.ota is not None:
+            try:
+                ota_status = self.ota.check_boot(APP_VERSION)
+                if ota_status.state == "rolled_back":
+                    self.diagnostics.log("warning", "OTA quay lui vi khong khoi dong duoc")
+            except OtaError as exc:
+                self.diagnostics.log("error", f"OTA check_boot loi: {exc}")
         self.mcu.cmd("SOC_WAKE")
         try:
             report = self.recorder.recover()
@@ -269,6 +287,68 @@ class DeviceService:
             self._last_state = state
             self._last_mode = mode
             self._enqueue_status()
+        self._maybe_spool_clip()
+
+    def _maybe_spool_clip(self) -> None:
+        """Đưa clip vừa đóng vào hàng đợi tải lên, một lần mỗi clip."""
+        if self.spool is None:
+            return
+        clip = self.power.last_clip
+        if clip is None or clip.clip_id == self._spooled_clip_id:
+            return
+        self._spooled_clip_id = clip.clip_id
+        try:
+            self.spool.add(clip.clip_id, clip.path, clip.size_b)
+        except UploadError as exc:
+            self.diagnostics.log("error", f"khong dua clip vao hang doi: {exc}")
+
+    # -- tải clip ------------------------------------------------------
+    def _pack_clip(self, clip_id: str, path: str) -> Path:
+        """Trả một file .ts để tải: đoạn đơn, hoặc nối các đoạn TS."""
+        clip_dir = Path(path)
+        segments = sorted(clip_dir.glob("*.ts"))
+        if not segments:
+            segments = [item for item in sorted(clip_dir.iterdir()) if item.is_file()]
+        if not segments:
+            raise UploadError(f"clip {clip_id} khong co file")
+        if len(segments) == 1:
+            return segments[0]
+        target = clip_dir / f"{clip_id}.upload.ts"
+        with target.open("wb") as handle:
+            for segment in segments:
+                handle.write(segment.read_bytes())
+            handle.flush()
+            os.fsync(handle.fileno())
+        return target
+
+    def _try_upload(self, now: float) -> None:
+        if self.spool is None or self.uploader is None:
+            return
+        item = self.spool.pending(now)
+        if item is None:
+            return
+        try:
+            packed = self._pack_clip(item.clip_id, item.path)
+            result = self.uploader.upload(packed, item.clip_id)
+        except (UploadError, OSError) as exc:
+            delay = self.spool.fail(item.clip_id, exc)
+            self.diagnostics.log(
+                "warning",
+                f"tai clip {item.clip_id} loi: {exc}"
+                + (f", thu lai sau {delay:.0f}s" if delay is not None else ", bo"),
+            )
+            return
+        self.spool.done(item.clip_id)
+        self._enqueue(
+            {
+                "type": "clip_ready",
+                "clip_id": item.clip_id,
+                "url": result.url,
+                "size_b": result.size_b,
+            },
+            "motion",
+        )
+        self.diagnostics.log("info", f"da tai clip {item.clip_id} ({result.size_b} B)")
 
     def _on_power_sleep(self) -> None:
         """SoC chuẩn bị ngủ: đồng bộ hàng đợi rồi bảo MCU cắt rail.
@@ -352,6 +432,7 @@ class DeviceService:
                 self._enqueue_temp()
             except McuError as exc:
                 self.diagnostics.log("error", f"doc nhiet do loi: {exc}")
+        self._try_upload(now)
 
     def _enqueue_battery(self) -> None:
         status = self.mcu.status()
@@ -567,6 +648,7 @@ class DeviceService:
             "config.set": self._cmd_config_set,
             "clip.request": self._cmd_clip_request,
             "reboot": self._cmd_reboot,
+            "ota.start": self._cmd_ota_start,
         }
         for name, handler in handlers.items():
             if not self.router.has(name):
@@ -641,9 +723,42 @@ class DeviceService:
         return {"key": key, "value": converted}
 
     def _cmd_clip_request(self, params: dict) -> dict:
-        raise CommandError(
-            "NOT_IMPLEMENTED", "tai clip len kho (HTTP upload) chua hien thuc"
+        if self.spool is None:
+            raise CommandError("NOT_IMPLEMENTED", "chua cau hinh tai clip len kho")
+        clip_id = str(params["clip_id"])
+        for item in self.spool.pending_ids():
+            if item == clip_id:
+                return {"clip_id": clip_id, "state": "queued"}
+        clip = self.recorder.clip(clip_id)
+        if clip is None:
+            raise CommandError("BAD_ARGS", f"khong co clip {clip_id}")
+        try:
+            self.spool.add(clip.clip_id, clip.path, clip.size_b)
+        except UploadError as exc:
+            raise CommandError("INTERNAL", str(exc)) from exc
+        return {"clip_id": clip_id, "state": "queued"}
+
+    def _cmd_ota_start(self, params: dict) -> dict:
+        if self.ota is None:
+            raise CommandError(
+                "NOT_IMPLEMENTED",
+                "chua cau hinh bo xac minh chu ky; tu choi cap nhat",
+            )
+        manifest = {
+            "version": params.get("version"),
+            "url": params.get("url"),
+            "sha256": params.get("sha256"),
+            "size": params.get("size"),
+            "signature": params.get("signature", ""),
+        }
+        try:
+            status = self.ota.stage(manifest)
+        except OtaError as exc:
+            raise CommandError("BAD_ARGS", str(exc)) from exc
+        self.diagnostics.log(
+            "info", f"OTA staged version={status.version} state={status.state}"
         )
+        return {"state": status.state, "version": status.version}
 
     def _cmd_reboot(self, params: dict) -> dict:
         self.reboot_requested = True

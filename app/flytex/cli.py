@@ -30,8 +30,10 @@ from .identity import Identity, IdentityError
 from .mcu import I2cLink, McuClient, McuError, MemoryMcu, ProtocolMismatch
 from .media import FakeSource, RkMpiSource
 from .modem import AtClient, FakeModem
-from .recorder import RawMuxer, SegmentRecorder
+from .recorder import SegmentRecorder
+from .tsmux import TsMuxer
 from .service import DeviceService
+from .upload import FakeUploader, UploadSpool
 from .uplink import UplinkQueue
 
 
@@ -124,7 +126,7 @@ def _selftest() -> int:
     def check_recorder() -> None:
         with tempfile.TemporaryDirectory() as tmp:
             clock = FakeClock()
-            recorder = SegmentRecorder(Path(tmp) / "clips", clock, RawMuxer())
+            recorder = SegmentRecorder(Path(tmp) / "clips", clock, TsMuxer())
             recorder.start("0123456789abcdef")
             recorder.write(0.0, b"frame")
             clock.advance(0.1)
@@ -240,7 +242,7 @@ def _sim(seconds: int) -> int:
             recorder = SegmentRecorder(
                 tmp / "clips",
                 clock,
-                RawMuxer(),
+                TsMuxer(),
                 segment_s=3.0,
                 max_bytes=1 << 20,
                 pin_budget_bytes=1 << 19,
@@ -259,6 +261,8 @@ def _sim(seconds: int) -> int:
                 clock=clock,
                 log=diagnostics.log,
             )
+            uploader = FakeUploader()
+            spool = UploadSpool(tmp / "upload.jsonl", clock)
             service = DeviceService(
                 identity,
                 config,
@@ -272,11 +276,12 @@ def _sim(seconds: int) -> int:
                 router,
                 diagnostics,
                 config_path=config_path,
+                uploader=uploader,
+                spool=spool,
             )
             service.boot()
 
             command_topic = f"dev/{identity.device_id}/cmd"
-
             def send_command(cmd_type: str, **params: object) -> None:
                 payload = {
                     "v": 1,
@@ -328,7 +333,8 @@ def _sim(seconds: int) -> int:
                 "sim: "
                 f"seconds={simulated} state={state} mode={mode} "
                 f"clips={clips} queued={stats['queued']} "
-                f"published={len(bus.published)} sleep_cmd={int(always_sleep)}"
+                f"published={len(bus.published)} sleep_cmd={int(always_sleep)} "
+                f"uploaded={len(uploader.calls)}"
             )
             _out(
                 "sim: types="

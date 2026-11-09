@@ -241,17 +241,19 @@ Thiết bị đo `rssi`/`rsrp` mỗi 30 s khi đang live và hạ cấp khi cầ
 
 ## 8. OTA
 
-**Chưa hiện thực.** Hợp đồng dưới đây là mục tiêu, không phải mô tả mã hiện có.
+Phần mềm đã có máy trạng thái trong `app/flytex/ota.py`: `stage` (tải, kiểm kích thước, `sha256`, chữ ký) → `activate` (ghi slot B, đặt cờ) → `check_boot` (khỏe thì chốt, quá hạn/không khớp thì quay lui). Trạng thái lưu xuống đĩa trước mỗi hành động. **Chưa có backend chữ ký và chưa có `Installer` thật**; thiếu verifier thì mọi yêu cầu bị từ chối.
 
-| Hạng mục | Mục tiêu |
+| Hạng mục | Trạng thái |
 |---|---|
-| Phân vùng | A/B cho rootfs, có quay lui |
-| Kích thước | Image ≤ 60 % dung lượng một slot (eMMC 8 GB: thoải mái) |
-| Chữ ký | Ký bằng khóa offline; thiết bị chỉ nhận image đúng chữ ký và đúng `device_id`/model |
-| Tải | HTTPS, có resume; dung lượng lớn nên không qua MQTT |
-| Kích hoạt | Ghi slot còn trống, đặt cờ, khởi động lại, kiểm tra sức khỏe, nếu hỏng quay lui |
-| Thời điểm | Chỉ khi đang sạc và pin >50 %, không cắt ngang clip |
-| Lệnh | `ota.start` trả `NOT_IMPLEMENTED` cho đến khi có hiện thực |
+| Phân vùng A/B | Thiết kế; `Installer` thật chưa có (phụ thuộc SDK) |
+| Kích thước | Image ≤ 60 % một slot; eMMC 8 GB thoải mái |
+| Chữ ký | Bắt buộc qua `Verifier`; chưa chọn thuật toán/khóa |
+| Tải | `HttpDownloader` qua HTTPS, ghi từng khối; chưa có resume |
+| Kích hoạt | `activate()` + `check_boot()` + `rollback()` đã có, test đầy đủ |
+| Thời điểm | Quy ước: chỉ khi đang sạc và pin >50 %, không cắt ngang clip — **chưa cưỡng chế trong mã** |
+| Lệnh | `ota.start` trả `NOT_IMPLEMENTED` khi chưa cấu hình OTA manager |
+
+Manifest `ota.start` cần `version`, `url`, `sha256`, `size`, `signature`; thiếu `size` hoặc `signature` thì bị từ chối.
 
 Trên biến thể 256 MB SPI NAND, A/B không vừa; đây là lý do [13](13-tinh-kha-thi.md) F-08 chốt biến thể eMMC.
 

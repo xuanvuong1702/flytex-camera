@@ -27,8 +27,9 @@ firmware/mcu/
   sim/                   FFI C cho mô phỏng Python
 app/flytex/              gói Python chạy trên SoC
   regs_gen.py, mqtt_gen.py (sinh)
-  clock.py mcu.py power.py modem.py media.py recorder.py uplink.py
-  cloud.py commands.py identity.py config.py diagnostics.py service.py cli.py
+  clock.py mcu.py power.py modem.py media.py recorder.py tsmux.py
+  uplink.py upload.py cloud.py commands.py ota.py identity.py config.py
+  diagnostics.py service.py cli.py
 app/tests/               unittest, chạy được không cần phần cứng
 sim/                     kịch bản end-to-end: firmware C (ctypes) + app Python + modem giả
 tools/measure/           nhập số đo G0, sinh báo cáo năng lượng
@@ -101,9 +102,12 @@ Một tiến trình `flytex-device` chứa các module, thay vì sáu daemon ri�
 | `modem` | AT, mạng, kênh đánh thức | `AtClient.command(cmd, timeout)` |
 | `media` | Nguồn hình | `MediaSource.start/read_frame/stop` |
 | `recorder` | Ghi đoạn lên thẻ | `SegmentRecorder.start/write/stop/pin/evict` |
+| `tsmux` | Đóng gói MPEG-TS H.264 | `TsMuxer.begin/write/end`, PAT/PMT/PCR/PTS |
 | `uplink` | Hàng đợi bền | `UplinkQueue.enqueue/peek/mark_sent/retry_later` |
+| `upload` | Tải clip qua HTTPS | `Uploader.upload`, `UploadSpool.add/pending/done/fail` |
 | `cloud` | MQTT | `Publisher.connect/publish/subscribe/loop` |
 | `commands` | Lệnh từ cloud | `CommandRouter.dispatch(topic, payload) -> Ack` |
+| `ota` | Cập nhật A/B có xác minh | `OtaManager.stage/activate/check_boot/rollback` |
 | `identity` | Định danh và chứng chỉ | `Identity.load(root)`, `.device_id`, `.cert_paths` |
 | `config` | Cấu hình | `Config.load/save`, `Config.set_allowed(key, value)` |
 | `diagnostics` | Log vòng, lý do khởi động | `Diagnostics.log()`, `.record_boot()` |
@@ -125,6 +129,7 @@ Giống [04](04-firmware.md) §3.2 nhưng là mã thật, có test:
 
 - Mỗi clip chia thành đoạn có giới hạn thời gian và kích thước.
 - Ghi vào `.part`, `fsync`, đóng container, rồi `rename` — mất điện tối đa một đoạn.
+- Container: **MPEG-TS H.264** (`tsmux.py`), có PAT/PMT, PCR, PTS 90 kHz, lặp PSI; test kiểm bằng parser độc lập. `RawMuxer` chỉ còn để bring-up.
 - Chỉ mục clip là file JSONL append, có `fsync`; khi khởi động, dọn `.part` mồ côi và sửa chỉ mục.
 - Clip gắn sự kiện được `pin`, không bị vòng ghi xóa; có giới hạn để thẻ không đầy.
 - Nguồn hình thật dùng RK MPI của SDK; trong repo chỉ có nguồn giả và một lớp `RkMpiSource` trả `NotImplementedError` kèm hướng dẫn. **Chưa có mã chạy camera thật.**
@@ -135,6 +140,7 @@ Giống [04](04-firmware.md) §3.2 nhưng là mã thật, có test:
 - Không gộp bản tin khác nội dung; chỉ bỏ khi đã gửi và đã `ack` (QoS 1).
 - Lùi thời gian có jitter, trần cấu hình; ưu tiên `fault` > `motion` > `status` > `battery`/`temp`.
 - Giới hạn kích thước; khi đầy, bỏ bản tin ưu tiên thấp nhất và ghi log, không bỏ im lặng.
+- Clip: `UploadSpool` giữ danh sách chờ tải (JSONL + `fsync`), `HttpUploader` PUT lên URL presigned; thành công thì phát `clip_ready`, thất bại thì lùi thời gian và thử lại. Nhiều đoạn TS được nối thành một file trước khi tải.
 
 ### 4.5 Modem
 
@@ -147,7 +153,7 @@ Giống [04](04-firmware.md) §3.2 nhưng là mã thật, có test:
 
 - TLS mọi kết nối; chứng chỉ riêng từng thiết bị nằm ở phân vùng định danh, không nằm trong image.
 - Không mật khẩu mặc định dùng chung.
-- OTA phải có chữ ký; hiện chưa hiện thực, `ota.start` trả `NOT_IMPLEMENTED`.
+- OTA chỉ nhận image khi có `Verifier` kiểm chữ ký; thiếu bộ xác minh thì `OtaManager` từ chối (không "tạm chấp nhận"). Repo chưa có backend chữ ký, nên trên thiết bị `ota.start` trả `NOT_IMPLEMENTED` cho tới khi cấu hình khóa.
 
 ## 5. Phân vùng lưu trữ trên thiết bị
 
@@ -157,6 +163,8 @@ Giống [04](04-firmware.md) §3.2 nhưng là mã thật, có test:
 | `/data/config.json` | Cấu hình | Ghi nguyên tử: file tạm + `rename` |
 | `/data/queue.jsonl` | Hàng đợi uplink | Append + `fsync` |
 | `/data/clips/` | Clip và chỉ mục | Vòng ghi, clip gắn sự kiện được giữ |
+| `/data/upload.jsonl` | Hàng đợi clip chờ tải | Append + `fsync`; sống qua restart |
+| `/data/ota/` | Image staged, trạng thái OTA | `staging/` và `ota-state.json`, ghi nguyên tử |
 | `/data/diag/` | Log vòng, lý do khởi động | Giới hạn kích thước |
 
 Thẻ nhớ là điểm hỏng dữ liệu khi mất điện; mọi lần ghi đều phải chịu được mất điện ở bất kỳ byte nào.
@@ -171,9 +179,9 @@ Thẻ nhớ là điểm hỏng dữ liệu khi mất điện; mọi lần ghi đ
 | Ứng dụng | `python -m unittest discover -s app/tests -t .` | Máy trạng thái, AT timeout, hàng đợi, ghi, lệnh |
 | Mô phỏng | `python sim/run.py --scenario all` | Firmware C thật + app thật + modem/cloud giả |
 | Tài liệu | `python tools/docs_check/check.py` | Tham chiếu ID, mục lục, file sinh lệch |
-| Tất cả | `python run_tests.py` | 23 bước: spec, hardware, firmware, app, tools, CLI, sim |
+| Tất cả | `python run_tests.py` | 27 bước: spec, hardware, firmware, app, tools, CLI, sim |
 
-Số test hiện tại: spec 29, hardware 28, firmware 59, ứng dụng 125, công cụ 108. Tổng 349 test cộng 5 kịch bản mô phỏng. Không test nào cần phần cứng.
+Số test hiện tại: spec 29, hardware 28, firmware 59, ứng dụng 172, công cụ 120. Tổng 408 test cộng 5 kịch bản mô phỏng. Không test nào cần phần cứng.
 
 Test cần phần cứng nằm ở [08](08-kiem-chung.md) và vẫn là "Chưa làm".
 
@@ -184,6 +192,7 @@ Test cần phần cứng nằm ở [08](08-kiem-chung.md) và vẫn là "Chưa l
 | Mã chạy camera thật (RK MPI) | Chưa có | Có SDK và dev board ở G0 |
 | Mã chạy I2C thật trên SoC | Có lớp mỏng, chưa thử phần cứng | Có board CMP |
 | Port STM32L0 thật | Khung, chưa build | Có SDK và board PWR |
-| OTA có chữ ký | Chưa có | Chốt cơ chế A/B ở G0 |
+| Backend xác minh chữ ký OTA | Chưa có; `OtaManager` đã sẵn sàng nhưng từ chối nếu thiếu verifier | Chọn Ed25519/RSA và cách lưu khóa ở G0 |
+| Tải image OTA thật trên thiết bị | Chưa thử; `HttpDownloader` chỉ test cục bộ | Có eMMC và SDK |
 | MQTT TLS thật | Lớp mỏng trên paho, chưa thử | Có chứng chỉ thiết bị |
 | Relay video | Chỉ hợp đồng, chưa cấu hình | Chọn MediaMTX và đo ở G0 |
